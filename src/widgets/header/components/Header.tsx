@@ -1,0 +1,64 @@
+import cn from "classnames";
+
+import logo from "../config/logo.svg";
+import { headerLinks } from "../config/links";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { CartIcon } from "../../../entities/cart/components/CartIcon";
+import styles from "./styles.module.scss";
+import { RoutesConfig } from "../../../shared/lib/routes-config";
+
+export function Header() {
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  return (
+    <header className={cn("site-header-with-search h-14 md:h-16 lg:h-22")}>
+      <div className="flex justify-between items-center w-full h-14 md:h-16 lg:h-22 md:px-4 lg:px-8 xl:px-32 py-5 z-50 fixed bg-light border-b border-border-200 shadow-sm transition-transform duration-300">
+        <div className="flex items-center w-full lg:w-auto">
+          <img src={logo} alt="logo" className="mx-auto lg:mx-0" />
+        </div>
+        <div className="flex">
+          <ul className="hidden lg:flex items-center flex-shrink-0 space-s-10">
+            {headerLinks.map(({ href, label, icon: Icon }) => {
+              const isCurrent = href === pathname;
+              return (
+                <li key={`${href}${label}`}>
+                  <Link
+                    to={href}
+                    className={cn(
+                      "font-semibold text-heading flex items-center transition duration-200 no-underline hover:text-accent",
+                      isCurrent && "text-accent"
+                    )}
+                  >
+                    {Icon && (
+                      <span className="me-2">
+                        <Icon
+                          containerClassName="mx-auto lg:mx-0"
+                          iconClassName={cn(
+                            "fill-current hover:text-accent",
+                            isCurrent && "text-accent"
+                          )}
+                        />
+                      </span>
+                    )}
+                    <span className={styles.upperCase}>{label}</span>
+                  </Link>
+                </li>
+              );
+            })}
+            <li
+              key={`cart`}
+              className="font-semibold text-heading flex items-center transition duration-200 no-underline"
+            >
+              <CartIcon
+                iconClassName={cn(
+                  "fill-current hover:text-accent focus:text-accent"
+                )}
+              />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+  );
+}

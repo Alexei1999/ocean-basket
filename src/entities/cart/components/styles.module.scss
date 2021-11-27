@@ -1,0 +1,18 @@
+.cartIcon {
+  &Cart {
+    pointer-events: none;
+  }
+  &Text {
+    position: absolute;
+    top: 0;
+    &-sm {
+      left: 36px;
+    }
+    &-md {
+      left: 32px;
+    }
+    &-lg {
+      left: 28px;
+    }
+  }
+}
