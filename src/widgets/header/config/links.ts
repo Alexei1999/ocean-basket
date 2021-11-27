@@ -1,5 +1,4 @@
 import { RoutesConfig } from "../../../shared/lib/routes-config";
-import present from "../config/present.svg";
 import { PresentIcon } from "./PresentIcon";
 
 export const headerLinks = [

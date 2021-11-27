@@ -1,0 +1,25 @@
+.promotion {
+  border-radius: 10px;
+  z-index: -1;
+
+  &Container {
+    display: relative;
+  }
+
+  &Description {
+    max-width: 50%;
+    max-height: 60%;
+    &Text {
+      line-height: 1.8rem;
+    }
+  }
+
+  &Discount {
+    font-size: 44px;
+  }
+
+  &WrapperBackground {
+    border-radius: 10px;
+    background: linear-gradient(90deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
+  }
+}

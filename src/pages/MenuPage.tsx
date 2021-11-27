@@ -1,3 +1,9 @@
+import PromotionSlider from "../entities/promotions/components/ui";
+
 export function MenuPage() {
-  return <div>Menu Page</div>;
+  return (
+    <div>
+      <PromotionSlider />
+    </div>
+  );
 }

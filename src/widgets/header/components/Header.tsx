@@ -6,16 +6,27 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CartIcon } from "../../../entities/cart/components/CartIcon";
 import styles from "./styles.module.scss";
 import { RoutesConfig } from "../../../shared/lib/routes-config";
+import { useCallback } from "react";
 
 export function Header() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
+  const onLogoClickHandler = useCallback(
+    () => navigate(RoutesConfig.Dashboard),
+    [navigate]
+  );
+
   return (
     <header className={cn("site-header-with-search h-14 md:h-16 lg:h-22")}>
       <div className="flex justify-between items-center w-full h-14 md:h-16 lg:h-22 md:px-4 lg:px-8 xl:px-32 py-5 z-50 fixed bg-light border-b border-border-200 shadow-sm transition-transform duration-300">
         <div className="flex items-center w-full lg:w-auto">
-          <img src={logo} alt="logo" className="mx-auto lg:mx-0" />
+          <img
+            src={logo}
+            alt="logo"
+            className={cn("mx-auto lg:mx-0", styles.logo)}
+            onClick={onLogoClickHandler}
+          />
         </div>
         <div className="flex">
           <ul className="hidden lg:flex items-center flex-shrink-0 space-s-10">
