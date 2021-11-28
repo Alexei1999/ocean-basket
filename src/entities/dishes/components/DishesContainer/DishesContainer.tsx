@@ -1,5 +1,4 @@
 import cn from "classnames";
-import { items } from "../../config/dishes";
 import { DishCard } from "../Card/DishCard";
 import { NotFound } from "../NotFound";
 import { ProductLoader } from "./ProductLoader";
@@ -14,14 +13,17 @@ export declare type Category = {
   id: number | string;
   name: string;
   slug: string;
+  category: string;
 };
 
 export declare type Product = {
   id?: number | string;
   name?: string;
   slug?: string;
+  category: string;
   ingridients: string[];
   deliveryFee?: number;
+  discount?: number;
   isApproximate?: boolean;
   isDiscount?: boolean;
   isAvailable?: boolean;
@@ -43,12 +45,19 @@ const ProductCard: React.FC<ProductCardProps> = ({
   return <DishCard product={product} {...props} className={className} />;
 };
 
-export const DishesContainer: React.FC = () => {
-  if (false) {
+type DishesContainerProps = {
+  dishes: Product[];
+};
+
+export function DishesContainer({ dishes }: DishesContainerProps) {
+  if (!dishes.length) {
     //TODO: Уточнить текстовки у бизнеса
     return (
       <div className="bg-gray-100 w-full min-h-full pt-6 pb-8 px-4 lg:p-8">
-        <NotFound text="Меню для данной категории отсутствует" className="w-7/12 mx-auto" />
+        <NotFound
+          text="Меню для данной категории отсутствует"
+          className="w-7/12 mx-auto"
+        />
       </div>
     );
   }
@@ -67,9 +76,8 @@ export const DishesContainer: React.FC = () => {
               ))}
           </>
         ) : (
-          items.map((product) => (
+          dishes.map((product) => (
             <div key={product.id}>
-              {/* @ts-ignore */}
               <ProductCard product={product} />
             </div>
           ))
@@ -77,4 +85,4 @@ export const DishesContainer: React.FC = () => {
       </div>
     </div>
   );
-};
+}

@@ -1,8 +1,19 @@
 import { Category } from "../../../dishes/components/DishesContainer/DishesContainer";
-import { categories } from "../../config/categories";
 import { StickySidebarListCategories } from "./StickySidebarListCategories";
 
-export const Categories: React.FC<{ className?: string }> = ({ className }) => {
+type CategoriesProps = {
+  className?: string;
+  categories: Category[];
+  onClick?: (item: string) => void;
+};
+
+//TODO: Use effector
+
+export function Categories({
+  className,
+  categories,
+  onClick,
+}: CategoriesProps) {
   // const {
   //   data,
   //   isLoading: loading,
@@ -16,9 +27,10 @@ export const Categories: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <StickySidebarListCategories
       notFound={false}
-      categories={categories as Category[]}
+      categories={categories}
       loading={false}
       className={className}
+      onClick={onClick}
     />
   );
-};
+}

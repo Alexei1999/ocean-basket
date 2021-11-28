@@ -6,72 +6,60 @@ import * as CategoryIcons from "../../lib/category-icons";
 import { useEffect, useState } from "react";
 import { getIcon } from "../../lib/get-icon";
 import { useParams } from "react-router";
+import { Category } from "../../../dishes/components/DishesContainer/DishesContainer";
 
 interface TreeMenuItemProps {
-  item: any;
+  item: Category;
   className?: string;
   depth?: number;
+  onClick?: (item: string) => void;
 }
 export function TreeMenuItem({
   className,
   item,
+  onClick,
   depth = 0,
 }: TreeMenuItemProps) {
   // const router = useRouter();
-  const { category } = useParams();
-  const active = category;
-  const isActive =
-    active === item.slug ||
-    item?.children?.some((_item: any) => _item.slug === active);
-  const [isOpen, setOpen] = useState<boolean>(isActive);
-  useEffect(() => {
-    setOpen(isActive);
-  }, [isActive]);
+  // const active = category;
+  // const isActive =
+  //   active === item.slug ||
+  //   item?.children?.some((_item: any) => _item.slug === active);
+  const [isOpen, setOpen] = useState<boolean>(false);
+  // useEffect(() => {
+  //   setOpen(isActive);
+  // }, [isActive]);
 
-  const { name, children: items, icon } = item;
-  const [{ display }, setDrawerState] = useState({ display: true, view: "" });
+  const {
+    name,
+    category,
+    icon,
+    expandIcon,
+    children: items,
+  } = item as Category & Record<string, any>;
+  // const [{ display }, setDrawerState] = useState({ display: true, view: "" });
 
-  function toggleCollapse() {
-    setOpen((prevValue) => !prevValue);
-  }
+  // function toggleCollapse() {
+  //   setOpen((prevValue) => !prevValue);
+  // }
 
   // const { pathname } = useLocation();
-  function onClick() {
-    // const navigate = () =>
-    //   router.push(
-    //     {
-    //       pathname,
-    //       query: { ...query, category: slug },
-    //     },
-    //     undefined,
-    //     {
-    //       scroll: false,
-    //     }
-    //   );
-    if (Array.isArray(items) && !!items.length) {
-      toggleCollapse();
-      // navigate();
-    } else {
-      // navigate();
-      display && setDrawerState({ display: false, view: "" });
-    }
-  }
 
-  let expandIcon;
-  if (Array.isArray(items) && items.length) {
-    expandIcon = !isOpen ? (
-      <ExpandLessIcon className="w-3 h-3" />
-    ) : (
-      <ExpandMoreIcon className="w-3 h-3" />
-    );
-  }
+  // let expandIcon;
+  // if (Array.isArray(items) && items.length) {
+  //   expandIcon = !isOpen ? (
+  //     <ExpandLessIcon className="w-3 h-3" />
+  //   ) : (
+  //     <ExpandMoreIcon className="w-3 h-3" />
+  //   );
+  // }
 
   return (
     <>
       <motion.li
         initial={false}
         animate={{ backgroundColor: "#ffffff" }}
-        onClick={onClick}
+        onClick={() => onClick?.(category)}
         className="py-1 rounded-md"
       >
         <button
@@ -130,13 +118,18 @@ export function TreeMenuItem({
 interface TreeMenuProps {
   items: any[];
   className?: string;
+  onClick?: (item: string) => void;
 }
 
-export function TreeMenu({ items, className }: TreeMenuProps) {
+export function TreeMenu({ items, className, onClick }: TreeMenuProps) {
   return (
     <ul className={cn("text-base", className)}>
-      {items?.map((item: any) => (
-        <TreeMenuItem key={`${item.name}${item.slug}`} item={item} />
+      {items?.map((item: Category) => (
+        <TreeMenuItem
+          onClick={onClick}
+          key={`${item.name}${item.slug}`}
+          item={item}
+        />
       ))}
     </ul>
   );
