@@ -5,6 +5,7 @@ import * as CategoryIcons from "../../lib/category-icons";
 import { useState } from "react";
 import { getIcon } from "../../lib/get-icon";
 import { Category } from "@entities/dishes/components/DishesContainer/DishesContainer";
+import { createEvent } from "effector";
 
 interface TreeMenuItemProps {
   item: Category;
@@ -12,10 +13,12 @@ interface TreeMenuItemProps {
   depth?: number;
   onClick?: (item: string) => void;
 }
+
+export const onCategoryClick = createEvent<string>();
+
 export function TreeMenuItem({
   className,
   item,
-  onClick,
   depth = 0,
 }: TreeMenuItemProps) {
   // const router = useRouter();
@@ -23,7 +26,7 @@ export function TreeMenuItem({
   // const isActive =
   //   active === item.slug ||
   //   item?.children?.some((_item: any) => _item.slug === active);
-  const [isOpen, setOpen] = useState<boolean>(false);
+  const [isOpen] = useState<boolean>(false);
   // useEffect(() => {
   //   setOpen(isActive);
   // }, [isActive]);
@@ -57,7 +60,7 @@ export function TreeMenuItem({
       <motion.li
         initial={false}
         animate={{ backgroundColor: "#ffffff" }}
-        onClick={() => onClick?.(category)}
+        onClick={() => onCategoryClick?.(category)}
         className="py-1 rounded-md"
       >
         <button
@@ -116,18 +119,13 @@ export function TreeMenuItem({
 interface TreeMenuProps {
   items: any[];
   className?: string;
-  onClick?: (item: string) => void;
 }
 
-export function TreeMenu({ items, className, onClick }: TreeMenuProps) {
+export function TreeMenu({ items, className }: TreeMenuProps) {
   return (
     <ul className={cn("text-base", className)}>
       {items?.map((item: Category) => (
-        <TreeMenuItem
-          onClick={onClick}
-          key={`${item.name}${item.slug}`}
-          item={item}
-        />
+        <TreeMenuItem key={`${item.name}${item.slug}`} item={item} />
       ))}
     </ul>
   );

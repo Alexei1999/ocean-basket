@@ -10,7 +10,6 @@ interface StickySidebarListCategoriesProps {
   loading: boolean;
   categories: Category[];
   className?: string;
-  onClick?: (item: string) => void;
 }
 
 export function StickySidebarListCategories({
@@ -18,7 +17,6 @@ export function StickySidebarListCategories({
   categories,
   loading,
   className,
-  onClick,
 }: StickySidebarListCategoriesProps) {
   if (loading) {
     return (
@@ -46,7 +44,6 @@ export function StickySidebarListCategories({
               <TreeMenu
                 items={categories}
                 className="xl:py-8"
-                onClick={onClick}
               />
             </div>
           ) : (

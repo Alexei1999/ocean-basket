@@ -4,7 +4,6 @@ import { StickySidebarListCategories } from "./StickySidebarListCategories";
 type CategoriesProps = {
   className?: string;
   categories: Category[];
-  onClick?: (item: string) => void;
 };
 
 //TODO: Use effector
@@ -12,7 +11,6 @@ type CategoriesProps = {
 export function Categories({
   className,
   categories,
-  onClick,
 }: CategoriesProps) {
   // const {
   //   data,
@@ -30,7 +28,6 @@ export function Categories({
       categories={categories}
       loading={false}
       className={className}
-      onClick={onClick}
     />
   );
 }
