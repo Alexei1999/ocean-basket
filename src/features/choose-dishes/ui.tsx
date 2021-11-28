@@ -20,6 +20,7 @@ export const $category = createStore<string>(categories[0].category)
 
 export const addProductToCart = createEvent<Product>();
 export const removeProductFromCart = createEvent<Product>();
+export const dropProductFromCart = createEvent<string>();
 
 export const $cart = createStore<{
   [id in string]: CartItemType;
@@ -56,6 +57,11 @@ export const $cart = createStore<{
       ...state,
       [product.id]: { count: count - 1, product },
     };
+  })
+  .on(dropProductFromCart, (state, id) => {
+    const { [id]: _, ...rest } = state;
+
+    return rest;
   });
 
 export const $cartSizes = $cart.map((state) =>

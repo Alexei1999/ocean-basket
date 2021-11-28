@@ -9,20 +9,25 @@ import { $cart, $cartSizes } from "@features/choose-dishes/ui";
 import { setIsDrawerOpen } from "@shared/components/drawer/managed-drawer";
 import { useMemo } from "react";
 import { useNavigate } from "react-router";
-import { RoutesConfig } from "@shared/lib/routes-config";
 import classNames from "classnames";
 
-export const CartSidebarView = () => {
+export const CartSidebarView = ({
+  onSubmit,
+  onClose,
+  isFlat = false,
+}: {
+  onSubmit: () => void;
+  onClose?: () => void;
+  isFlat?: boolean;
+}) => {
   const cart = useStore($cart);
   const cartSizes = useStore($cartSizes);
-  const navigate = useNavigate();
 
   const cartItems = useMemo(() => Object.values(cart), [cart]);
 
   function handleCheckout() {
     if (!cartSizes.size) return;
-    setIsDrawerOpen(false);
-    navigate(RoutesConfig.Payment);
+    onSubmit?.();
   }
 
   const { price: totalPrice } = usePrice({
@@ -30,25 +35,35 @@ export const CartSidebarView = () => {
   });
   return (
     <section className="flex flex-col h-full relative">
-      <header className="fixed max-w-md w-full top-0 z-10 bg-light py-4 px-6 flex items-center justify-between border-b border-border-200 border-opacity-75">
+      <header
+        className={classNames(
+          !isFlat && "fixed",
+          "max-w-md w-full top-0 z-10 bg-light py-4 px-6 flex items-center justify-between border-b border-border-200 border-opacity-75"
+        )}
+      >
         <div className="flex text-heading text-lg font-bold">
           <span className="flex">Корзина:</span>
         </div>
-        <button
-          onClick={() => setIsDrawerOpen(false)}
-          className="w-7 h-7 ms-3 -me-2 flex items-center justify-center rounded-full text-muted bg-gray-100 transition-all duration-200 focus:outline-none hover:bg-accent focus:bg-accent hover:text-light focus:text-light"
-        >
-          <span className="sr-only">Закрыть</span>
-          <CloseIcon className="w-3 h-3" />
-        </button>
+        {!isFlat && (
+          <button
+            onClick={() => onClose?.()}
+            className="w-7 h-7 ms-3 -me-2 flex items-center justify-center rounded-full text-muted bg-gray-100 transition-all duration-200 focus:outline-none hover:bg-accent focus:bg-accent hover:text-light focus:text-light"
+          >
+            <span className="sr-only">Закрыть</span>
+            <CloseIcon className="w-3 h-3" />
+          </button>
+        )}
       </header>
       {/* End of cart header */}
 
       <AnimateSharedLayout>
-        <motion.div layout className="flex-grow pt-16">
+        <motion.div
+          layout
+          className={classNames("flex-grow", !isFlat && "pt-16")}
+        >
           {cartItems.length > 0 ? (
             cartItems.map((item) => (
-              <CartItem item={item} key={item.product.id} />
+              <CartItem isCounter={isFlat} item={item} key={item.product.id} />
             ))
           ) : (
             <motion.div
@@ -69,7 +84,12 @@ export const CartSidebarView = () => {
       </AnimateSharedLayout>
       {/* End of cart items */}
 
-      <footer className="sticky start-0 bottom-0 w-full py-5 px-6 z-10 bg-light">
+      <footer
+        className={classNames(
+          !isFlat && "sticky",
+          "start-0 bottom-0 w-full py-5 px-6 z-10 bg-light"
+        )}
+      >
         <button
           className={classNames(
             "flex justify-between w-full h-12 md:h-14 p-1 text-sm font-bold bg-blue-900 rounded-full shadow-700 transition-colors ",

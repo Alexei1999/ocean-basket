@@ -1,7 +1,11 @@
+import { DishCover } from "@entities/payment/components/DishCover/DishCover";
+import { OrderOverview } from "@entities/payment/components/OrderOverview";
+
 export function PaymentPage() {
   return (
     <div>
-      <h1>Checkout Page</h1>
+      <DishCover />
+      <OrderOverview />
     </div>
   );
 }

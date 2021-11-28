@@ -11,7 +11,7 @@ export function CartItemCount({
   return (
     <div
       className={classNames(
-        "bg-gray-100 flex justify-center",
+        "bg-gray-100 flex justify-center flex-shrink-0",
         styles.circle,
         styles.circleRounded,
         className
