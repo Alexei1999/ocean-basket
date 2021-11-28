@@ -24,10 +24,11 @@ export declare type Product = {
   ingridients: string[];
   deliveryFee?: number;
   discount?: number;
+  description?: string;
   isApproximate?: boolean;
   isDiscount?: boolean;
   isAvailable?: boolean;
-  setItems?: string[],
+  setItems?: string[];
   is_taxable?: boolean;
   price: number;
   image?: Attachment;

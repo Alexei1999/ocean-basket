@@ -20,6 +20,7 @@ export const dishes: Product[] = [
     price: 1500,
     discount: 3000,
     isAvailable: true,
+    description: "Собреите свой завтрак",
     category: "starters",
     image: {
       id: "103",

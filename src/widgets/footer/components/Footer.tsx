@@ -103,7 +103,7 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <hr className="border bg-white w-full" />
+        <hr className="border bg-light w-full" />
         <div className="py-7 font-light text-xs">
           © Copyright 2021 All Rights Reserved
         </div>
