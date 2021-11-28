@@ -1,4 +1,4 @@
-import { Category } from "../../../../entities/dishes/components/DishesContainer/DishesContainer";
+import { Category } from "../../../dishes/components/DishesContainer/DishesContainer";
 import { categories } from "../../config/categories";
 import { StickySidebarListCategories } from "./StickySidebarListCategories";
 

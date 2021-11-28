@@ -1,6 +1,6 @@
 import cn from "classnames";
-import { Category } from "../../../../entities/dishes/components/DishesContainer/DishesContainer";
-import { NotFound } from "../../../../entities/dishes/components/NotFound";
+import { Category } from "../../../dishes/components/DishesContainer/DishesContainer";
+import { NotFound } from "../../../dishes/components/NotFound";
 import { Scrollbar } from "../../../../shared/components/Scrollbar";
 import { TreeMenu } from "../TreeMenu/TreeMenuItem";
 import { CategoriesLoader } from "./CategoriesLoader";

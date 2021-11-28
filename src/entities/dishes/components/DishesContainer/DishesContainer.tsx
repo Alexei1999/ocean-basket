@@ -45,9 +45,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
 export const DishesContainer: React.FC = () => {
   if (false) {
+    //TODO: Уточнить текстовки у бизнеса
     return (
       <div className="bg-gray-100 w-full min-h-full pt-6 pb-8 px-4 lg:p-8">
-        <NotFound className="w-7/12 mx-auto" />
+        <NotFound text="Меню для данной категории отсутствует" className="w-7/12 mx-auto" />
       </div>
     );
   }

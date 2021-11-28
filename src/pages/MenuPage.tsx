@@ -1,7 +1,7 @@
 import { DishesContainer } from "../entities/dishes/components/DishesContainer/DishesContainer";
 import { PromotionSlider } from "../entities/promotions/components/ui";
 import { Element } from "react-scroll";
-import { Categories } from "../features/select-category/components/Categories/Categories";
+import { Categories } from "../entities/сategories/components/Categories/Categories";
 
 export function MenuPage() {
   return (
