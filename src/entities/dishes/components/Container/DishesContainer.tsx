@@ -107,7 +107,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   return <Helium product={product} {...props} className={className} />;
 };
 
-export const DishesContainer: React.FC = ({ children }) => {
+export const DishesContainer: React.FC = () => {
   if (false) {
     return (
       <div className="bg-gray-100 w-full min-h-full pt-6 pb-8 px-4 lg:p-8">
@@ -117,12 +117,9 @@ export const DishesContainer: React.FC = ({ children }) => {
   }
 
   return (
-    <div className={cn("flex-1 bg-gray-100 pt-6 pb-8 px-4 lg:p-8")}>
+    <div className={cn("flex-1 bg-gray-100 pt-6 pb-8 pl-4 lg:p-8 xl:pr-32")}>
       <div
-        className={cn(
-          "grid grid-cols-1 sm:grid-cols-2 gap-3",
-          "md:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-7"
-        )}
+        className={cn("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3")}
       >
         {false ? (
           <>

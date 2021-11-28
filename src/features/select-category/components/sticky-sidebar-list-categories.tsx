@@ -31,11 +31,11 @@ const StickySidebarListCategories: React.FC<StickySidebarListCategoriesProps> =
       >
         <div className="max-h-full overflow-hidden">
           <Scrollbar
-            className="w-full max-h-screen"
-            style={{ height: "calc(100vh - 5.35rem)", paddingLeft: "110px" }}
+            className="w-full max-h-screen pl-32"
+            style={{ height: "calc(100vh - 5.35rem)" }}
           >
             {!notFound ? (
-              <div className="px-5">
+              <div className="pr-5">
                 <TreeMenu items={categories} className="xl:py-8" />
               </div>
             ) : (

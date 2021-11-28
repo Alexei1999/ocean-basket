@@ -1,5 +1,7 @@
+import cn from "classnames";
 import AddToCartBtn from "./add-to-cart-btn";
 import Counter from "./counter";
+import styles from "./styles.module.scss";
 
 interface Props {
   data: any;
@@ -17,13 +19,13 @@ interface Props {
 }
 
 export const AddToCart = ({
-  data,
-  variant = "helium",
+  variant = "neon",
   counterVariant,
   counterClass,
-  variation,
   disabled,
 }: Props) => {
+  console.log("styles", styles);
+
   // const {
   //   addItemToCart,
   //   removeItemFromCart,
@@ -48,14 +50,13 @@ export const AddToCart = ({
   // const outOfStock = isInCart(item?.id) && !isInStock(item.id);
   // return !isInCart(item?.id) ? (
   return true ? (
-    <div className="flex h-4 w-full">
-      <AddToCartBtn
-        // disabled={disabled || outOfStock}
-        disabled={disabled || false}
-        variant={variant}
-        onClick={handleAddClick}
-      />
-    </div>
+    <AddToCartBtn
+      variant={variant}
+      className={cn(styles.button, "max-h-8")}
+      // disabled={disabled || outOfStock}
+      disabled={disabled || false}
+      onClick={handleAddClick}
+    />
   ) : (
     <>
       <Counter
