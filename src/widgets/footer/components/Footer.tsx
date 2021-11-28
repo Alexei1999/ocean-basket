@@ -7,7 +7,7 @@ import logoFooter from "@assets/logo-footer.svg";
 //TODO: Split to the components
 export function Footer() {
   return (
-    <footer className={cn(styles.container, "bg-local bg-black")}>
+    <footer className={cn(styles.container, "bg-local bg-gray-600")}>
       <div className="flex h-full items-center md:px-4 lg:px-8 xl:px-32 flex-col text-white text-sm">
         <div className="flex justify-between lg:pr-16 xl:pr-36 flex-grow w-full pt-16">
           <div className="flex flex-col">
