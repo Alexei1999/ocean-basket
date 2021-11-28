@@ -3,7 +3,7 @@ import cn from "classnames";
 import logo from "../config/logo.svg";
 import { headerLinks } from "../config/links";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { CartIcon } from "../../../entities/cart/components/CartIcon";
+import { CartHeaderIcon } from "../../../entities/cart/components/CartIcon";
 import styles from "./styles.module.scss";
 import { RoutesConfig } from "../../../shared/lib/routes-config";
 import { useCallback } from "react";
@@ -18,7 +18,9 @@ export function Header() {
   );
 
   return (
-    <header className={cn("site-header-with-search h-14 md:h-16 lg:h-22")}>
+    <header
+      className={"flex-shrink-0 site-header-with-search h-14 md:h-16 lg:h-22"}
+    >
       <div className="flex justify-between items-center w-full h-14 md:h-16 lg:h-22 md:px-4 lg:px-8 xl:px-32 py-5 z-50 fixed bg-light border-b border-border-200 shadow-sm transition-transform duration-300">
         <div className="flex items-center w-full lg:w-auto">
           <img
@@ -61,7 +63,7 @@ export function Header() {
               key={`cart`}
               className="font-semibold text-heading flex items-center transition duration-200 no-underline"
             >
-              <CartIcon
+              <CartHeaderIcon
                 iconClassName={cn(
                   "fill-current hover:text-accent focus:text-accent"
                 )}

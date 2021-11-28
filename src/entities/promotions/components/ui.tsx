@@ -28,9 +28,7 @@ const offerSliderBreakpoints = {
   },
 };
 
-export default function PromotionSlider() {
-  console.log("styles", styles);
-
+export function PromotionSlider() {
   return (
     <div className="px-6 py-5 xl:py-14 xl:px-32 border-t border-border-200 bg-light">
       <div className="relative">

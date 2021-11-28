@@ -37,7 +37,7 @@ type CartProps = {
   counter?: number;
 } & React.SVGProps<SVGSVGElement>;
 
-export const CartIcon: FC<CartProps> = ({
+export const CartHeaderIcon: FC<CartProps> = ({
   containerClassName,
   iconClassName,
   className,
