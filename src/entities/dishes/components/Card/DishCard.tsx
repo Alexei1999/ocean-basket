@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { AddToCart } from "../../../../features/add-to-cart/components/AddToCart";
+import { AddToCart } from "../../../cart/components/Buttons/AddToCart";
 import { GiftIcon } from "../../config/GiftIcon";
 import productIcon from "../../../../app/assets/product.svg";
 

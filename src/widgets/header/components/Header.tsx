@@ -3,10 +3,10 @@ import cn from "classnames";
 import logo from "../config/logo.svg";
 import { headerLinks } from "../config/links";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { CartHeaderIcon } from "../../../entities/cart/components/CartIcon";
 import styles from "./styles.module.scss";
-import { RoutesConfig } from "../../../shared/lib/routes-config";
 import { useCallback } from "react";
+import { CartHeaderIcon } from "../../../entities/cart/components/icons/CartIcon";
+import { RoutesConfig } from "../../../shared/lib/routes-config";
 
 export function Header() {
   const { pathname } = useLocation();

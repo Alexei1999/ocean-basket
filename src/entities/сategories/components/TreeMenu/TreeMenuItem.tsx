@@ -1,12 +1,10 @@
 import { motion, AnimatePresence } from "framer-motion";
 import cn from "classnames";
-import { ExpandLessIcon } from "./ExpandLessIcon";
-import { ExpandMoreIcon } from "./ExpandMoreIcon";
+
 import * as CategoryIcons from "../../lib/category-icons";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getIcon } from "../../lib/get-icon";
-import { useParams } from "react-router";
-import { Category } from "../../../dishes/components/DishesContainer/DishesContainer";
+import { Category } from "@entities/dishes/components/DishesContainer/DishesContainer";
 
 interface TreeMenuItemProps {
   item: Category;

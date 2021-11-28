@@ -1,6 +1,6 @@
 import cn from "classnames";
-import { AddToCartBtn } from "../../../entities/dishes/components/Card/AddToCartBtn";
-import { Counter } from "../../../entities/dishes/components/Counter/Counter";
+import { AddToCartBtn } from "../../../dishes/components/Card/AddToCartBtn";
+import { Counter } from "../../../dishes/components/Counter/Counter";
 import styles from "./styles.module.scss";
 
 interface Props {
