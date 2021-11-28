@@ -1,0 +1,4 @@
+.content {
+  //TODO: footer: 600px header: 84px, fix this magic values
+  min-height: calc(100vh - 600px - 84px);
+}
