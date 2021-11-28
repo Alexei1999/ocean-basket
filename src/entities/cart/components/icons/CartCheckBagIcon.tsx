@@ -41,5 +41,3 @@ export const CartCheckBagIcon: FC<CartCheckBagProps> = ({
     </svg>
   );
 };
-
-export default CartCheckBagIcon;

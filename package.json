@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.4.2",
+    "@reach/portal": "^0.16.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -12,6 +13,7 @@
     "@types/overlayscrollbars": "^1.12.1",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "body-scroll-lock": "^4.0.0-beta.0",
     "classnames": "^2.3.1",
     "dayjs": "^1.10.7",
     "effector": "^22.1.2",
@@ -59,6 +61,7 @@
     ]
   },
   "devDependencies": {
+    "@types/body-scroll-lock": "^3.1.0",
     "@types/react-scroll": "^1.8.3",
     "autoprefixer": "^9.8.8",
     "craco-alias": "^3.0.1",

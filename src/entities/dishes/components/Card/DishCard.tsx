@@ -1,9 +1,10 @@
 import cn from "classnames";
 import { AddToCart } from "../../../cart/components/Buttons/AddToCart";
 import { GiftIcon } from "../../config/GiftIcon";
-import productIcon from "../../../../app/assets/product.svg";
+import productIcon from "@assets/product.svg";
 
 import styles from "./styles.module.scss";
+import usePrice from "@entities/cart/lib/use-price";
 
 type DishCardProps = {
   product: any;
@@ -24,6 +25,16 @@ export const DishCard: React.FC<DishCardProps> = ({ product, className }) => {
   } = product ?? {};
 
   function handleProductQuickView() {}
+
+  const { price: deliveryPrice } = usePrice({
+    amount: deliveryFee ?? 0,
+  });
+  const { price: discountPrice } = usePrice({
+    amount: discount ?? 0,
+  });
+  const { price: dishPrice } = usePrice({
+    amount: price ?? 0,
+  });
 
   return (
     <article
@@ -66,7 +77,7 @@ export const DishCard: React.FC<DishCardProps> = ({ product, className }) => {
           onClick={handleProductQuickView}
           className="text-md font-bold truncate mb-2"
         >
-          {deliveryFee ? `${deliveryFee}$ доставка` : "Бесплатная доставка"}
+          {deliveryFee ? `${deliveryPrice} доставка` : "Бесплатная доставка"}
         </h3>
         {/* End of product info */}
 
@@ -74,11 +85,11 @@ export const DishCard: React.FC<DishCardProps> = ({ product, className }) => {
           <div className="relative">
             {discount && (
               <del className="text-xs text-muted text-opacity-75 absolute -top-4 md:-top-5 italic">
-                {discount}
+                {discountPrice}
               </del>
             )}
             <span className="text-heading font-medium text-sm  md:text-lg">
-              {isApproximate ? `от ${price} ₽` : `${price} ₽`}
+              {isApproximate ? `от ${dishPrice}` : dishPrice}
             </span>
           </div>
           {isAvailable && <AddToCart data={product} />}

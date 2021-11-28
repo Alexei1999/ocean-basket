@@ -17,7 +17,7 @@ export declare type Category = {
 };
 
 export declare type Product = {
-  id?: number | string;
+  id: number | string;
   name?: string;
   slug?: string;
   category: string;
@@ -27,6 +27,7 @@ export declare type Product = {
   isApproximate?: boolean;
   isDiscount?: boolean;
   isAvailable?: boolean;
+  setItems?: string[],
   is_taxable?: boolean;
   price: number;
   image?: Attachment;

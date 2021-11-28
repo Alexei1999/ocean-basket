@@ -2,7 +2,13 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
+      "@assets/*": ["src/app/assets/*", "src/app/assets/"],
+      "@widgets/*": ["src/widgets/*", "src/widgets/"],
+      "@shared/*": ["src/shared/*", "src/shared/"],
+      "@pages/*": ["src/pages/*", "src/pages/"],
+      "@features/*": ["src/features/*", "src/features/"],
       "@entities/*": ["src/entities/*", "src/entities/"],
+      "@app/*": ["src/app/*", "src/app/"],
       "@src/*": ["src/*", "src/"]
     }
   }

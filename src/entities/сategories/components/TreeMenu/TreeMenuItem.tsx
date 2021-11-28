@@ -2,10 +2,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import cn from "classnames";
 
 import * as CategoryIcons from "../../lib/category-icons";
-import { useState } from "react";
 import { getIcon } from "../../lib/get-icon";
 import { Category } from "@entities/dishes/components/DishesContainer/DishesContainer";
 import { createEvent } from "effector";
+import { useStore } from "effector-react";
+import { $category } from "@features/choose-dishes/ui";
 
 interface TreeMenuItemProps {
   item: Category;
@@ -21,15 +22,9 @@ export function TreeMenuItem({
   item,
   depth = 0,
 }: TreeMenuItemProps) {
-  // const router = useRouter();
-  // const active = category;
-  // const isActive =
-  //   active === item.slug ||
-  //   item?.children?.some((_item: any) => _item.slug === active);
-  const [isOpen] = useState<boolean>(false);
-  // useEffect(() => {
-  //   setOpen(isActive);
-  // }, [isActive]);
+  const selectedCategory = useStore($category);
+
+  const isActive = selectedCategory === item.category;
 
   const {
     name,
@@ -38,22 +33,6 @@ export function TreeMenuItem({
     expandIcon,
     children: items,
   } = item as Category & Record<string, any>;
-  // const [{ display }, setDrawerState] = useState({ display: true, view: "" });
-
-  // function toggleCollapse() {
-  //   setOpen((prevValue) => !prevValue);
-  // }
-
-  // const { pathname } = useLocation();
-
-  // let expandIcon;
-  // if (Array.isArray(items) && items.length) {
-  //   expandIcon = !isOpen ? (
-  //     <ExpandLessIcon className="w-3 h-3" />
-  //   ) : (
-  //     <ExpandMoreIcon className="w-3 h-3" />
-  //   );
-  // }
 
   return (
     <>
@@ -66,7 +45,7 @@ export function TreeMenuItem({
         <button
           className={cn(
             "flex items-center w-full py-2 text-start outline-none font-semibold  focus:outline-none focus:ring-0 hover:text-accent focus:text-accent transition-all ease-in-expo",
-            isOpen ? "text-accent text-xl" : "text-heading",
+            isActive ? "text-accent text-xl" : "text-heading",
             className
           )}
         >
@@ -84,7 +63,7 @@ export function TreeMenuItem({
         </button>
       </motion.li>
       <AnimatePresence initial={false}>
-        {Array.isArray(items) && isOpen ? (
+        {Array.isArray(items) && isActive ? (
           <li>
             <motion.ul
               key="content"

@@ -6,12 +6,7 @@ type CategoriesProps = {
   categories: Category[];
 };
 
-//TODO: Use effector
-
-export function Categories({
-  className,
-  categories,
-}: CategoriesProps) {
+export function Categories({ className, categories }: CategoriesProps) {
   // const {
   //   data,
   //   isLoading: loading,

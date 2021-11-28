@@ -41,10 +41,7 @@ export function StickySidebarListCategories({
         >
           {!notFound ? (
             <div className="pr-5">
-              <TreeMenu
-                items={categories}
-                className="xl:py-8"
-              />
+              <TreeMenu items={categories} className="xl:py-8" />
             </div>
           ) : (
             <div className="min-h-full w-full pt-6 pb-8 px-9 lg:p-8">

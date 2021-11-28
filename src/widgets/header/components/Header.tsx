@@ -5,10 +5,14 @@ import { headerLinks } from "../config/links";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import styles from "./styles.module.scss";
 import { useCallback } from "react";
-import { CartHeaderIcon } from "../../../entities/cart/components/icons/CartIcon";
+import { CartHeaderIcon } from "../../../entities/cart/components/icons/CartHeaderIcon";
 import { RoutesConfig } from "../../../shared/lib/routes-config";
+import { setIsDrawerOpen } from "@shared/components/drawer/managed-drawer";
+import { useStore } from "effector-react";
+import { $cartSizes } from "@features/choose-dishes/ui";
 
 export function Header() {
+  const { size } = useStore($cartSizes);
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -54,7 +58,14 @@ export function Header() {
                         />
                       </span>
                     )}
-                    <span className={styles.upperCase}>{label}</span>
+                    <span
+                      className={cn(
+                        isCurrent && "text-accent",
+                        styles.upperCase
+                      )}
+                    >
+                      {label}
+                    </span>
                   </Link>
                 </li>
               );
@@ -65,8 +76,10 @@ export function Header() {
             >
               <CartHeaderIcon
                 iconClassName={cn(
-                  "fill-current hover:text-accent focus:text-accent"
+                  "fill-current hover:text-accent focus:text-accent cursor-pointer"
                 )}
+                counter={size}
+                onClick={() => setIsDrawerOpen(true)}
               />
             </li>
           </ul>
