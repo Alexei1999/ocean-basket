@@ -10,8 +10,6 @@ import { OrderPage } from "./OrderPage";
 import { PromotionsPage } from "./PromotionsPage";
 import { RoutesConfig } from "../shared/lib/routes-config";
 
-import styles from "./styles.module.scss";
-
 export const Routing = () => {
   return (
     <Routes>

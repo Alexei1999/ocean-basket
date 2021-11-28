@@ -7,11 +7,15 @@ import styles from "./styles.module.scss";
 import { useCallback } from "react";
 import { CartHeaderIcon } from "../../../entities/cart/components/icons/CartHeaderIcon";
 import { RoutesConfig } from "../../../shared/lib/routes-config";
-import { setIsDrawerOpen } from "@shared/components/drawer/managed-drawer";
+import {
+  $isDrawerOpen,
+  setIsDrawerOpen,
+} from "@shared/components/drawer/managed-drawer";
 import { useStore } from "effector-react";
 import { $cartSizes } from "@features/choose-dishes/ui";
 
 export function Header() {
+  const isOpen = useStore($isDrawerOpen);
   const { size } = useStore($cartSizes);
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -20,6 +24,8 @@ export function Header() {
     () => navigate(RoutesConfig.Dashboard),
     [navigate]
   );
+
+  const isCartDisabled = pathname === RoutesConfig.Payment;
 
   return (
     <header
@@ -76,10 +82,14 @@ export function Header() {
             >
               <CartHeaderIcon
                 iconClassName={cn(
-                  "fill-current hover:text-accent focus:text-accent cursor-pointer"
+                  "fill-current",
+                  "hover:text-accent focus:text-accent cursor-pointer",
+                  isOpen && "text-accent"
                 )}
                 counter={size}
-                onClick={() => setIsDrawerOpen(true)}
+                onClick={() => {
+                  setIsDrawerOpen(true);
+                }}
               />
             </li>
           </ul>
