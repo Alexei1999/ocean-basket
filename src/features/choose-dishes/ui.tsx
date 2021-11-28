@@ -20,7 +20,7 @@ export const $category = createStore<string>(categories[0].category)
 
 export const addProductToCart = createEvent<Product>();
 export const removeProductFromCart = createEvent<Product>();
-export const dropProductFromCart = createEvent<string>();
+export const dropProductFromCart = createEvent<string | number>();
 
 export const $cart = createStore<{
   [id in string]: CartItemType;

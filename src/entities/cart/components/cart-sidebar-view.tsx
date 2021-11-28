@@ -42,7 +42,9 @@ export const CartSidebarView = ({
         )}
       >
         <div className="flex text-heading text-lg font-bold">
-          <span className="flex">Корзина:</span>
+          <span className="flex">
+            {isFlat ? `${cartSizes.size} позиций` : "Корзина:"}
+          </span>
         </div>
         {!isFlat && (
           <button
@@ -72,7 +74,7 @@ export const CartSidebarView = ({
               animate="to"
               exit="from"
               variants={fadeInOut(0.25)}
-              className="w-full flex items-center justify-center pt-8"
+              className="w-full flex items-center justify-center pt-8 pb-3"
             >
               <img className="justify-self-start mr-auto pl-8" src={cartLogo} />
               <h4 className="text-base mr-auto font-bold pr-8">
