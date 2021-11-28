@@ -1,31 +1,16 @@
 import cn from "classnames";
-import AddToCartBtn from "./add-to-cart-btn";
-import Counter from "./counter";
+import { AddToCartBtn } from "../../../entities/dishes/components/Card/AddToCartBtn";
+import { Counter } from "../../../entities/dishes/components/Counter/Counter";
 import styles from "./styles.module.scss";
 
 interface Props {
   data: any;
-  variant?: "helium" | "neon" | "argon" | "oganesson" | "single" | "big";
-  counterVariant?:
-    | "helium"
-    | "neon"
-    | "argon"
-    | "oganesson"
-    | "single"
-    | "details";
   counterClass?: string;
   variation?: any;
   disabled?: boolean;
 }
 
-export const AddToCart = ({
-  variant = "neon",
-  counterVariant,
-  counterClass,
-  disabled,
-}: Props) => {
-  console.log("styles", styles);
-
+export const AddToCart = ({ counterClass, disabled }: Props) => {
   // const {
   //   addItemToCart,
   //   removeItemFromCart,
@@ -51,7 +36,6 @@ export const AddToCart = ({
   // return !isInCart(item?.id) ? (
   return true ? (
     <AddToCartBtn
-      variant={variant}
       className={cn(styles.button, "max-h-8")}
       // disabled={disabled || outOfStock}
       disabled={disabled || false}
@@ -63,9 +47,8 @@ export const AddToCart = ({
         // value={getItemFromCart(item.id).quantity}
         value={10}
         onDecrement={handleRemoveClick}
+        className={cn(styles.counter, "max-h-8", counterClass)}
         onIncrement={handleAddClick}
-        variant={counterVariant || variant}
-        className={counterClass}
         disabled={false}
       />
     </>

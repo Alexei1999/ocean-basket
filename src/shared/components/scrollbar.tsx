@@ -8,7 +8,7 @@ type ScrollbarProps = {
   className?: string;
 };
 
-const Scrollbar: React.FC<ScrollbarProps> = ({
+export const Scrollbar: React.FC<ScrollbarProps> = ({
   options,
   className,
   style,
@@ -28,5 +28,3 @@ const Scrollbar: React.FC<ScrollbarProps> = ({
     />
   );
 };
-
-export default Scrollbar;

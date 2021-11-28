@@ -1,8 +1,8 @@
-import breakfastLogo from "./breakfast.png";
-import dinnerLogo from "./dinner.png";
-import pizzaLogo from "./pizza.png";
-import saladLogo from "./salad.png";
-import spaghettiLogo from "./spaghetti.png";
+import breakfastImg from "./dish-images/breakfast.png";
+import dinnerImg from "./dish-images/dinner.png";
+import pizzaImg from "./dish-images/pizza.png";
+import saladImg from "./dish-images/salad.png";
+import spaghettiImg from "./dish-images/spaghetti.png";
 
 export const items = [
   {
@@ -18,8 +18,8 @@ export const items = [
     isAvailable: true,
     image: {
       id: "103",
-      original: breakfastLogo,
-      thumbnail: breakfastLogo,
+      original: breakfastImg,
+      thumbnail: breakfastImg,
     },
   },
   {
@@ -34,8 +34,8 @@ export const items = [
     isAvailable: true,
     image: {
       id: "104",
-      original: pizzaLogo,
-      thumbnail: pizzaLogo,
+      original: pizzaImg,
+      thumbnail: pizzaImg,
     },
   },
   {
@@ -50,8 +50,8 @@ export const items = [
     isAvailable: true,
     image: {
       id: "105",
-      original: spaghettiLogo,
-      thumbnail: spaghettiLogo,
+      original: spaghettiImg,
+      thumbnail: spaghettiImg,
     },
   },
   {
@@ -62,12 +62,12 @@ export const items = [
     deliveryFee: null,
     isApproximate: true,
     isDiscount: false,
-    price: 1500,
     isAvailable: true,
+    price: 1500,
     image: {
       id: "103",
-      original: dinnerLogo,
-      thumbnail: dinnerLogo,
+      original: dinnerImg,
+      thumbnail: dinnerImg,
     },
   },
   {
@@ -82,8 +82,8 @@ export const items = [
     isAvailable: true,
     image: {
       id: "103",
-      original: saladLogo,
-      thumbnail: saladLogo,
+      original: saladImg,
+      thumbnail: saladImg,
     },
   },
 ];

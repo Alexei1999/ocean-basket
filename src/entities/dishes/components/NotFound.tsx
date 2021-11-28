@@ -1,11 +1,11 @@
 import cn from "classnames";
-import noResult from "../../../../app/assets/no-result.svg";
+import noResult from "../../../app/assets/no-result.svg";
 interface Props {
   text?: string;
   className?: string;
 }
 
-const NotFound: React.FC<Props> = ({ className, text }) => {
+export const NotFound: React.FC<Props> = ({ className, text }) => {
   return (
     <div className={cn("flex flex-col items-center", className)}>
       <div className="w-full h-full flex items-center justify-center">
@@ -21,5 +21,3 @@ const NotFound: React.FC<Props> = ({ className, text }) => {
     </div>
   );
 };
-
-export default NotFound;

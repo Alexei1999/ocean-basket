@@ -1,22 +1,22 @@
 import { motion, AnimatePresence } from "framer-motion";
 import cn from "classnames";
-import { ExpandLessIcon } from "./expand-less-icon";
-import { ExpandMoreIcon } from "./expand-more-icon";
-import * as CategoryIcons from "../lib/category-icons";
+import { ExpandLessIcon } from "./ExpandLessIcon";
+import { ExpandMoreIcon } from "./ExpandMoreIcon";
+import * as CategoryIcons from "../../lib/category-icons";
 import { useEffect, useState } from "react";
-import { getIcon } from "../lib/get-icon";
-import { useLocation, useParams } from "react-router";
+import { getIcon } from "../../lib/get-icon";
+import { useParams } from "react-router";
 
 interface TreeMenuItemProps {
   item: any;
   className?: string;
   depth?: number;
 }
-const TreeMenuItem: React.FC<TreeMenuItemProps> = ({
+export function TreeMenuItem({
   className,
   item,
   depth = 0,
-}) => {
+}: TreeMenuItemProps) {
   // const router = useRouter();
   const { category } = useParams();
   const active = category;
@@ -28,14 +28,14 @@ const TreeMenuItem: React.FC<TreeMenuItemProps> = ({
     setOpen(isActive);
   }, [isActive]);
 
-  const { slug, name, children: items, icon } = item;
+  const { name, children: items, icon } = item;
   const [{ display }, setDrawerState] = useState({ display: true, view: "" });
 
   function toggleCollapse() {
     setOpen((prevValue) => !prevValue);
   }
 
-  const { pathname } = useLocation();
+  // const { pathname } = useLocation();
   function onClick() {
     // const navigate = () =>
     //   router.push(
@@ -76,7 +76,7 @@ const TreeMenuItem: React.FC<TreeMenuItemProps> = ({
       >
         <button
           className={cn(
-            "flex items-center w-full py-2 text-start outline-none font-semibold  focus:outline-none focus:ring-0 focus:text-accent transition-all ease-in-expo",
+            "flex items-center w-full py-2 text-start outline-none font-semibold  focus:outline-none focus:ring-0 hover:text-accent focus:text-accent transition-all ease-in-expo",
             isOpen ? "text-accent text-xl" : "text-heading",
             className
           )}
@@ -126,13 +126,13 @@ const TreeMenuItem: React.FC<TreeMenuItemProps> = ({
       </AnimatePresence>
     </>
   );
-};
+}
 interface TreeMenuProps {
   items: any[];
   className?: string;
 }
 
-function TreeMenu({ items, className }: TreeMenuProps) {
+export function TreeMenu({ items, className }: TreeMenuProps) {
   return (
     <ul className={cn("text-base", className)}>
       {items?.map((item: any) => (
@@ -141,5 +141,3 @@ function TreeMenu({ items, className }: TreeMenuProps) {
     </ul>
   );
 }
-
-export default TreeMenu;

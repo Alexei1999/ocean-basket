@@ -1,15 +1,16 @@
 import cn from "classnames";
-import { CartIcon } from "./cart";
-import { PlusIcon } from "./plus-icon";
 
 type Props = {
   className?: string;
-  variant?: "helium" | "neon" | "argon" | "oganesson" | "single" | "big";
   onClick(event: React.MouseEvent<HTMLButtonElement | MouseEvent>): void;
   disabled?: boolean;
 };
 
-const AddToCartBtn: React.FC<Props> = ({ className, onClick, disabled }) => {
+export const AddToCartBtn: React.FC<Props> = ({
+  className,
+  onClick,
+  disabled,
+}) => {
   return (
     <button
       onClick={onClick}
@@ -27,5 +28,3 @@ const AddToCartBtn: React.FC<Props> = ({ className, onClick, disabled }) => {
     </button>
   );
 };
-
-export default AddToCartBtn;

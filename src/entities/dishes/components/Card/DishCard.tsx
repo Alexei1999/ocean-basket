@@ -1,16 +1,16 @@
 import cn from "classnames";
-import { AddToCart } from "./add-to-cart";
-import productLogo from "../../../../app/assets/product.svg";
-import { GiftIcon } from "./GiftIcon";
+import { AddToCart } from "../../../../features/add-to-cart/components/AddToCart";
+import { GiftIcon } from "../../config/GiftIcon";
+import productIcon from "../../../../app/assets/product.svg";
 
 import styles from "./styles.module.scss";
 
-type HeliumProps = {
+type DishCardProps = {
   product: any;
   className?: string;
 };
 
-const Helium: React.FC<HeliumProps> = ({ product, className }) => {
+export const DishCard: React.FC<DishCardProps> = ({ product, className }) => {
   const {
     name,
     image,
@@ -40,7 +40,7 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
       >
         <span className="sr-only">{name}</span>
         <img
-          src={image?.original ?? productLogo}
+          src={image?.original ?? productIcon}
           alt={name}
           className="product-image h-full object-fill"
         />
@@ -55,14 +55,16 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
       <header className="p-3 md:py-6 md:p-5 relative">
         <h3
           onClick={handleProductQuickView}
-          className="text-md text-heading font-semibold truncate mb-2"
+          className="text-md text-heading font-bold truncate mb-2"
         >
           {name}
         </h3>
-        <p className="text-muted text-xs mb-3">{ingridients?.join(", ")}</p>
+        <p className="text-muted text-xs mb-3 font-medium">
+          {ingridients?.join(", ")}
+        </p>
         <h3
           onClick={handleProductQuickView}
-          className="text-md font-semibold truncate mb-2"
+          className="text-md font-bold truncate mb-2"
         >
           {deliveryFee ? `${deliveryFee}$ доставка` : "Бесплатная доставка"}
         </h3>
@@ -75,11 +77,11 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
                 {discount}
               </del>
             )}
-            <span className="text-heading text-sm md:text-lg font-semibold">
+            <span className="text-heading font-medium text-sm  md:text-lg">
               {isApproximate ? `от ${price} ₽` : `${price} ₽`}
             </span>
           </div>
-          {isAvailable && <AddToCart data={product} variant="big" />}
+          {isAvailable && <AddToCart data={product} />}
           {!isAvailable && (
             <div className="bg-red-500 rounded text-xs text-light px-2 py-1">
               Нет в наличии
@@ -91,5 +93,3 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
     </article>
   );
 };
-
-export default Helium;
