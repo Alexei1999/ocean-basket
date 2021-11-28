@@ -4,6 +4,7 @@ import styles from "./styles.module.scss";
 import logoMini from "@assets/logo-mini.svg";
 import logoFooter from "@assets/logo-footer.svg";
 
+//TODO: Split to the components
 export function Footer() {
   return (
     <footer className={cn(styles.container, "bg-local bg-black")}>
