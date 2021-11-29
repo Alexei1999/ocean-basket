@@ -21,6 +21,7 @@ export const $category = createStore<string>(categories[0].category)
 export const addProductToCart = createEvent<Product>();
 export const removeProductFromCart = createEvent<Product>();
 export const dropProductFromCart = createEvent<string | number>();
+export const dropCart = createEvent();
 
 const getCartFromStorage = () => {
   const localCart = window.localStorage.getItem("cart");
@@ -77,7 +78,8 @@ export const $cart = createStore<{
     const { [id]: _, ...rest } = state;
 
     return rest;
-  });
+  })
+  .on(dropCart, () => ({}));
 
 $cart.watch((state) => {
   window.localStorage.setItem("cart", JSON.stringify(state));

@@ -5,10 +5,8 @@ import { ManagedDrawer } from "@shared/components/drawer/managed-drawer";
 import { Footer } from "@widgets/footer/components/Footer";
 
 import styles from "./styles/global.module.scss";
-import { ScrollToTop } from "@shared/ScrollToTop";
 import { ReactNode, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
-import { RoutesConfig } from "@shared/lib/routes-config";
 
 const ScrollContainer = ({ children }: { children: ReactNode }) => {
   const ref = useRef<HTMLDivElement>(null);

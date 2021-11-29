@@ -24,7 +24,6 @@ export const ScheduleGrid: React.FC<ScheduleProps> = ({
   const [selectedSchedule, setSchedule] = useState<typeof schedules[number]>();
 
   useEffect(() => {
-    console.log("selectedSchedule", selectedSchedule);
     onValidateError([
       label,
       !selectedSchedule

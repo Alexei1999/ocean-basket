@@ -1,8 +1,11 @@
+import usePrice from "@entities/cart/lib/use-price";
+import { dropCart } from "@features/choose-dishes/ui";
+import Button from "@shared/button";
+import { RoutesConfig } from "@shared/lib/routes-config";
 import { useState } from "react";
+import { OrderDescription } from "../OrderDescription/OrderDescription";
 import { AddressGrid } from "./address-grid";
 import { CheckAvailabilityAction } from "./check-availability-action";
-import ContactGrid from "./contact-grid";
-import PaymentGrid from "./payment-grid";
 import { RightSideView } from "./RightSideView";
 import ScheduleGrid from "./schedule-grid";
 
@@ -86,6 +89,7 @@ const addresses = [
 
 export function CheckoutPage() {
   const [isOrdered, setIsOrdered] = useState(false);
+
   return !isOrdered ? (
     <div className="py-8 px-4 lg:py-10 lg:px-8 xl:py-14 xl:px-16 2xl:px-20 bg-gray-100">
       <div className="flex flex-col lg:flex-row items-center lg:items-start m-auto w-full max-w-5xl">
@@ -115,6 +119,7 @@ export function CheckoutPage() {
           <CheckAvailabilityAction
             onSubmit={() => {
               setIsOrdered(true);
+              dropCart();
             }}
           >
             Оформить заказ
@@ -126,10 +131,6 @@ export function CheckoutPage() {
       </div>
     </div>
   ) : (
-    <div className="py-8 px-4 lg:py-10 lg:px-8 xl:py-14 xl:px-24 2xl:px-64 bg-gray-100">
-      <div className="shadow-700 bg-light px-16 py-14">
-        <div>Заказ получен</div>
-      </div>
-    </div>
+    <OrderDescription />
   );
 }

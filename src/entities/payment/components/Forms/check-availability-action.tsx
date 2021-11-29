@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { formatOrderedProduct, ValidationError } from "./place-order-action";
+import { ValidationError } from "./place-order-action";
 import Button, { ButtonProps } from "@shared/button";
 import { $cartSizes } from "@features/choose-dishes/ui";
 import { useStore } from "effector-react";
@@ -19,7 +19,10 @@ export const CheckAvailabilityAction: React.FC<
   }, [errorList]);
 
   function handleVerifyCheckout() {
-    if (errorList.length) setError(errorList[0]);
+    if (errorList.length) {
+      setError(errorList[0]);
+      return;
+    }
     onSubmit?.();
   }
 
