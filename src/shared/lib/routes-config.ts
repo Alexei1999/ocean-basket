@@ -3,6 +3,7 @@ export enum RoutesConfig {
   Menu = "/menu",
   Order = "/order",
   Payment = "/payment",
+  Checkout = "/checkout",
   About = "/about",
   Promotions = "/promotions",
   Certificates = "/certificates",

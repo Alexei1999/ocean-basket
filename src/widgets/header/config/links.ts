@@ -10,6 +10,10 @@ export const headerLinks = [
     label: "Акции",
   },
   { href: RoutesConfig.Certificates, label: "Сертификаты" },
-  { href: RoutesConfig.Payment, label: "Оплата и доставка" },
+  {
+    href: RoutesConfig.Payment,
+    matchingRoutes: [RoutesConfig.Payment, RoutesConfig.Checkout],
+    label: "Оплата и доставка",
+  },
   { href: RoutesConfig.Contacts, label: "Контакты" },
 ];

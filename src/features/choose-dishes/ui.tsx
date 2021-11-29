@@ -22,9 +22,24 @@ export const addProductToCart = createEvent<Product>();
 export const removeProductFromCart = createEvent<Product>();
 export const dropProductFromCart = createEvent<string | number>();
 
+const getCartFromStorage = () => {
+  const localCart = window.localStorage.getItem("cart");
+
+  if (localCart) {
+    try {
+      return JSON.parse(localCart);
+    } catch (e) {
+      console.error(e);
+      return {};
+    }
+  }
+
+  return {};
+};
+
 export const $cart = createStore<{
   [id in string]: CartItemType;
-}>({})
+}>(getCartFromStorage())
   .on(addProductToCart, (state, product) => {
     const isProductInCart = Boolean(state[product.id]);
 
@@ -64,6 +79,10 @@ export const $cart = createStore<{
     return rest;
   });
 
+$cart.watch((state) => {
+  window.localStorage.setItem("cart", JSON.stringify(state));
+});
+
 export const $cartSizes = $cart.map((state) =>
   Object.values(state)
     .filter((value) => value !== undefined && value.count > 0)
@@ -84,6 +103,8 @@ export const $cartSizes = $cart.map((state) =>
       }
     )
 );
+
+export const $cartItems = $cart.map((state) => Object.values(state));
 
 const ChooseDishesGate = createGate();
 forward({

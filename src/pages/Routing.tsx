@@ -9,6 +9,7 @@ import { MenuPage } from "./MenuPage";
 import { OrderPage } from "./OrderPage";
 import { PromotionsPage } from "./PromotionsPage";
 import { RoutesConfig } from "../shared/lib/routes-config";
+import { CheckoutPage } from "@entities/payment/components/Forms/PaymentProccessing";
 
 export const Routing = () => {
   return (
@@ -16,6 +17,7 @@ export const Routing = () => {
       <Route path={RoutesConfig.Menu} element={<MenuPage />} />
       <Route path={RoutesConfig.Order} element={<OrderPage />} />
       <Route path={RoutesConfig.Payment} element={<PaymentPage />} />
+      <Route path={RoutesConfig.Checkout} element={<CheckoutPage />} />
       <Route path={RoutesConfig.About} element={<AboutPage />} />
       <Route path={RoutesConfig.Promotions} element={<PromotionsPage />} />
       <Route path={RoutesConfig.Certificates} element={<CertificatePage />} />

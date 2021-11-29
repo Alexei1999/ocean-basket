@@ -5,12 +5,36 @@ import CartItem from "./cart-item";
 import { fadeInOut } from "../lib/fade-in-out";
 import usePrice from "../lib/use-price";
 import { useStore } from "effector-react";
-import { $cart, $cartSizes } from "@features/choose-dishes/ui";
-import { setIsDrawerOpen } from "@shared/components/drawer/managed-drawer";
+import { $cart, $cartItems, $cartSizes } from "@features/choose-dishes/ui";
 import { useMemo } from "react";
-import { useNavigate } from "react-router";
 import classNames from "classnames";
 import { Scrollbar } from "@shared/components/Scrollbar";
+
+export const EmptyCartPanel = ({
+  noGutters = false,
+}: {
+  noGutters?: boolean;
+}) => {
+  return (
+    <motion.div
+      layout
+      initial="from"
+      animate="to"
+      exit="from"
+      variants={fadeInOut(0.25)}
+      className="w-full flex items-center justify-center"
+    >
+      <img
+        className={classNames(
+          "justify-self-start mr-auto",
+          !noGutters ? "pl-8" : "pl-4"
+        )}
+        src={cartLogo}
+      />
+      <h4 className="text-base mr-auto font-bold pr-8">Корзина пуста</h4>
+    </motion.div>
+  );
+};
 
 export const CartSidebarView = ({
   onSubmit,
@@ -21,10 +45,8 @@ export const CartSidebarView = ({
   onClose?: () => void;
   isFlat?: boolean;
 }) => {
-  const cart = useStore($cart);
   const cartSizes = useStore($cartSizes);
-
-  const cartItems = useMemo(() => Object.values(cart), [cart]);
+  const cartItems = useStore($cartItems);
 
   function handleCheckout() {
     if (!cartSizes.size) return;
@@ -75,19 +97,9 @@ export const CartSidebarView = ({
               ))}
             </Scrollbar>
           ) : (
-            <motion.div
-              layout
-              initial="from"
-              animate="to"
-              exit="from"
-              variants={fadeInOut(0.25)}
-              className="w-full flex items-center justify-center pt-8 pb-3"
-            >
-              <img className="justify-self-start mr-auto pl-8" src={cartLogo} />
-              <h4 className="text-base mr-auto font-bold pr-8">
-                Корзина пуста
-              </h4>
-            </motion.div>
+            <div className="pt-8 pb-3">
+              <EmptyCartPanel />
+            </div>
           )}
         </motion.div>
       </AnimateSharedLayout>
@@ -101,7 +113,7 @@ export const CartSidebarView = ({
       >
         <button
           className={classNames(
-            "flex justify-between w-full h-12 md:h-14 p-1 text-sm font-bold bg-blue-900 rounded-full shadow-700 transition-colors ",
+            "flex justify-between w-full h-12 md:h-14 p-1 text-sm font-bold bg-current rounded-full shadow-700 transition-colors ",
             cartSizes.size &&
               "focus:outline-none hover:bg-accent-hover focus:bg-accent-hover"
           )}

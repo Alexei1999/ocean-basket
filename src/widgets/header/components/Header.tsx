@@ -42,8 +42,10 @@ export function Header() {
         </div>
         <div className="flex">
           <ul className="hidden lg:flex items-center flex-shrink-0 space-s-10">
-            {headerLinks.map(({ href, label, icon: Icon }) => {
-              const isCurrent = href === pathname;
+            {headerLinks.map(({ href, matchingRoutes, label, icon: Icon }) => {
+              const isCurrent = Array.isArray(matchingRoutes)
+                ? matchingRoutes.some((route) => route === pathname)
+                : href === pathname;
               return (
                 <li key={`${href}${label}`}>
                   <Link

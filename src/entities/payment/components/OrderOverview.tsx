@@ -5,7 +5,7 @@ import { Scrollbar } from "@shared/components/Scrollbar";
 import classNames from "classnames";
 import style from "./styles.module.scss";
 
-export const OrderOverview = () => {
+export const OrderOverview = ({ onSubmit }: { onSubmit: () => void }) => {
   return (
     <div className="w-full bg-gray-100">
       <div className="flex flex-col md:flex-row max-w-7xl w-full mx-auto py-10">
@@ -16,12 +16,7 @@ export const OrderOverview = () => {
             style.shadow
           )}
         >
-            <CartSidebarView
-              isFlat
-              onSubmit={function (): void {
-                throw new Error("Function not implemented.");
-              }}
-            />
+          <CartSidebarView isFlat onSubmit={onSubmit} />
         </div>
 
         {/* sidebar */}

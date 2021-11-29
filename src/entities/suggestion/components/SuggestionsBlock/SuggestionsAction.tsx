@@ -15,7 +15,7 @@ export function SuggestionsAction({
   });
 
   return (
-    <div className="bg-light w-full flex py-9 md:px-4 lg:px-8 justify-between">
+    <div className="bg-light w-full flex py-9 md:px-4 lg:px-8 justify-between border-b border-border-200">
       <div>
         <div className="text-heading font-bold text-2xl mb-2">
           {item.ingridients.join(", ")}
