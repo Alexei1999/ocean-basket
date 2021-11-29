@@ -10,6 +10,7 @@ import { setIsDrawerOpen } from "@shared/components/drawer/managed-drawer";
 import { useMemo } from "react";
 import { useNavigate } from "react-router";
 import classNames from "classnames";
+import { Scrollbar } from "@shared/components/Scrollbar";
 
 export const CartSidebarView = ({
   onSubmit,
@@ -37,8 +38,8 @@ export const CartSidebarView = ({
     <section className="flex flex-col h-full relative">
       <header
         className={classNames(
-          !isFlat && "fixed",
-          "max-w-md w-full top-0 z-10 bg-light py-4 px-6 flex items-center justify-between border-b border-border-200 border-opacity-75"
+          !isFlat ? "fixed py-4" : "py-7",
+          "max-w-md w-full top-0 z-10 bg-light px-6 flex items-center justify-between border-b border-border-200 border-opacity-75"
         )}
       >
         <div className="flex text-heading text-lg font-bold">
@@ -64,9 +65,15 @@ export const CartSidebarView = ({
           className={classNames("flex-grow", !isFlat && "pt-16")}
         >
           {cartItems.length > 0 ? (
-            cartItems.map((item) => (
-              <CartItem isCounter={isFlat} item={item} key={item.product.id} />
-            ))
+            <Scrollbar className="w-full h-full">
+              {cartItems.map((item) => (
+                <CartItem
+                  isCounter={isFlat}
+                  item={item}
+                  key={item.product.id}
+                />
+              ))}
+            </Scrollbar>
           ) : (
             <motion.div
               layout

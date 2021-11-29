@@ -11,20 +11,20 @@ export function HeadlineSuggestion({ item }: { item: Product }) {
   });
 
   return (
-    <div className="md:px-4 lg:px-8 xl:px-32 bg-light py-6 w-full flex justify-between">
+    <div className="md:px-4 lg:px-8 xl:px-32 bg-light py-6 w-full flex justify-between border-b border-border-200  border-opacity-75">
       <div>
         <div className="text-heading font-bold text-2xl mb-2">{item.name}</div>
-        <div className="text-gray-300 text-sm">{item.description}</div>
+        <div className="text-gray-400 text-sm">{item.description}</div>
       </div>
       <div className="flex">
         <div>
-          <div className="text-gray-300 text-sm mb-2">Готовое предложение</div>
+          <div className="text-gray-400 text-sm mb-2">Готовое предложение</div>
           <div className="text-heading text-sm">
             {item.ingridients.join(", ")}
           </div>
         </div>
         <div className="ml-8">
-          <div className="text-gray-300 text-sm mb-2">Стоимость</div>
+          <div className="text-gray-400 text-sm mb-2">Стоимость</div>
           <div className="text-heading text-base">{totalPrice}</div>
         </div>
         {!item.deliveryFee ? (

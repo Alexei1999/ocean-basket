@@ -22,6 +22,7 @@ export const dishes: Product[] = [
     isAvailable: true,
     description: "Собреите свой завтрак",
     category: "starters",
+    categoryName: "Стартеры",
     image: {
       id: "103",
       original: breakfastImg,
@@ -38,6 +39,7 @@ export const dishes: Product[] = [
     price: 2500,
     isAvailable: true,
     category: "top-up",
+    categoryName: "Топ Ап",
     image: {
       id: "104",
       original: pizzaImg,
@@ -53,6 +55,7 @@ export const dishes: Product[] = [
     isApproximate: false,
     isDiscount: true,
     category: "top-up",
+    categoryName: "Топ Ап",
     price: 1500,
     isAvailable: true,
     image: {
@@ -72,6 +75,7 @@ export const dishes: Product[] = [
     isAvailable: true,
     price: 1500,
     category: "starters",
+    categoryName: "Стартерс",
     image: {
       id: "103",
       original: dinnerImg,
@@ -87,6 +91,7 @@ export const dishes: Product[] = [
     isApproximate: false,
     isDiscount: true,
     category: "salats",
+    categoryName: "Салаты",
     price: 1500,
     isAvailable: true,
     image: {
@@ -104,6 +109,7 @@ export const dishes: Product[] = [
     isApproximate: false,
     isDiscount: false,
     category: "soups",
+    categoryName: "Супы",
     price: 5000,
     isAvailable: true,
     image: {
@@ -121,6 +127,7 @@ export const dishes: Product[] = [
     isApproximate: false,
     isDiscount: false,
     category: "combos",
+    categoryName: "Комбо",
     setItems: ["Яйца бенедикт", "летний салат", "американо"],
     price: 5000,
     isAvailable: true,

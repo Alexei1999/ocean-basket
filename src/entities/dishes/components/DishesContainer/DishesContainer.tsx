@@ -21,6 +21,7 @@ export declare type Product = {
   name?: string;
   slug?: string;
   category: string;
+  categoryName: string;
   ingridients: string[];
   deliveryFee?: number;
   discount?: number;
