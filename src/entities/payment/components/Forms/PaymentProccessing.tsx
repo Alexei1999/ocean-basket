@@ -1,3 +1,4 @@
+import { onScrollPage } from "@app/";
 import usePrice from "@entities/cart/lib/use-price";
 import { dropCart } from "@features/choose-dishes/ui";
 import Button from "@shared/button";
@@ -119,6 +120,7 @@ export function CheckoutPage() {
           <CheckAvailabilityAction
             onSubmit={() => {
               setIsOrdered(true);
+              onScrollPage();
               dropCart();
             }}
           >

@@ -7,15 +7,21 @@ import { Footer } from "@widgets/footer/components/Footer";
 import styles from "./styles/global.module.scss";
 import { ReactNode, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
+import { createEvent, createStore } from "effector";
+import { useStore } from "effector-react";
+
+export const onScrollPage = createEvent();
+const $updateDependency = createStore<{}>({}).on(onScrollPage, () => ({}));
 
 const ScrollContainer = ({ children }: { children: ReactNode }) => {
+  const updateDependency = useStore($updateDependency);
   const ref = useRef<HTMLDivElement>(null);
 
   const { pathname } = useLocation();
 
   useEffect(() => {
     ref.current?.scrollTo(0, 0);
-  }, [pathname]);
+  }, [pathname, updateDependency]);
 
   return (
     <div ref={ref} className="overflow-auto">
