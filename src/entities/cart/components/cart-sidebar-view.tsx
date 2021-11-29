@@ -5,8 +5,7 @@ import CartItem from "./cart-item";
 import { fadeInOut } from "../lib/fade-in-out";
 import usePrice from "../lib/use-price";
 import { useStore } from "effector-react";
-import { $cart, $cartItems, $cartSizes } from "@features/choose-dishes/ui";
-import { useMemo } from "react";
+import { $cartItems, $cartSizes } from "@features/choose-dishes/ui";
 import classNames from "classnames";
 import { Scrollbar } from "@shared/components/Scrollbar";
 

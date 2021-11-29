@@ -1,9 +1,9 @@
 import usePrice from "@entities/cart/lib/use-price";
-import { dishes } from "@features/choose-dishes/config/dishes";
-import { $cartSizes } from "@features/choose-dishes/ui";
+import { $cartSizes, dropCart } from "@features/choose-dishes/ui";
 import { RoutesConfig } from "@shared/lib/routes-config";
 import classNames from "classnames";
 import { useStore } from "effector-react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import styles from "./styles.module.scss";
@@ -40,7 +40,17 @@ const Details = ({
 export function OrderDescription() {
   const navigate = useNavigate();
 
-  const cartSizes = useStore($cartSizes);
+  const _cartSizes = useStore($cartSizes);
+
+  const [cartSizes, setCartSizes] = useState<typeof _cartSizes>({
+    size: 0,
+    totalAmount: 0,
+  });
+
+  useEffect(() => {
+    setCartSizes(_cartSizes);
+    dropCart();
+  }, []);
 
   const { price } = usePrice({
     amount: cartSizes.totalAmount ?? 0,
@@ -55,7 +65,7 @@ export function OrderDescription() {
         <div className="flex justify-between">
           <div>
             <div className="font-bold text-2xl">Заказ получен</div>
-            <span className="mt-1">Спасибо. Ваш заказ получен</span>
+            <div className="mt-1">Спасибо. Ваш заказ получен</div>
           </div>
           <div className="-mt-8 -mr-9">
             <button

@@ -1,8 +1,3 @@
-import { useEffect, useState } from "react";
-
-import isEmpty from "lodash/isEmpty";
-import Button from "@shared/button";
-
 interface Props {
   message: string | undefined;
 }

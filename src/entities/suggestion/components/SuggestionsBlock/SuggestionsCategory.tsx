@@ -1,5 +1,3 @@
-import usePrice from "@entities/cart/lib/use-price";
-import { Product } from "@entities/dishes/components/DishesContainer/DishesContainer";
 import classNames from "classnames";
 import { Eclipse } from "./Eclipse";
 

@@ -1,7 +1,6 @@
 import { CartSidebarView } from "@entities/cart/components/cart-sidebar-view";
 import { SuggestionsBlock } from "@entities/suggestion/components/SuggestionsBlock/SuggestionsBlock";
 import { dishes } from "@features/choose-dishes/config/dishes";
-import { Scrollbar } from "@shared/components/Scrollbar";
 import classNames from "classnames";
 import style from "./styles.module.scss";
 

@@ -1,6 +1,4 @@
-import { CartIcon } from "@entities/cart/config/CartIcon";
 import { PlusIcon } from "@entities/dishes/components/Counter/PlusIcon";
-import cn from "classnames";
 
 type Props = {
   onClick(event: React.MouseEvent<HTMLButtonElement | MouseEvent>): void;

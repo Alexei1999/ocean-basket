@@ -1,7 +1,4 @@
 import { onScrollPage } from "@app/";
-import usePrice from "@entities/cart/lib/use-price";
-import { dropCart } from "@features/choose-dishes/ui";
-import Button from "@shared/button";
 import { RoutesConfig } from "@shared/lib/routes-config";
 import { useState } from "react";
 import { OrderDescription } from "../OrderDescription/OrderDescription";
@@ -121,7 +118,6 @@ export function CheckoutPage() {
             onSubmit={() => {
               setIsOrdered(true);
               onScrollPage();
-              dropCart();
             }}
           >
             Оформить заказ

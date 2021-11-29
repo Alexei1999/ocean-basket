@@ -1,8 +1,6 @@
 import ItemCard from "./item-card";
 import { ItemInfoRow } from "./item-info-row";
-import { Key } from "react";
 import usePrice from "@entities/cart/lib/use-price";
-import { CheckAvailabilityAction } from "./check-availability-action";
 import { EmptyCartPanel } from "@entities/cart/components/cart-sidebar-view";
 import { useStore } from "effector-react";
 import { $cartItems, $cartSizes } from "@features/choose-dishes/ui";

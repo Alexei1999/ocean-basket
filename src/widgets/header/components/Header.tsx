@@ -25,8 +25,6 @@ export function Header() {
     [navigate]
   );
 
-  const isCartDisabled = pathname === RoutesConfig.Payment;
-
   return (
     <header
       className={"flex-shrink-0 site-header-with-search h-14 md:h-16 lg:h-22"}
