@@ -1,0 +1,28 @@
+.promotion {
+  z-index: -1;
+  &WrapperBackground {
+    background: rgba(17, 49, 95, 0.8);
+  }
+}
+
+.card {
+  max-width: 980px;
+  max-height: 336px;
+}
+
+.button {
+  max-width: 150px;
+}
+
+.email {
+  &Img {
+    flex-basis: 35%;
+  }
+  &Input {
+    flex-basis: 65%;
+  }
+}
+
+.instagram {
+  max-width: 300px;
+}

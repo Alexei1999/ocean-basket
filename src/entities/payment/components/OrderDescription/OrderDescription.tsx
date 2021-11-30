@@ -106,7 +106,7 @@ export function OrderDescription() {
 
         <Details
           className="max-w-xl mt-16"
-          label="Детали заказа"
+          label="Общая сумма"
           items={[
             ["Итого", total],
             ["Метод оплаты", "Картой онлайн"],

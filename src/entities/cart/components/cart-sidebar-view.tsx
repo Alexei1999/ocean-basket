@@ -112,9 +112,8 @@ export const CartSidebarView = ({
       >
         <button
           className={classNames(
-            "flex justify-between w-full h-12 md:h-14 p-1 text-sm font-bold bg-current rounded-full shadow-700 transition-colors ",
-            cartSizes.size &&
-              "focus:outline-none hover:bg-accent-hover focus:bg-accent-hover"
+            "flex justify-between w-full h-12 md:h-14 p-1 text-sm font-bold bg-current rounded-full shadow-700 transition-colors focus:outline-none hover:bg-accent-hover focus:bg-accent-hover",
+            !cartSizes.size && "cursor-not-allowed"
           )}
           onClick={handleCheckout}
         >
