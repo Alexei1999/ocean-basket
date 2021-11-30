@@ -88,7 +88,7 @@ export const CartHeaderIcon: FC<CartProps> = ({
       {size && (
         <span
           className={cn(
-            "absollute text-white font-normal text-sm",
+            "absollute text-white font-normal text-sm pointer-events-none",
             styles.cartIconText,
             styles[`cartIconText-${size}`]
           )}

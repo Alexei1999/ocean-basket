@@ -11,7 +11,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 const classes = {
   root: "inline-flex items-center justify-center flex-shrink-0 font-semibold leading-none rounded outline-none transition duration-300 ease-in-out focus:outline-none focus:shadow focus:ring-1 focus:ring-accent-700",
-  normal: "text-heading bg-current border border-transparent hover:bg-accent",
+  normal: "bg-current border border-transparent ",
   custom: "border border-transparent",
   outline:
     "border border-border-400 bg-transparent text-body hover:text-light hover:bg-accent hover:border-accent",
@@ -28,7 +28,7 @@ const classes = {
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref) => {
     const {
-      className,
+      className = "text-heading hover:bg-accent",
       variant = "normal",
       size = "medium",
       children,

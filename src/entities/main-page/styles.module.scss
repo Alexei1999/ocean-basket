@@ -1,0 +1,38 @@
+.container {
+  min-height: calc(100vh - 84px);
+  &Left {
+    &Wrapper {
+      padding-right: 10%;
+      padding-top: 10%;
+      padding-left: 10%;
+    }
+    width: 40%;
+    box-sizing: content-box;
+  }
+}
+
+.image {
+  top: 0;
+  height: 100%;
+  z-index: -1;
+  &Left {
+    left: 0;
+    width: 40%;
+  }
+  &Right {
+    left: 40%;
+    width: 60%;
+  }
+}
+
+.promotion {
+  z-index: -1;
+  &WrapperBackground {
+    background: rgba(17, 49, 95, 0.8);
+  }
+}
+
+.card {
+  width: 980px;
+  height: 336px;
+}

@@ -30,7 +30,7 @@ export const CheckAvailabilityAction: React.FC<
     <>
       <Button
         // loading={loading}
-        className="w-full mt-5"
+        className="text-heading hover:bg-accent w-full mt-5"
         onClick={handleVerifyCheckout}
         disabled={!size}
         {...props}

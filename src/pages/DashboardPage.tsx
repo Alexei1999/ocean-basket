@@ -1,7 +1,10 @@
+import { MailSection, MainPageCover } from "@entities/main-page/MainPageCover";
+
 export function DashboardPage() {
   return (
     <div>
-      <h1>Dashboard Page</h1>
+      <MainPageCover />
+      <MailSection />
     </div>
   );
 }
