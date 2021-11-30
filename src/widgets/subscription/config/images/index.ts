@@ -11,5 +11,5 @@ export const instagramImages = [
   { img: instagram3, alt: "instagram-3", href: "#" },
   { img: instagram4, alt: "instagram-4", href: "#" },
   { img: instagram5, alt: "instagram-5", href: "#" },
-  { img: instagram6, alt: "instagram-6", href: "#" },
+  // { img: instagram6, alt: "instagram-6", href: "#" },
 ];

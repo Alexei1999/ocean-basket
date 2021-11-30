@@ -45,14 +45,14 @@
 }
 
 .swiper-button-prev {
-  background: no-repeat center url(../config/prev-icon.svg);
+  background: no-repeat center url(../../config/prev-icon.svg);
   left: -15px;
   @include arrow;
   background-position: right 55% bottom 50%;
 }
 
 .swiper-button-next {
-  background: no-repeat center url(../config/next-icon.svg);
+  background: no-repeat center url(../../config/next-icon.svg);
   right: -15px;
   @include arrow;
   background-position: right 45% bottom 50%;

@@ -6,8 +6,8 @@ import "./buttons.scss";
 import styles from "./styles.module.scss";
 
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
-import { sliders } from "../config/sliders";
 import cn from "classnames";
+import { sliders } from "@entities/promotions/config/sliders";
 
 const offerSliderBreakpoints = {
   320: {

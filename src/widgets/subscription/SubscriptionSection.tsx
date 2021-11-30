@@ -78,12 +78,14 @@ function InstagramHeader() {
 
 function InstagramGalery() {
   return (
-    <div className="flex flex-wrap justify-center md:px-4 lg:px-8 xl:px-32 gap-5">
-      {instagramImages.map(({ img, alt, href }, idx) => (
-        <a href={href} key={idx}>
-          <img src={img} alt={alt} />
-        </a>
-      ))}
+    <div className="flex justify-center md:px-4 lg:px-8 xl:px-32">
+      <div className="grid grid-cols-3 gap-5">
+        {instagramImages.map(({ img, alt, href }, idx) => (
+          <a href={href} key={idx}>
+            <img width="376px" height="376px" src={img} alt={alt} />
+          </a>
+        ))}
+      </div>
     </div>
   );
 }

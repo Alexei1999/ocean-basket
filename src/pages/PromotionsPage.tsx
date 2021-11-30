@@ -1,7 +1,11 @@
+import { PromotionsSection } from "@entities/promotions/components/PromotionsSection/PromotionsSection";
+import { SubscriptionSection } from "@widgets/subscription/SubscriptionSection";
+
 export function PromotionsPage() {
   return (
     <div>
-      <h1>Promotions Page</h1>
+      <PromotionsSection />
+      <SubscriptionSection />
     </div>
   );
 }
