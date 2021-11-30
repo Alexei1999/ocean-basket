@@ -1,7 +1,6 @@
 @import "~@app/styles/variables";
 
 .container {
-  // height: $footer-height;
-  height: 600px;
+  height: $footer-height;
   background: url("~@assets/footer.png");
 }

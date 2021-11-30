@@ -69,7 +69,9 @@ function InstagramHeader() {
     <div className="flex flex-col justify-center items-center">
       <img src={instagram} className={styles.instagram} />
       <span className="text-accent pt-2">Все последние новости о нас там</span>
-      <span className="text-accent font-bold text-2xl pt-8">@ocenbasket</span>
+      <a className="text-accent font-bold text-2xl pt-8" href="#">
+        @ocenbasket
+      </a>
     </div>
   );
 }

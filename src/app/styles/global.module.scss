@@ -1,6 +1,5 @@
 @import "~@app/styles/variables";
 
 .content {
-  // min-height: calc(100vh - $footer-height - $header-height);
-  min-height: calc(100vh - 600px - 84px);
+  min-height: calc(100vh - #{$footer-height} - #{$header-height});
 }
