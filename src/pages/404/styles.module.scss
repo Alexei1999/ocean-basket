@@ -1,0 +1,9 @@
+@import "~@app/styles/variables";
+
+.container {
+  max-height: calc(100vh - #{$header-height});
+}
+
+.image {
+  width: auto;
+}

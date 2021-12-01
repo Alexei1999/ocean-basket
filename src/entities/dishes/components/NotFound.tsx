@@ -8,7 +8,7 @@ interface Props {
 export const NotFound: React.FC<Props> = ({ className, text }) => {
   return (
     <div className={cn("flex flex-col items-center", className)}>
-      <div className="w-full h-full flex items-center justify-center">
+      <div className="h-full flex items-center justify-center">
         <img
           src={noResult}
           alt={text || "Нет данных для отображения"}
