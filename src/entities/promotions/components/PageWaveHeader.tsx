@@ -11,7 +11,7 @@ export function PageWaveHeader({
   return (
     <div className={classNames(className, "flex")}>
       <WavesIcon />
-      <img className="pl-3" src={src} />
+      {src && <img className="pl-4" src={src} />}
     </div>
   );
 }

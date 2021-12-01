@@ -1,7 +1,6 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import { NotFoundPage } from "./404";
 import { AboutPage } from "./AboutPage";
-import { CertificatePage } from "./CertificatePage";
 import { PaymentPage } from "./PaymentPage";
 import { ContactsPage } from "./ContactsPage/ContactsPage";
 import { DashboardPage } from "./DashboardPage";
@@ -10,6 +9,7 @@ import { OrderPage } from "./OrderPage";
 import { PromotionsPage } from "./PromotionsPage";
 import { RoutesConfig } from "../shared/lib/routes-config";
 import { CheckoutPage } from "@entities/payment/components/Forms/PaymentProccessing";
+import { CertificatePage } from "./CertificatesPage/CertificatePage";
 
 export const Routing = () => {
   return (
