@@ -1,9 +1,9 @@
 import { promotions } from "@entities/promotions/config/promotions";
-import { WavesIcon } from "./WavesIcon";
 import promotionsHeader from "./promotions-header.svg";
 import { useCallback, useState } from "react";
 import { PromotionModal } from "./PromotionModal";
 import { setIsDrawerOpen } from "@shared/components/drawer/managed-drawer";
+import { PageWaveHeader } from "../PageWaveHeader";
 
 export function PromotionsSection() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,10 +25,7 @@ export function PromotionsSection() {
           setIsDrawerOpen(true);
         }}
       />
-      <div className="flex">
-        <WavesIcon />
-        <img className="pl-3" src={promotionsHeader} />
-      </div>
+      <PageWaveHeader src={promotionsHeader} />
       <div className="grid grid-cols-2 gap-2 md:gap-4 lg:gap-6 lg:px-4 xl:px-32 pt-12">
         {promotions.map((promotion, index) => (
           <img

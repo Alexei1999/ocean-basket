@@ -3,7 +3,7 @@ import { NotFoundPage } from "./404";
 import { AboutPage } from "./AboutPage";
 import { CertificatePage } from "./CertificatePage";
 import { PaymentPage } from "./PaymentPage";
-import { ContactsPage } from "./ContactsPage";
+import { ContactsPage } from "./ContactsPage/ContactsPage";
 import { DashboardPage } from "./DashboardPage";
 import { MenuPage } from "./MenuPage";
 import { OrderPage } from "./OrderPage";
