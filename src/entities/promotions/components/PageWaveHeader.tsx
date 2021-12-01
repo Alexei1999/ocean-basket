@@ -5,7 +5,7 @@ export function PageWaveHeader({
   src,
   className,
 }: {
-  src: string;
+  src?: string;
   className?: string;
 }) {
   return (

@@ -10,6 +10,7 @@ import { PromotionsPage } from "./PromotionsPage/PromotionsPage";
 import { RoutesConfig } from "../shared/lib/routes-config";
 import { CheckoutPage } from "@entities/payment/components/Forms/PaymentProccessing";
 import { CertificatePage } from "./CertificatesPage/CertificatePage";
+import { DetailsPage } from "./DetailsPage/DeatilsPage";
 
 export const Routing = () => {
   return (
@@ -22,6 +23,7 @@ export const Routing = () => {
       <Route path={RoutesConfig.Promotions} element={<PromotionsPage />} />
       <Route path={RoutesConfig.Certificates} element={<CertificatePage />} />
       <Route path={RoutesConfig.Contacts} element={<ContactsPage />} />
+      <Route path={RoutesConfig.Details} element={<DetailsPage />} />
       <Route path="/" element={<DashboardPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
