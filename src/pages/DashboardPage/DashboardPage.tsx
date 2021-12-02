@@ -1,4 +1,4 @@
-import { MainPageCover } from "@entities/main-page/components/MainPageCover/MainPageCover";
+import { MainPageCover } from "@pages/DashboardPage/MainPageCover/MainPageCover";
 import { SubscriptionSection } from "@widgets/subscription/SubscriptionSection";
 
 export function DashboardPage() {

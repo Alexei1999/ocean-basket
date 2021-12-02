@@ -53,13 +53,13 @@ const numbers = [
       street_address: "+7 911 999-99-99",
     },
   },
-  {
-    id: 1,
-    title: "Дополнительный",
-    address: {
-      street_address: "+7 911 999-99-99",
-    },
-  },
+  // {
+  //   id: 1,
+  //   title: "Дополнительный",
+  //   address: {
+  //     street_address: "+7 911 999-99-99",
+  //   },
+  // },
 ];
 
 const addresses = [
@@ -73,16 +73,16 @@ const addresses = [
       country: "Россия",
     },
   },
-  {
-    title: "Работа",
-    address: {
-      street_address: "Москва, Ленина, д.1",
-      state: "Москва",
-      city: "Москва",
-      zip: "1234",
-      country: "Россия",
-    },
-  },
+  // {
+  //   title: "Работа",
+  //   address: {
+  //     street_address: "Москва, Ленина, д.1",
+  //     state: "Москва",
+  //     city: "Москва",
+  //     zip: "1234",
+  //     country: "Россия",
+  //   },
+  // },
 ];
 
 export function CheckoutPage() {

@@ -3,7 +3,6 @@ import instagram2 from "./instagram-2.png";
 import instagram3 from "./instagram-3.png";
 import instagram4 from "./instagram-4.png";
 import instagram5 from "./instagram-5.png";
-import instagram6 from "./instagram-6.png";
 
 export const instagramImages = [
   { img: instagram1, alt: "instagram-1", href: "#" },

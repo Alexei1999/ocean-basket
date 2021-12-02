@@ -34,9 +34,7 @@ const AddressCard: React.FC<AddressProps> = ({ checked, address, userId }) => {
   function onEdit() {
     openModal("ADD_OR_UPDATE_ADDRESS", { customerId: userId, address });
   }
-  function onDelete() {
-    openModal("DELETE_ADDRESS", { customerId: userId, addressId: address.id });
-  }
+
   return (
     <div
       className={classNames(
@@ -61,15 +59,6 @@ const AddressCard: React.FC<AddressProps> = ({ checked, address, userId }) => {
           >
             <span className="sr-only">{"text-edit"}</span>
             <PencilIcon className="w-3 h-3" />
-          </button>
-        )}
-        {onDelete && (
-          <button
-            className="flex items-center justify-center w-5 h-5 rounded-full bg-red-600 text-light"
-            onClick={onDelete}
-          >
-            <span className="sr-only">{"text-delete"}</span>
-            <CloseIcon className="w-3 h-3" />
           </button>
         )}
       </div>

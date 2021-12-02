@@ -13,7 +13,7 @@ export function Footer() {
           <div className="flex flex-col">
             <div className="flex flex-col items-center">
               <img width="65px" height="65px" src={logoMini} />
-              <img className="pt-4" src={logoFooter} />
+              <img className="pt-4 w-48" src={logoFooter} />
             </div>
 
             <div className="flex flex-col mt-16">

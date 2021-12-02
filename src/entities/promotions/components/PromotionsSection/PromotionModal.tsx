@@ -1,9 +1,8 @@
 import { CloseIcon } from "@entities/cart/components/icons/close-icon";
 import Modal from "@entities/payment/components/Forms/modal";
-import { Promotion, promotions } from "@entities/promotions/config/promotions";
+import { Promotion } from "@entities/promotions/config/promotions";
 import { addProductToCart } from "@features/choose-dishes/ui";
 import Button from "@shared/button";
-import { setIsDrawerOpen } from "@shared/components/drawer/managed-drawer";
 
 export function PromotionModal({
   isOpen,

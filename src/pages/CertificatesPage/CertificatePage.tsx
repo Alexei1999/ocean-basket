@@ -12,7 +12,7 @@ export function CertificatePage() {
   return (
     <>
       <PageWaveHeader src={certificates} className="pt-12 pb-16" />
-      <div className="md:px-4 lg:px-8 xl:px-32 bg-light">
+      <div className="md:px-4 lg:px-8 xl:px-32 bg-light text-heading">
         <div className="flex flex-col lg:flex-row lg:justify-between gap-8 lg:gap-20">
           <div className={classNames(styles.block, "w-full flex-grow")}>
             <img
@@ -20,7 +20,12 @@ export function CertificatePage() {
               className="w-full lg:w-auto ml-auto mr-auto lg:mr-0"
             />
           </div>
-          <div className={classNames(styles.block, "flex-grow pt-9 pb-10")}>
+          <div
+            className={classNames(
+              styles.block,
+              "flex-grow xl:pt-9 pb-10 xl:pr-6"
+            )}
+          >
             <p>
               Подарочный сертификат от Ocean Basket — универсальный подарок для
               всех любителей морепродуктов.
@@ -31,9 +36,15 @@ export function CertificatePage() {
               номинала:
             </p>
             <ul className="pt-5 pb-6">
-              <li> — на 1000р. (одна тысяча рублей)</li>
-              <li>— на 3000р. (три тысячи рублей)</li>
-              <li>— на 5000р. (пять тысяч рублей)</li>
+              <li className="text-base font-bold">
+                — на 1000р. (одна тысяча рублей)
+              </li>
+              <li className="text-base font-bold">
+                — на 3000р. (три тысячи рублей)
+              </li>
+              <li className="text-base font-bold">
+                — на 5000р. (пять тысяч рублей)
+              </li>
             </ul>
             <p>
               Обналичить сертификат можно только в московских ресторанах Ocean
