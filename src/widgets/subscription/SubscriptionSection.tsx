@@ -9,12 +9,18 @@ import Button from "@shared/button";
 import Input from "@entities/payment/components/Forms/forms/input";
 import { instagramImages } from "./config/images/index";
 
+import { ReactComponent as WhiteWaves } from "@shared/icons/white-waves.svg";
+import blueWaves from "@shared/icons/blue-waves.svg";
+import hook from "./hook.svg";
+import wave from "./wave.svg";
+
 function EmailSection() {
   return (
-    <div>
+    <div className="relative">
+      <WhiteWaves className="absolute -mt-10 z-10" />
       <div
         className={classNames(
-          "flex max-h-80 overflow-hidden",
+          "flex max-h-80 overflow-hidden relative",
           styles.promotionWrapperBackground
         )}
       >
@@ -27,12 +33,14 @@ function EmailSection() {
       <div className="flex justify-center drop-shadow-md lg:-mt-56">
         <div
           className={classNames(
-            "bg-light flex justify-between rounded-3xl overflow-hidden",
+            "bg-light flex justify-between rounded-3xl",
             styles.card
           )}
         >
-          <div className="flex flex-col text-3xl font-bold px-12 py-12 justify-between">
-            <div className="pt-3">
+          <div className="flex flex-col text-3xl font-bold px-12 py-12 justify-between relative">
+            <img src={hook} className="absolute -bottom-32" />
+
+            <div className="pt-3 text-body">
               Подпишись на наши обновления и получи подарок на первый заказ
             </div>
             <div className={"flex text-lg"}>
@@ -72,6 +80,7 @@ function InstagramHeader() {
       <a className="text-accent font-bold text-2xl pt-8" href="#">
         @ocenbasket
       </a>
+      <img src={wave} className="pt-4" />
     </div>
   );
 }
@@ -94,10 +103,11 @@ export function SubscriptionSection() {
   return (
     <div>
       <EmailSection />
-      <div className="flex justify-center pt-36">
+      <div className="flex justify-center pt-36 relative">
+        <img src={blueWaves} className="absolute right-0 top-28" />
         <InstagramHeader />
       </div>
-      <div className="pt-14 pb-28">
+      <div className="pt-9 pb-28">
         <InstagramGalery />
       </div>
     </div>

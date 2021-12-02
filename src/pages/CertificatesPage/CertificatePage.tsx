@@ -12,7 +12,7 @@ export function CertificatePage() {
   return (
     <>
       <PageWaveHeader src={certificates} className="pt-12 pb-16" />
-      <div className="md:px-4 lg:px-8 xl:px-32 bg-light text-heading">
+      <div className="md:px-4 lg:px-8 xl:px-32 bg-light text-body">
         <div className="flex flex-col lg:flex-row lg:justify-between gap-8 lg:gap-20">
           <div className={classNames(styles.block, "w-full flex-grow")}>
             <img
@@ -62,7 +62,7 @@ export function CertificatePage() {
           </div>
         </div>
       </div>
-      <div className="flex justify-center pt-10 pb-32">
+      <div className="flex justify-center pt-10 pb-32 text-body">
         <img src={important} />
         <div className="pl-16 max-w-xl">
           <p>

@@ -3,60 +3,76 @@ import styles from "./styles.module.scss";
 
 import logoMini from "@assets/logo-mini.svg";
 import logoFooter from "@assets/logo-footer.svg";
+import { kzContats } from "@pages/ContactsPage/ContactsPage";
+import classNames from "classnames";
+
+function FooterContactsBlock({
+  country,
+  contacts,
+  email,
+  className,
+}: {
+  country: string;
+  contacts: ([string, string] | string)[];
+  email: string;
+  className?: string;
+}) {
+  return (
+    <div className={classNames(className)}>
+      <div className="text-base font-medium">{country}</div>
+
+      <div className="flex flex-col font-light text-sm pt-4">
+        {contacts.map((item, idx) =>
+          Array.isArray(item) ? (
+            <div className={classNames(idx && "pt-4", "flex justify-between")}>
+              <span className="max-w-xs w-8/12">{item[0]}</span>
+              <span className="w-4/12">{item[1]}</span>
+            </div>
+          ) : (
+            <div className="pt-4 text-base font-medium">{item}</div>
+          )
+        )}
+        <div className="flex justify-end PT-4">
+          <span className="w-4/12 text-base">{email}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export const ruContats = [
+  ["ул. Мясницкая, д. 11, 1 этаж, м. Лубянка", "+7 (977) 456 2221"],
+] as (string | [string, string])[];
 
 //TODO: Split to the components
 export function Footer() {
   return (
     <footer className={cn(styles.container, "bg-local bg-gray-600")}>
-      <div className="flex h-full items-center md:px-4 lg:px-8 xl:px-32 flex-col text-white text-sm">
-        <div className="flex justify-between lg:pr-16 xl:pr-36 flex-grow w-full pt-16">
-          <div className="flex flex-col">
-            <div className="flex flex-col items-center">
-              <img width="65px" height="65px" src={logoMini} />
-              <img className="pt-4 w-48" src={logoFooter} />
-            </div>
-
-            <div className="flex flex-col mt-16">
-              <span className="text-base font-bold mb-4">Контакты</span>
-              <span className="mb-1">+7 999 999-99-99</span>
-              <span>mail@gmail.com</span>
-            </div>
-
-            <div className="flex flex-col mt-16">
-              <span>Юр информация</span>
-            </div>
-          </div>
-          <div className="flex flex-col">
+      <div className="flex h-full items-center pt-14 md:px-4 lg:px-8 xl:px-32 flex-col text-white text-sm">
+        <div className="flex flex-col items-center">
+          <img width="65px" height="65px" src={logoMini} />
+          <img className="pt-4 w-48" src={logoFooter} />
+        </div>
+        <div className="flex justify-between flex-grow w-full pt-16 pb-10">
+          <div className="flex flex-col w-1/2">
             <span className="text-base font-bold uppercase">
               Наши рестораны
             </span>
 
-            <div className="flex flex-col font-light mt-10">
-              <span className="text-base font-bold">Москва</span>
-              {["Адрес #1", "Адрес #2"].map((item, index) => (
-                <a
-                  key={`link-${index}`}
-                  href="#"
-                  className="mt-4 hover:underline"
-                >
-                  {item}
-                </a>
-              ))}
-            </div>
-
-            <div className="flex flex-col mt-10 font-light">
-              <span className="text-base font-bold">Казахстан</span>
-              {["Адрес #1", "Адрес #2", "Адрес #3"].map((item, index) => (
-                <a
-                  key={`link-${index}`}
-                  href="#"
-                  className="mt-4 hover:underline"
-                >
-                  {item}
-                </a>
-              ))}
-            </div>
+            <FooterContactsBlock
+              className="flex-grow pt-12"
+              email="marketing@oceanbasket.ru"
+              country={"Москва"}
+              contacts={ruContats}
+            />
+            <FooterContactsBlock
+              className="flex-grow"
+              email="marketing@oceanbasket.kz"
+              country={"Казахстан"}
+              contacts={kzContats}
+            />
           </div>
+
           <div className="flex flex-col font-medium">
             <span className="text-base font-bold uppercase">Блюда</span>
 
@@ -86,19 +102,31 @@ export function Footer() {
                 )}
               </div>
             </div>
+
+            <div className="pt-16 flex flex-col text-sm font-normal">
+              <a href="#">Политика конфиденциальности</a>
+              <a href="#" className="pt-3">
+                Доставка и оплата
+              </a>
+            </div>
           </div>
           <div className="flex flex-col">
             <span className="text-base font-bold uppercase">Страницы</span>
 
             <div className="mt-10 flex">
               <div className="flex flex-col">
-                {["Меню", "О ресторане", "Оплата и доставка", "Контакты"].map(
-                  (item, index) => (
-                    <span className="mb-4 cursor-pointer" key={index}>
-                      {item}
-                    </span>
-                  )
-                )}
+                {[
+                  "Меню",
+                  "О ресторане",
+                  "Акции",
+                  "Сертификаты",
+                  "Оплата и доставка",
+                  "Контакты",
+                ].map((item, index) => (
+                  <span className="mb-4 cursor-pointer" key={index}>
+                    {item}
+                  </span>
+                ))}
               </div>
             </div>
           </div>

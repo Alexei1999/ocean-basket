@@ -63,7 +63,7 @@ export const CartSidebarView = ({
           "max-w-md w-full top-0 z-10 bg-light px-6 flex items-center justify-between border-b border-border-200 border-opacity-75"
         )}
       >
-        <div className="flex text-heading text-lg font-bold">
+        <div className="flex text-body text-lg font-bold">
           <span className="flex">
             {isFlat ? `${cartSizes.size} позиций` : "Корзина:"}
           </span>
@@ -112,15 +112,15 @@ export const CartSidebarView = ({
       >
         <button
           className={classNames(
-            "flex justify-between w-full h-12 md:h-14 p-1 text-sm font-bold bg-current rounded-full shadow-700 transition-colors focus:outline-none hover:bg-accent-hover focus:bg-accent-hover",
-            !cartSizes.size && "cursor-not-allowed"
+            "flex text-body justify-between w-full h-12 md:h-14 p-1 text-sm font-bold bg-current rounded-full shadow-700 transition-colors focus:outline-none hover:bg-accent-hover focus:bg-accent-hover",
+            !cartSizes.size ? "bg-gray-300 hover:bg-gray-300 border-border-400 cursor-not-allowed" : ""
           )}
           onClick={handleCheckout}
         >
           <span className="flex flex-1 items-center  h-full px-5 text-light">
             Заказать
           </span>
-          <span className="flex items-center flex-shrink-0 h-full bg-light text-heading rounded-full px-5">
+          <span className="flex items-center flex-shrink-0 h-full bg-light text-body rounded-full px-5">
             {totalPrice}
           </span>
         </button>

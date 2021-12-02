@@ -86,7 +86,7 @@ export const OTP: React.FC<OTPProps> = ({ defaultValue, onVerify }) => {
             country={"us"}
             value={number}
             onChange={(phone) => setNumber(`+${phone}`)}
-            inputClass="!p-0 !pe-4 !ps-14 !flex !items-center !w-full !appearance-none !transition !duration-300 !ease-in-out !text-heading !text-sm focus:!outline-none focus:!ring-0 !border !border-border-base !border-e-0 !rounded !rounded-e-none focus:!border-accent !h-12"
+            inputClass="!p-0 !pe-4 !ps-14 !flex !items-center !w-full !appearance-none !transition !duration-300 !ease-in-out !text-body !text-sm focus:!outline-none focus:!ring-0 !border !border-border-base !border-e-0 !rounded !rounded-e-none focus:!border-accent !h-12"
             dropdownClass="focus:!ring-0 !border !border-border-base !shadow-350"
           />
           <Button

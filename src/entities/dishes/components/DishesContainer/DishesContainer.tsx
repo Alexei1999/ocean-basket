@@ -68,7 +68,7 @@ export function DishesContainer({ dishes }: DishesContainerProps) {
   return (
     <div className={cn("flex-1 bg-gray-100 pt-6 pb-8 pl-4 lg:p-8 xl:pr-32")}>
       <div
-        className={cn("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3")}
+        className={cn("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7")}
       >
         {false ? (
           <>

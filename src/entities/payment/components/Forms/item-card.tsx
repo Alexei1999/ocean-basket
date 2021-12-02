@@ -26,13 +26,13 @@ const ItemCard = ({ item, notAvailable }: Props) => {
           <div
             className={cn(
               "text-sm font-bold",
-              notAvailable ? "text-red-500" : "text-heading"
+              notAvailable ? "text-red-500" : "text-body"
             )}
           >
             {count}
           </div>
           <div className="mx-2">x</div>
-          <div className="font-medium text-heading mr-3">
+          <div className="font-medium text-body mr-3">
             {Array.isArray(product.setItems) && product.setItems.length
               ? product.setItems.join(", ")
               : product.name}
@@ -42,7 +42,7 @@ const ItemCard = ({ item, notAvailable }: Props) => {
       <div
         className={cn(
           "text-sm font-medium",
-          notAvailable ? "text-red-500" : "text-heading"
+          notAvailable ? "text-red-500" : "text-body"
         )}
       >
         {!notAvailable ? price : "text-unavailable"}

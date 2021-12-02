@@ -20,8 +20,8 @@ export const UnverifiedItemList = () => {
   });
   return (
     <div className="w-full">
-      <div className="flex flex-col items-center space-s-4 mb-4">
-        <span className="text-base font-bold text-heading">Твой заказ</span>
+      <div className="flex flex-col items-center space-s-4 mb-3">
+        <span className="text-base font-bold text-body">Твой заказ</span>
       </div>
       <div className="flex flex-col py-3 border-b border-border-200 font-normal">
         {!cartSizes.size ? (
@@ -35,10 +35,18 @@ export const UnverifiedItemList = () => {
         )}
       </div>
       <div className="space-y-2 mt-4">
-        <ItemInfoRow title={"Доставка"} value={delivery} />
-        <ItemInfoRow title={"Скидка"} value={discount} />
         <ItemInfoRow
-          className="text-heading text-base font-medium"
+          keyClassName="text-gray-500"
+          title={"Доставка"}
+          value={delivery}
+        />
+        <ItemInfoRow
+          keyClassName="text-gray-500"
+          title={"Скидка"}
+          value={discount}
+        />
+        <ItemInfoRow
+          className="text-body text-base font-medium"
           title="Итого"
           value={total}
         />

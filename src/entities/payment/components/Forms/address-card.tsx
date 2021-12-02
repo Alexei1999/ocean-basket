@@ -40,17 +40,15 @@ const AddressCard: React.FC<AddressProps> = ({ checked, address, userId }) => {
       className={classNames(
         "relative p-4 rounded border cursor-pointer group hover:border-current",
         {
-          "text-heading border-current shadow-sm": checked,
+          "text-body border-current shadow-sm": checked,
           "bg-gray-100 border-transparent": !checked,
         }
       )}
     >
-      <p className="text-sm text-heading font-semibold mb-3 capitalize">
+      <p className="text-sm text-body font-semibold mb-3 capitalize">
         {address.title}
       </p>
-      <p className="text-sm text-sub-heading">
-        {formatAddress(address.address)}
-      </p>
+      <p className="text-sm text-muted">{formatAddress(address.address)}</p>
       <div className="absolute top-4 end-4 flex space-s-2 opacity-0 group-hover:opacity-100">
         {onEdit && (
           <button

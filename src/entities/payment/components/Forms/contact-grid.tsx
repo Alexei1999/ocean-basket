@@ -36,7 +36,7 @@ const ContactGrid = ({ contact, label, count, className }: ContactProps) => {
               {count}
             </span>
           )}
-          <p className="text-lg lg:text-xl text-heading capitalize">{label}</p>
+          <p className="text-lg lg:text-xl text-body capitalize">{label}</p>
         </div>
 
         <button

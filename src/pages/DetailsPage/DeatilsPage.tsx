@@ -30,8 +30,8 @@ function Card({
       <div>
         <img src={src} />
       </div>
-      {label && <div className="pt-3 text-2xl text-heading">{label}</div>}
-      {description && <div className="pt-3 text-heading">{description}</div>}
+      {label && <div className="pt-3 text-2xl text-body">{label}</div>}
+      {description && <div className="pt-3 text-body">{description}</div>}
     </div>
   );
 }

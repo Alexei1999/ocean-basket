@@ -14,12 +14,12 @@
     /*
     * primary color
     */
-    --color-accent: 0, 159, 127;
+    --color-accent: 97, 168, 174;
 
     /*
     * Hover state color of primary color
     */
-    --color-accent-hover: 1, 147, 118;
+    --color-accent-hover: 107, 145, 156;
 
     /*
     * shade of primary color
@@ -70,7 +70,7 @@
     /*
     * text color used for body/base text -> gray-500
     */
-    --text-base: 107, 114, 128;
+    --text-base: 17, 49, 95;
 
     /*
     * dark base text color  -> gray-600

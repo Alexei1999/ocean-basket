@@ -65,14 +65,14 @@ const CartItem = ({
       <h3
         className={classNames(
           isCounter ? "ml-5" : "ml-3",
-          "font-bold text-heading"
+          "font-bold text-body"
         )}
       >
         {Array.isArray(product.setItems) && product.setItems.length
           ? product.setItems.join(", ")
           : product.name}
       </h3>
-      <span className="ms-auto font-bold text-heading">{price}</span>
+      <span className="ms-auto font-bold text-body">{price}</span>
       {!isResult && (
         <button
           className="w-7 h-7 ms-3 -me-2 flex items-center justify-center flex-shrink-0 rounded-full text-muted transition-all duration-200 focus:outline-none hover:bg-gray-100 focus:bg-gray-100 hover:text-red-600 focus:text-red-600"

@@ -17,7 +17,7 @@ const ContactCard: React.FC<PhoneNumberProps> = ({ checked, number }) => {
         }
       )}
     >
-      <p className="text-sm text-heading font-semibold">{capitalize(number)}</p>
+      <p className="text-sm text-body font-semibold">{capitalize(number)}</p>
     </div>
   );
 };

@@ -19,7 +19,7 @@ export function CartItemCount({
     >
       <div
         className={classNames(
-          "text-heading inline-block text-base font-medium bg-gray-100 px-1",
+          "text-body inline-block text-base font-medium bg-gray-100 px-1",
           styles.circleRounded
         )}
       >

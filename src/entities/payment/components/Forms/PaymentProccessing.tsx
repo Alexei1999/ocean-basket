@@ -118,7 +118,7 @@ export function CheckoutPage() {
             onSubmit={() => {
               // window
               //   .open(
-              //     "https://usa.visa.com/run-your-business/small-business-tools/payment-technology/checkout.html",
+              //     "",
               //     "_blank"
               //   )
               //   ?.focus();

@@ -12,7 +12,7 @@ export function SuggestionsCategory({ name }: { name: string }) {
           )}
         >
           <Eclipse className="mr-5" />
-          <span className="text-xl font-bold">{name}</span>
+          <span className="text-xl font-bold text-body">{name}</span>
           <Eclipse className="ml-5" />
         </header>
       </div>

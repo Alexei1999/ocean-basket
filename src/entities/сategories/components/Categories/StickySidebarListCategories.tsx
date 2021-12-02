@@ -45,7 +45,7 @@ export function StickySidebarListCategories({
             </div>
           ) : (
             <div className="min-h-full w-full pt-6 pb-8 px-9 lg:p-8">
-              <NotFound text="text-no-category" className="h-96" />
+              <NotFound text="Нет категорий" className="h-96" />
             </div>
           )}
         </Scrollbar>

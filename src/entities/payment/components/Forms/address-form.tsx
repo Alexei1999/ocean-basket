@@ -46,7 +46,7 @@ const AddressForm: React.FC<any> = ({ onSubmit }) => {
 
   return (
     <div className="p-5 sm:p-8 bg-light md:rounded-xl min-h-screen md:min-h-0">
-      <h1 className="text-heading font-semibold text-lg text-center mb-4 sm:mb-6">
+      <h1 className="text-body font-semibold text-lg text-center mb-4 sm:mb-6">
         {address ? "text-update" : "text-add-new"} {"text-address"}
       </h1>
       <Form<FormValues>

@@ -81,7 +81,7 @@ export function AboutPageCover() {
         <div className={styles.staff} />
       </div>
       <img className="w-full" src={staff} />
-      <div className="flex flex-col md:px-4 lg:px-8 xl:px-32 pt-20 text-base font-normal">
+      <div className="flex flex-col md:px-4 lg:px-8 xl:px-32 pt-20 text-body font-normal">
         <div className="flex">
           <div className="w-1/2">
             <img src={begginText} />
@@ -135,7 +135,7 @@ export function AboutPageCover() {
               сами, чтобы убедиться в их безупречном вкусе. Вскоре Претория
               влюбилась в этот уютный и семейный средиземноморский ресторан.
             </p>
-            <p className="mt-5">
+            <p className="max-w-lg mt-5">
               Мама братьев, Лиза Лазаридис, разработала для ресторана несколько
               десертов. Её стандарт обслуживания гостя лежит в основе тренингов
               для персонала ресторанов. А также наши фирменные булочки чиабатта
@@ -160,7 +160,7 @@ export function AboutPageCover() {
               мягким булочкам чиабатта, тех, кто ценит нашу щедрость и заботу
               при подаче морепродуктов.
             </p>
-            <p className="pt-5">
+            <p className="max-w-lg pt-5 pl-9">
               Среди тех, кто приходит в московские рестораны Ocean Basket много
               тех, кто знает нас по заведениям на Кипре. Практически ежедневно
               мы получаем сообщения в директ и комментарии под постами с одной
@@ -180,15 +180,16 @@ export function AboutPageCover() {
         </div>
 
         <div className="flex pt-24">
-          <div className="w-1/2 flex justify-center items-center">
+          <div className="w-1/2 flex justify-center">
             <img src={hands} />
           </div>
           <div className="w-1/2 pt-6">
-            <ul>
-              <li>
-                - доступные цены на морепродукты; - морепродукты со всех уголков
-                Земли: Япония, Аргентина, Фарерские Острова, Средиземное море,
-                Чили, Новая Зеландия, Греция;
+            <ul className="max-w-xl">
+              <li>- доступные цены на морепродукты;</li>
+              <li className="pt-3">
+                - морепродукты со всех уголков Земли: Япония, Аргентина,
+                Фарерские Острова, Средиземное море, Чили, Новая Зеландия,
+                Греция;
               </li>
               <li className="pt-3">
                 - большие и сытные порции (самый популярное блюдо — Платтер на

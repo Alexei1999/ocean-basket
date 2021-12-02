@@ -46,17 +46,17 @@ export const DishCard: React.FC<DishCardProps> = ({ product, className }) => {
     >
       <div
         onClick={handleProductQuickView}
-        className="relative flex items-center justify-center w-auto h-48 sm:h-64"
+        className="relative flex items-center justify-center w-auto h-48 sm:h-52"
         role="button"
       >
         <span className="sr-only">{name}</span>
         <img
           src={image?.original ?? productIcon}
           alt={name}
-          className="product-image h-full object-fill"
+          className="product-image w-full h-full object-cover"
         />
         {isDiscount && (
-          <div className="absolute top-3 end-3 md:top-4 md:end-4 px-1.5 sm:px-2 md:px-2.5">
+          <div className="absolute top-3 end-3 md:top-4 md:end-4">
             <GiftIcon />
           </div>
         )}
@@ -66,7 +66,7 @@ export const DishCard: React.FC<DishCardProps> = ({ product, className }) => {
       <header className="p-3 md:py-6 md:p-5 relative">
         <h3
           onClick={handleProductQuickView}
-          className="text-md text-heading font-bold truncate mb-2"
+          className="text-md text-body font-bold truncate mb-1"
         >
           {name}
         </h3>
@@ -81,14 +81,14 @@ export const DishCard: React.FC<DishCardProps> = ({ product, className }) => {
         </h3>
         {/* End of product info */}
 
-        <div className="flex items-center justify-between min-h-6 mt-7 md:mt-8 relative">
+        <div className="flex items-center justify-between min-h-6 mt-7 md:mt-6 relative">
           <div className="relative">
             {discount && (
               <del className="text-xs text-muted text-opacity-75 absolute -top-4 md:-top-5 italic">
                 {discountPrice}
               </del>
             )}
-            <span className="text-heading font-medium text-sm  md:text-lg">
+            <span className="text-body font-medium text-sm  md:text-lg">
               {isApproximate ? `от ${dishPrice}` : dishPrice}
             </span>
           </div>

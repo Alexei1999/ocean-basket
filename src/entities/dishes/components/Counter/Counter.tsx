@@ -36,7 +36,7 @@ const variantClasses = {
   details:
     "order-5 sm:order-4 w-full sm:w-24 h-10 bg-accent text-light rounded-full",
   pillVertical:
-    "flex-col-reverse items-center w-8 h-24 bg-gray-100 text-heading rounded-full",
+    "flex-col-reverse items-center w-8 h-24 bg-gray-100 text-body rounded-full",
   big: "w-full h-14 rounded text-light bg-accent inline-flex justify-between",
 };
 
@@ -69,7 +69,7 @@ export const Counter: React.FC<CounterProps> = ({
       <div
         className={cn(
           "flex-1 flex items-center justify-center font-semibold",
-          variant === "pillVertical" ? "text-heading text-sm" : "text-xs"
+          variant === "pillVertical" ? "text-body text-sm" : "text-xs"
         )}
       >
         {value}

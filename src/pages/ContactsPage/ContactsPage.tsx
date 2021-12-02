@@ -48,11 +48,11 @@ function ContactsBlock({
   );
 }
 
-const ruContats = [
+export const ruContats = [
   "Алматы",
   ["ул. Мясницкая, д. 11, 1 этаж, м. Лубянка", "+7 (977) 456 2221"],
 ] as (string | [string, string])[];
-const kzContats = [
+export const kzContats = [
   "Алматы",
   ["ул. Панфилова, 100", "+7 (727) 727-27-27"],
   ["ул. Аль-Фараби, 1", "+7 (727) 727-27-27"],
@@ -73,7 +73,7 @@ export function ContactsPage() {
   return (
     <YMaps>
       <div>
-        <div className="pt-12 pb-2 lg:pb-4 xl:pb-32 bg-light">
+        <div className="pt-12 pb-2 lg:pb-4 xl:pb-32 bg-light text-body">
           <PageWaveHeader src={contactsIcon} />
           <div className="flex pt-20 md:px-4 lg:px-8 xl:px-32 justify-around">
             <ContactsBlock
