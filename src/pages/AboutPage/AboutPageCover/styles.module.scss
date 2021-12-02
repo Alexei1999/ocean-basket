@@ -1,0 +1,38 @@
+@import "~@app/styles/variables";
+
+.container {
+  min-height: calc(100vh - #{$header-height});
+  height: 900px;
+  &Left {
+    max-width: 50%;
+    background: url("~@assets/footer.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    &Wrapper {
+      & > * {
+        margin-right: 10%;
+        margin-left: 10%;
+      }
+      & > *:first-child {
+        margin-top: 10%;
+      }
+      & > *:last-child {
+        margin-bottom: 10%;
+      }
+    }
+  }
+  &Right {
+    background: url("./cover-right.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    z-index: -1;
+  }
+}
+
+.wave {
+  margin-left: 0;
+  margin-right: -30px;
+  max-width: none;
+}
