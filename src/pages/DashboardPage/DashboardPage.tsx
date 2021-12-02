@@ -5,7 +5,7 @@ export function DashboardPage() {
   return (
     <div>
       <MainPageCover />
-      <SubscriptionSection />
+      <SubscriptionSection isWaves />
     </div>
   );
 }

@@ -5,7 +5,7 @@ import classNames from "classnames";
 import { YMaps, Map, Placemark } from "react-yandex-maps";
 
 import contactsIcon from "./contacts-text.svg";
-
+import hook from "@widgets/subscription/hook.svg";
 import styles from "./styles.module.scss";
 
 function ContactsBlock({
@@ -13,11 +13,13 @@ function ContactsBlock({
   contacts,
   email,
   className,
+  children,
 }: {
   country: string;
   contacts: ([string, string] | string)[];
   email: string;
   className?: string;
+  children?: React.ReactNode;
 }) {
   return (
     <div className={classNames(className)}>
@@ -44,6 +46,7 @@ function ContactsBlock({
           <span className="text-base pt-6">{email}</span>
         </div>
       )}
+      {children}
     </div>
   );
 }
@@ -81,7 +84,11 @@ export function ContactsPage() {
               email="marketing@oceanbasket.ru"
               country={"Москва"}
               contacts={ruContats}
-            />
+            >
+              <div className="flex justify-center items-center pt-20">
+                <img src={hook} className="bottom-16 right-11" />
+              </div>
+            </ContactsBlock>
             <ContactsBlock
               className="flex-grow max-w-lg"
               email="marketing@oceanbasket.kz"

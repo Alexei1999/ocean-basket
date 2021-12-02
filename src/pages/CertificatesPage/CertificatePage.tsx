@@ -8,6 +8,9 @@ import classNames from "classnames";
 import styles from "./styles.module.scss";
 import { SubscriptionSection } from "@widgets/subscription/SubscriptionSection";
 
+import hook from "@widgets/subscription/hook.svg";
+import twoWaves from "@pages/AboutPage/AboutPageCover/2-waves.svg";
+
 export function CertificatePage() {
   return (
     <>
@@ -62,7 +65,9 @@ export function CertificatePage() {
           </div>
         </div>
       </div>
-      <div className="flex justify-center pt-10 pb-32 text-body">
+      <div className="flex justify-center pt-10 pb-32 text-body relative">
+        <img src={twoWaves} className="absolute right-9 top-20 w-56" />
+        <img src={hook} className="absolute left-14 bottom-16" />
         <img src={important} />
         <div className="pl-16 max-w-xl">
           <p>

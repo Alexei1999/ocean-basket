@@ -4,6 +4,9 @@ import classNames from "classnames";
 import { useNavigate } from "react-router";
 import { LogoFooter as Icon } from "@assets/Icons";
 
+import fishesLeft from "./fishes-left.svg";
+import fishesRight from "./fishes-right.svg";
+
 import bigWave from "./big-wave.svg";
 
 import N18 from "./18.svg";
@@ -26,6 +29,10 @@ import ourFetures from "./our-features.svg";
 
 import hands from "./hands.png";
 import weGood from "./we-good.svg";
+
+import mediumWaves from "./medium-waves.svg";
+
+import fullFishes from "./full-fishes.svg";
 
 export function NumberLabel({
   src,
@@ -61,7 +68,7 @@ export function AboutPageCover() {
               )}
             >
               <Icon />
-              <p className="text-light lg:pr-4">
+              <p className={classNames("text-light lg:pr-4", styles.mainText)}>
                 – это более 20 лет упорной работы в ресторанном бизнесе, свыше
                 200 успешных проектов по всему миру, которых с каждым годом
                 становится всё больше. Каждый день более 60 000 посетителей
@@ -76,7 +83,14 @@ export function AboutPageCover() {
               </div>
             </div>
           </div>
-          <div className={classNames(styles.containerRight, "flex-grow")} />
+          <div
+            className={classNames(
+              styles.containerRight,
+              "flex flex-grow justify-end items-center"
+            )}
+          >
+            <img src={fishesLeft} />
+          </div>
         </div>
         <div className={styles.staff} />
       </div>
@@ -106,6 +120,10 @@ export function AboutPageCover() {
           <div className="w-1/2 flex pt-20">
             <div className="flex flex-col">
               <div className="relative">
+                <img
+                  src={twoWaves}
+                  className="absolute w-60 -top-3 -right-16"
+                />
                 <img src={founders} />
                 <img src={photo} className="absolute -bottom-40 -right-16" />
               </div>
@@ -129,7 +147,13 @@ export function AboutPageCover() {
               напитков. Тогда Фатс предложил гостям приносить с собой
               собственные напитки и даже свои собственные салаты.
             </p>
-            <p className="max-w-lg mt-52">
+            <div className="pt-24 pb-28 relative">
+              <img
+                src={mediumWaves}
+                className="absolute right-0 lg:-mr-8 xl:-mr-32"
+              />
+            </div>
+            <p className="max-w-lg">
               Фатс и Джордж Лазаридис были рождены для работы в ресторане, они
               знали каждого гостя по имени, а перед подачей пробовали блюда
               сами, чтобы убедиться в их безупречном вкусе. Вскоре Претория
@@ -149,7 +173,11 @@ export function AboutPageCover() {
           <img src={twoWaves} />
         </div>
 
-        <div className="flex pt-12">
+        <div className="flex pt-12 relative">
+          <img
+            src={fishesRight}
+            className="absolute md:-ml-4 -bottom-12 lg:-ml-8 xl:-ml-32 w-64"
+          />
           <div className="w-1/2">
             <img src={today} />
             <p className="max-w-lg pt-14 pl-9">
@@ -180,10 +208,17 @@ export function AboutPageCover() {
         </div>
 
         <div className="flex pt-24">
-          <div className="w-1/2 flex justify-center">
+          <div className="w-1/2 flex justify-center relative">
             <img src={hands} />
+            <img
+              src={mediumWaves}
+              className="absolute lg:-ml-8 xl:-ml-32 left-0 -bottom-7"
+            />
           </div>
           <div className="w-1/2 pt-6">
+            <div className="w-full flex justify-end">
+              <img src={twoWaves} className="w-60 -mt-20" />
+            </div>
             <ul className="max-w-xl">
               <li>- доступные цены на морепродукты;</li>
               <li className="pt-3">
@@ -235,6 +270,9 @@ export function AboutPageCover() {
               не найдете угорь, из-за угрозы его исчезновения.
             </p>
           </div>
+        </div>
+        <div className="flex justify-center">
+          <img className="-mb-8" src={fullFishes} />
         </div>
       </div>
     </>

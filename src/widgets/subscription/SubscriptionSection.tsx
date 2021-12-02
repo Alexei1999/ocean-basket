@@ -14,10 +14,10 @@ import blueWaves from "@shared/icons/blue-waves.svg";
 import hook from "./hook.svg";
 import wave from "./wave.svg";
 
-function EmailSection() {
+function EmailSection({ isWaves = false }) {
   return (
     <div className="relative">
-      <WhiteWaves className="absolute -mt-10 z-10" />
+      {isWaves && <WhiteWaves className="absolute -mt-10 z-10" />}
       <div
         className={classNames(
           "flex max-h-80 overflow-hidden relative",
@@ -99,10 +99,10 @@ function InstagramGalery() {
   );
 }
 
-export function SubscriptionSection() {
+export function SubscriptionSection({ isWaves: isWaves = false }) {
   return (
     <div>
-      <EmailSection />
+      <EmailSection isWaves={isWaves} />
       <div className="flex justify-center pt-36 relative">
         <img src={blueWaves} className="absolute right-0 top-28" />
         <InstagramHeader />

@@ -8,6 +8,7 @@ import minSum from "./config/min-sum.svg";
 import territory from "./config/territory.svg";
 import { PageWaveHeader } from "@entities/promotions/components/PageWaveHeader";
 import { SubscriptionSection } from "@widgets/subscription/SubscriptionSection";
+import fishesFull from "./fishes-full.svg";
 
 function Card({
   src,
@@ -41,8 +42,9 @@ export function DetailsPage() {
     <>
       <div className="relative">
         <PageWaveHeader className="absolute xl:top-12 left-0" />
+        <img src={fishesFull} className="absolute right-0 top-20" />
         <div className="pt-16 pb-24 md:px-4 lg:px-8 xl:px-32 flex flex-col">
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap relative">
             <Card
               src={delivery}
               description="Прием заказов осуществляется во время работы ресторанов."
