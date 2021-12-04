@@ -93,7 +93,6 @@ export function CheckoutPage() {
       <div className="flex flex-col lg:flex-row items-center lg:items-start m-auto w-full max-w-5xl">
         <div className="lg:max-w-2xl w-full space-y-6">
           <AddressGrid
-            userId={"123"}
             addLabel="Добавить адрес"
             className="shadow-700 bg-light p-5 md:p-8"
             label="Адрес доставки"
@@ -106,14 +105,14 @@ export function CheckoutPage() {
             schedules={schedules}
             count={2}
           />
-          <AddressGrid
+          {/* <AddressGrid
             userId={"123"}
             addLabel="Добавить телефон"
             className="shadow-700 bg-light p-5 md:p-8"
             label="Контактный телефон"
             count={3}
             addresses={numbers}
-          />
+          /> */}
           <CheckAvailabilityAction
             onSubmit={() => {
               // window

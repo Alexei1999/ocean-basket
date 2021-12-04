@@ -9,7 +9,7 @@ interface Props {
 const ItemCard = ({ item, notAvailable }: Props) => {
   const { product, count } = item;
   const { price } = usePrice({
-    amount: product.price * count,
+    amount: parseInt(product.prices?.[0]?.rouble_price ?? 0) * count,
   });
   return (
     <div
@@ -33,9 +33,7 @@ const ItemCard = ({ item, notAvailable }: Props) => {
           </div>
           <div className="mx-2">x</div>
           <div className="font-medium text-body mr-3">
-            {Array.isArray(product.setItems) && product.setItems.length
-              ? product.setItems.join(", ")
-              : product.name}
+            {product.description}
           </div>
         </div>
       </div>

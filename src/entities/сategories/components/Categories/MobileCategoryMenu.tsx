@@ -5,7 +5,7 @@ export function MobileCategoryMenu() {
   return (
     <DrawerWrapper>
       <div className="h-full max-h-full overflow-hidden">
-        <Categories className="!block" categories={[]} />
+        <Categories className="!block" />
       </div>
     </DrawerWrapper>
   );

@@ -3,7 +3,7 @@ import { ItemInfoRow } from "./item-info-row";
 import usePrice from "@entities/cart/lib/use-price";
 import { EmptyCartPanel } from "@entities/cart/components/cart-sidebar-view";
 import { useStore } from "effector-react";
-import { $cartItems, $cartSizes } from "@features/choose-dishes/ui";
+import { $cartSizes, $cartItems } from "@features/choose-dishes/models";
 
 export const UnverifiedItemList = () => {
   const cartSizes = useStore($cartSizes);

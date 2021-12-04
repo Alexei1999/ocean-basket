@@ -3,10 +3,10 @@ import cn from "classnames";
 
 import * as CategoryIcons from "../../lib/category-icons";
 import { getIcon } from "../../lib/get-icon";
-import { Category } from "@entities/dishes/components/DishesContainer/DishesContainer";
 import { createEvent } from "effector";
 import { useStore } from "effector-react";
-import { $category } from "@features/choose-dishes/ui";
+import { $category } from "@features/choose-dishes/models";
+import { Category } from "@shared/api/dishes";
 
 interface TreeMenuItemProps {
   item: Category;
@@ -27,12 +27,14 @@ export function TreeMenuItem({
   const isActive = selectedCategory === item.category;
 
   const {
-    name,
+    // name,
     category,
     icon,
     expandIcon,
     children: items,
   } = item as Category & Record<string, any>;
+
+  const name = category;
 
   return (
     <>
@@ -104,7 +106,7 @@ export function TreeMenu({ items, className }: TreeMenuProps) {
   return (
     <ul className={cn("text-base", className)}>
       {items?.map((item: Category) => (
-        <TreeMenuItem key={`${item.name}${item.slug}`} item={item} />
+        <TreeMenuItem key={`${item.category}`} item={item} />
       ))}
     </ul>
   );

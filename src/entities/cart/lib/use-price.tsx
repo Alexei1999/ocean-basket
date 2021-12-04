@@ -53,7 +53,8 @@ export default function usePrice(
   const { amount, baseAmount, currencyCode = currency } = data ?? {};
   const { locale } = { locale: "ru" };
   const value = useMemo(() => {
-    if (typeof amount !== "number" || !currencyCode) return "";
+    if (isNaN(amount as number) || typeof amount !== "number" || !currencyCode)
+      return "—";
     const currentLocale = locale ? locale : "en";
     return baseAmount
       ? formatVariantPrice({

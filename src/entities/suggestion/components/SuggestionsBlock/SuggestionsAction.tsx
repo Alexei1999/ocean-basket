@@ -1,5 +1,5 @@
 import usePrice from "@entities/cart/lib/use-price";
-import { Product } from "@entities/dishes/components/DishesContainer/DishesContainer";
+import { Dish } from "@shared/api/dishes";
 import { AddToCartSuggstionBtn } from "./AddToCartSuggstionBtn";
 
 //@ts-ignore
@@ -7,19 +7,17 @@ export function SuggestionsAction({
   item,
   onClick,
 }: {
-  item: Product;
-  onClick: (item: Product) => void;
+  item: Dish;
+  onClick: (item: Dish) => void;
 }) {
   const { price } = usePrice({
-    amount: item.price ?? 0,
+    amount: parseInt(item.prices?.[0].rouble_price) ?? 0,
   });
 
   return (
     <div className="bg-light w-full flex py-9 md:px-4 lg:px-8 justify-between border-b border-border-200">
-      <div>
-        <div className="text-body font-bold text-2xl mb-2">
-          {item.ingridients.join(", ")}
-        </div>
+      <div className="pr-9">
+        <div className="text-body font-bold text-2xl mb-2">{item.name}</div>
         <div className="text-gray-400 text-sm">{item.description}</div>
       </div>
       <div className="flex items-center">

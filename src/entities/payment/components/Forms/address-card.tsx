@@ -1,5 +1,7 @@
 import { CloseIcon } from "@entities/cart/components/icons/close-icon";
 import classNames from "classnames";
+import { FormValues } from "./address-form";
+import { onSetEditModalOpen } from "./address-grid";
 import { PencilIcon } from "./pencil-icon";
 
 function removeFalsy(obj: any) {
@@ -13,26 +15,28 @@ export declare type UserAddress = {
   zip?: string;
 };
 
-export function formatAddress(address: UserAddress) {
+export function formatAddress(address: FormValues) {
   if (!address) return;
-  const temp = ["street_address", "state", "city", "zip", "country"].reduce(
-    (acc, k) => ({ ...acc, [k]: (address as any)[k] }),
-    {}
-  );
+  const temp = [
+    "city",
+    "restaurant",
+    "street",
+    "building",
+    "flat",
+    "entrance",
+    "floor",
+  ].reduce((acc, k) => ({ ...acc, [k]: (address as any)[k] }), {});
   const formattedAddress = removeFalsy(temp);
   return Object.values(formattedAddress).join(", ");
 }
 
 interface AddressProps {
-  address: any;
+  form: FormValues;
   checked: boolean;
-  userId: string;
 }
-const AddressCard: React.FC<AddressProps> = ({ checked, address, userId }) => {
-  const { openModal } = { openModal: () => {} } as any;
-
+const AddressCard: React.FC<AddressProps> = ({ checked, form }) => {
   function onEdit() {
-    openModal("ADD_OR_UPDATE_ADDRESS", { customerId: userId, address });
+    onSetEditModalOpen(true);
   }
 
   return (
@@ -46,9 +50,9 @@ const AddressCard: React.FC<AddressProps> = ({ checked, address, userId }) => {
       )}
     >
       <p className="text-sm text-body font-semibold mb-3 capitalize">
-        {address.title}
+        {form.title || "Адрес"}
       </p>
-      <p className="text-sm text-muted">{formatAddress(address.address)}</p>
+      <p className="text-sm text-muted">{formatAddress(form)}</p>
       <div className="absolute top-4 end-4 flex space-s-2 opacity-0 group-hover:opacity-100">
         {onEdit && (
           <button

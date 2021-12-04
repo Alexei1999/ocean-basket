@@ -5,9 +5,9 @@ import CartItem from "./cart-item";
 import { fadeInOut } from "../lib/fade-in-out";
 import usePrice from "../lib/use-price";
 import { useStore } from "effector-react";
-import { $cartItems, $cartSizes } from "@features/choose-dishes/ui";
 import classNames from "classnames";
 import { Scrollbar } from "@shared/components/Scrollbar";
+import { $cartSizes, $cartItems } from "@features/choose-dishes/models";
 
 export const EmptyCartPanel = ({
   noGutters = false,
@@ -46,6 +46,8 @@ export const CartSidebarView = ({
 }) => {
   const cartSizes = useStore($cartSizes);
   const cartItems = useStore($cartItems);
+
+  console.log("cartSizes", cartSizes);
 
   function handleCheckout() {
     if (!cartSizes.size) return;
@@ -113,7 +115,9 @@ export const CartSidebarView = ({
         <button
           className={classNames(
             "flex text-body justify-between w-full h-12 md:h-14 p-1 text-sm font-bold bg-current rounded-full shadow-700 transition-colors focus:outline-none hover:bg-accent-hover focus:bg-accent-hover",
-            !cartSizes.size ? "bg-gray-300 hover:bg-gray-300 border-border-400 cursor-not-allowed" : ""
+            !cartSizes.size
+              ? "bg-gray-300 hover:bg-gray-300 border-border-400 cursor-not-allowed"
+              : ""
           )}
           onClick={handleCheckout}
         >

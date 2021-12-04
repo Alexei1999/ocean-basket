@@ -1,7 +1,7 @@
 import { CloseIcon } from "@entities/cart/components/icons/close-icon";
 import Modal from "@entities/payment/components/Forms/modal";
-import { Promotion } from "@entities/promotions/config/promotions";
-import { addProductToCart } from "@features/choose-dishes/ui";
+import { addProductToCart } from "@features/choose-dishes/models";
+import { Dish, Promotion } from "@shared/api/dishes";
 import Button from "@shared/button";
 
 export function PromotionModal({
@@ -20,7 +20,7 @@ export function PromotionModal({
       <div className="p-5 sm:p-8 bg-light min-h-screen md:min-h-0 max-w-3xl">
         <div className="flex justify-between">
           <h1 className="text-heading font-bold text-xl mb-4 sm:mb-6">
-            {promotion?.name}
+            {promotion?.title}
           </h1>
           <CloseIcon
             className="w-3 h-3 cursor-pointer"
@@ -28,11 +28,15 @@ export function PromotionModal({
           />
         </div>
         <p className="max-w-lg">{promotion?.description}</p>
-        {promotion?.product && (
+        {promotion?.basket.length && (
           <Button
             className="mt-16 text-accent hover:text-accent-hover"
             onClick={() => {
-              if (promotion.product) addProductToCart(promotion.product);
+              if (promotion.basket.length) {
+                promotion.basket.forEach((basket: Dish) =>
+                  addProductToCart(basket)
+                );
+              }
               setIsOpen(false);
               onProductAdd?.();
             }}

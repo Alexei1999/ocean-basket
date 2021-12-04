@@ -4,6 +4,7 @@ import { capitalize } from "@shared/lib/functional-utils";
 interface AddressHeaderProps {
   addLabel?: string;
   count: number | boolean;
+  isShown: boolean;
   label: string;
   onAdd?: () => void;
 }
@@ -12,6 +13,7 @@ export const AddressHeader: React.FC<AddressHeaderProps> = ({
   addLabel,
   onAdd,
   count,
+  isShown,
   label,
 }) => {
   return (
@@ -24,7 +26,7 @@ export const AddressHeader: React.FC<AddressHeaderProps> = ({
         )}
         <p className="text-lg lg:text-xl text-body">{capitalize(label)}</p>
       </div>
-      {onAdd && (
+      {onAdd && isShown && (
         <button
           className="flex items-center text-body text-sm font-semibold transition-colors duration-200 focus:outline-none focus:text-accent-hover hover:text-accent-hover"
           onClick={onAdd}

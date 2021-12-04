@@ -1,6 +1,3 @@
-import usePrice from "@entities/cart/lib/use-price";
-import { Product } from "@entities/dishes/components/DishesContainer/DishesContainer";
-
 export function SuggestionCategories({ items }: { items: string[] }) {
   return (
     <div className="md:px-4 lg:px-8 xl:px-32 bg-light py-6 w-full flex">

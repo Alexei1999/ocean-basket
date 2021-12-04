@@ -1,9 +1,9 @@
 import cn from "classnames";
-import { Category } from "../../../dishes/components/DishesContainer/DishesContainer";
 import { NotFound } from "../../../dishes/components/NotFound";
 import { Scrollbar } from "../../../../shared/components/Scrollbar";
 import { TreeMenu } from "../TreeMenu/TreeMenuItem";
 import { CategoriesLoader } from "./CategoriesLoader";
+import { Category } from "@shared/api/dishes";
 
 interface StickySidebarListCategoriesProps {
   notFound: boolean;
@@ -20,8 +20,8 @@ export function StickySidebarListCategories({
 }: StickySidebarListCategoriesProps) {
   if (loading) {
     return (
-      <div className="hidden xl:block">
-        <div className="w-72 mt-8 px-2">
+      <div className="hidden xl:block max-h-full pl-32">
+        <div className="w-72 mt-8">
           <CategoriesLoader />
         </div>
       </div>

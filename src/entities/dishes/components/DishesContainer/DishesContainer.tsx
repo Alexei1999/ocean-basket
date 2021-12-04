@@ -1,59 +1,38 @@
+import {
+  $category,
+  $dishes,
+  $popularDishes,
+  fetchDishesFx,
+  POPULAR_CATEGORY,
+} from "@features/choose-dishes/models";
+import { Dish } from "@shared/api/dishes";
 import cn from "classnames";
+import { useStore } from "effector-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { DishCard } from "../Card/DishCard";
 import { NotFound } from "../NotFound";
 import { ProductLoader } from "./ProductLoader";
 
-export declare type Attachment = {
-  id?: number | string;
-  thumbnail?: string;
-  original?: string;
-};
+export function DishesContainer() {
+  const selectedCategory = useStore($category);
 
-export declare type Category = {
-  id: number | string;
-  name: string;
-  slug: string;
-  category: string;
-};
+  const dishes = useStore($dishes);
+  const popular = useStore($popularDishes);
 
-export declare type Product = {
-  id: number | string;
-  name?: string;
-  slug?: string;
-  category: string;
-  categoryName: string;
-  ingridients: string[];
-  deliveryFee?: number;
-  discount?: number;
-  description?: string;
-  isApproximate?: boolean;
-  isDiscount?: boolean;
-  isAvailable?: boolean;
-  setItems?: string[];
-  is_taxable?: boolean;
-  price: number;
-  image?: Attachment;
-};
+  const isDishesLoading = useStore(fetchDishesFx.pending);
+  const isPopularDishesLoading = useStore(fetchDishesFx.pending);
 
-interface ProductCardProps {
-  product: Product;
-  className?: string;
-}
+  const filteredDishes = useMemo(() => {
+    if (selectedCategory === POPULAR_CATEGORY.category) return popular;
+    return dishes?.filter((dish) => dish.category === selectedCategory);
+  }, [dishes, selectedCategory]);
 
-const ProductCard: React.FC<ProductCardProps> = ({
-  product,
-  className,
-  ...props
-}) => {
-  return <DishCard product={product} {...props} className={className} />;
-};
+  const isLoading =
+    selectedCategory === POPULAR_CATEGORY.category
+      ? isPopularDishesLoading
+      : isDishesLoading;
 
-type DishesContainerProps = {
-  dishes: Product[];
-};
-
-export function DishesContainer({ dishes }: DishesContainerProps) {
-  if (!dishes.length) {
+  if (!filteredDishes?.length) {
     //TODO: Уточнить текстовки у бизнеса
     return (
       <div className="bg-gray-100 flex-grow min-h-full pt-6 pb-8 px-4 lg:p-8">
@@ -70,7 +49,7 @@ export function DishesContainer({ dishes }: DishesContainerProps) {
       <div
         className={cn("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7")}
       >
-        {false ? (
+        {isLoading ? (
           <>
             {Array(20)
               .fill(null)
@@ -79,9 +58,9 @@ export function DishesContainer({ dishes }: DishesContainerProps) {
               ))}
           </>
         ) : (
-          dishes.map((product) => (
+          filteredDishes?.map((product) => (
             <div key={product.id}>
-              <ProductCard product={product} />
+              <DishCard product={product} />
             </div>
           ))
         )}

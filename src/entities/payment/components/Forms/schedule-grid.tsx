@@ -2,7 +2,6 @@ import { RadioGroup } from "@headlessui/react";
 import ScheduleCard from "./schedule-card";
 import { useEffect, useState } from "react";
 import { AddressHeader } from "./address-header";
-import { onValidateError } from "./address-grid";
 
 interface ScheduleProps {
   label: string;
@@ -24,12 +23,12 @@ export const ScheduleGrid: React.FC<ScheduleProps> = ({
   const [selectedSchedule, setSchedule] = useState<typeof schedules[number]>();
 
   useEffect(() => {
-    onValidateError([
-      label,
-      !selectedSchedule
-        ? `Необходимо выбрать ${label?.toLowerCase()}`
-        : undefined,
-    ]);
+    // onValidateError([
+    //   label,
+    //   !selectedSchedule
+    //     ? `Необходимо выбрать ${label?.toLowerCase()}`
+    //     : undefined,
+    // ]);
   }, [selectedSchedule]);
 
   useEffect(() => {
@@ -52,7 +51,7 @@ export const ScheduleGrid: React.FC<ScheduleProps> = ({
   ]);
   return (
     <div className={className}>
-      <AddressHeader count={count} label={label} />
+      <AddressHeader isShown={true} label={label} count={count} />
 
       {schedules && schedules?.length ? (
         <RadioGroup value={selectedSchedule} onChange={setSchedule}>

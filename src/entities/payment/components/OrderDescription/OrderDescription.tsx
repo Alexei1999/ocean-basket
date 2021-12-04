@@ -1,5 +1,5 @@
 import usePrice from "@entities/cart/lib/use-price";
-import { $cartSizes, dropCart } from "@features/choose-dishes/ui";
+import { $cartSizes, dropCart } from "@features/choose-dishes/models";
 import { RoutesConfig } from "@shared/lib/routes-config";
 import classNames from "classnames";
 import { useStore } from "effector-react";

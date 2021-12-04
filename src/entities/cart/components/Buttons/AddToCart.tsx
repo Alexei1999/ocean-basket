@@ -1,9 +1,10 @@
-import { Product } from "@entities/dishes/components/DishesContainer/DishesContainer";
 import {
   $cart,
   addProductToCart,
   removeProductFromCart,
-} from "@features/choose-dishes/ui";
+} from "@features/choose-dishes/models";
+import { Dish } from "@shared/api/dishes";
+
 import cn from "classnames";
 import { useStore } from "effector-react";
 import { AddToCartBtn } from "../../../dishes/components/Card/AddToCartBtn";
@@ -11,7 +12,7 @@ import { Counter } from "../../../dishes/components/Counter/Counter";
 import styles from "./styles.module.scss";
 
 interface Props {
-  data: Product;
+  data: Dish;
   counterClass?: string;
   variation?: any;
   disabled?: boolean;

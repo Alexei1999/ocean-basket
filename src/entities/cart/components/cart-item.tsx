@@ -2,15 +2,15 @@ import { motion } from "framer-motion";
 import usePrice from "../lib/use-price";
 import { fadeInOut } from "../lib/fade-in-out";
 import { CloseIcon } from "./icons/close-icon";
-import {
-  addProductToCart,
-  CartItemType,
-  dropProductFromCart,
-  removeProductFromCart,
-} from "@features/choose-dishes/ui";
 import { CartItemCount } from "./CartItemCount";
 import { Counter } from "@entities/dishes/components/Counter/Counter";
 import classNames from "classnames";
+import {
+  addProductToCart,
+  removeProductFromCart,
+  dropProductFromCart,
+} from "@features/choose-dishes/models";
+import { CartItemType } from "@features/choose-dishes/ui";
 
 interface CartItemProps {
   item: CartItemType;
@@ -26,7 +26,7 @@ const CartItem = ({
   const { count, product } = item;
 
   const { price } = usePrice({
-    amount: product.price * count,
+    amount: (parseInt(product.prices?.[0].rouble_price) ?? 0) * count,
   });
 
   function handleIncrement(e: any) {
@@ -68,9 +68,7 @@ const CartItem = ({
           "font-bold text-body"
         )}
       >
-        {Array.isArray(product.setItems) && product.setItems.length
-          ? product.setItems.join(", ")
-          : product.name}
+        {product.name}
       </h3>
       <span className="ms-auto font-bold text-body">{price}</span>
       {!isResult && (

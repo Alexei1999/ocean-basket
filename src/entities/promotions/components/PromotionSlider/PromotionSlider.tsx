@@ -7,12 +7,11 @@ import styles from "./styles.module.scss";
 
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
 import cn from "classnames";
-import { sliders } from "@entities/promotions/config/sliders";
-import { promotions } from "@entities/promotions/config/promotions";
 import { useState } from "react";
 import { PromotionModal } from "../PromotionsSection/PromotionModal";
-import { addProductToCart } from "@features/choose-dishes/ui";
-import { Product } from "@entities/dishes/components/DishesContainer/DishesContainer";
+import { Promotion } from "@shared/api/dishes";
+import { useStore } from "effector-react";
+import { $promotions } from "@features/choose-dishes/models";
 
 const offerSliderBreakpoints = {
   320: {
@@ -35,9 +34,9 @@ const offerSliderBreakpoints = {
 
 export function PromotionSlider() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [promotion, setPromotion] = useState<typeof promotions[number] | null>(
-    null
-  );
+  const [promotion, setPromotion] = useState<Promotion | null>(null);
+
+  const promotions = useStore($promotions);
 
   return (
     <div className="px-6 py-5 xl:py-14 xl:px-32 border-t border-border-200 bg-light">
@@ -57,16 +56,15 @@ export function PromotionSlider() {
           loop
           breakpoints={offerSliderBreakpoints}
         >
-          {sliders?.map(({ id, original, name, discount, ...props }) => (
+          {promotions?.map(({ id, photo: original, title: name, ...props }) => (
             <SwiperSlide key={id}>
               <div
                 className={cn("cursor-pointer", styles.promotionContainer)}
                 onClick={() => {
                   setPromotion({
                     id,
-                    original,
-                    name,
-                    discount,
+                    photo: original,
+                    title: name,
                     ...props,
                   });
                   setIsModalOpen(true);
@@ -86,7 +84,7 @@ export function PromotionSlider() {
                       styles.promotionDescription
                     )}
                   >
-                    {name && (
+                    {/* {name && (
                       <div
                         className={cn(
                           "text-white text-2xl font-bold",
@@ -95,8 +93,8 @@ export function PromotionSlider() {
                       >
                         {name}
                       </div>
-                    )}
-                    {discount && (
+                    )} */}
+                    {/* {discount && (
                       <div
                         className={cn(
                           "text-white font-bold",
@@ -105,7 +103,7 @@ export function PromotionSlider() {
                       >
                         {discount}%
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </div>
               </div>

@@ -12,7 +12,7 @@ import {
   setIsDrawerOpen,
 } from "@shared/components/drawer/managed-drawer";
 import { useStore } from "effector-react";
-import { $cartSizes } from "@features/choose-dishes/ui";
+import { $cartSizes } from "@features/choose-dishes/models";
 
 export function Header() {
   const isOpen = useStore($isDrawerOpen);

@@ -1,27 +1,23 @@
-import { Category } from "../../../dishes/components/DishesContainer/DishesContainer";
+import { $categories, fetchCategoriesFx } from "@features/choose-dishes/models";
+import { ErrorMessage } from "@shared/components/ErrorMessage";
+import { useStore } from "effector-react";
 import { StickySidebarListCategories } from "./StickySidebarListCategories";
 
 type CategoriesProps = {
   className?: string;
-  categories: Category[];
 };
 
-export function Categories({ className, categories }: CategoriesProps) {
-  // const {
-  //   data,
-  //   isLoading: loading,
-  //   error,
-  // } = useCategoriesQuery({
-  //   type: (query.pages?.[0] as string) ?? homePage?.slug,
-  // });
+export function Categories({ className }: CategoriesProps) {
+  const categories = useStore($categories);
+  const isCategoriesLoading = useStore(fetchCategoriesFx.pending);
 
   // if (error) return <ErrorMessage message={error.message} />;
 
   return (
     <StickySidebarListCategories
-      notFound={false}
-      categories={categories}
-      loading={false}
+      notFound={categories.length === 0}
+      categories={categories!}
+      loading={isCategoriesLoading}
       className={className}
     />
   );

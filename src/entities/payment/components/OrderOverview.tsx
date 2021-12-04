@@ -1,10 +1,27 @@
 import { CartSidebarView } from "@entities/cart/components/cart-sidebar-view";
 import { SuggestionsBlock } from "@entities/suggestion/components/SuggestionsBlock/SuggestionsBlock";
-import { dishes } from "@features/choose-dishes/config/dishes";
+import {
+  $dishes,
+  $popularDishes,
+  fetchPopularDishesFx,
+} from "@features/choose-dishes/models";
 import classNames from "classnames";
+import { forward } from "effector";
+import { createGate, useGate, useStore } from "effector-react";
 import style from "./styles.module.scss";
 
+export const OrderOverviewGate = createGate();
+
+forward({
+  from: OrderOverviewGate.open,
+  to: [fetchPopularDishesFx],
+});
+
 export const OrderOverview = ({ onSubmit }: { onSubmit: () => void }) => {
+  useGate(OrderOverviewGate);
+
+  const dishes = useStore($popularDishes);
+
   return (
     <div className="w-full bg-gray-100">
       <div className="flex flex-col md:flex-row max-w-7xl w-full mx-auto py-10">
@@ -25,9 +42,7 @@ export const OrderOverview = ({ onSubmit }: { onSubmit: () => void }) => {
             style.shadow
           )}
         >
-          <SuggestionsBlock
-            items={[...dishes.slice(1, 2), ...dishes.slice(4, 5)]}
-          />
+          <SuggestionsBlock dishes={dishes ?? []} />
         </div>
       </div>
     </div>
