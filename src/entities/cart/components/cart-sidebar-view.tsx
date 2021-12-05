@@ -8,6 +8,7 @@ import { useStore } from "effector-react";
 import classNames from "classnames";
 import { Scrollbar } from "@shared/components/Scrollbar";
 import { $cartSizes, $cartItems } from "@features/choose-dishes/models";
+import { getPlurals } from "@shared/lib/functional-utils";
 
 export const EmptyCartPanel = ({
   noGutters = false,
@@ -67,7 +68,12 @@ export const CartSidebarView = ({
       >
         <div className="flex text-body text-lg font-bold">
           <span className="flex">
-            {isFlat ? `${cartSizes.size} позиций` : "Корзина:"}
+            {isFlat
+              ? `Корзина: ${`${cartSizes.size} ${getPlurals(
+                  cartSizes.size,
+                  ["позиция", "позиции", "позиций"]
+                )}`}`
+              : "Корзина:"}
           </span>
         </div>
         {!isFlat && (

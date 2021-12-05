@@ -4,6 +4,7 @@ import usePrice from "@entities/cart/lib/use-price";
 import { EmptyCartPanel } from "@entities/cart/components/cart-sidebar-view";
 import { useStore } from "effector-react";
 import { $cartSizes, $cartItems } from "@features/choose-dishes/models";
+import { DishStatus } from "@shared/api/dishes";
 
 export const UnverifiedItemList = () => {
   const cartSizes = useStore($cartSizes);
@@ -30,7 +31,11 @@ export const UnverifiedItemList = () => {
           </div>
         ) : (
           cartItems.map((item) => (
-            <ItemCard item={item} key={item.product.id} />
+            <ItemCard
+              item={item}
+              key={item.product.id}
+              notAvailable={item.product.status !== DishStatus.Active}
+            />
           ))
         )}
       </div>

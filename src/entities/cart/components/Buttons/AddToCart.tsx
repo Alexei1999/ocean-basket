@@ -3,7 +3,7 @@ import {
   addProductToCart,
   removeProductFromCart,
 } from "@features/choose-dishes/models";
-import { Dish } from "@shared/api/dishes";
+import { Dish, DishStatus } from "@shared/api/dishes";
 
 import cn from "classnames";
 import { useStore } from "effector-react";
@@ -15,10 +15,9 @@ interface Props {
   data: Dish;
   counterClass?: string;
   variation?: any;
-  disabled?: boolean;
 }
 
-export const AddToCart = ({ data, counterClass, disabled }: Props) => {
+export const AddToCart = ({ data, counterClass }: Props) => {
   const cart = useStore($cart);
 
   const handleAddClick = (
@@ -46,8 +45,7 @@ export const AddToCart = ({ data, counterClass, disabled }: Props) => {
   ) : (
     <AddToCartBtn
       className={cn(styles.button, "max-h-8")}
-      // disabled={disabled || outOfStock}
-      disabled={disabled || false}
+      disabled={data.status !== DishStatus.Active}
       onClick={handleAddClick}
     />
   );

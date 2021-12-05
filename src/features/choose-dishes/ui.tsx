@@ -2,8 +2,9 @@ import { DishesContainer } from "../../entities/dishes/components/DishesContaine
 import { Categories } from "../../entities/сategories/components/Categories/Categories";
 import { Element } from "react-scroll";
 import { createEffect, createStore, forward } from "effector";
-import { createGate, useGate } from "effector-react";
+import { createGate, useGate, useStore } from "effector-react";
 import {
+  $category,
   fetchCategoriesFx,
   fetchDishesFx,
   fetchPomotionsFx,
@@ -19,6 +20,7 @@ import {
   getPromotions,
   Promotion,
 } from "@shared/api/dishes";
+import { useEffect, useRef } from "react";
 
 export type CartItemType = { count: number; product: Dish };
 
@@ -42,19 +44,24 @@ forward({
 export function ChooseDishes() {
   useGate(ChooseDishesGate);
 
-  // const filteredDishes = useMemo(() => {
-  //   if (dishes === "popular") return dishes;
+  const caetgory = useStore($category);
+  const ref = useRef<HTMLDivElement>(null);
 
-  //   return dishes?.filter(({ category }) => category === dishes);
-  // }, [dishes]);
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [caetgory]);
 
   return (
-    <Element
-      name="grid"
-      className="flex flex-1 border-t border-solid border-border-200 border-opacity-70"
-    >
-      <Categories />
-      <DishesContainer />
-    </Element>
+    <div ref={ref}>
+      <Element
+        name="grid"
+        className="flex flex-1 border-t border-solid border-border-200 border-opacity-70"
+      >
+        <Categories />
+        <DishesContainer />
+      </Element>
+    </div>
   );
 }

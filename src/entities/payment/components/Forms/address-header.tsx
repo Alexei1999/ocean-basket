@@ -3,8 +3,9 @@ import { capitalize } from "@shared/lib/functional-utils";
 
 interface AddressHeaderProps {
   addLabel?: string;
+  editLabel?: string;
   count: number | boolean;
-  isShown: boolean;
+  isEdit: boolean;
   label: string;
   onAdd?: () => void;
 }
@@ -13,7 +14,8 @@ export const AddressHeader: React.FC<AddressHeaderProps> = ({
   addLabel,
   onAdd,
   count,
-  isShown,
+  editLabel,
+  isEdit,
   label,
 }) => {
   return (
@@ -26,13 +28,13 @@ export const AddressHeader: React.FC<AddressHeaderProps> = ({
         )}
         <p className="text-lg lg:text-xl text-body">{capitalize(label)}</p>
       </div>
-      {onAdd && isShown && (
+      {onAdd && (
         <button
           className="flex items-center text-body text-sm font-semibold transition-colors duration-200 focus:outline-none focus:text-accent-hover hover:text-accent-hover"
           onClick={onAdd}
         >
-          <PlusIcon className="w-4 h-4 stroke-2 me-0.5" />
-          {addLabel}
+          {!isEdit && <PlusIcon className="w-4 h-4 stroke-2 me-0.5" />}
+          {isEdit ? editLabel : addLabel}
         </button>
       )}
     </div>

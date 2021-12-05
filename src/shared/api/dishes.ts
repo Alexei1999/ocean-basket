@@ -1,3 +1,4 @@
+import { FormValues } from "@entities/payment/components/Forms/address-form";
 import { baseApi } from "./base";
 
 const apiBaseUrl = "/api";
@@ -63,4 +64,17 @@ export type Promotion = {
 
 export const getPromotions = (): Promise<Promotion[]> => {
   return baseApi.get(`${apiBaseUrl}/actions`).then((response) => response.data);
+};
+
+export type OrderType = Omit<FormValues, "title"> & {
+  time: string;
+  phone: string;
+} & {
+  payment: string;
+};
+
+export const postOrder = (params: OrderType): Promise<any> => {
+  return baseApi
+    .post(`orders/submit`, params)
+    .then((response) => response.data);
 };

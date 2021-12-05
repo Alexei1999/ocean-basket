@@ -11,10 +11,10 @@ import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react";
 
 export const onScrollPage = createEvent();
-const $updateDependency = createStore<{}>({}).on(onScrollPage, () => ({}));
+const $updateStore = createStore<{}>({}).on(onScrollPage, () => ({}));
 
 const ScrollContainer = ({ children }: { children: ReactNode }) => {
-  const updateDependency = useStore($updateDependency);
+  const updateDependency = useStore($updateStore);
   const ref = useRef<HTMLDivElement>(null);
 
   const { pathname } = useLocation();

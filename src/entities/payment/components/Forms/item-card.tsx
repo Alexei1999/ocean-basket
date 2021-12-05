@@ -32,9 +32,7 @@ const ItemCard = ({ item, notAvailable }: Props) => {
             {count}
           </div>
           <div className="mx-2">x</div>
-          <div className="font-medium text-body mr-3">
-            {product.description}
-          </div>
+          <div className="font-medium text-body mr-3">{product.name}</div>
         </div>
       </div>
       <div
@@ -43,7 +41,7 @@ const ItemCard = ({ item, notAvailable }: Props) => {
           notAvailable ? "text-red-500" : "text-body"
         )}
       >
-        {!notAvailable ? price : "text-unavailable"}
+        {!notAvailable ? price : "Недоступно"}
       </div>
     </div>
   );

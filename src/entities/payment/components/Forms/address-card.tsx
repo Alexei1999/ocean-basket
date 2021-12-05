@@ -30,14 +30,17 @@ export function formatAddress(address: FormValues) {
   return Object.values(formattedAddress).join(", ");
 }
 
-interface AddressProps {
-  form: FormValues;
+export interface AddressProps {
+  data: FormValues | null;
   checked: boolean;
+  onEdit: () => void;
 }
-const AddressCard: React.FC<AddressProps> = ({ checked, form }) => {
-  function onEdit() {
-    onSetEditModalOpen(true);
-  }
+const AddressCard: React.FC<AddressProps> = ({
+  checked,
+  data: form,
+  onEdit,
+}) => {
+  if (!form) return null;
 
   return (
     <div

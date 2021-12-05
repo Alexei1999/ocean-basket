@@ -1,12 +1,16 @@
 import { capitalize } from "@shared/lib/functional-utils";
 import classNames from "classnames";
+import PhoneInput from "react-phone-input-2";
 
 interface PhoneNumberProps {
-  number: any;
-  checked?: boolean;
+  data: string | null;
+  checked: boolean;
 }
 
-const ContactCard: React.FC<PhoneNumberProps> = ({ checked, number }) => {
+const ContactCard: React.FC<PhoneNumberProps> = ({ checked, data: number }) => {
+  if (!number) {
+    return null;
+  }
   return (
     <div
       className={classNames(
@@ -17,7 +21,14 @@ const ContactCard: React.FC<PhoneNumberProps> = ({ checked, number }) => {
         }
       )}
     >
-      <p className="text-sm text-body font-semibold">{capitalize(number)}</p>
+      <PhoneInput
+        specialLabel={""}
+        country={"ru"}
+        value={number}
+        disabled
+        inputClass="bg-light w-full"
+        dropdownClass="focus:!ring-0 !border !border-border-base !shadow-350"
+      />
     </div>
   );
 };

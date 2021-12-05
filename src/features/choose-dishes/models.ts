@@ -3,6 +3,7 @@ import { onCategoryClick } from "@entities/сategories/components/TreeMenu/TreeM
 import {
   Category,
   Dish,
+  DishStatus,
   getCategories,
   getDishes,
   getPopular,
@@ -107,7 +108,12 @@ $cart.watch((state) => {
 
 export const $cartSizes = $cart.map((state) => {
   return Object.values(state)
-    .filter((value) => value !== undefined && value.count > 0)
+    .filter(
+      (value) =>
+        value !== undefined &&
+        value.product.status === DishStatus.Active &&
+        value.count > 0
+    )
     .reduce<{ size: number; totalAmount: number | null }>(
       (acc, value) => {
         const amount = parseInt(value?.product.prices?.[0].rouble_price);

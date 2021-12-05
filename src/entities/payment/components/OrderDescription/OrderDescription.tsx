@@ -1,12 +1,20 @@
 import usePrice from "@entities/cart/lib/use-price";
-import { $cartSizes, dropCart } from "@features/choose-dishes/models";
+import { $cart, $cartSizes, dropCart } from "@features/choose-dishes/models";
+import { getPlurals } from "@shared/lib/functional-utils";
 import { RoutesConfig } from "@shared/lib/routes-config";
 import classNames from "classnames";
+import dayjs, { Dayjs } from "dayjs";
 import { useStore } from "effector-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { $phone } from "../Forms/add-or-update";
+import { formatAddress } from "../Forms/address-card";
+import { $form } from "../Forms/address-form";
+import { $schedule } from "../Forms/schedule-grid";
 
 import styles from "./styles.module.scss";
+
+dayjs.locale("ru");
 
 const Details = ({
   className,
@@ -37,24 +45,24 @@ const Details = ({
   );
 };
 
-export function OrderDescription() {
+export function OrderDescription({
+  orderNumber,
+  orderDate,
+}: {
+  orderNumber?: number;
+  orderDate: Dayjs | null;
+}) {
   const navigate = useNavigate();
 
-  const _cartSizes = useStore($cartSizes);
-
-  const [cartSizes, setCartSizes] = useState<typeof _cartSizes>({
-    size: 0,
-    totalAmount: 0,
-  });
+  const cartSizes = useStore($cartSizes);
+  const form = useStore($form);
+  const schedule = useStore($schedule);
+  const phone = useStore($phone);
 
   useEffect(() => {
-    setCartSizes(_cartSizes);
     dropCart();
   }, []);
 
-  const { price } = usePrice({
-    amount: cartSizes.totalAmount ?? 0,
-  });
   const { price: total } = usePrice({
     amount: cartSizes.totalAmount ?? 0,
   });
@@ -79,9 +87,9 @@ export function OrderDescription() {
 
         <div className="flex justify-between pt-11">
           {[
-            { label: "Номер заказа", text: "1444" },
-            { label: "Дата", text: "14 марта 2019 г." },
-            { label: "Итого", text: price },
+            { label: "Номер заказа", text: orderNumber || "" },
+            { label: "Дата", text: orderDate?.format("DD MMMM YYYY г.") || "" },
+            { label: "Итого", text: total },
             { label: "Метод оплаты", text: "Картой онлайн" },
           ].map(({ label, text }, idx) => (
             <div
@@ -97,10 +105,17 @@ export function OrderDescription() {
           className="max-w-xl mt-16"
           label="Детали заказа"
           items={[
-            ["Всего товаров", `${cartSizes.size} позиций`],
-            ["Время заказа", "13:00 12.10.2019"],
-            ["Срок доставки", "60-минутная экспресс-доставка"],
-            ["Место доставки", "Москва, дом 149, 1-й этаж"],
+            [
+              "Всего товаров",
+              `${cartSizes.size} ${getPlurals(cartSizes.size, [
+                "позиция",
+                "позиции",
+                "позиций",
+              ])}`,
+            ],
+            ["Время заказа", orderDate?.format("HH:mm DD MMMM YYYY г.") ?? ""],
+            ["Срок доставки", schedule?.description ?? ""],
+            ["Место доставки", form ? formatAddress(form) ?? "" : ""],
           ]}
         />
 

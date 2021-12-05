@@ -19,7 +19,7 @@ export function PromotionModal({
     <Modal open={isOpen && Boolean(promotion)} onClose={() => setIsOpen(false)}>
       <div className="p-5 sm:p-8 bg-light min-h-screen md:min-h-0 max-w-3xl">
         <div className="flex justify-between">
-          <h1 className="text-heading font-bold text-xl mb-4 sm:mb-6">
+          <h1 className="text-heading font-bold text-xl mb-4 sm:mb-6 pr-10">
             {promotion?.title}
           </h1>
           <CloseIcon
@@ -27,13 +27,13 @@ export function PromotionModal({
             onClick={() => setIsOpen(false)}
           />
         </div>
-        <p className="max-w-lg">{promotion?.description}</p>
-        {promotion?.basket.length && (
+        <p className="max-w-lg pr-8">{promotion?.description}</p>
+        {Boolean(promotion?.basket.length) && (
           <Button
             className="mt-16 text-accent hover:text-accent-hover"
             onClick={() => {
-              if (promotion.basket.length) {
-                promotion.basket.forEach((basket: Dish) =>
+              if (promotion!.basket.length) {
+                promotion!.basket.forEach((basket: Dish) =>
                   addProductToCart(basket)
                 );
               }
