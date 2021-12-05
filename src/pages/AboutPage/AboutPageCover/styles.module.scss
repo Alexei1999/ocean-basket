@@ -2,7 +2,6 @@
 
 .container {
   min-height: calc(100vh - #{$header-height});
-  height: 900px;
   &Left {
     max-width: 50%;
     background: url("~@assets/footer.png");

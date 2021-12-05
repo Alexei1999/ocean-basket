@@ -5,8 +5,6 @@ import { SuggestionsAction } from "./SuggestionsAction";
 import { SuggestionsCategory } from "./SuggestionsCategory";
 
 export function SuggestionsBlock({ dishes }: { dishes: Dish[] }) {
-  console.log("dishes", dishes);
-
   const [filteredDishes, setFilteredDishes] = React.useState<{
     [key: string]: Dish[];
   }>({});
@@ -26,8 +24,6 @@ export function SuggestionsBlock({ dishes }: { dishes: Dish[] }) {
   }, [dishes]);
 
   const entries = Object.entries(filteredDishes);
-
-  console.log("entries", entries);
 
   return (
     <div>

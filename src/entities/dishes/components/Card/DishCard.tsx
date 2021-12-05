@@ -49,8 +49,6 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
   }, []);
 
   const onImgaeErrorHandle = useCallback(() => {
-    console.log("error");
-
     setIsDisplayed(false);
   }, []);
 

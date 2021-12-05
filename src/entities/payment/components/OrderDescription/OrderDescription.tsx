@@ -57,14 +57,19 @@ export function OrderDescription({
   const cartSizes = useStore($cartSizes);
   const form = useStore($form);
   const schedule = useStore($schedule);
-  const phone = useStore($phone);
+
+  const [savedCartSiezes, setSavedCartSiezes] = useState<{
+    size: number;
+    totalAmount: number | null;
+  } | null>(null);
 
   useEffect(() => {
+    setSavedCartSiezes(cartSizes);
     dropCart();
   }, []);
 
   const { price: total } = usePrice({
-    amount: cartSizes.totalAmount ?? 0,
+    amount: savedCartSiezes?.totalAmount ?? 0,
   });
 
   return (
@@ -107,11 +112,10 @@ export function OrderDescription({
           items={[
             [
               "Всего товаров",
-              `${cartSizes.size} ${getPlurals(cartSizes.size, [
-                "позиция",
-                "позиции",
-                "позиций",
-              ])}`,
+              `${savedCartSiezes?.size} ${getPlurals(
+                savedCartSiezes?.size ?? 0,
+                ["позиция", "позиции", "позиций"]
+              )}`,
             ],
             ["Время заказа", orderDate?.format("HH:mm DD MMMM YYYY г.") ?? ""],
             ["Срок доставки", schedule?.description ?? ""],

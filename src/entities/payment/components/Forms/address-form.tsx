@@ -86,111 +86,108 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
         }}
       >
         {({ register, watch, formState: { errors } }) => (
-          console.log(watch("intercom")),
-          (
-            <>
-              <Input
-                label={"Город"}
-                {...register("city")}
-                error={errors.city?.message!}
-                variant="outline"
-                className="col-span-2"
-              />
-              <Input
-                label={"Ресторан"}
-                {...register("restaurant")}
-                error={errors.restaurant?.message!}
-                variant="outline"
-                className="col-span-2"
-              />
-              <Input
-                label={"Улица"}
-                {...register("street")}
-                error={errors.street?.message!}
-                variant="outline"
-                className="col-span-2"
-              />
-              <Input
-                label={"Дом"}
-                {...register("building")}
-                error={errors.building?.message}
-                className="col-span-2"
-                variant="outline"
-              />
-              <Input
-                label={"Квартира"}
-                {...register("flat")}
-                error={errors.flat?.message}
-                variant="outline"
-              />
-              <Input
-                label={"Подъезд"}
-                {...register("entrance")}
-                error={errors.entrance?.message}
-                variant="outline"
-              />
-              <Input
-                label={"Этаж"}
-                {...register("floor")}
-                error={errors.floor?.message}
-                variant="outline"
-              />
+          <>
+            <Input
+              label={"Город"}
+              {...register("city")}
+              error={errors.city?.message!}
+              variant="outline"
+              className="col-span-2"
+            />
+            <Input
+              label={"Ресторан"}
+              {...register("restaurant")}
+              error={errors.restaurant?.message!}
+              variant="outline"
+              className="col-span-2"
+            />
+            <Input
+              label={"Улица"}
+              {...register("street")}
+              error={errors.street?.message!}
+              variant="outline"
+              className="col-span-2"
+            />
+            <Input
+              label={"Дом"}
+              {...register("building")}
+              error={errors.building?.message}
+              className="col-span-2"
+              variant="outline"
+            />
+            <Input
+              label={"Квартира"}
+              {...register("flat")}
+              error={errors.flat?.message}
+              variant="outline"
+            />
+            <Input
+              label={"Подъезд"}
+              {...register("entrance")}
+              error={errors.entrance?.message}
+              variant="outline"
+            />
+            <Input
+              label={"Этаж"}
+              {...register("floor")}
+              error={errors.floor?.message}
+              variant="outline"
+            />
 
-              <div>
-                <Label>Наличие домофона</Label>
-                <div className="space-s-4 flex items-center">
-                  <Radio
-                    id="Exist"
-                    {...register("intercom")}
-                    type="radio"
-                    value="1"
-                    label="Есть"
-                    checked={watch("intercom") === "1"}
-                  />
-                  <Radio
-                    id="Missing"
-                    {...register("intercom")}
-                    type="radio"
-                    value="0"
-                    label="Нет"
-                    checked={watch("intercom") === "0"}
-                  />
-                </div>
-                <ValidationError message={errors.intercom?.message} />
+            <div>
+              <Label>Наличие домофона</Label>
+              <div className="space-s-4 flex items-center">
+                <Radio
+                  id="Exist"
+                  {...register("intercom")}
+                  type="radio"
+                  value="1"
+                  label="Есть"
+                  checked={watch("intercom") === "1"}
+                />
+                <Radio
+                  id="Missing"
+                  {...register("intercom")}
+                  type="radio"
+                  value="0"
+                  label="Нет"
+                  checked={watch("intercom") === "0"}
+                />
               </div>
+              <ValidationError message={errors.intercom?.message} />
+            </div>
 
-              <Input
-                label={"Колличество персон"}
-                {...register("persons_number")}
-                error={errors.persons_number?.message}
-                variant="outline"
-                className="col-span-1"
-                type="number"
-              />
+            <Input
+              label={"Колличество персон"}
+              {...register("persons_number")}
+              error={errors.persons_number?.message}
+              variant="outline"
+              className="col-span-1"
+              type="number"
+            />
 
-              <TextArea
-                label={"Комментарий"}
-                {...register("comment")}
-                error={errors.comment?.message}
-                variant="outline"
-                className="col-span-4"
-              />
+            <TextArea
+              label={"Комментарий"}
+              {...register("comment")}
+              error={errors.comment?.message}
+              variant="outline"
+              className="col-span-4"
+            />
 
-              <Input
-                label={"Название"}
-                {...register("title")}
-                error={errors.title?.message}
-                variant="outline"
-                className="col-span-1"
-                placeholder="Например: Домашний"
-                min={1}
-              />
+            <Input
+              label={"Название"}
+              {...register("title")}
+              error={errors.title?.message}
+              variant="outline"
+              className="col-span-1"
+              placeholder="Например: Домашний"
+              min={1}
+            />
 
-              <Button className="w-full col-span-4 text-body hover:text-accent">
-                {address ? "Обновить" : "Сохранить"} {"адрес"}
-              </Button>
-            </>
-          )
+            <Button className="w-full col-span-4 text-body hover:text-accent">
+              {address ? "Обновить" : "Сохранить"} {"адрес"}
+            </Button>
+          </>
         )}
       </Form>
     </div>
