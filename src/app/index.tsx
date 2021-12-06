@@ -5,6 +5,7 @@ import { ManagedDrawer } from "@shared/components/drawer/managed-drawer";
 import { Footer } from "@widgets/footer/components/Footer";
 
 import styles from "./styles/global.module.scss";
+
 import { ReactNode, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { createEvent, createStore } from "effector";

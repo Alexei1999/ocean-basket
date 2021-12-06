@@ -3,7 +3,6 @@ import cn from "classnames";
 import logo from "../config/logo.svg";
 import { headerLinks } from "../config/links";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import styles from "./styles.module.scss";
 import { useCallback } from "react";
 import { CartHeaderIcon } from "../../../entities/cart/components/icons/CartHeaderIcon";
 import { RoutesConfig } from "../../../shared/lib/routes-config";
@@ -34,7 +33,7 @@ export function Header() {
           <img
             src={logo}
             alt="logo"
-            className={cn("mx-auto lg:mx-0", styles.logo)}
+            className={cn("mx-auto lg:mx-0 -ml-3 cursor-pointer")}
             onClick={onLogoClickHandler}
           />
         </div>
@@ -49,7 +48,7 @@ export function Header() {
                   <Link
                     to={href}
                     className={cn(
-                      "font-semibold text-heading flex items-center transition duration-200 no-underline hover:text-accent",
+                      "font-normal text-heading flex items-center transition duration-200 no-underline hover:text-accent",
                       isCurrent && "text-accent"
                     )}
                   >
@@ -65,10 +64,7 @@ export function Header() {
                       </span>
                     )}
                     <span
-                      className={cn(
-                        isCurrent && "text-accent",
-                        styles.upperCase
-                      )}
+                      className={cn(isCurrent && "text-accent", "uppercase")}
                     >
                       {label}
                     </span>

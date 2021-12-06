@@ -1,3 +1,4 @@
+import { $promocode } from "@entities/cart/components/cart-sidebar-view";
 import usePrice from "@entities/cart/lib/use-price";
 import { $cart, $cartSizes, dropCart } from "@features/choose-dishes/models";
 import { getPlurals } from "@shared/lib/functional-utils";
@@ -5,7 +6,7 @@ import { RoutesConfig } from "@shared/lib/routes-config";
 import classNames from "classnames";
 import dayjs, { Dayjs } from "dayjs";
 import { useStore } from "effector-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { $phone } from "../Forms/add-or-update";
 import { formatAddress } from "../Forms/address-card";
@@ -25,14 +26,23 @@ const Details = ({
   className?: string;
   valueClassName?: string;
   label: string;
-  items: [string | number, string | number][];
+  items: ([string | number, string | number] | undefined | null | false)[];
 }) => {
+  const filteredItems = useMemo(
+    () =>
+      items.filter((item) => Array.isArray(item)) as [
+        string | number,
+        string | number
+      ][],
+    [items]
+  );
+
   return (
     <div className={classNames(className)}>
       <div className="font-bold text-2xl">{label}</div>
       <div className="pt-9 flex flex-col">
-        {items.map(([key, value]) => (
-          <div className="max-w-full flex items-center">
+        {filteredItems.map(([key, value]) => (
+          <div className="max-w-full flex items-start pb-3">
             <div className="text-base font-bold flex justify-between w-1/2">
               <div>{key}</div>
               <span className={styles.semicolon}>:</span>
@@ -57,6 +67,7 @@ export function OrderDescription({
   const cartSizes = useStore($cartSizes);
   const form = useStore($form);
   const schedule = useStore($schedule);
+  const promocodeObj = useStore($promocode);
 
   const [savedCartSiezes, setSavedCartSiezes] = useState<{
     size: number;
@@ -120,6 +131,14 @@ export function OrderDescription({
             ["Время заказа", orderDate?.format("HH:mm DD MMMM YYYY г.") ?? ""],
             ["Срок доставки", schedule?.description ?? ""],
             ["Место доставки", form ? formatAddress(form) ?? "" : ""],
+            Boolean(promocodeObj) && [
+              "Промокод",
+              `${promocodeObj!.promocode}${
+                promocodeObj!.promocodeText
+                  ? ": " + promocodeObj!.promocodeText
+                  : ""
+              }`,
+            ],
           ]}
         />
 

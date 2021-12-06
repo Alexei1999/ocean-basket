@@ -4,12 +4,17 @@ import { CloseIcon } from "./icons/close-icon";
 import CartItem from "./cart-item";
 import { fadeInOut } from "../lib/fade-in-out";
 import usePrice from "../lib/use-price";
-import { useStore } from "effector-react";
+import { createGate, useGate, useStore } from "effector-react";
 import classNames from "classnames";
 import { Scrollbar } from "@shared/components/Scrollbar";
 import { $cartSizes, $cartItems } from "@features/choose-dishes/models";
 import { getPlurals } from "@shared/lib/functional-utils";
 import { useState } from "react";
+import Input from "@entities/payment/components/Forms/forms/input";
+import { ValidationError } from "@entities/payment/components/Forms/place-order-action";
+import { createEffect, createEvent, createStore } from "effector";
+import { verifyPromocode } from "@shared/api/dishes";
+import Button from "@shared/button";
 
 export const EmptyCartPanel = ({
   noGutters = false,
@@ -37,6 +42,30 @@ export const EmptyCartPanel = ({
   );
 };
 
+const verifyPromocodeFx = createEffect(verifyPromocode);
+
+const onSetPromocode = createEvent<{
+  promocode: string;
+  promocodeText: string | null;
+}>();
+export const $promocode = createStore<{
+  promocode: string;
+  promocodeText: string | null;
+} | null>(null).on(onSetPromocode, (_, data) => data);
+
+const cartSidebarViewGate = createGate<{
+  onSuccess: (promocodeText: string | null) => void;
+  onFail: () => void;
+}>();
+cartSidebarViewGate.state.on(
+  verifyPromocodeFx.doneData,
+  ({ onSuccess, onFail }, { result, promocode_text } = {} as any) => {
+    if (result === true) {
+      onSuccess(promocode_text);
+    } else onFail();
+  }
+);
+
 export const CartSidebarView = ({
   onSubmit,
   onClose,
@@ -50,15 +79,40 @@ export const CartSidebarView = ({
   const cartItems = useStore($cartItems);
 
   const [isPromocodeInput, setIsPromocodeInput] = useState(false);
+  const [promocode, setPromocode] = useState<string>("");
+  const [error, setError] = useState<string | undefined>();
+  const [isSuccessful, setIsSuccessful] = useState<boolean>(false);
+
+  const isLoading = useStore(verifyPromocodeFx.pending);
+
+  useGate(cartSidebarViewGate, {
+    onSuccess: (promocodeText) => {
+      onSetPromocode({ promocode, promocodeText });
+      setIsSuccessful(true);
+    },
+    onFail: () => {
+      setError("Неверный промокод");
+    },
+  });
 
   function handleCheckout() {
     if (!cartSizes.size) return;
     onSubmit?.();
   }
 
+  function handlePromocode() {
+    if (!promocode) {
+      setError("Введите промокод");
+      return;
+    }
+
+    verifyPromocodeFx({ promocode });
+  }
+
   const { price: totalPrice } = usePrice({
     amount: cartSizes.totalAmount ?? 0,
   });
+
   return (
     <section className="flex flex-col h-full relative">
       <header
@@ -120,13 +174,53 @@ export const CartSidebarView = ({
           "start-0 bottom-0 w-full py-5 px-6 z-10 bg-light"
         )}
       >
-        {isFlat && (
-          <div className=" py-5 flex justify-center">
-            <div role="button" className="hover:text-accent font-bold button">
-              У тебя есть промокод?
+        {isFlat &&
+          (isSuccessful ? (
+            <div className="pb-3 flex justify-center">
+              <span className="text-accent font-bold">
+                Промокод {promocode} активирован!
+              </span>
             </div>
-          </div>
-        )}
+          ) : isPromocodeInput ? (
+            <>
+              {error && <ValidationError message={error} />}
+              <div
+                className={classNames(
+                  "mb-3",
+                  "flex text-body border overflow-hidden justify-between w-full h-12 md:h-14 p-1 text-sm font-bold rounded-xl shadow-700 transition-colors focus:outline-none"
+                )}
+              >
+                <Input
+                  className="flex flex-col flex-1 items-center h-full text-light"
+                  name={""}
+                  onChange={(e) => {
+                    setPromocode(e.target.value);
+                    setError(undefined);
+                  }}
+                  value={promocode}
+                  placeholder="Введите код"
+                  inputClassName="!bg-light !border-0"
+                ></Input>
+                <Button
+                  loading={isLoading}
+                  onClick={handlePromocode}
+                  className="flex items-center flex-shrink-0 h-full bg-current text-body rounded-xl px-5 hover:text-accent focus:text-accent"
+                >
+                  <span className="text-light">Применить</span>
+                </Button>
+              </div>
+            </>
+          ) : (
+            <div className="pb-3 flex justify-center">
+              <div
+                role="button"
+                onClick={() => setIsPromocodeInput(true)}
+                className="hover:text-accent font-bold button"
+              >
+                У тебя есть промокод?
+              </div>
+            </div>
+          ))}
         <button
           className={classNames(
             "flex text-body justify-between w-full h-12 md:h-14 p-1 text-sm font-bold bg-current rounded-full shadow-700 transition-colors focus:outline-none hover:bg-accent-hover focus:bg-accent-hover",
@@ -136,7 +230,7 @@ export const CartSidebarView = ({
           )}
           onClick={handleCheckout}
         >
-          <span className="flex flex-1 items-center  h-full px-5 text-light">
+          <span className="flex flex-1 items-center h-full px-5 text-light">
             Заказать
           </span>
           <span className="flex items-center flex-shrink-0 h-full bg-light text-body rounded-full px-5">

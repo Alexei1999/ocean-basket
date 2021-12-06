@@ -6,7 +6,7 @@ import { useStore } from "effector-react";
 import { useMemo, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 
-const RUS_PHONE_REGEXP = /^7\d{10}$/;
+const RUS_PHONE_REGEXP = /\d{11}$/;
 const isNumberValid = (value?: string | null) =>
   RUS_PHONE_REGEXP.test(value as string);
 
@@ -40,7 +40,7 @@ const AddOrUpdateCheckoutContact: React.FC<{ onSubmit: () => void }> = ({
           value={phone}
           isValid={isValid}
           onChange={setNumber}
-          masks={["+7 (999) 999-99-99"]}
+          masks={["+9 (999) 999-99-99"]}
           inputClass="!p-0 !pe-4 !ps-14 !flex !items-end !w-full !appearance-none !transition !duration-300 !ease-in-out !text-body !text-sm focus:!outline-none focus:!ring-0 !border !border-border-base !border-e-0 !rounded !rounded-e-none focus:!border-accent !h-12"
           dropdownClass="focus:!ring-0 !border !border-border-base !shadow-350"
         />

@@ -78,3 +78,15 @@ export const postOrder = (params: OrderType): Promise<any> => {
     .post(`orders/submit`, params)
     .then((response) => response.data);
 };
+
+export type PromocodeParams = {
+  promocode: string;
+};
+
+export const verifyPromocode = (
+  params: PromocodeParams
+): Promise<{ result: boolean; promocode_text: string | null }> => {
+  return baseApi
+    .post(`${apiBaseUrl}/promocodes/promocodeValidator`, params)
+    .then((response) => response.data);
+};

@@ -23,8 +23,22 @@ module.exports = {
         "-1": "-1",
       },
       fontFamily: {
-        body: ["Open Sans", "system-ui", "sans-serif"],
-        heading: ["Open Sans", "system-ui", "sans-serif"],
+        body: ["Inter"],
+        heading: ["Inter"],
+        // body: [
+        //   "Helvetica Neue",
+        //   "Helvetica",
+        //   "Inter",
+        //   "Arial Narrow",
+        //   "sans-serif",
+        // ],
+        // heading: [
+        //   "Helvetica Neue",
+        //   "Helvetica",
+        //   "Inter",
+        //   "Arial Narrow",
+        //   "sans-serif",
+        // ],
       },
       fontSize: {
         "10px": "0.625rem",

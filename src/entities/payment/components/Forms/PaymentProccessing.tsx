@@ -18,7 +18,7 @@ export enum AddressType {
 }
 
 export function CheckoutPage() {
-  const [isOrdered, setIsOrdered] = useState(true);
+  const [isOrdered, setIsOrdered] = useState(false);
   const [orderNumber, setOrderNumber] = useState<undefined | number>(undefined);
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const [isPhoneModalOpen, setIsPhoneModalOpen] = useState(false);
