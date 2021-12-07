@@ -3,12 +3,12 @@ import {
   $dishes,
   $popularDishes,
   fetchDishesFx,
+  fetchPopularDishesFx,
   POPULAR_CATEGORY,
 } from "@features/choose-dishes/models";
-import { Dish } from "@shared/api/dishes";
 import cn from "classnames";
 import { useStore } from "effector-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { DishCard } from "../Card/DishCard";
 import { NotFound } from "../NotFound";
 import { ProductLoader } from "./ProductLoader";
@@ -20,7 +20,19 @@ export function DishesContainer() {
   const popular = useStore($popularDishes);
 
   const isDishesLoading = useStore(fetchDishesFx.pending);
-  const isPopularDishesLoading = useStore(fetchDishesFx.pending);
+  const isPopularDishesLoading = useStore(fetchPopularDishesFx.pending);
+
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    const dishesSubscribe = fetchDishesFx.fail.watch(() => {
+      setIsError(true);
+    });
+
+    return () => {
+      dishesSubscribe();
+    };
+  }, []);
 
   const filteredDishes = useMemo(() => {
     if (selectedCategory === POPULAR_CATEGORY.category) return popular;
@@ -32,12 +44,16 @@ export function DishesContainer() {
       ? isPopularDishesLoading
       : isDishesLoading;
 
-  if (!filteredDishes?.length) {
+  if (!isLoading && !filteredDishes?.length) {
     //TODO: Уточнить текстовки у бизнеса
     return (
       <div className="bg-gray-100 flex-grow min-h-full pt-6 pb-8 px-4 lg:p-8">
         <NotFound
-          text="Меню для данной категории отсутствует"
+          text={
+            isError
+              ? "Ошибка при получении меню, перезагрузите страницу"
+              : "Меню для выбранной категории отсутствует"
+          }
           className="w-7/12 mx-auto"
         />
       </div>

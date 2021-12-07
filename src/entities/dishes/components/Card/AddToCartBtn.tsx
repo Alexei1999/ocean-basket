@@ -16,7 +16,7 @@ export const AddToCartBtn: React.FC<Props> = ({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "py-4 px-5 w-full flex items-center justify-center text-xs font-light text-light bg-green-600 hover:bg-accent-hover transition-colors duration-300 focus:outline-none focus:bg-accent-hover",
+        "py-4 px-7 w-full flex items-center justify-center text-xs font-light text-light bg-green-600 hover:bg-accent-hover transition-colors duration-300 focus:outline-none focus:bg-accent-hover",
         className,
         {
           "border !bg-gray-300 hover:!bg-gray-300 border-border-400 !text-body cursor-not-allowed":
@@ -24,7 +24,7 @@ export const AddToCartBtn: React.FC<Props> = ({
         }
       )}
     >
-      <span>В корзину</span>
+      <span className="whitespace-nowrap">В корзину</span>
     </button>
   );
 };

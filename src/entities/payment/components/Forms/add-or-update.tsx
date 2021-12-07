@@ -3,7 +3,7 @@ import Button from "@shared/button";
 import classNames from "classnames";
 import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import PhoneInput from "react-phone-input-2";
 
 const RUS_PHONE_REGEXP = /\d{11}$/;

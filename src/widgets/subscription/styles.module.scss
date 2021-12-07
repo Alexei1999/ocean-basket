@@ -24,5 +24,16 @@
 }
 
 .instagram {
+  &Block {
+    width: 376px;
+    height: 376px;
+  }
+  &Cover {
+    height: 54px;
+  }
   max-width: 300px;
+}
+
+.emailError {
+  margin-bottom: -26px;
 }

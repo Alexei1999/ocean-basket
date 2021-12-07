@@ -24,7 +24,7 @@ function ContactsBlock({
   return (
     <div className={classNames(className)}>
       <div className="text-2xl font-bold">{country}</div>
-      <div className="flex pt-9 justify-between text-base font-bold">
+      <div className="flex pt-9 justify-between text-base font-bold pb-6">
         <span className="text-base font-bold w-8/12">Адрес</span>
         <span className="text-base font-bold w-4/12">Телефон</span>
       </div>
@@ -36,7 +36,14 @@ function ContactsBlock({
               <span className="w-4/12">{item[1]}</span>
             </div>
           ) : (
-            <div className="pt-6 pb-4 text-base font-medium">{item}</div>
+            <div
+              className={classNames(
+                idx && "pt-6",
+                "pb-4 text-base font-medium"
+              )}
+            >
+              {item}
+            </div>
           )
         )}
       </div>
@@ -52,7 +59,6 @@ function ContactsBlock({
 }
 
 export const ruContats = [
-  "Алматы",
   ["ул. Мясницкая, д. 11, 1 этаж, м. Лубянка", "+7 (977) 456 2221"],
 ] as (string | [string, string])[];
 export const kzContats = [

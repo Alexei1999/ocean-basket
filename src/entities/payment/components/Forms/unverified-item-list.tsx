@@ -1,7 +1,10 @@
 import ItemCard from "./item-card";
 import { ItemInfoRow } from "./item-info-row";
 import usePrice from "@entities/cart/lib/use-price";
-import { EmptyCartPanel } from "@entities/cart/components/cart-sidebar-view";
+import {
+  $promocode,
+  EmptyCartPanel,
+} from "@entities/cart/components/cart-sidebar-view";
 import { useStore } from "effector-react";
 import { $cartSizes, $cartItems } from "@features/choose-dishes/models";
 import { DishStatus } from "@shared/api/dishes";
@@ -9,6 +12,7 @@ import { DishStatus } from "@shared/api/dishes";
 export const UnverifiedItemList = () => {
   const cartSizes = useStore($cartSizes);
   const cartItems = useStore($cartItems);
+  const promocode = useStore($promocode);
 
   const { price: delivery } = usePrice({
     amount: 0,
@@ -39,7 +43,21 @@ export const UnverifiedItemList = () => {
           ))
         )}
       </div>
+
       <div className="space-y-2 mt-4">
+        {promocode && (
+          <div className="max-w-full">
+            <ItemInfoRow
+              keyClassName="text-gray-500"
+              valueClassName="text-body text-sm font-medium"
+              title="Промокод"
+              value={promocode?.promocode}
+            />
+            <p className="text-body text-sm text-end font-medium pt-1 ">
+              {promocode?.promocodeText}
+            </p>
+          </div>
+        )}
         <ItemInfoRow
           keyClassName="text-gray-500"
           title={"Доставка"}

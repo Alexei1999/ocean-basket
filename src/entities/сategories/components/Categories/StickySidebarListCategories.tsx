@@ -21,7 +21,7 @@ export function StickySidebarListCategories({
   if (loading) {
     return (
       <div className="hidden xl:block max-h-full pl-32">
-        <div className="w-72 mt-8">
+        <div className="w-64 mt-8">
           <CategoriesLoader />
         </div>
       </div>

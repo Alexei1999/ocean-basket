@@ -17,15 +17,11 @@ export function PromotionModal({
 }) {
   return (
     <Modal open={isOpen && Boolean(promotion)} onClose={() => setIsOpen(false)}>
-      <div className="p-5 sm:p-8 bg-light min-h-screen md:min-h-0 max-w-3xl">
+      <div className="p-5 sm:p-8 bg-light min-h-screen md:min-h-0 max-w-3xl rounded-2xl">
         <div className="flex justify-between">
           <h1 className="text-heading font-bold text-xl mb-4 sm:mb-6 pr-10">
             {promotion?.title}
           </h1>
-          <CloseIcon
-            className="w-3 h-3 cursor-pointer"
-            onClick={() => setIsOpen(false)}
-          />
         </div>
         <p className="max-w-lg pr-8">{promotion?.description}</p>
         {Boolean(promotion?.basket.length) && (

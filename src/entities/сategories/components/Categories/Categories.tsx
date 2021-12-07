@@ -1,6 +1,7 @@
 import { $categories, fetchCategoriesFx } from "@features/choose-dishes/models";
 import { ErrorMessage } from "@shared/components/ErrorMessage";
 import { useStore } from "effector-react";
+import { useEffect, useState } from "react";
 import { StickySidebarListCategories } from "./StickySidebarListCategories";
 
 type CategoriesProps = {
@@ -11,7 +12,20 @@ export function Categories({ className }: CategoriesProps) {
   const categories = useStore($categories);
   const isCategoriesLoading = useStore(fetchCategoriesFx.pending);
 
-  // if (error) return <ErrorMessage message={error.message} />;
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    const categories = fetchCategoriesFx.failData.watch(() => {
+      setIsError(true);
+    });
+    return () => {
+      categories();
+    };
+  }, []);
+
+  if (isError) {
+    return null;
+  }
 
   return (
     <StickySidebarListCategories

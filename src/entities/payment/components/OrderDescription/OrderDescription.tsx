@@ -8,14 +8,13 @@ import dayjs, { Dayjs } from "dayjs";
 import { useStore } from "effector-react";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { $phone } from "../Forms/add-or-update";
 import { formatAddress } from "../Forms/address-card";
 import { $form } from "../Forms/address-form";
 import { $schedule } from "../Forms/schedule-grid";
 
 import styles from "./styles.module.scss";
 
-dayjs.locale("ru");
+import "dayjs/locale/ru";
 
 const Details = ({
   className,

@@ -13,15 +13,13 @@ type DishCardProps = {
   className?: string;
 };
 
-export const DishCard = React.memo(({ product, className }: DishCardProps) => {
-  const { name, photo, description, status, prices } = product ?? {};
-
-  const [isDisplayed, setIsDisplayed] = useState<boolean>(false);
+export const useObserver = () => {
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [isStartLoading, setIsStartLoading] = useState<boolean>(false);
 
   const [oberver, setObserver] = useState<IntersectionObserver | null>(null);
 
-  const updateRef = useCallback(
+  const containerRef = useCallback(
     (ref: HTMLElement | null) => {
       if (oberver && ref) {
         oberver.unobserve(ref);
@@ -34,10 +32,10 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
   useEffect(() => {
     const intObs = new IntersectionObserver((entries) => {
       if (entries.some((entry) => entry.isIntersecting)) {
-        setIsDisplayed(true);
+        setIsVisible(true);
         setIsStartLoading(true);
       } else {
-        setIsDisplayed(false);
+        setIsVisible(false);
       }
     });
 
@@ -48,8 +46,25 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
     };
   }, []);
 
+  return useMemo(
+    () => ({
+      containerRef,
+      isVisible,
+      isStartLoading,
+    }),
+    [containerRef, isVisible, isStartLoading]
+  );
+};
+
+export const DishCard = React.memo(({ product, className }: DishCardProps) => {
+  const { name, photo, description, status, prices } = product ?? {};
+
+  const [isDisplaying, setIsDisplaying] = useState<boolean>(true);
+
+  const { containerRef, isVisible, isStartLoading } = useObserver();
+
   const onImgaeErrorHandle = useCallback(() => {
-    setIsDisplayed(false);
+    setIsDisplaying(false);
   }, []);
 
   function handleProductQuickView() {}
@@ -66,7 +81,7 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
 
   return (
     <article
-      ref={updateRef}
+      ref={containerRef}
       className={cn(
         "product-card cart-type-helium border border-border-200 h-full bg-light overflow-hidden transition-shadow duration-200 hover:shadow-sm flex flex-col",
         styles.roundedXl,
@@ -79,12 +94,12 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
       >
         <span className="sr-only">{name}</span>
         <img
-          src={isStartLoading && photo ? photo : productIcon}
+          src={isDisplaying && isStartLoading && photo ? photo : productIcon}
           onError={onImgaeErrorHandle}
           alt={name}
           className={classNames(
             "product-image w-full h-full object-cover",
-            !isDisplayed && "hidden",
+            !isVisible && "hidden",
             styles.image
           )}
         />

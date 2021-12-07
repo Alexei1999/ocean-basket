@@ -70,6 +70,7 @@ export type OrderType = Omit<FormValues, "title"> & {
   time: string;
   phone: string;
 } & {
+  promocode: string;
   payment: string;
 };
 
@@ -89,4 +90,8 @@ export const verifyPromocode = (
   return baseApi
     .post(`${apiBaseUrl}/promocodes/promocodeValidator`, params)
     .then((response) => response.data);
+};
+
+export const postSubscribe = (params: string) => {
+  return baseApi.post(`${apiBaseUrl}/subscribers/submit`, { email: params });
 };

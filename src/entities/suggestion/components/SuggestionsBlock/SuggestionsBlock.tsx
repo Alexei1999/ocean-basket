@@ -27,12 +27,6 @@ export function SuggestionsBlock({ dishes }: { dishes: Dish[] }) {
 
   return (
     <div>
-      {Boolean(dishes[0]) && (
-        <>
-          <SuggestionsCategory name="Наше предложение" />
-          <SuggestionsAction item={dishes[0]} onClick={addProductToCart} />
-        </>
-      )}
       {Boolean(entries.length) &&
         entries.map(([category, dishes], idx) => (
           <React.Fragment key={idx}>

@@ -15,6 +15,7 @@ import { ValidationError } from "@entities/payment/components/Forms/place-order-
 import { createEffect, createEvent, createStore } from "effector";
 import { verifyPromocode } from "@shared/api/dishes";
 import Button from "@shared/button";
+import { toast } from "react-toastify";
 
 export const EmptyCartPanel = ({
   noGutters = false,
@@ -80,7 +81,6 @@ export const CartSidebarView = ({
 
   const [isPromocodeInput, setIsPromocodeInput] = useState(false);
   const [promocode, setPromocode] = useState<string>("");
-  const [error, setError] = useState<string | undefined>();
   const [isSuccessful, setIsSuccessful] = useState<boolean>(false);
 
   const isLoading = useStore(verifyPromocodeFx.pending);
@@ -91,7 +91,8 @@ export const CartSidebarView = ({
       setIsSuccessful(true);
     },
     onFail: () => {
-      setError("Неверный промокод");
+      setPromocode("");
+      toast.error("Неверный промокод");
     },
   });
 
@@ -102,7 +103,6 @@ export const CartSidebarView = ({
 
   function handlePromocode() {
     if (!promocode) {
-      setError("Введите промокод");
       return;
     }
 
@@ -183,7 +183,6 @@ export const CartSidebarView = ({
             </div>
           ) : isPromocodeInput ? (
             <>
-              {error && <ValidationError message={error} />}
               <div
                 className={classNames(
                   "mb-3",
@@ -195,7 +194,6 @@ export const CartSidebarView = ({
                   name={""}
                   onChange={(e) => {
                     setPromocode(e.target.value);
-                    setError(undefined);
                   }}
                   value={promocode}
                   placeholder="Введите код"
@@ -204,6 +202,7 @@ export const CartSidebarView = ({
                 <Button
                   loading={isLoading}
                   onClick={handlePromocode}
+                  disabled={!promocode}
                   className="flex items-center flex-shrink-0 h-full bg-current text-body rounded-xl px-5 hover:text-accent focus:text-accent"
                 >
                   <span className="text-light">Применить</span>

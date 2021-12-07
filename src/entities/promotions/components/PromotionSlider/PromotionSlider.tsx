@@ -7,7 +7,7 @@ import styles from "./styles.module.scss";
 
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
 import cn from "classnames";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PromotionModal } from "../PromotionsSection/PromotionModal";
 import { Promotion } from "@shared/api/dishes";
 import { useStore } from "effector-react";
@@ -37,6 +37,10 @@ export function PromotionSlider() {
   const [promotion, setPromotion] = useState<Promotion | null>(null);
 
   const promotions = useStore($promotions);
+
+  if (!promotions?.length) {
+    return null;
+  }
 
   return (
     <div className="px-6 py-5 xl:py-14 xl:px-32 border-t border-border-200 bg-light">

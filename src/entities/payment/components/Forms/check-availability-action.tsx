@@ -8,10 +8,16 @@ import { $schedule } from "./schedule-grid";
 import { $phone } from "./add-or-update";
 import { createEffect } from "effector";
 import { OrderType, postOrder } from "@shared/api/dishes";
+import { $promocode } from "@entities/cart/components/cart-sidebar-view";
+import { toast } from "react-toastify";
 
 const submitFormFx = createEffect<OrderType, { order_id?: number }>(
   (params: OrderType) => postOrder(params)
 );
+
+submitFormFx.watch(() => {
+  toast.error("Ошибка при отправке заказа, попробуйте еще раз");
+});
 
 const actionGate = createGate<{
   onSuccess: (orderNumber?: number) => void;
@@ -21,6 +27,8 @@ actionGate.state.on(submitFormFx.doneData, ({ onSuccess }, reponse) =>
   onSuccess(reponse?.order_id)
 );
 actionGate.state.on(submitFormFx.fail, ({ onFail }) => onFail());
+
+const errorToast = () => toast.error("Ошибка при отправке заказа");
 
 export const CheckAvailabilityAction: React.FC<
   Omit<ButtonProps, "onSubmit"> & { onSubmit: (orderNumber?: number) => void }
@@ -32,6 +40,7 @@ export const CheckAvailabilityAction: React.FC<
   const form = useStore($form);
   const schedule = useStore($schedule);
   const phone = useStore($phone);
+  const promocode = useStore($promocode);
 
   const isLoading = useStore(submitFormFx.pending);
 
@@ -76,7 +85,7 @@ export const CheckAvailabilityAction: React.FC<
       phone: `+${phone!}`,
       persons_number: 2,
       payment: "payment",
-      // promocode: "qwetyrbt",
+      promocode: promocode?.promocode!,
       // dishes: cart,
     });
     // onSubmit?.();

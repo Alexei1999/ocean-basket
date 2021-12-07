@@ -14,8 +14,6 @@ import { ValidationError } from "./place-order-action";
 
 export type FormValues = {
   title: string;
-  city: string;
-  restaurant: string;
   street: string;
   building: string;
   flat: string;
@@ -28,8 +26,6 @@ export type FormValues = {
 
 const addressSchema = yup.object().shape({
   title: yup.string(),
-  city: yup.string().required("Город обязателен к заполнению"),
-  restaurant: yup.string().required("Ресторан обязательен к заполнению"),
   street: yup.string().required("Улица обязательна к заполнению"),
   building: yup.string().required("Дом обязателен к заполнению"),
   flat: yup.string().required("Кваритра обязательна к заполнению"),
@@ -87,20 +83,6 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
       >
         {({ register, watch, formState: { errors } }) => (
           <>
-            <Input
-              label={"Город"}
-              {...register("city")}
-              error={errors.city?.message!}
-              variant="outline"
-              className="col-span-2"
-            />
-            <Input
-              label={"Ресторан"}
-              {...register("restaurant")}
-              error={errors.restaurant?.message!}
-              variant="outline"
-              className="col-span-2"
-            />
             <Input
               label={"Улица"}
               {...register("street")}
