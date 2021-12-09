@@ -3,16 +3,8 @@ import { Dish } from "@shared/api/dishes";
 import { useEffect, useMemo } from "react";
 import Attribute from "./attribute";
 
-export default function VariationPrice({
-  prices,
-  active,
-  onChange,
-}: {
-  prices: Dish["prices"];
-  active: null | (Dish["prices"][number] & { idx: number });
-  onChange: (price: Dish["prices"][number] & { idx: number }) => void;
-}) {
-  const mappedPrices = useMemo(
+export const useSortedPrices = (prices: Dish["prices"]) => {
+  return useMemo(
     () =>
       (prices || [])
         .map((price, idx) => {
@@ -28,9 +20,28 @@ export default function VariationPrice({
         })
         .filter(
           ({ weight, rouble_price }) => !isNaN(weight) && !isNaN(rouble_price)
-        ),
+        )
+        .sort((a, b) => a.rouble_price - b.rouble_price),
     [prices]
   );
+};
+
+export default function VariationPrice({
+  prices,
+  active,
+  onChange,
+}: {
+  prices: Dish["prices"];
+  active: null | (Dish["prices"][number] & { idx: number });
+  onChange: (price: Dish["prices"][number] & { idx: number }) => void;
+}) {
+  const mappedPrices = useSortedPrices(prices);
+
+  useEffect(() => {
+    if (!active && mappedPrices.length > 0) {
+      onChange(mappedPrices[0].price);
+    }
+  }, [mappedPrices, onChange, active]);
 
   if (mappedPrices.length === 0) return null;
 

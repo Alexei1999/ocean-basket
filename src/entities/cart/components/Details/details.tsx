@@ -1,4 +1,4 @@
-import { Dish } from "@shared/api/dishes";
+import { Dish, DishStatus } from "@shared/api/dishes";
 import classNames from "classnames";
 import { scroller } from "react-scroll";
 import { Waypoint } from "react-waypoint";
@@ -8,8 +8,9 @@ import Truncate from "./truncate";
 import VariationPrice from "./variation-price";
 import { AddToCart } from "../Buttons/AddToCart";
 import { useState } from "react";
-import VariationGroups from "./variation-groups";
+import ModifierGroups from "./variation-groups";
 import { ModifierType, PickedModifier } from "@features/choose-dishes/models";
+import { AddToCartBig } from "../Buttons/AddToCartBig";
 
 type Props = {
   product: Dish;
@@ -76,7 +77,7 @@ const Details: React.FC<Props> = ({
             )}
           </div>
 
-          <div className="product-gallery h-full">
+          <div className="product-gallery">
             <div className="w-full h-full flex items-center justify-center">
               <img
                 src={photo ?? productSvg}
@@ -103,7 +104,7 @@ const Details: React.FC<Props> = ({
                     prices={prices}
                   />
                 </div>
-                <VariationGroups
+                <ModifierGroups
                   setActiveModifier={setActiveModifier}
                   activeModifier={activeModifier}
                   modifiers={modifiers}
@@ -111,10 +112,17 @@ const Details: React.FC<Props> = ({
               </>
             </div>
           </Waypoint>
-          {true && (
+          {
             <div className="mt-4 w-full md:mt-6 flex flex-col lg:flex-row items-center justify-between">
-              <div className="mb-3 lg:mb-0 w-full lg:max-w-[400px]">
-                <AddToCart data={product} />
+              <div className="mb-3 lg:mb-0 w-full">
+                <AddToCartBig
+                  active={activePrice}
+                  product={product}
+                  activeModifiers={activeModifier}
+                  disabled={
+                    product.status !== DishStatus.Active && !prices.length
+                  }
+                />
               </div>
 
               {/* <div className="flex">
@@ -132,7 +140,7 @@ const Details: React.FC<Props> = ({
               </button> */}
               {/* </div> */}
             </div>
-          )}
+          }
         </div>
       </div>
     </article>

@@ -12,10 +12,7 @@ import Details from "./details";
 const getModifiersFx = createEffect(getModifiers);
 export const $modifiers = createStore<ModifierType[]>([]).on(
   getModifiersFx.doneData,
-  (_, modifiers) => {
-    console.log(modifiers, "modifiers");
-    return modifiers;
-  }
+  (_, modifiers) => modifiers
 );
 
 interface ProductPopupProps {

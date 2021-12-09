@@ -3,10 +3,12 @@ import { AddToCart } from "../../../cart/components/Buttons/AddToCart";
 import productIcon from "@assets/product.svg";
 
 import styles from "./styles.module.scss";
-import usePrice from "@entities/cart/lib/use-price";
+import usePrice, { formatPrice } from "@entities/cart/lib/use-price";
 import { Dish, DishStatus } from "@shared/api/dishes";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
+import { useSortedPrices } from "@entities/cart/components/Details/variation-price";
+import { onDishModalOpen } from "@entities/cart/components/Details/add-dish-modal";
 
 type DishCardProps = {
   product: Dish;
@@ -59,6 +61,20 @@ export const useObserver = () => {
 export const DishCard = React.memo(({ product, className }: DishCardProps) => {
   const { name, photo, description, status, prices } = product ?? {};
 
+  const mappedPrices = useSortedPrices(prices);
+
+  const price = useMemo(() => {
+    if (mappedPrices.length === 0) return;
+
+    const price = formatPrice({
+      amount: mappedPrices[0].rouble_price,
+      currencyCode: "RUB",
+      locale: "ru",
+    });
+
+    return mappedPrices.length > 1 ? `от ${price}` : price;
+  }, []);
+
   const [isDisplaying, setIsDisplaying] = useState<boolean>(true);
 
   const { containerRef, isVisible, isStartLoading } = useObserver();
@@ -67,17 +83,9 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
     setIsDisplaying(false);
   }, []);
 
-  function handleProductQuickView() {}
-
-  // const { price: deliveryPrice } = usePrice({
-  //   amount: deliveryFee ?? 0,
-  // });
-  // const { price: discountPrice } = usePrice({
-  //   amount: discount ?? 0,
-  // });
-  const { price: dishPrice } = usePrice({
-    amount: parseInt(prices?.[0].rouble_price) ?? 0,
-  });
+  function handleProductQuickView() {
+    onDishModalOpen(product);
+  }
 
   return (
     <article
@@ -145,14 +153,13 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
               </del>
             )} */}
             <span className="text-body font-medium text-sm  md:text-lg">
-              {false ? `от ${dishPrice}` : dishPrice}
-              {/* {isApproximate ? `от ${dishPrice}` : dishPrice} */}
+              {price}
             </span>
           </div>
-          {status === DishStatus.Active ? (
+          {status === DishStatus.Active && Boolean(mappedPrices.length) ? (
             <AddToCart data={product} />
           ) : (
-            <div className="bg-red-500 rounded text-xs text-light px-2 py-1">
+            <div className="text-muted bg-gray-100 rounded-full text-xs py-2 px-4">
               Нет в наличии
             </div>
           )}

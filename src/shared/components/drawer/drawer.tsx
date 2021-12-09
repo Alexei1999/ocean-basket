@@ -73,7 +73,7 @@ export const Drawer: FC<DrawerProps> = ({
                   variant === "right" ? "end-0" : "start-0"
                 )}
               >
-                <div className="h-full w-screen max-w-xs">
+                <div className="h-full w-screen max-w-sm">
                   <div className="h-full flex flex-col text-base bg-light shadow-xl">
                     <Scrollbar className="w-full h-full">{children}</Scrollbar>
                   </div>

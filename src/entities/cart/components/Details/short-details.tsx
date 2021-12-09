@@ -4,7 +4,7 @@ import productSvg from "@assets/product.svg";
 
 import cn from "classnames";
 import VariationPrice from "./variation-price";
-import VariationGroups from "./variation-groups";
+import ModifierGroups from "./variation-groups";
 import { AddToCart } from "../Buttons/AddToCart";
 
 interface ShortDetailsProps {

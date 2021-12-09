@@ -22,8 +22,6 @@ export const AddDishModal = () => {
 
   if (!currentDish) return null;
 
-  console.log(currentDish, "currentDish");
-
   return (
     <Modal showClose open={isOpen} onClose={onDishModalClose}>
       <Popup product={currentDish} />

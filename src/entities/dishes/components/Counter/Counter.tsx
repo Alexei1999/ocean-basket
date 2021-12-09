@@ -54,6 +54,7 @@ export const Counter: React.FC<CounterProps> = ({
     >
       <button
         onClick={onDecrement}
+        disabled={disabled}
         className={cn(
           "cursor-pointer p-2 transition-colors duration-200 focus:outline-none hover:bg-accent-hover",
           {

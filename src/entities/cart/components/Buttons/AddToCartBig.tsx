@@ -1,9 +1,12 @@
+import { AddToCartBtnBig } from "@entities/dishes/components/Card/AddToCartBtnBig";
 import Modal from "@entities/payment/components/Forms/modal";
+import { createPickedDish } from "@features/choose-dishes/lib";
 import {
   $cart,
   $cartSizes,
   addProductToCart,
   deleteLastProductFromCart,
+  PickedModifier,
   removeProductFromCart,
 } from "@features/choose-dishes/models";
 import { Dish, DishStatus } from "@shared/api/dishes";
@@ -17,42 +20,62 @@ import Popup from "../Details/popup";
 import styles from "./styles.module.scss";
 
 interface Props {
-  data: Dish;
+  product: Dish;
   counterClass?: string;
   variation?: any;
+  disabled?: boolean;
+  active: null | (Dish["prices"][number] & { idx: number });
+  activeModifiers: {
+    [id: string]: PickedModifier;
+  };
 }
 
-export const AddToCart = ({ data, counterClass }: Props) => {
+export const AddToCartBig = ({
+  counterClass,
+  product,
+  active,
+  disabled,
+  activeModifiers,
+}: Props) => {
   const { unicItemsNumber } = useStore($cartSizes);
 
   const handleAddClick = (
     e: React.MouseEvent<HTMLButtonElement | MouseEvent>
   ) => {
     e.stopPropagation();
-    onDishModalOpen(data);
+    if (!active) return;
+
+    addProductToCart(
+      createPickedDish(
+        product,
+        active.weight,
+        active.rouble_price,
+        Object.values(activeModifiers)
+      )
+    );
   };
   const handleRemoveClick = (e: any) => {
     e.stopPropagation();
-    deleteLastProductFromCart(data);
+    deleteLastProductFromCart(product);
   };
 
-  const count = unicItemsNumber[data.id];
+  const count = unicItemsNumber[product.id];
 
   return (
     <>
-      {false ? (
+      {typeof count === "number" && count > 0 && !disabled ? (
         <Counter
           value={count ?? 0}
-          variant="argon"
+          variant="big"
           onDecrement={handleRemoveClick}
-          className={cn(styles.counter, "max-h-8", counterClass)}
+          className={cn(counterClass)}
           onIncrement={handleAddClick}
-          disabled={false}
+          disabled={disabled}
         />
       ) : (
-        <AddToCartBtn
+        <AddToCartBtnBig
           className={cn(styles.button, "max-h-8")}
-          disabled={data.status !== DishStatus.Active}
+          disabled={disabled}
           onClick={handleAddClick}
         />
       )}

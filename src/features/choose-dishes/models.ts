@@ -62,7 +62,7 @@ export const $promotions = createStore<Promotion[] | null>(null).on(
   (_, data) => data
 );
 
-export const addProductToCart = createEvent<PickedDish>();
+export const addProductToCart = createEvent<Omit<PickedDish, "count">>();
 export const removeProductFromCart = createEvent<PickedDish>();
 export const deleteLastProductFromCart = createEvent<Dish>();
 export const dropProductFromCart = createEvent<PickedDish>();
@@ -97,7 +97,7 @@ export const $cart = createStore<PickedDish[]>(
     );
 
     if (indexOfItem === -1) {
-      return [...state, pickedDish];
+      return [...state, { ...pickedDish, count: 1 }];
     }
 
     return [
@@ -139,27 +139,35 @@ export const $cart = createStore<PickedDish[]>(
     return [...state.slice(0, indexOfItem), ...state.slice(indexOfItem + 1)];
   })
   .on(deleteLastProductFromCart, (state, product) => {
-    const indexRight =
-      state.length -
-      state
-        .reverse()
-        .findIndex((item: PickedDish) => item.product.id === product.id);
+    const indexRight = [...state]
+      .reverse()
+      .findIndex((item: PickedDish) => item.product.id === product.id);
+
+    console.log(" --- ");
+    console.log(product, "product");
+    console.log(state, "state");
+    console.log(indexRight, "indexRight");
 
     if (indexRight === -1) {
       return state;
     }
 
-    if (state[indexRight].count === 1) {
-      return [...state.slice(0, indexRight), ...state.slice(indexRight + 1)];
+    const reversedIndex = state.length - indexRight - 1;
+
+    if (state[reversedIndex].count === 1) {
+      return [
+        ...state.slice(0, reversedIndex),
+        ...state.slice(reversedIndex + 1),
+      ];
     }
 
     return [
-      ...state.slice(0, indexRight),
+      ...state.slice(0, reversedIndex),
       {
-        ...state[indexRight],
-        count: state[indexRight].count - 1,
+        ...state[reversedIndex],
+        count: state[reversedIndex].count - 1,
       },
-      ...state.slice(indexRight + 1),
+      ...state.slice(reversedIndex + 1),
     ];
   })
   .on(dropCart, () => []);

@@ -1,7 +1,7 @@
 import { ModifierType, PickedModifier } from "@features/choose-dishes/models";
 import Attribute from "./attribute";
 
-const VariationGroups = ({
+const ModifierGroups = ({
   modifiers,
   setActiveModifier,
   activeModifier,
@@ -17,12 +17,16 @@ const VariationGroups = ({
   return (
     <>
       {modifiers.map((modifier, index) => {
-        const { option1, option2, option3, option4, option5 } = modifier;
-        const options = [option1, option2, option3, option4, option5].filter(
-          (option) => option
-        );
+        const { option1, option2, option3, option4, option5, id } = modifier;
+        const optionsObject = [
+          option1,
+          option2,
+          option3,
+          option4,
+          option5,
+        ].filter((option) => option);
 
-        if (!options.length) {
+        if (!optionsObject.length) {
           return null;
         }
 
@@ -35,7 +39,7 @@ const VariationGroups = ({
               {modifier.name}
             </span>
             <div className="pt-3 w-full flex flex-wrap">
-              {options.map((option) => (
+              {optionsObject.map((option) => (
                 <Attribute
                   className="mt-3 mr-3"
                   active={activeModifier[modifier.id]?.option === option}
@@ -65,4 +69,4 @@ const VariationGroups = ({
   );
 };
 
-export default VariationGroups;
+export default ModifierGroups;
