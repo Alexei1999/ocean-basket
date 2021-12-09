@@ -1,8 +1,22 @@
+import { onDishModalOpen } from "@entities/cart/components/Details/add-dish-modal";
+import { isDishValid } from "@entities/cart/components/Details/details";
+import { filterPrices } from "@entities/cart/components/Details/variation-price";
 import { CloseIcon } from "@entities/cart/components/icons/close-icon";
 import Modal from "@entities/payment/components/Forms/modal";
-import { addProductToCart } from "@features/choose-dishes/models";
+import { addProductToCart, PickedDish } from "@features/choose-dishes/models";
 import { Dish, Promotion } from "@shared/api/dishes";
 import Button from "@shared/button";
+import { useMemo } from "react";
+
+export const pickDishForce = (dish: Dish): Omit<PickedDish, "count"> => {
+  const filteredPrice = filterPrices(dish.prices);
+  return {
+    price: `${filteredPrice[0].rouble_price}`,
+    product: dish,
+    weight: `${filteredPrice[0].weight}`,
+    modifiers: [],
+  };
+};
 
 export function PromotionModal({
   isOpen,
@@ -15,6 +29,11 @@ export function PromotionModal({
   onProductAdd?: () => void;
   promotion: Promotion | null;
 }) {
+  const filteredBasket = useMemo(
+    () => (promotion?.basket ?? []).filter((dish) => isDishValid(dish)),
+    [promotion]
+  );
+
   return (
     <Modal open={isOpen} onClose={() => setIsOpen(false)}>
       <div className="p-5 sm:p-8 bg-light min-h-screen md:min-h-0 max-w-3xl rounded-2xl">
@@ -27,13 +46,12 @@ export function PromotionModal({
         {Boolean(promotion?.basket.length) && (
           <Button
             className="mt-16 text-accent hover:text-accent-hover"
+            disabled={filteredBasket.length === 0}
             onClick={() => {
-              if (promotion!.basket.length) {
-                promotion!.basket.forEach(
-                  (basket: Dish) => {}
-                  // addProductToCart(basket)
-                );
-              }
+              filteredBasket.forEach((basket: Dish) => {
+                setIsOpen(false);
+                addProductToCart(pickDishForce(basket));
+              });
               setIsOpen(false);
               onProductAdd?.();
             }}

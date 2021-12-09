@@ -19,10 +19,9 @@ export const isTwoPickedDishesEqual = (
 
   if (
     dish1.modifiers?.some(({ id, option }) => {
-      const found = dish2.modifiers?.find(
+      return !dish2.modifiers?.find(
         ({ id: id2, option: option2 }) => id === id2 && option === option2
       );
-      return !found;
     })
   ) {
     return false;

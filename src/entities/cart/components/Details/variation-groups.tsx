@@ -1,6 +1,18 @@
 import { ModifierType, PickedModifier } from "@features/choose-dishes/models";
 import Attribute from "./attribute";
 
+export const createPickedModifier = (
+  modifier: ModifierType,
+  option: string | null
+): PickedModifier => {
+  return {
+    id: modifier.id,
+    dish_id: modifier.dish_id,
+    name: modifier.name,
+    option: option ?? undefined,
+  };
+};
+
 const ModifierGroups = ({
   modifiers,
   setActiveModifier,
@@ -51,12 +63,7 @@ const ModifierGroups = ({
                       [modifier.id]:
                         option === activeModifier[modifier.id]?.option
                           ? undefined
-                          : {
-                              id: modifier.id,
-                              dish_id: modifier.dish_id,
-                              name: modifier.name,
-                              option: option,
-                            },
+                          : createPickedModifier(modifier, option),
                     });
                   }}
                 />

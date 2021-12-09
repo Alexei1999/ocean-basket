@@ -1,4 +1,3 @@
-import { OrderOverviewGate } from "@entities/payment/components/OrderOverview";
 import { onCategoryClick } from "@entities/сategories/components/TreeMenu/TreeMenuItem";
 import {
   Category,
@@ -132,9 +131,24 @@ export const $cart = createStore<PickedDish[]>(
     ];
   })
   .on(dropProductFromCart, (state, product) => {
+    console.log(" --- ");
+    console.log(product);
+    console.log(state);
+
     const indexOfItem = state.findIndex((item: PickedDish) =>
       isTwoPickedDishesEqual(item, product)
     );
+
+    console.log("indexOfItem", indexOfItem);
+
+    if (indexOfItem === -1) {
+      return state;
+    }
+
+    console.log("new state", [
+      ...state.slice(0, indexOfItem),
+      ...state.slice(indexOfItem + 1),
+    ]);
 
     return [...state.slice(0, indexOfItem), ...state.slice(indexOfItem + 1)];
   })
@@ -142,11 +156,6 @@ export const $cart = createStore<PickedDish[]>(
     const indexRight = [...state]
       .reverse()
       .findIndex((item: PickedDish) => item.product.id === product.id);
-
-    console.log(" --- ");
-    console.log(product, "product");
-    console.log(state, "state");
-    console.log(indexRight, "indexRight");
 
     if (indexRight === -1) {
       return state;
@@ -215,4 +224,21 @@ export const $category = createStore<string>(POPULAR_CATEGORY.category)
   .on(onCategoryClick, (_, category) => category)
   .on(onResetCategory, () => POPULAR_CATEGORY.category);
 
-export const $cartItems = $cart.map((state) => Object.values(state));
+export const $cartItems = $cart.map<{
+  list: PickedDish[];
+  unicItemsList: Dish[];
+}>((state) => {
+  const values = Object.values(state);
+
+  const unicItems = values.reduce<{ [key: number]: Dish }>((obj, item) => {
+    return {
+      ...obj,
+      [item.product.id]: item.product,
+    };
+  }, {});
+
+  return {
+    list: values,
+    unicItemsList: Object.values(unicItems),
+  };
+});

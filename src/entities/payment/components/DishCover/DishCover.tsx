@@ -1,8 +1,9 @@
 import styles from "./styles.module.scss";
 import cover from "./cover.png";
 import classNames from "classnames";
+import { forwardRef, useCallback, useEffect, useRef } from "react";
 
-export function DishCover() {
+export const DishCover = forwardRef<HTMLDivElement>(() => {
   return (
     <div className={styles.container}>
       <img
@@ -12,4 +13,4 @@ export function DishCover() {
       />
     </div>
   );
-}
+});

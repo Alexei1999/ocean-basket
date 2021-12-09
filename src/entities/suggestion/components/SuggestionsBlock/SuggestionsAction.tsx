@@ -7,8 +7,8 @@ export function SuggestionsAction({
   item,
   onClick,
 }: {
-  item: Dish;
-  onClick: (item: Dish) => void;
+  item: Omit<Dish, "recommended_dishes">;
+  onClick: (item: Omit<Dish, "recommended_dishes">) => void;
 }) {
   const { price } = usePrice({
     amount: parseInt(item.prices?.[0].rouble_price) ?? 0,

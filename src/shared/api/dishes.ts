@@ -23,7 +23,7 @@ export type Dish = {
   }[];
   photo: string | null;
   recommended: string | null;
-  recommended_dishes: Omit<Dish, "recommended_dishes">[];
+  recommended_dishes?: Omit<Dish, "recommended_dishes">[];
   status: DishStatus;
   category: string;
   created_at: string;

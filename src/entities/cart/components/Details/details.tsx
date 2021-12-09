@@ -2,15 +2,19 @@ import { Dish, DishStatus } from "@shared/api/dishes";
 import classNames from "classnames";
 import { scroller } from "react-scroll";
 import { Waypoint } from "react-waypoint";
-import BackButton from "./back-button";
 import productSvg from "@assets/product.svg";
 import Truncate from "./truncate";
-import VariationPrice from "./variation-price";
-import { AddToCart } from "../Buttons/AddToCart";
+import VariationPrice, { filterPrices } from "./variation-price";
 import { useState } from "react";
 import ModifierGroups from "./variation-groups";
 import { ModifierType, PickedModifier } from "@features/choose-dishes/models";
 import { AddToCartBig } from "../Buttons/AddToCartBig";
+
+export const isDishValid = (dish: Dish) => {
+  const filteredPrices = filterPrices(dish.prices);
+
+  return filteredPrices.length > 0 && dish.status === DishStatus.Active;
+};
 
 type Props = {
   product: Dish;
@@ -25,7 +29,9 @@ const Details: React.FC<Props> = ({
   modifiers,
   setShowStickyShortDetails,
 }) => {
-  const { name, description, prices, photo, status } = product ?? {};
+  const [isError, setIsError] = useState(false);
+
+  const { name, description, prices, photo } = product ?? {};
 
   const [activePrice, setActivePrice] = useState<
     null | (Dish["prices"][number] & { idx: number })
@@ -80,7 +86,8 @@ const Details: React.FC<Props> = ({
           <div className="product-gallery">
             <div className="w-full h-full flex items-center justify-center">
               <img
-                src={photo ?? productSvg}
+                src={!isError && photo ? photo : productSvg}
+                onError={() => setIsError(true)}
                 alt={name}
                 width={450}
                 height={450}

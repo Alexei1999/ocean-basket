@@ -11,6 +11,7 @@ import {
   dropProductFromCart,
   PickedDish,
 } from "@features/choose-dishes/models";
+import { useMemo } from "react";
 
 interface CartItemProps {
   item: PickedDish;
@@ -23,8 +24,13 @@ const CartItem = ({
   isCounter = false,
   isResult = false,
 }: CartItemProps) => {
-  const { price, count, product } = item;
+  const { price, count, product, modifiers, weight } = item;
   const { name } = product;
+
+  const modifiersString = useMemo(
+    () => modifiers.map(({ option }) => option),
+    [modifiers]
+  );
 
   const { price: formatedPrice } = usePrice({
     amount: (parseInt(price) ?? 0) * count,
@@ -73,7 +79,14 @@ const CartItem = ({
           "font-bold text-body"
         )}
       >
-        {name}
+        <div className="flex flex-col">
+          <span>
+            {name} <span className="whitespace-nowrap">{weight} гр.</span>
+          </span>
+          <span>
+            {Boolean(modifiersString.length) && modifiersString.join(", ")}
+          </span>
+        </div>
       </h3>
       <span className="ml-3 ms-auto font-bold text-body">{formatedPrice}</span>
       {!isResult && (

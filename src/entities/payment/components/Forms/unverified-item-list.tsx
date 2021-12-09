@@ -11,7 +11,7 @@ import { DishStatus } from "@shared/api/dishes";
 
 export const UnverifiedItemList = () => {
   const cartSizes = useStore($cartSizes);
-  const cartItems = useStore($cartItems);
+  const { list } = useStore($cartItems);
   const promocode = useStore($promocode);
 
   const { price: delivery } = usePrice({
@@ -34,7 +34,7 @@ export const UnverifiedItemList = () => {
             <EmptyCartPanel noGutters />
           </div>
         ) : (
-          cartItems.map((item) => (
+          list.map((item) => (
             <ItemCard
               item={item}
               key={item.product.id}

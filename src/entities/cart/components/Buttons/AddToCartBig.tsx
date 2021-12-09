@@ -50,7 +50,7 @@ export const AddToCartBig = ({
         product,
         active.weight,
         active.rouble_price,
-        Object.values(activeModifiers)
+        Object.values(activeModifiers).filter((modifier) => modifier)
       )
     );
   };

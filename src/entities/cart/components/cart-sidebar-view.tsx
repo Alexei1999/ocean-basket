@@ -77,7 +77,7 @@ export const CartSidebarView = ({
   isFlat?: boolean;
 }) => {
   const cartSizes = useStore($cartSizes);
-  const cartItems = useStore($cartItems);
+  const { list } = useStore($cartItems);
 
   const [isPromocodeInput, setIsPromocodeInput] = useState(false);
   const [promocode, setPromocode] = useState<string>("");
@@ -149,13 +149,13 @@ export const CartSidebarView = ({
           layout
           className={classNames("flex-grow", !isFlat && "pt-16")}
         >
-          {cartItems.length > 0 ? (
+          {list.length > 0 ? (
             <Scrollbar className="w-full h-full">
-              {cartItems.map((item) => (
+              {list.map((item, idx) => (
                 <CartItem
                   isCounter={isFlat}
                   item={item}
-                  key={item.product.id}
+                  key={`${item.product.id}-${item.product.name}-${idx}`}
                 />
               ))}
             </Scrollbar>

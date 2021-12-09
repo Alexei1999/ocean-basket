@@ -3,27 +3,26 @@ import { Dish } from "@shared/api/dishes";
 import { useEffect, useMemo } from "react";
 import Attribute from "./attribute";
 
+export const filterPrices = (prices: Dish["prices"]) =>
+  (prices || [])
+    .map((price, idx) => {
+      const { weight, rouble_price } = price;
+      return {
+        weight: parseInt(weight),
+        rouble_price: parseInt(rouble_price),
+        price: {
+          ...price,
+          idx,
+        },
+      };
+    })
+    .filter(
+      ({ weight, rouble_price }) => !isNaN(weight) && !isNaN(rouble_price)
+    )
+    .sort((a, b) => a.rouble_price - b.rouble_price);
+
 export const useSortedPrices = (prices: Dish["prices"]) => {
-  return useMemo(
-    () =>
-      (prices || [])
-        .map((price, idx) => {
-          const { weight, rouble_price } = price;
-          return {
-            weight: parseInt(weight),
-            rouble_price: parseInt(rouble_price),
-            price: {
-              ...price,
-              idx,
-            },
-          };
-        })
-        .filter(
-          ({ weight, rouble_price }) => !isNaN(weight) && !isNaN(rouble_price)
-        )
-        .sort((a, b) => a.rouble_price - b.rouble_price),
-    [prices]
-  );
+  return useMemo(() => filterPrices(prices), [prices]);
 };
 
 export default function VariationPrice({

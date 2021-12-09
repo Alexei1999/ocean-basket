@@ -1,33 +1,61 @@
-import { addProductToCart } from "@features/choose-dishes/models";
+import { onDishModalOpen } from "@entities/cart/components/Details/add-dish-modal";
+import {
+  $cart,
+  $cartItems,
+  $cartSizes,
+  addProductToCart,
+} from "@features/choose-dishes/models";
 import { Dish } from "@shared/api/dishes";
-import React, { useEffect } from "react";
+import { useStore } from "effector-react";
+import React, { useEffect, useMemo, useState } from "react";
 import { SuggestionsAction } from "./SuggestionsAction";
 import { SuggestionsCategory } from "./SuggestionsCategory";
 
-export function SuggestionsBlock({ dishes }: { dishes: Dish[] }) {
-  const [filteredDishes, setFilteredDishes] = React.useState<{
-    [key: string]: Dish[];
+export function SuggestionsBlock() {
+  const { unicItemsList } = useStore($cartItems);
+
+  const [categorizedDishes, setCategorizedDishes] = useState<{
+    [key: string]: Omit<Dish, "recommended_dishes">[];
   }>({});
 
   useEffect(() => {
-    setFilteredDishes(
-      dishes.reduce<{ [key: string]: Dish[] }>((acc, dish) => {
-        if (dish.category) {
-          if (!acc[dish.category]) {
-            acc[dish.category] = [];
-          }
-          acc[dish.category].push(dish);
-        }
-        return acc;
-      }, {})
-    );
-  }, [dishes]);
+    const reccomendedDishes = unicItemsList
+      .filter((item) => item.recommended_dishes)
+      .map((item) => item.recommended_dishes)
+      .flat(1)
+      .reduce<{ [K in string]: Omit<Dish, "recommended_dishes"> }>(
+        (acc, dish) => {
+          if (!dish?.id) return acc;
 
-  const entries = Object.entries(filteredDishes);
+          acc[dish.id] = dish;
+          return acc;
+        },
+        {}
+      );
+
+    const categorizedDishes = Object.values(reccomendedDishes).reduce<{
+      [key: string]: Omit<Dish, "recommended_dishes">[];
+    }>((acc, dish) => {
+      if (dish.category) {
+        if (!acc[dish.category]) {
+          acc[dish.category] = [];
+        }
+        acc[dish.category].push(dish);
+      }
+      return acc;
+    }, {});
+
+    setCategorizedDishes(categorizedDishes);
+  }, [unicItemsList]);
+
+  const entries = useMemo(
+    () => Object.entries(categorizedDishes),
+    [categorizedDishes]
+  );
 
   return (
     <div>
-      {Boolean(entries.length) &&
+      {Boolean(entries.length) ? (
         entries.map(([category, dishes], idx) => (
           <React.Fragment key={idx}>
             <SuggestionsCategory name={category} />
@@ -35,12 +63,20 @@ export function SuggestionsBlock({ dishes }: { dishes: Dish[] }) {
               <SuggestionsAction
                 key={idx}
                 item={item}
-                // onClick={addProductToCart}
-                onClick={() => {}}
+                onClick={() => {
+                  onDishModalOpen(item);
+                }}
               />
             ))}
           </React.Fragment>
-        ))}
+        ))
+      ) : (
+        <div className="w-full flex justify-center py-7 border-b border-border-200 border-opacity-75">
+          <h1 className="text-body text-lg font-bold">
+            Нет подходящих блюд для рекоммендации
+          </h1>
+        </div>
+      )}
     </div>
   );
 }

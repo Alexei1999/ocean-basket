@@ -1,16 +1,21 @@
 import usePrice from "@entities/cart/lib/use-price";
 import { PickedDish } from "@features/choose-dishes/models";
 import cn from "classnames";
+import { useMemo } from "react";
 interface Props {
   item: PickedDish;
   notAvailable?: boolean;
 }
 
 const ItemCard = ({ item, notAvailable }: Props) => {
-  const { product, count, price } = item;
-  const { price: formatedPrice } = usePrice({
-    amount: parseInt(price) * count,
-  });
+  const { product, count, price, weight, modifiers } = item;
+  const { name } = product;
+
+  const modifiersString = useMemo(
+    () => modifiers.map(({ option }) => option),
+    [modifiers]
+  );
+
   return (
     <div
       className={cn("flex justify-between py-2 items-center")}
@@ -32,7 +37,14 @@ const ItemCard = ({ item, notAvailable }: Props) => {
             {count}
           </div>
           <div className="mx-2">x</div>
-          <div className="font-medium text-body mr-3">{product.name}</div>
+          <div className="font-medium text-body mr-3 flex flex-col">
+            <span>
+              {name} <span className="whitespace-nowrap">{weight} гр.</span>
+            </span>
+            <span>
+              {Boolean(modifiersString.length) && modifiersString.join(", ")}
+            </span>
+          </div>
         </div>
       </div>
       <div

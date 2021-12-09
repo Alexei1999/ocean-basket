@@ -29,7 +29,7 @@ export function CheckoutPage() {
 
   return !isOrdered ? (
     <div className="py-8 px-4 lg:py-10 lg:px-8 xl:py-14 xl:px-16 2xl:px-20 bg-gray-100">
-      <div className="flex flex-col lg:flex-row items-center lg:items-start m-auto w-full max-w-5xl">
+      <div className="flex flex-col lg:flex-row items-center lg:items-start m-auto w-full max-w-6xl">
         <div className="lg:max-w-2xl w-full space-y-6">
           <BlocksGrid
             addLabel="Добавить адрес"

@@ -8,23 +8,16 @@ import {
 import classNames from "classnames";
 import { forward } from "effector";
 import { createGate, useGate, useStore } from "effector-react";
+import React, { useEffect, useRef } from "react";
 import style from "./styles.module.scss";
 
-export const OrderOverviewGate = createGate();
-
-forward({
-  from: OrderOverviewGate.open,
-  to: [fetchPopularDishesFx],
-});
-
-export const OrderOverview = ({ onSubmit }: { onSubmit: () => void }) => {
-  useGate(OrderOverviewGate);
-
-  const dishes = useStore($popularDishes);
-
+export const OrderOverview = React.forwardRef<
+  HTMLDivElement,
+  { onSubmit: () => void }
+>(({ onSubmit }, ref) => {
   return (
-    <div className="w-full bg-gray-100">
-      <div className="flex flex-col md:flex-row max-w-7xl w-full mx-auto py-10">
+    <div ref={ref} className="w-full bg-gray-100">
+      <div className="flex flex-col md:flex-row max-w-7xl w-full mx-auto py-10 min-h-140">
         {/* Contact form */}
         <div
           className={classNames(
@@ -42,9 +35,9 @@ export const OrderOverview = ({ onSubmit }: { onSubmit: () => void }) => {
             style.shadow
           )}
         >
-          <SuggestionsBlock dishes={dishes ?? []} />
+          <SuggestionsBlock />
         </div>
       </div>
     </div>
   );
-};
+});
