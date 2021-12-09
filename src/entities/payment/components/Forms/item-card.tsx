@@ -1,15 +1,15 @@
 import usePrice from "@entities/cart/lib/use-price";
-import { CartItemType } from "@features/choose-dishes/ui";
+import { PickedDish } from "@features/choose-dishes/models";
 import cn from "classnames";
 interface Props {
-  item: CartItemType;
+  item: PickedDish;
   notAvailable?: boolean;
 }
 
 const ItemCard = ({ item, notAvailable }: Props) => {
-  const { product, count } = item;
-  const { price } = usePrice({
-    amount: parseInt(product.prices?.[0]?.rouble_price ?? 0) * count,
+  const { product, count, price } = item;
+  const { price: formatedPrice } = usePrice({
+    amount: parseInt(price) * count,
   });
   return (
     <div

@@ -1,7 +1,10 @@
 import { FormValues } from "@entities/payment/components/Forms/address-form";
+import { ModifierType } from "@features/choose-dishes/models";
 import { baseApi } from "./base";
 
 const apiBaseUrl = "/api";
+
+export const EMPTY_STRING = "-";
 
 //уточнить статусы
 export enum DishStatus {
@@ -14,14 +17,13 @@ export type Dish = {
   name: string;
   description: string;
   prices: {
-    weight: string | "-";
-    tenge_price: string | "-";
-    rouble_price: string | "-";
+    weight: string | typeof EMPTY_STRING;
+    tenge_price: string | typeof EMPTY_STRING;
+    rouble_price: string | typeof EMPTY_STRING;
   }[];
   photo: string | null;
-  recommended_dish1: string | null;
-  recommended_dish2: string | null;
-  recommended_dish3: string | null;
+  recommended: string | null;
+  recommended_dishes: Omit<Dish, "recommended_dishes">[];
   status: DishStatus;
   category: string;
   created_at: string;
@@ -94,4 +96,12 @@ export const verifyPromocode = (
 
 export const postSubscribe = (params: string) => {
   return baseApi.post(`${apiBaseUrl}/subscribers/submit`, { email: params });
+};
+
+export const getModifiers = (id: string | number): Promise<ModifierType[]> => {
+  if (!id) throw new Error("id is required");
+
+  return baseApi
+    .get(`${apiBaseUrl}/modifiers/${id}`)
+    .then((response) => response.data);
 };

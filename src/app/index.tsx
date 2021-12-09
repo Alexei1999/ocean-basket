@@ -10,6 +10,7 @@ import { ReactNode, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react";
+import { AddDishModal } from "@entities/cart/components/Details/add-dish-modal";
 
 export const onScrollPage = createEvent();
 const $updateStore = createStore<{}>({}).on(onScrollPage, () => ({}));
@@ -34,6 +35,7 @@ const ScrollContainer = ({ children }: { children: ReactNode }) => {
 function App() {
   return (
     <div className="flex flex-col max-h-screen">
+      <AddDishModal />
       <Header />
       <ManagedDrawer />
       <ScrollContainer>

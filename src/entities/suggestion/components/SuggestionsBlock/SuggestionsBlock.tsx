@@ -35,7 +35,8 @@ export function SuggestionsBlock({ dishes }: { dishes: Dish[] }) {
               <SuggestionsAction
                 key={idx}
                 item={item}
-                onClick={addProductToCart}
+                // onClick={addProductToCart}
+                onClick={() => {}}
               />
             ))}
           </React.Fragment>

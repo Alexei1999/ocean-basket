@@ -90,6 +90,7 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
     >
       <div
         onClick={handleProductQuickView}
+        role="button"
         className="relative flex items-center justify-center w-auto h-48 sm:h-52"
       >
         <span className="sr-only">{name}</span>

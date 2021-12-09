@@ -4,6 +4,7 @@ import {
   Category,
   Dish,
   DishStatus,
+  EMPTY_STRING,
   getCategories,
   getDishes,
   getPopular,
@@ -12,13 +13,30 @@ import {
 } from "@shared/api/dishes";
 import { createEffect, createEvent, createStore, forward } from "effector";
 import { getFromStorage } from "./api";
-import { CartItemType, ChooseDishesGate } from "./ui";
+import { isTwoPickedDishesEqual } from "./lib";
 
 export const POPULAR_CATEGORY = {
   id: -1,
   category: "Популярные",
   created_at: "",
   updated_at: "",
+};
+
+export type ModifierType = {
+  id: number;
+  dish_id: number;
+  name: string;
+  option1: string | null;
+  option2: string | null;
+  option3: string | null;
+  option4: string | null;
+  option5: string | null;
+  created_at: string | null;
+  updated_at: string | null;
+};
+
+export type PickedModifier = Pick<ModifierType, "id" | "dish_id" | "name"> & {
+  option?: string;
 };
 
 export const fetchDishesFx = createEffect(getDishes);
@@ -44,93 +62,144 @@ export const $promotions = createStore<Promotion[] | null>(null).on(
   (_, data) => data
 );
 
-export const addProductToCart = createEvent<Dish>();
-export const removeProductFromCart = createEvent<Dish>();
-export const dropProductFromCart = createEvent<string | number>();
+export const addProductToCart = createEvent<PickedDish>();
+export const removeProductFromCart = createEvent<PickedDish>();
+export const deleteLastProductFromCart = createEvent<Dish>();
+export const dropProductFromCart = createEvent<PickedDish>();
 export const dropCart = createEvent();
 
-export const $cart = createStore<{
-  [id in string]: CartItemType;
-}>(getFromStorage("cart"))
+const items = getFromStorage("cart");
+
+export type PickedDish = {
+  count: number;
+  product: Dish;
+  weight: string;
+  price: string;
+  modifiers: PickedModifier[];
+};
+
+export const $cart = createStore<PickedDish[]>(
+  Array.isArray(items) ? items : []
+)
   .on(fetchDishesFx.doneData, (state, dishes) => {
     const ids = dishes.map((dish) => dish.id);
-    Object.keys(state).forEach((id) => {
-      if (!ids.includes(parseInt(id))) {
-        delete state[id];
-      }
+    return state.filter(({ product: { id } }) => {
+      return ids.includes(id);
     });
-
-    return state;
   })
-  .on(addProductToCart, (state, product) => {
-    const isProductInCart = Boolean(state[product.id]);
+  .on(addProductToCart, (state, pickedDish) => {
+    if (pickedDish.product.status !== DishStatus.Active) return;
+    if (!pickedDish.price || pickedDish.price === EMPTY_STRING) return;
+    if (!pickedDish.weight || pickedDish.weight === EMPTY_STRING) return;
 
-    if (!isProductInCart) {
-      return {
-        ...state,
-        [product.id]: { count: 1, product },
-      };
+    const indexOfItem = state.findIndex((item: PickedDish) =>
+      isTwoPickedDishesEqual(item, pickedDish)
+    );
+
+    if (indexOfItem === -1) {
+      return [...state, pickedDish];
     }
 
-    return {
-      ...state,
-      [product.id]: { count: state[product.id]!.count + 1, product },
-    };
+    return [
+      ...state.slice(0, indexOfItem),
+      {
+        ...state[indexOfItem],
+        count: state[indexOfItem].count + 1,
+      },
+      ...state.slice(indexOfItem + 1),
+    ];
   })
   .on(removeProductFromCart, (state, product) => {
-    const isProductInCart = Boolean(state[product.id]);
+    const indexOfItem = state.findIndex((item: PickedDish) =>
+      isTwoPickedDishesEqual(item, product)
+    );
 
-    if (!isProductInCart) return state;
-
-    const count = state[product.id]!.count;
-
-    if (count === 1) {
-      const { [product.id]: _, ...rest } = state;
-
-      return rest;
+    if (indexOfItem === -1) {
+      return state;
     }
 
-    return {
-      ...state,
-      [product.id]: { count: count - 1, product },
-    };
-  })
-  .on(dropProductFromCart, (state, id) => {
-    const { [id]: _, ...rest } = state;
+    if (state[indexOfItem].count === 1) {
+      return [...state.slice(0, indexOfItem), ...state.slice(indexOfItem + 1)];
+    }
 
-    return rest;
+    return [
+      ...state.slice(0, indexOfItem),
+      {
+        ...state[indexOfItem],
+        count: state[indexOfItem].count - 1,
+      },
+      ...state.slice(indexOfItem + 1),
+    ];
   })
-  .on(dropCart, () => ({}));
+  .on(dropProductFromCart, (state, product) => {
+    const indexOfItem = state.findIndex((item: PickedDish) =>
+      isTwoPickedDishesEqual(item, product)
+    );
 
-$cart.watch((state) => {
-  window.localStorage.setItem("cart", JSON.stringify(state));
-});
+    return [...state.slice(0, indexOfItem), ...state.slice(indexOfItem + 1)];
+  })
+  .on(deleteLastProductFromCart, (state, product) => {
+    const indexRight =
+      state.length -
+      state
+        .reverse()
+        .findIndex((item: PickedDish) => item.product.id === product.id);
+
+    if (indexRight === -1) {
+      return state;
+    }
+
+    if (state[indexRight].count === 1) {
+      return [...state.slice(0, indexRight), ...state.slice(indexRight + 1)];
+    }
+
+    return [
+      ...state.slice(0, indexRight),
+      {
+        ...state[indexRight],
+        count: state[indexRight].count - 1,
+      },
+      ...state.slice(indexRight + 1),
+    ];
+  })
+  .on(dropCart, () => []);
 
 export const $cartSizes = $cart.map((state) => {
-  return Object.values(state)
-    .filter(
-      (value) =>
-        value !== undefined &&
-        value.product.status === DishStatus.Active &&
-        value.count > 0
-    )
-    .reduce<{ size: number; totalAmount: number | null }>(
-      (acc, value) => {
-        const amount = parseInt(value?.product.prices?.[0].rouble_price);
+  return state
+    .filter((item) => item !== undefined && item.count > 0)
+    .reduce<{
+      size: number;
+      totalAmount: number | null;
+      unicItemsNumber: {
+        [key: string]: number;
+      };
+    }>(
+      (obj, item) => {
+        const amount = parseInt(item.price) * item.count;
 
         return {
-          size: acc.size + value!.count,
+          size: obj.size + item!.count,
           totalAmount:
             !isNaN(amount) && typeof amount === "number"
-              ? (acc.totalAmount ?? 0) + amount * value!.count
-              : acc.totalAmount,
+              ? (obj.totalAmount ?? 0) + amount * item!.count
+              : obj.totalAmount,
+          unicItemsNumber: {
+            ...obj.unicItemsNumber,
+            [item.product.id]:
+              (obj.unicItemsNumber[item.product.id] ?? 0) + item.count,
+          },
         };
       },
       {
         size: 0,
         totalAmount: null,
+        unicItemsNumber: {},
       }
     );
+});
+
+$cart.watch((state) => {
+  window.localStorage.setItem("cart", JSON.stringify(state));
 });
 
 export const onResetCategory = createEvent<void>();

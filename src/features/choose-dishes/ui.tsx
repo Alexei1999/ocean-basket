@@ -22,8 +22,6 @@ import {
 } from "@shared/api/dishes";
 import { useEffect, useRef } from "react";
 
-export type CartItemType = { count: number; product: Dish };
-
 export const ChooseDishesGate = createGate();
 
 forward({

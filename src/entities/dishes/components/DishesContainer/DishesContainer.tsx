@@ -1,3 +1,5 @@
+import Popup from "@entities/cart/components/Details/popup";
+import Modal from "@entities/payment/components/Forms/modal";
 import {
   $category,
   $dishes,
@@ -6,6 +8,7 @@ import {
   fetchPopularDishesFx,
   POPULAR_CATEGORY,
 } from "@features/choose-dishes/models";
+import { DishStatus } from "@shared/api/dishes";
 import cn from "classnames";
 import { useStore } from "effector-react";
 import { useEffect, useMemo, useState } from "react";
@@ -61,26 +64,28 @@ export function DishesContainer() {
   }
 
   return (
-    <div className={cn("flex-1 bg-gray-100 pt-6 pb-8 pl-4 lg:p-8 xl:pr-32")}>
-      <div
-        className={cn("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7")}
-      >
-        {isLoading ? (
-          <>
-            {Array(20)
-              .fill(null)
-              .map((_, i) => (
-                <ProductLoader key={i} uniqueKey={`product-${i}`} />
-              ))}
-          </>
-        ) : (
-          filteredDishes?.map((product) => (
-            <div key={product.id}>
-              <DishCard product={product} />
-            </div>
-          ))
-        )}
+    <>
+      <div className={cn("flex-1 bg-gray-100 pt-6 pb-8 pl-4 lg:p-8 xl:pr-32")}>
+        <div
+          className={cn("grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7")}
+        >
+          {isLoading ? (
+            <>
+              {Array(20)
+                .fill(null)
+                .map((_, i) => (
+                  <ProductLoader key={i} uniqueKey={`product-${i}`} />
+                ))}
+            </>
+          ) : (
+            filteredDishes?.map((product) => (
+              <div key={product.id}>
+                <DishCard product={product} />
+              </div>
+            ))
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

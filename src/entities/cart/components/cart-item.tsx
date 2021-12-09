@@ -9,11 +9,11 @@ import {
   addProductToCart,
   removeProductFromCart,
   dropProductFromCart,
+  PickedDish,
 } from "@features/choose-dishes/models";
-import { CartItemType } from "@features/choose-dishes/ui";
 
 interface CartItemProps {
-  item: CartItemType;
+  item: PickedDish;
   isCounter?: boolean;
   isResult?: boolean;
 }
@@ -23,19 +23,20 @@ const CartItem = ({
   isCounter = false,
   isResult = false,
 }: CartItemProps) => {
-  const { count, product } = item;
+  const { price, count, product } = item;
+  const { name } = product;
 
-  const { price } = usePrice({
-    amount: (parseInt(product.prices?.[0].rouble_price) ?? 0) * count,
+  const { price: formatedPrice } = usePrice({
+    amount: (parseInt(price) ?? 0) * count,
   });
 
   function handleIncrement(e: any) {
     e.stopPropagation();
-    addProductToCart(product);
+    // addProductToCart(items);
   }
   const handleRemoveClick = (e: any) => {
     e.stopPropagation();
-    removeProductFromCart(product);
+    // removeProductFromCart(items);
   };
 
   return (
@@ -68,17 +69,17 @@ const CartItem = ({
           "font-bold text-body"
         )}
       >
-        {product.name}
+        {name}
       </h3>
-      <span className="ms-auto font-bold text-body">{price}</span>
+      <span className="ms-auto font-bold text-body">{formatedPrice}</span>
       {!isResult && (
         <button
           className="w-7 h-7 ms-3 -me-2 flex items-center justify-center flex-shrink-0 rounded-full text-muted transition-all duration-200 focus:outline-none hover:bg-gray-100 focus:bg-gray-100 hover:text-red-600 focus:text-red-600"
-          onClick={() =>
-            isCounter
-              ? dropProductFromCart(product.id)
-              : removeProductFromCart(product)
-          }
+          // onClick={() =>
+          //   isCounter
+          //     ? dropProductFromCart(items.id)
+          //     : removeProductFromCart(items)
+          // }
         >
           <span className="sr-only">Закрыть</span>
           <CloseIcon className="w-3 h-3" />
