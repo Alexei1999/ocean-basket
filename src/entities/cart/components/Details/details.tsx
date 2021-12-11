@@ -13,6 +13,7 @@ import {
   PickedModifier,
 } from "@features/choose-dishes/models";
 import { AddToCartBig } from "../Buttons/AddToCartBig";
+import { hostUrl } from "@shared/api/base";
 
 export const filterCartObjects = (
   items: Partial<PickedDish[]>
@@ -127,7 +128,7 @@ const Details: React.FC<Props> = ({
           <div className="w-full h-full flex items-center justify-center overflow-hidden">
             <img
               className={classNames("rounded-lg")}
-              src={!isError && photo ? photo : productSvg}
+              src={!isError && photo ? `${hostUrl}/${photo}` : productSvg}
               onError={() => setIsError(true)}
               alt={name}
             />

@@ -8,6 +8,7 @@ import { $promotions, fetchPomotionsFx } from "@features/choose-dishes/models";
 import { useObserver } from "@entities/dishes/components/Card/DishCard";
 import classNames from "classnames";
 import { forward } from "effector";
+import { hostUrl } from "@shared/api/base";
 
 function PromotionImage({
   src,
@@ -23,7 +24,7 @@ function PromotionImage({
       <img
         className={classNames("h-full w-full cursor-pointer")}
         onClick={onClick}
-        src={isStartLoading ? src : undefined}
+        src={isStartLoading ? `${hostUrl}/${src}` : undefined}
       />
     </div>
   );

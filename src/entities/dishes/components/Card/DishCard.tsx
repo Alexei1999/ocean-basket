@@ -9,6 +9,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
 import { useSortedPrices } from "@entities/cart/components/Details/variation-price";
 import { onDishModalOpen } from "@entities/cart/components/Details/add-dish-modal";
+import { hostUrl } from "@shared/api/base";
 
 type DishCardProps = {
   product: Dish;
@@ -103,7 +104,11 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
       >
         <span className="sr-only">{name}</span>
         <img
-          src={isDisplaying && isStartLoading && photo ? photo : productIcon}
+          src={
+            isDisplaying && isStartLoading && photo
+              ? `${hostUrl}/${photo}`
+              : productIcon
+          }
           onError={onImgaeErrorHandle}
           alt={name}
           className={classNames(

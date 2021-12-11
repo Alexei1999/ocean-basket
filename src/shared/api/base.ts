@@ -1,12 +1,14 @@
 import axios from "axios";
 
+export const hostUrl = "http://2.56.213.189:81";
+
 export type ResponseType = {
   status: number;
   data: unknown;
   message?: string;
 };
 export const baseApi = axios.create({
-  // baseURL: "http://2.56.213.189:81",
+  baseURL: hostUrl,
   transformResponse: [
     (data) => {
       const {

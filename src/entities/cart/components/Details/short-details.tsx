@@ -6,6 +6,7 @@ import cn from "classnames";
 import VariationPrice from "./variation-price";
 import ModifierGroups from "./variation-groups";
 import { AddToCart } from "../Buttons/AddToCart";
+import { hostUrl } from "@shared/api/base";
 
 interface ShortDetailsProps {
   product: Dish;
@@ -54,7 +55,7 @@ const ShortDetails: React.FC<ShortDetailsProps> = ({
           )}
         >
           <img
-            src={photo ?? productSvg}
+            src={photo ? `${hostUrl}/${photo}` : productSvg}
             alt={name}
             className="product-image object-contain"
           />

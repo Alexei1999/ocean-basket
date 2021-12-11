@@ -12,6 +12,7 @@ import { PromotionModal } from "../PromotionsSection/PromotionModal";
 import { Promotion } from "@shared/api/dishes";
 import { useStore } from "effector-react";
 import { $promotions } from "@features/choose-dishes/models";
+import { hostUrl } from "@shared/api/base";
 
 const offerSliderBreakpoints = {
   320: {
@@ -60,14 +61,14 @@ export function PromotionSlider() {
           loop
           breakpoints={offerSliderBreakpoints}
         >
-          {promotions?.map(({ id, photo: original, title: name, ...props }) => (
+          {promotions?.map(({ id, photo, title: name, ...props }) => (
             <SwiperSlide key={id}>
               <div
                 className={cn("cursor-pointer", styles.promotionContainer)}
                 onClick={() => {
                   setPromotion({
                     id,
-                    photo: original,
+                    photo: photo,
                     title: name,
                     ...props,
                   });
@@ -77,7 +78,7 @@ export function PromotionSlider() {
                 <div className={cn("flex", styles.promotionWrapperBackground)}>
                   <img
                     className={styles.promotion}
-                    src={original}
+                    src={`${hostUrl}/${photo}`}
                     alt={id}
                     width="580"
                     height="270"
