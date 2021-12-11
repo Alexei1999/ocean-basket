@@ -5,14 +5,16 @@ import "./buttons.scss";
 
 import styles from "./styles.module.scss";
 
+import productSvg from "@assets/product.svg";
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
 import cn from "classnames";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PromotionModal } from "../PromotionsSection/PromotionModal";
 import { Promotion } from "@shared/api/dishes";
 import { useStore } from "effector-react";
 import { $promotions } from "@features/choose-dishes/models";
 import { hostUrl } from "@shared/api/base";
+import classNames from "classnames";
 
 const offerSliderBreakpoints = {
   320: {
@@ -34,6 +36,8 @@ const offerSliderBreakpoints = {
 };
 
 export function PromotionSlider() {
+  const [errorObj, setErrorObj] = useState<{ [id: string]: boolean }>({});
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [promotion, setPromotion] = useState<Promotion | null>(null);
 
@@ -61,59 +65,61 @@ export function PromotionSlider() {
           loop
           breakpoints={offerSliderBreakpoints}
         >
-          {promotions?.map(({ id, photo, title: name, ...props }) => (
-            <SwiperSlide key={id}>
-              <div
-                className={cn("cursor-pointer", styles.promotionContainer)}
-                onClick={() => {
-                  setPromotion({
-                    id,
-                    photo: photo,
-                    title: name,
-                    ...props,
-                  });
-                  setIsModalOpen(true);
-                }}
-              >
-                <div className={cn("flex", styles.promotionWrapperBackground)}>
+          {promotions?.map(({ id, photo, title: name, ...props }, idx) => {
+            const isError = errorObj[id];
+
+            return (
+              <SwiperSlide key={id}>
+                <div
+                  className={cn(
+                    "cursor-pointer relative",
+                    "flex rounded-xl overflow-hidden",
+                    "w-full h-[250px]",
+                    isError && styles.promotionWrapperBackground
+                  )}
+                  onClick={() => {
+                    setPromotion({
+                      id,
+                      photo: photo,
+                      title: name,
+                      ...props,
+                    });
+                    setIsModalOpen(true);
+                  }}
+                >
                   <img
-                    className={styles.promotion}
-                    src={`${hostUrl}/${photo}`}
+                    className={classNames(
+                      "rounded-xl object-cover w-full h-full",
+                      styles.promotion
+                    )}
+                    src={!isError && photo ? `${hostUrl}/${photo}` : productSvg}
+                    onError={() => setErrorObj({ ...errorObj, [id]: true })}
                     alt={id}
-                    width="580"
-                    height="270"
                   />
                   <div
                     className={cn(
-                      "absolute left-12 top-10 opacity-100 flex flex-col justify-between",
-                      styles.promotionDescription
+                      "absolute left-12 top-10 opacity-100 flex flex-col justify-between max-w-[50%] max-h-[60%] h-full"
                     )}
                   >
-                    {/* {name && (
+                    {isError && name && (
                       <div
                         className={cn(
-                          "text-white text-2xl font-bold",
-                          styles.promotionDescriptionText
+                          "text-white text-2xl font-bold leading-7"
                         )}
                       >
                         {name}
                       </div>
-                    )} */}
+                    )}
                     {/* {discount && (
-                      <div
-                        className={cn(
-                          "text-white font-bold",
-                          styles.promotionDiscount
-                        )}
-                      >
+                      <div className={cn("text-white font-bold text-4xl")}>
                         {discount}%
                       </div>
                     )} */}
                   </div>
                 </div>
-              </div>
-            </SwiperSlide>
-          ))}
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       </div>
     </div>

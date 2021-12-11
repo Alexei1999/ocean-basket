@@ -47,7 +47,7 @@ export default function VariationPrice({
 
   return (
     <span className="flex flex-col">
-      <span className="text-xl font-bold text-body leading-none capitalize min-w-[60px] inline-block">
+      <span className="font-semibold text-lg md:text-xl xl:text-2xl tracking-tight text-body leading-none capitalize min-w-[60px] inline-block">
         Вес:
       </span>
 
@@ -62,7 +62,7 @@ export default function VariationPrice({
             onClick={() => onChange(price)}
             value={
               <div className="flex justify-between font-medium">
-                <span className="whitespace-nowrap">{weight} гр.</span>
+                <span className="whitespace-nowrap">{weight}</span>
                 <span className="pl-4">—</span>
                 <span className="whitespace-nowrap pl-4">
                   {formatPrice({

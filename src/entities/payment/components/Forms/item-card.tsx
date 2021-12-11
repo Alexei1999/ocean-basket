@@ -41,12 +41,12 @@ const ItemCard = ({ item, notAvailable }: Props) => {
           <div className="mx-2">x</div>
           <div className="font-medium text-body mr-3 flex flex-col">
             <span>
-              {name} <span className="whitespace-nowrap">{weight} гр.</span>
+              {name} <span className="whitespace-nowrap">{weight}</span>
             </span>
             <span>
               {Boolean(modifiersString.length) && modifiersString.join(", ")}
             </span>
-          </div>
+          </div>11
         </div>
       </div>
       <div

@@ -28,8 +28,8 @@ const ModifierGroups = ({
 
   return (
     <>
-      {modifiers.map((modifier, index) => {
-        const { option1, option2, option3, option4, option5, id } = modifier;
+      {modifiers.map((modifier, idx) => {
+        const { option1, option2, option3, option4, option5 } = modifier;
         const optionsObject = [
           option1,
           option2,
@@ -45,18 +45,18 @@ const ModifierGroups = ({
         return (
           <div
             className="py-4 border-b border-border-200  border-opacity-70 first:pt-0 flex flex-col"
-            key={`${modifier.id}-${index}`}
+            key={`${modifier.id}-${idx}`}
           >
             <span className="text-sm font-semibold text-body leading-none capitalize min-w-[60px] inline-block">
               {modifier.name}
             </span>
             <div className="pt-3 w-full flex flex-wrap">
-              {optionsObject.map((option) => (
+              {optionsObject.map((option, idx) => (
                 <Attribute
                   className="mt-3 mr-3"
                   active={activeModifier[modifier.id]?.option === option}
                   value={option}
-                  key={option}
+                  key={`${option}-${idx}`}
                   onClick={() => {
                     setActiveModifier({
                       ...activeModifier,

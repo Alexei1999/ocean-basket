@@ -82,7 +82,7 @@ const CartItem = ({
       >
         <div className="flex flex-col">
           <span>
-            {name} <span className="whitespace-nowrap">{weight} гр.</span>
+            {name} <span className="whitespace-nowrap">{weight}</span>
           </span>
           <span>
             {Boolean(modifiersString.length) && modifiersString.join(", ")}

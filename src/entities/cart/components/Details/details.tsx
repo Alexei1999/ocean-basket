@@ -15,6 +15,8 @@ import {
 import { AddToCartBig } from "../Buttons/AddToCartBig";
 import { hostUrl } from "@shared/api/base";
 
+import styles from "./styles.module.scss";
+
 export const filterCartObjects = (
   items: Partial<PickedDish[]>
 ): PickedDish[] => {
@@ -95,13 +97,18 @@ const Details: React.FC<Props> = ({
   };
 
   return (
-    <article className="rounded-lg bg-light">
+    <article className="rounded-lg bg-light w-full">
       <div
         className={classNames(
-          "flex flex-col gap-16 md:flex-row border-b border-border-200 border-opacity-70 p-6 lg:p-14 xl:p-16"
+          "flex flex-col gap-16 md:flex-row border-b border-border-200 border-opacity-70 p-6 lg:p-14 xl:p-16 max-h-full"
         )}
       >
-        <div className={classNames("flex flex-col md:w-1/2 pt-10 lg:pt-0")}>
+        <div
+          className={classNames(
+            "flex flex-col md:w-1/2 pt-10 lg:pt-0",
+            styles.dishImage
+          )}
+        >
           <div className="mb-8 lg:mb-10">
             <h1
               className={classNames(
@@ -111,7 +118,7 @@ const Details: React.FC<Props> = ({
               {name}
             </h1>
             {description && (
-              <div className="mt-3 md:mt-4 text-body text-sm leading-7">
+              <div className="mt-3 md:mt-4 text-body text-base leading-7">
                 <Truncate
                   character={150}
                   {...(!isModal && {
@@ -127,7 +134,9 @@ const Details: React.FC<Props> = ({
 
           <div className="w-full h-full flex items-center justify-center overflow-hidden">
             <img
-              className={classNames("rounded-lg")}
+              className={classNames(
+                "rounded-lg max-h-full w-full object-cover"
+              )}
               src={!isError && photo ? `${hostUrl}/${photo}` : productSvg}
               onError={() => setIsError(true)}
               alt={name}

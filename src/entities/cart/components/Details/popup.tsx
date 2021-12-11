@@ -49,7 +49,7 @@ const Popup: React.FC<ProductPopupProps> = ({ product }) => {
     );
 
   return (
-    <article className="bg-light w-full max-w-6xl xl:min-w-[1152px] relative z-[51] md:rounded-xl">
+    <article className="bg-light flex w-full max-w-6xl xl:min-w-[1152px] relative z-[51] md:rounded-xl">
       {/* <ShortDetails
         closeModal={() => {}}
         product={product}
