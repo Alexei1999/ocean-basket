@@ -20,6 +20,10 @@ interface ProductPopupProps {
 }
 const Popup: React.FC<ProductPopupProps> = ({ product }) => {
   const [showStickyShortDetails, setShowStickyShortDetails] = useState(false);
+  const [isDelayed, setIsDelayed] = useState(false);
+
+  const isLoading = useStore(getModifiersFx.pending);
+  const modifiers = useStore($modifiers);
 
   useEffect(() => {
     if (!product?.id) return;
@@ -27,12 +31,19 @@ const Popup: React.FC<ProductPopupProps> = ({ product }) => {
     getModifiersFx(product.id);
   }, [product?.id]);
 
-  const isLoading = useStore(getModifiersFx.pending);
-  const modifiers = useStore($modifiers);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsDelayed(true);
+    }, 250);
 
-  if (isLoading || !product)
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
+  if (!isDelayed || isLoading || !product)
     return (
-      <div className="w-96 flex justify-center items-center h-96 bg-light relative">
+      <div className="w-96 flex justify-center items-center h-96 bg-light relative md:rounded-xl">
         <Spinner text="Загрузка" />
       </div>
     );

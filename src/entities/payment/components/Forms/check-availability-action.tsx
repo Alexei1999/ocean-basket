@@ -7,7 +7,7 @@ import { $form } from "./address-form";
 import { $schedule } from "./schedule-grid";
 import { $phone } from "./add-or-update";
 import { createEffect } from "effector";
-import { OrderType, postOrder } from "@shared/api/dishes";
+import { EMPTY_STRING, OrderType, postOrder } from "@shared/api/dishes";
 import { $promocode } from "@entities/cart/components/cart-sidebar-view";
 import { toast } from "react-toastify";
 
@@ -15,7 +15,7 @@ const submitFormFx = createEffect<OrderType, { order_id?: number }>(
   (params: OrderType) => postOrder(params)
 );
 
-submitFormFx.watch(() => {
+submitFormFx.fail.watch(() => {
   toast.error("Ошибка при отправке заказа, попробуйте еще раз");
 });
 
@@ -27,8 +27,6 @@ actionGate.state.on(submitFormFx.doneData, ({ onSuccess }, reponse) =>
   onSuccess(reponse?.order_id)
 );
 actionGate.state.on(submitFormFx.fail, ({ onFail }) => onFail());
-
-const errorToast = () => toast.error("Ошибка при отправке заказа");
 
 export const CheckAvailabilityAction: React.FC<
   Omit<ButtonProps, "onSubmit"> & { onSubmit: (orderNumber?: number) => void }
@@ -86,7 +84,25 @@ export const CheckAvailabilityAction: React.FC<
       persons_number: 2,
       payment: "payment",
       promocode: promocode?.promocode!,
-      // dishes: cart,
+      dishes: cart.map(({ product, priceObj, modifiers }) => {
+        const parsedWeight = parseInt(priceObj.weight);
+        const parsedRoublePrice = parseInt(priceObj.rouble_price);
+        const parsedTengePrice = parseInt(priceObj.tenge_price);
+
+        return {
+          name: product.name,
+          weight: (isNaN(parsedWeight) ? EMPTY_STRING : parsedWeight) as number,
+          rouble_price: (isNaN(parsedRoublePrice)
+            ? EMPTY_STRING
+            : parsedRoublePrice) as number,
+          tenge_price: (isNaN(parsedTengePrice)
+            ? EMPTY_STRING
+            : parsedTengePrice) as number,
+          modifiers: modifiers
+            .map(({ option }) => option)
+            .filter((option) => option) as string[],
+        };
+      }),
     });
     // onSubmit?.();
   }

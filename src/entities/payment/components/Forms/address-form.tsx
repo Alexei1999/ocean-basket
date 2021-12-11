@@ -26,6 +26,7 @@ export type FormValues = {
 
 const addressSchema = yup.object().shape({
   title: yup.string(),
+  // city: yup.string().required("Город обязателен к заполнению"),
   street: yup.string().required("Улица обязательна к заполнению"),
   building: yup.string().required("Дом обязателен к заполнению"),
   flat: yup.string().required("Кваритра обязательна к заполнению"),

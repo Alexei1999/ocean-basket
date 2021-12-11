@@ -40,7 +40,7 @@ export function DishesContainer() {
   const filteredDishes = useMemo(() => {
     if (selectedCategory === POPULAR_CATEGORY.category) return popular;
     return dishes?.filter((dish) => dish.category === selectedCategory);
-  }, [dishes, selectedCategory]);
+  }, [dishes, popular, selectedCategory]);
 
   const isLoading =
     selectedCategory === POPULAR_CATEGORY.category

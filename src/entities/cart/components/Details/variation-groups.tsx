@@ -45,7 +45,7 @@ const ModifierGroups = ({
         return (
           <div
             className="py-4 border-b border-border-200  border-opacity-70 first:pt-0 flex flex-col"
-            key={index}
+            key={`${modifier.id}-${index}`}
           >
             <span className="text-sm font-semibold text-body leading-none capitalize min-w-[60px] inline-block">
               {modifier.name}

@@ -71,12 +71,21 @@ export const getPromotions = (): Promise<Promotion[]> => {
 export type OrderType = Omit<FormValues, "title"> & {
   time: string;
   phone: string;
+  dishes: {
+    name: string;
+    weight: number;
+    rouble_price: number;
+    tenge_price: number;
+    modifiers: string[];
+  }[];
 } & {
   promocode: string;
   payment: string;
 };
 
-export const postOrder = (params: OrderType): Promise<any> => {
+export const postOrder = (
+  params: OrderType
+): Promise<{ order_id?: number }> => {
   return baseApi
     .post(`orders/submit`, params)
     .then((response) => response.data);

@@ -206,7 +206,6 @@
   h6 {
     @apply font-heading;
   }
-
   a {
     @apply no-underline;
   }

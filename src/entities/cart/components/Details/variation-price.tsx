@@ -6,10 +6,11 @@ import Attribute from "./attribute";
 export const filterPrices = (prices: Dish["prices"]) =>
   (prices || [])
     .map((price, idx) => {
-      const { weight, rouble_price } = price;
+      const { weight, rouble_price, tenge_price } = price;
       return {
         weight: parseInt(weight),
         rouble_price: parseInt(rouble_price),
+        tenge_price,
         price: {
           ...price,
           idx,

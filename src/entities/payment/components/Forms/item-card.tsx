@@ -8,7 +8,9 @@ interface Props {
 }
 
 const ItemCard = ({ item, notAvailable }: Props) => {
-  const { product, count, price, weight, modifiers } = item;
+  const { product, count, priceObj, modifiers } = item;
+  const { rouble_price: price, weight } = priceObj;
+
   const { name } = product;
 
   const modifiersString = useMemo(

@@ -24,7 +24,8 @@ const CartItem = ({
   isCounter = false,
   isResult = false,
 }: CartItemProps) => {
-  const { price, count, product, modifiers, weight } = item;
+  const { priceObj, count, product, modifiers } = item;
+  const { rouble_price: price, weight } = priceObj;
   const { name } = product;
 
   const modifiersString = useMemo(

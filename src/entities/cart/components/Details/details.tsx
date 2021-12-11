@@ -1,4 +1,4 @@
-import { Dish, DishStatus } from "@shared/api/dishes";
+import { Dish, DishStatus, EMPTY_STRING } from "@shared/api/dishes";
 import classNames from "classnames";
 import { scroller } from "react-scroll";
 import { Waypoint } from "react-waypoint";
@@ -7,8 +7,45 @@ import Truncate from "./truncate";
 import VariationPrice, { filterPrices } from "./variation-price";
 import { useState } from "react";
 import ModifierGroups from "./variation-groups";
-import { ModifierType, PickedModifier } from "@features/choose-dishes/models";
+import {
+  ModifierType,
+  PickedDish,
+  PickedModifier,
+} from "@features/choose-dishes/models";
 import { AddToCartBig } from "../Buttons/AddToCartBig";
+
+export const filterCartObjects = (
+  items: Partial<PickedDish[]>
+): PickedDish[] => {
+  if (!Array.isArray(items)) return [];
+
+  return items.filter((item) => {
+    if (!item) {
+      return false;
+    }
+    if (item.product.status !== DishStatus.Active) {
+      return false;
+    }
+    if (!item.count || item.count <= 0) return false;
+
+    if (
+      !item.priceObj?.rouble_price ||
+      item.priceObj.rouble_price === EMPTY_STRING
+    ) {
+      return false;
+    }
+
+    if (!item.priceObj?.weight || item.priceObj.weight === EMPTY_STRING) {
+      return false;
+    }
+
+    if (!Array.isArray(item.modifiers)) {
+      item.modifiers = [];
+    }
+
+    return true;
+  }) as PickedDish[];
+};
 
 export const isDishValid = (dish: Dish) => {
   const filteredPrices = filterPrices(dish.prices);
@@ -58,8 +95,12 @@ const Details: React.FC<Props> = ({
 
   return (
     <article className="rounded-lg bg-light">
-      <div className="flex flex-col md:flex-row border-b border-border-200 border-opacity-70">
-        <div className="flex flex-col md:w-1/2 p-6 pt-10 lg:p-14 xl:p-16">
+      <div
+        className={classNames(
+          "flex flex-col gap-16 md:flex-row border-b border-border-200 border-opacity-70 p-6 lg:p-14 xl:p-16"
+        )}
+      >
+        <div className={classNames("flex flex-col md:w-1/2 pt-10 lg:pt-0")}>
           <div className="mb-8 lg:mb-10">
             <h1
               className={classNames(
@@ -83,40 +124,35 @@ const Details: React.FC<Props> = ({
             )}
           </div>
 
-          <div className="product-gallery">
-            <div className="w-full h-full flex items-center justify-center">
-              <img
-                src={!isError && photo ? photo : productSvg}
-                onError={() => setIsError(true)}
-                alt={name}
-                width={450}
-                height={450}
-              />
-            </div>
+          <div className="w-full h-full flex items-center justify-center overflow-hidden">
+            <img
+              className={classNames("rounded-lg")}
+              src={!isError && photo ? photo : productSvg}
+              onError={() => setIsError(true)}
+              alt={name}
+            />
           </div>
         </div>
 
-        <div className="flex flex-col justify-between items-start md:w-1/2 p-5 pt-10 lg:p-14 xl:p-16">
+        <div className="flex flex-col justify-between items-start md:w-1/2 pt-10 lg:pt-0">
           <Waypoint
             onLeave={() => setShowStickyShortDetails(true)}
             onEnter={() => setShowStickyShortDetails(false)}
             onPositionChange={onWaypointPositionChange}
           >
             <div className="w-full">
-              <>
-                <div className="mb-5 md:mb-10 flex items-center">
-                  <VariationPrice
-                    active={activePrice}
-                    onChange={setActivePrice}
-                    prices={prices}
-                  />
-                </div>
-                <ModifierGroups
-                  setActiveModifier={setActiveModifier}
-                  activeModifier={activeModifier}
-                  modifiers={modifiers}
+              <div className="mb-5 md:mb-10 flex items-center">
+                <VariationPrice
+                  active={activePrice}
+                  onChange={setActivePrice}
+                  prices={prices}
                 />
-              </>
+              </div>
+              <ModifierGroups
+                setActiveModifier={setActiveModifier}
+                activeModifier={activeModifier}
+                modifiers={modifiers}
+              />
             </div>
           </Waypoint>
           {

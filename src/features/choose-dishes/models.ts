@@ -1,3 +1,4 @@
+import { filterCartObjects } from "@entities/cart/components/Details/details";
 import { onCategoryClick } from "@entities/сategories/components/TreeMenu/TreeMenuItem";
 import {
   Category,
@@ -67,18 +68,21 @@ export const deleteLastProductFromCart = createEvent<Dish>();
 export const dropProductFromCart = createEvent<PickedDish>();
 export const dropCart = createEvent();
 
-const items = getFromStorage("cart");
+export type PickedPrice = {
+  weight: string;
+  tenge_price: string;
+  rouble_price: string;
+};
 
 export type PickedDish = {
   count: number;
   product: Dish;
-  weight: string;
-  price: string;
+  priceObj: PickedPrice;
   modifiers: PickedModifier[];
 };
 
 export const $cart = createStore<PickedDish[]>(
-  Array.isArray(items) ? items : []
+  filterCartObjects(getFromStorage("cart"))
 )
   .on(fetchDishesFx.doneData, (state, dishes) => {
     const ids = dishes.map((dish) => dish.id);
@@ -88,8 +92,16 @@ export const $cart = createStore<PickedDish[]>(
   })
   .on(addProductToCart, (state, pickedDish) => {
     if (pickedDish.product.status !== DishStatus.Active) return;
-    if (!pickedDish.price || pickedDish.price === EMPTY_STRING) return;
-    if (!pickedDish.weight || pickedDish.weight === EMPTY_STRING) return;
+    if (
+      !pickedDish.priceObj?.rouble_price ||
+      pickedDish.priceObj.rouble_price === EMPTY_STRING
+    )
+      return;
+    if (
+      !pickedDish.priceObj?.weight ||
+      pickedDish.priceObj.weight === EMPTY_STRING
+    )
+      return;
 
     const indexOfItem = state.findIndex((item: PickedDish) =>
       isTwoPickedDishesEqual(item, pickedDish)
@@ -192,7 +204,7 @@ export const $cartSizes = $cart.map((state) => {
       };
     }>(
       (obj, item) => {
-        const amount = parseInt(item.price) * item.count;
+        const amount = parseInt(item.priceObj?.rouble_price) * item.count;
 
         return {
           size: obj.size + item!.count,

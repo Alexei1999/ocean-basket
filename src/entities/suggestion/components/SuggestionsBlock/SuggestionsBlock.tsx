@@ -19,6 +19,8 @@ export function SuggestionsBlock() {
   }>({});
 
   useEffect(() => {
+    // console.log(unicItemsList, "unicItemsList");
+
     const reccomendedDishes = unicItemsList
       .filter((item) => item.recommended_dishes)
       .map((item) => item.recommended_dishes)

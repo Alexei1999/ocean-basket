@@ -6,7 +6,7 @@ export type ResponseType = {
   message?: string;
 };
 export const baseApi = axios.create({
-  baseURL: "http://2.56.213.189:81",
+  // baseURL: "http://2.56.213.189:81",
   transformResponse: [
     (data) => {
       const {

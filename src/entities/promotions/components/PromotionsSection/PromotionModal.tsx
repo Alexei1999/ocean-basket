@@ -1,7 +1,5 @@
-import { onDishModalOpen } from "@entities/cart/components/Details/add-dish-modal";
 import { isDishValid } from "@entities/cart/components/Details/details";
 import { filterPrices } from "@entities/cart/components/Details/variation-price";
-import { CloseIcon } from "@entities/cart/components/icons/close-icon";
 import Modal from "@entities/payment/components/Forms/modal";
 import { addProductToCart, PickedDish } from "@features/choose-dishes/models";
 import { Dish, Promotion } from "@shared/api/dishes";
@@ -10,10 +8,14 @@ import { useMemo } from "react";
 
 export const pickDishForce = (dish: Dish): Omit<PickedDish, "count"> => {
   const filteredPrice = filterPrices(dish.prices);
+
   return {
-    price: `${filteredPrice[0].rouble_price}`,
+    priceObj: {
+      weight: `${filteredPrice[0].weight}`,
+      rouble_price: `${filteredPrice[0].rouble_price}`,
+      tenge_price: `${filteredPrice[0].tenge_price}`,
+    },
     product: dish,
-    weight: `${filteredPrice[0].weight}`,
     modifiers: [],
   };
 };

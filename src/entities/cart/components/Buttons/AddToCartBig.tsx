@@ -48,8 +48,11 @@ export const AddToCartBig = ({
     addProductToCart(
       createPickedDish(
         product,
-        active.weight,
-        active.rouble_price,
+        {
+          rouble_price: active.rouble_price,
+          tenge_price: active.tenge_price,
+          weight: active.weight,
+        },
         Object.values(activeModifiers).filter((modifier) => modifier)
       )
     );

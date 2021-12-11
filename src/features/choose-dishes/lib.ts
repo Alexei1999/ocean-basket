@@ -1,5 +1,10 @@
 import { Dish } from "@shared/api/dishes";
-import { ModifierType, PickedDish, PickedModifier } from "./models";
+import {
+  ModifierType,
+  PickedDish,
+  PickedModifier,
+  PickedPrice,
+} from "./models";
 
 export const isTwoPickedDishesEqual = (
   dish1: Partial<PickedDish>,
@@ -9,7 +14,7 @@ export const isTwoPickedDishesEqual = (
     return false;
   }
 
-  if (dish1.weight !== dish2.weight) {
+  if (dish1.priceObj?.weight !== dish2.priceObj?.weight) {
     return false;
   }
 
@@ -40,14 +45,12 @@ export const createModifier = (
 
 export const createPickedDish = (
   dish: Dish,
-  weight: string,
-  price: string,
+  priceObj: PickedPrice,
   modifiers: PickedModifier[] = []
 ): Omit<PickedDish, "count"> => {
   return {
     product: dish,
-    weight,
-    price,
+    priceObj,
     modifiers,
   };
 };

@@ -23,22 +23,20 @@ module.exports = {
         "-1": "-1",
       },
       fontFamily: {
-        body: ["Inter"],
-        heading: ["Inter"],
-        // body: [
-        //   "Helvetica Neue",
-        //   "Helvetica",
-        //   "Inter",
-        //   "Arial Narrow",
-        //   "sans-serif",
-        // ],
-        // heading: [
-        //   "Helvetica Neue",
-        //   "Helvetica",
-        //   "Inter",
-        //   "Arial Narrow",
-        //   "sans-serif",
-        // ],
+        body: [
+          "Helvetica Neue",
+          "'Inter'",
+          "Arial Narrow",
+          "Arial",
+          "sans-serif",
+        ],
+        heading: [
+          "Helvetica Neue",
+          "'Inter'",
+          "Arial Narrow",
+          "Arial",
+          "sans-serif",
+        ],
       },
       fontSize: {
         "10px": "0.625rem",
