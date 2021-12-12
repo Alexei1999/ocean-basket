@@ -58,7 +58,9 @@ function EmailSection({ isWaves = false }) {
 
   return (
     <div className="relative">
-      {isWaves && <WhiteWaves className="absolute -mt-10 z-10" />}
+      {isWaves && (
+        <WhiteWaves className="absolute -mt-10 z-10 hidden lg:block" />
+      )}
       <div
         className={classNames(
           "flex max-h-80 overflow-hidden relative",
@@ -78,9 +80,8 @@ function EmailSection({ isWaves = false }) {
             styles.card
           )}
         >
+          <img src={hook} className="absolute -bottom-32" />
           <div className="flex flex-col text-3xl font-bold px-12 py-12 justify-between relative">
-            <img src={hook} className="absolute -bottom-32" />
-
             <div className="pt-3 text-body">
               Подпишись на наши обновления и получи подарок на первый заказ
             </div>
