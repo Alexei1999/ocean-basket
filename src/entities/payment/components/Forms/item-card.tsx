@@ -1,13 +1,14 @@
-import usePrice from "@entities/cart/lib/use-price";
+import usePrice, { formatPrice } from "@entities/cart/lib/use-price";
 import { PickedDish } from "@features/choose-dishes/models";
 import cn from "classnames";
 import { useMemo } from "react";
 interface Props {
   item: PickedDish;
   notAvailable?: boolean;
+  className?: string;
 }
 
-const ItemCard = ({ item, notAvailable }: Props) => {
+const ItemCard = ({ className, item, notAvailable }: Props) => {
   const { product, count, priceObj, modifiers } = item;
   const { rouble_price: price, weight } = priceObj;
 
@@ -18,9 +19,13 @@ const ItemCard = ({ item, notAvailable }: Props) => {
     [modifiers]
   );
 
+  const { price: formatedPrice } = usePrice({
+    amount: (parseInt(price) ?? 0) * count,
+  });
+
   return (
     <div
-      className={cn("flex justify-between py-2 items-center")}
+      className={cn(className, "flex justify-between py-2 items-center")}
       key={product.id}
     >
       <div className="flex items-center justify-between text-base">
@@ -46,16 +51,16 @@ const ItemCard = ({ item, notAvailable }: Props) => {
             <span>
               {Boolean(modifiersString.length) && modifiersString.join(", ")}
             </span>
-          </div>11
+          </div>
         </div>
       </div>
       <div
         className={cn(
-          "text-sm font-medium",
+          "pl-2 text-sm font-medium",
           notAvailable ? "text-red-500" : "text-body"
         )}
       >
-        {!notAvailable ? price : "Недоступно"}
+        {!notAvailable ? formatedPrice : "Недоступно"}
       </div>
     </div>
   );

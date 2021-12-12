@@ -9,17 +9,17 @@ import { useStore } from "effector-react";
 import { $cartSizes, $cartItems } from "@features/choose-dishes/models";
 import { DishStatus } from "@shared/api/dishes";
 
-export const UnverifiedItemList = () => {
+export const RightSideView = () => {
   const cartSizes = useStore($cartSizes);
   const { list } = useStore($cartItems);
   const promocode = useStore($promocode);
 
-  const { price: delivery } = usePrice({
-    amount: 0,
-  });
-  const { price: discount } = usePrice({
-    amount: 0,
-  });
+  // const { price: delivery } = usePrice({
+  //   amount: 0,
+  // });
+  // const { price: discount } = usePrice({
+  //   amount: 0,
+  // });
   const { price: total } = usePrice({
     amount: cartSizes.totalAmount ?? 0,
   });
@@ -58,7 +58,7 @@ export const UnverifiedItemList = () => {
             </p>
           </div>
         )}
-        <ItemInfoRow
+        {/* <ItemInfoRow
           keyClassName="text-gray-500"
           title={"Доставка"}
           value={delivery}
@@ -67,7 +67,7 @@ export const UnverifiedItemList = () => {
           keyClassName="text-gray-500"
           title={"Скидка"}
           value={discount}
-        />
+        /> */}
         <ItemInfoRow
           className="text-body text-base font-medium"
           title="Итого"
