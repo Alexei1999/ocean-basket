@@ -34,7 +34,7 @@ const addressSchema = yup.object().shape({
   flat: yup.string().required("Кваритра обязательна к заполнению"),
   entrance: yup.string().required("Подъезд обязательен к заполнению"),
   floor: yup.string().required("Этаж обязательен к заполнению"),
-  intercom: yup.string().notRequired(),
+  intercom: yup.string().nullable().notRequired(),
   comment: yup.string().required("Комментарий обязателен к заполнению"),
   persons_number: yup
     .number()
@@ -70,8 +70,9 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
   return (
     <div className="p-5 sm:p-8 bg-light md:rounded-xl min-h-screen md:min-h-0">
       <div className="w-full mb-4 sm:mb-6 flex justify-center">
-        <AddressSelection className="mr-auto w-[150px]" />
-        <h1 className="text-body font-semibold text-lg text-center mr-auto pr-[150px]">
+        {/* <AddressSelection className="mr-auto w-[150px]" /> */}
+        <h1 className="text-body font-semibold text-lg text-center">
+          {/* mr-auto pr-[150px]*/}
           {address ? "Редактирование" : "Добавление"} адреса
         </h1>
       </div>
