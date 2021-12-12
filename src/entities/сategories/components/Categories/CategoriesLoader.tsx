@@ -11,17 +11,17 @@ export const CategoriesLoader = (props: any) => {
       foregroundColor="#cecece"
       {...props}
     >
-      {Array(6)
+      {Array(4)
         .fill(null)
         .map((_, index) => (
           <rect
             key={index}
             x="0"
-            y={5 + index * 50}
+            y={5 + index * 83}
             rx="5"
             ry="5"
-            width="40%"
-            height="20"
+            width="50%"
+            height="24"
           />
         ))}
     </ContentLoader>

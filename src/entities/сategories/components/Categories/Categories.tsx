@@ -1,5 +1,4 @@
 import { $categories, fetchCategoriesFx } from "@features/choose-dishes/models";
-import { ErrorMessage } from "@shared/components/ErrorMessage";
 import { useStore } from "effector-react";
 import { useEffect, useState } from "react";
 import { StickySidebarListCategories } from "./StickySidebarListCategories";
