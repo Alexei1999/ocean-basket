@@ -44,7 +44,7 @@ export function Header() {
                 ? matchingRoutes.some((route) => route === pathname)
                 : href === pathname;
               return (
-                <li key={`${href}${label}`}>
+                <li key={`${href}-${label}`}>
                   <Link
                     to={href}
                     className={cn(
@@ -64,7 +64,10 @@ export function Header() {
                       </span>
                     )}
                     <span
-                      className={cn(isCurrent && "text-accent", "uppercase")}
+                      className={cn(
+                        isCurrent && "text-accent",
+                        "uppercase text-sm"
+                      )}
                     >
                       {label}
                     </span>

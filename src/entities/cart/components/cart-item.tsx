@@ -89,7 +89,7 @@ const CartItem = ({
           </span>
         </div>
       </h3>
-      <span className="ml-3 ms-auto font-bold text-body">{formatedPrice}</span>
+      <div className="pl-2 ms-auto font-bold text-body">{formatedPrice}</div>
       {!isResult && (
         <button
           className="w-7 h-7 ms-3 -me-2 flex items-center justify-center flex-shrink-0 rounded-full text-muted transition-all duration-200 focus:outline-none hover:bg-gray-100 focus:bg-gray-100 hover:text-red-600 focus:text-red-600"
