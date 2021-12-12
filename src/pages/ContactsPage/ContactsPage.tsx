@@ -8,6 +8,7 @@ import contactsIcon from "./contacts-text.svg";
 import hook from "@widgets/subscription/hook.svg";
 import styles from "./styles.module.scss";
 import { addresses, Country } from "./config";
+import { useMemo } from "react";
 
 function ContactsBlock({
   item,
@@ -20,7 +21,9 @@ function ContactsBlock({
 }) {
   return (
     <div className={classNames(className)}>
-      {item.country_label && <div className="text-2xl font-bold">{item.country_label}</div>}
+      {item.country_label && (
+        <div className="text-2xl font-bold">{item.country_label}</div>
+      )}
       <div className="flex pt-9 justify-between text-base font-bold pb-6">
         <span className="text-base font-bold w-8/12">Адрес</span>
         <span className="text-base font-bold w-4/12">Телефон</span>
@@ -63,12 +66,20 @@ function ContactsBlock({
 }
 
 export function ContactsPage() {
+  const gps = useMemo(
+    () =>
+      addresses
+        .flatMap(({ regions }) => regions)
+        .flatMap(({ addresses }) => addresses.map(({ gps }) => gps)),
+    []
+  );
+
   return (
     <YMaps>
       <div>
         <div className="pt-12 pb-2 lg:pb-4 xl:pb-32 bg-light text-body">
           <PageWaveHeader src={contactsIcon} />
-          <div className="flex pt-20 md:px-4 lg:px-8 xl:px-32 justify-around">
+          <div className="flex flex-col items-center lg:items-start lg:flex-row pt-20 md:px-4 lg:px-8 xl:px-32 justify-around max-w-7xl box-content mx-auto">
             <ContactsBlock className="flex-grow max-w-lg" item={addresses[0]}>
               <div className="flex justify-center items-center pt-20">
                 <img src={hook} className="bottom-16 right-11" />
@@ -86,13 +97,15 @@ export function ContactsPage() {
           <Map
             className={"w-full h-full"}
             defaultState={{
-              center: [55.75, 37.57],
-              zoom: 9,
+              center: [50.7617, 60.632682],
+              zoom: 4,
               controls: ["zoomControl", "fullscreenControl"],
             }}
             modules={["control.ZoomControl", "control.FullscreenControl"]}
           >
-            <Placemark defaultGeometry={[55.75, 37.57]} />
+            {gps.map((gps, idx) => (
+              <Placemark key={idx} defaultGeometry={gps} />
+            ))}
           </Map>
         </div>
         <SubscriptionSection />
