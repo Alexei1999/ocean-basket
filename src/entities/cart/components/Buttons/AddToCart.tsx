@@ -1,10 +1,7 @@
 import Modal from "@entities/payment/components/Forms/modal";
 import {
-  $cart,
   $cartSizes,
-  addProductToCart,
   deleteLastProductFromCart,
-  removeProductFromCart,
 } from "@features/choose-dishes/models";
 import { Dish, DishStatus } from "@shared/api/dishes";
 
@@ -13,7 +10,6 @@ import { useStore } from "effector-react";
 import { AddToCartBtn } from "../../../dishes/components/Card/AddToCartBtn";
 import { Counter } from "../../../dishes/components/Counter/Counter";
 import { onDishModalOpen } from "../Details/add-dish-modal";
-import Popup from "../Details/popup";
 import styles from "./styles.module.scss";
 
 interface Props {

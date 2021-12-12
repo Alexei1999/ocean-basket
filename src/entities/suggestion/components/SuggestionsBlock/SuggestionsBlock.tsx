@@ -1,17 +1,13 @@
 import { onDishModalOpen } from "@entities/cart/components/Details/add-dish-modal";
-import {
-  $cart,
-  $cartItems,
-  $cartSizes,
-  addProductToCart,
-} from "@features/choose-dishes/models";
+import { isDishValid } from "@entities/cart/components/Details/details";
+import { $cartItems } from "@features/choose-dishes/models";
 import { Dish } from "@shared/api/dishes";
 import { useStore } from "effector-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { SuggestionsAction } from "./SuggestionsAction";
 import { SuggestionsCategory } from "./SuggestionsCategory";
 
-export function SuggestionsBlock() {
+export function SuggestionsBlock({ className }: { className?: string }) {
   const { unicItemsList } = useStore($cartItems);
 
   const [categorizedDishes, setCategorizedDishes] = useState<{
@@ -19,12 +15,11 @@ export function SuggestionsBlock() {
   }>({});
 
   useEffect(() => {
-    // console.log(unicItemsList, "unicItemsList");
-
     const reccomendedDishes = unicItemsList
-      .filter((item) => item.recommended_dishes)
+      .filter((item) => item.recommended_dishes?.length)
       .map((item) => item.recommended_dishes)
       .flat(1)
+      .filter((item) => isDishValid(item))
       .reduce<{ [K in string]: Omit<Dish, "recommended_dishes"> }>(
         (acc, dish) => {
           if (!dish?.id) return acc;
@@ -56,7 +51,7 @@ export function SuggestionsBlock() {
   );
 
   return (
-    <div>
+    <div className={className}>
       {Boolean(entries.length) ? (
         entries.map(([category, dishes], idx) => (
           <React.Fragment key={idx}>
@@ -75,7 +70,7 @@ export function SuggestionsBlock() {
       ) : (
         <div className="w-full flex justify-center py-7 border-b border-border-200 border-opacity-75">
           <h1 className="text-body text-lg font-bold">
-            Нет подходящих блюд для рекоммендации
+            Нет подходящих блюд для рекомендации
           </h1>
         </div>
       )}

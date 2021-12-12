@@ -2,7 +2,6 @@ import cn from "classnames";
 import { AddToCart } from "../../../cart/components/Buttons/AddToCart";
 import productIcon from "@assets/product.svg";
 
-import styles from "./styles.module.scss";
 import usePrice, { formatPrice } from "@entities/cart/lib/use-price";
 import { Dish, DishStatus } from "@shared/api/dishes";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
@@ -92,8 +91,7 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
     <article
       ref={containerRef}
       className={cn(
-        "product-card cart-type-helium border border-border-200 h-full bg-light overflow-hidden transition-shadow duration-200 hover:shadow-sm flex flex-col",
-        styles.roundedXl,
+        "product-card cart-type-helium border border-border-200 h-full bg-light overflow-hidden transition-shadow duration-200 hover:shadow-sm flex flex-col rounded-2xl",
         className
       )}
     >
@@ -113,8 +111,7 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
           alt={name}
           className={classNames(
             "product-image w-full h-full object-cover",
-            !isVisible && "hidden",
-            styles.image
+            !isVisible && "hidden"
           )}
         />
         {/* {isDiscount && (
@@ -133,12 +130,7 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
           >
             {name}
           </h3>
-          <p
-            className={classNames(
-              "text-muted text-xs mb-3 font-medium",
-              styles.description
-            )}
-          >
+          <p className={classNames("text-muted text-xs mb-3 font-medium")}>
             {description}
           </p>
         </div>

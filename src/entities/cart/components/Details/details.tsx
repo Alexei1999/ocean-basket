@@ -50,7 +50,11 @@ export const filterCartObjects = (
   }) as PickedDish[];
 };
 
-export const isDishValid = (dish: Dish) => {
+export const isDishValid = (dish?: Partial<Dish>): dish is Dish => {
+  if (!dish || !dish.prices || !dish.id) {
+    return false;
+  }
+
   const filteredPrices = filterPrices(dish.prices);
 
   return filteredPrices.length > 0 && dish.status === DishStatus.Active;

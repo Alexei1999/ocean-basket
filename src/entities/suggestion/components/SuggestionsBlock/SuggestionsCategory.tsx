@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { Eclipse } from "./Eclipse";
 
-//@ts-ignore
 export function SuggestionsCategory({ name }: { name: string }) {
   return (
     <div className="bg-light w-full flex">

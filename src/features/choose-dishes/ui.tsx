@@ -21,6 +21,7 @@ import {
   Promotion,
 } from "@shared/api/dishes";
 import { useEffect, useRef } from "react";
+import { SuggestionsBlock } from "@entities/suggestion/components/SuggestionsBlock/SuggestionsBlock";
 
 export const ChooseDishesGate = createGate();
 
