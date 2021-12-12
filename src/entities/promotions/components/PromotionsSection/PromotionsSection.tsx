@@ -56,7 +56,7 @@ export function PromotionsSection() {
         promotion={promotion}
       />
       <PageWaveHeader src={promotionsHeader} />
-      <div className="grid grid-cols-2 gap-2 md:gap-4 lg:gap-6 lg:px-4 xl:px-32 pt-12">
+      <div className="grid lg:grid-cols-2 3xl:grid-cols-3 gap-2 md:gap-4 lg:gap-6 lg:px-4 xl:px-32 pt-12">
         {promotions?.map((promotion) => (
           <PromotionImage
             onClick={() => openModal(promotion)}

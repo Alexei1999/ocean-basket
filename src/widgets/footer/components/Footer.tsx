@@ -18,14 +18,12 @@ function FooterContactsBlock({
       {item.country_label && (
         <div className="text-base font-medium">{item.country_label}</div>
       )}
-      <div className="flex flex-col font-light text-sm pt-4">
+      <div className="flex flex-col font-light text-sm">
         {item.regions.map(({ region_label: name, addresses }, idx) => {
           return (
             <>
               {name && (
-                <div
-                  className={classNames(idx && "pt-4 text-base font-medium")}
-                >
+                <div className={classNames("pt-4 text-sm font-medium")}>
                   {name}
                 </div>
               )}
@@ -40,7 +38,7 @@ function FooterContactsBlock({
         })}
 
         {item.email && (
-          <div className="flex justify-end PT-4">
+          <div className="flex justify-end pt-4">
             <span className="w-4/12 text-base">{item.email}</span>
           </div>
         )}

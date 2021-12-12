@@ -8,6 +8,7 @@ import instagram from "./config/instagram.svg";
 import Button from "@shared/button";
 import Input from "@entities/payment/components/Forms/forms/input";
 import { instagramImages } from "./config/images/index";
+import productIcon from "@assets/product.svg";
 
 import { ReactComponent as WhiteWaves } from "@shared/icons/white-waves.svg";
 import blueWaves from "@shared/icons/blue-waves.svg";
@@ -112,7 +113,7 @@ function EmailSection({ isWaves = false }) {
                 </Button>
               </div>
               {error && (
-                <p className="pt-2 text-sm text-start justify-self-end text-red-500">
+                <p className="pt-[6px] text-sm text-start justify-self-end text-red-500">
                   {error}
                 </p>
               )}
@@ -162,22 +163,49 @@ const links = [
 ];
 
 function InstagramItem({ url }: { url: string }) {
+  const [isTimeoutExpired, setIsTimeoutExpired] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsTimeoutExpired(true);
+    }, 5000);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isTimeoutExpired && !isLoaded) {
+      setIsError(true);
+    }
+  }, [isLoaded, isTimeoutExpired]);
+
   return (
     <div
       className={classNames(
         "relative w-[350px] h-[350px] 2xl:w-[376px] 2xl:h-[376px] overflow-hidden"
       )}
     >
-      <iframe
-        src={url}
-        className={classNames(
-          styles.instagramItem,
-          "w-[350px] 2xl:w-[376px] h-[404px] 2xl:h-[430px]"
-        )}
-        frameBorder="0"
-        scrolling="no"
-        allowTransparency={true}
-      />
+      {isError ? (
+        <img src={productIcon} className="w-full h-full" />
+      ) : (
+        <iframe
+          src={url}
+          onLoad={() => {
+            setIsLoaded(true);
+          }}
+          className={classNames(
+            styles.instagramItem,
+            "w-[350px] 2xl:w-[376px] h-[404px] 2xl:h-[430px]"
+          )}
+          frameBorder="0"
+          scrolling="no"
+          allowTransparency={true}
+        />
+      )}
     </div>
   );
 }
