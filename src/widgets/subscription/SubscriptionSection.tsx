@@ -190,7 +190,12 @@ function InstagramItem({ url }: { url: string }) {
       )}
     >
       {isError ? (
-        <img src={productIcon} className="w-full h-full" />
+        <a href={url}>
+          <img
+            src={productIcon}
+            className="w-full h-full border border-border-base"
+          />
+        </a>
       ) : (
         <iframe
           src={url}

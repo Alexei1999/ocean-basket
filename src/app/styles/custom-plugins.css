@@ -369,3 +369,11 @@ body[dir="rtl"] .react-tel-input .country-list .flag {
     background-color: #fff;
   }
 }
+
+.basis-80 {
+  flex-basis: 20rem;
+}
+
+.basis-96 {
+  flex-basis: 24rem;
+}

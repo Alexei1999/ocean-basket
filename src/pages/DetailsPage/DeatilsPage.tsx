@@ -44,28 +44,28 @@ export function DetailsPage() {
       <div className="relative">
         <PageWaveHeader className="absolute xl:top-12 left-0" />
         <img src={fishesFull} className="absolute right-0 top-20" />
-        <div className="pt-16 pb-24 md:px-4 lg:px-8 xl:px-32 flex flex-col">
-          <div className="flex flex-wrap relative">
+        <div className="pt-16 pb-24 gap-y-7  md:px-4 lg:px-8 xl:px-32 flex flex-col">
+          <div className="gap-x-14 3xl:gap-x-20 gap-y-7 flex flex-wrap relative max-w-[70%] justify-start">
             <Card
               src={delivery}
               description="Прием заказов осуществляется во время работы ресторанов."
-              className="w-80 mr-14 mb-7"
+              className="flex-grow basis-80 max-w-xl"
             />
             <Card
               src={territory}
               description="Мы доставляем по всей Москве."
-              className="w-96 mb-7"
+              className=""
             />
           </div>
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap gap-y-7 gap-x-14 3xl:gap-x-20">
             <Card
               src={minSum}
               label="2000 РУБ*"
               description="*С учетом всех специальных предложений."
-              className="max-w-lg mr-14 mb-7"
+              className="max-w-lg"
             />
             <Card
-              className="max-w-2xl mb-7"
+              className="max-w-2xl"
               src={cost}
               description={
                 <ul>
@@ -79,16 +79,16 @@ export function DetailsPage() {
               }
             />
           </div>
-          <div className="flex flex-wrap">
+          <div className="flex flex-wrap gap-y-7 max-w-[70%] gap-x-14 3xl:gap-x-20">
             <Card
               src={method}
               description="Сейчас мы работаем по системе предоплаты на сайте."
-              className="w-80 mr-14 mb-7"
+              className="flex-grow basis-80 max-w-lg"
             />
             <Card
               src={howGet}
               description="Доставка осуществляется курьерскими службами."
-              className="w-96 mb-7"
+              className="basis-96 max-w-lg"
             />
           </div>
         </div>
