@@ -7,76 +7,60 @@ import { YMaps, Map, Placemark } from "react-yandex-maps";
 import contactsIcon from "./contacts-text.svg";
 import hook from "@widgets/subscription/hook.svg";
 import styles from "./styles.module.scss";
+import { addresses, Country } from "./config";
 
 function ContactsBlock({
-  country,
-  contacts,
-  email,
+  item,
   className,
   children,
 }: {
-  country: string;
-  contacts: ([string, string] | string)[];
-  email: string;
+  item: Country;
   className?: string;
   children?: React.ReactNode;
 }) {
   return (
     <div className={classNames(className)}>
-      <div className="text-2xl font-bold">{country}</div>
+      {item.country_label && <div className="text-2xl font-bold">{item.country_label}</div>}
       <div className="flex pt-9 justify-between text-base font-bold pb-6">
         <span className="text-base font-bold w-8/12">Адрес</span>
         <span className="text-base font-bold w-4/12">Телефон</span>
       </div>
       <div className="flex flex-col font-light text-sm">
-        {contacts.map((item, idx) =>
-          Array.isArray(item) ? (
-            <div className={classNames(idx && "pt-2", "flex justify-between")}>
-              <span className="max-w-xs w-8/12">{item[0]}</span>
-              <span className="w-4/12">{item[1]}</span>
-            </div>
-          ) : (
-            <div
-              className={classNames(
-                idx && "pt-6",
-                "pb-4 text-base font-medium"
+        {item.regions.map(({ region_label: name, addresses }, idx) => {
+          return (
+            <>
+              {name && (
+                <div
+                  className={classNames(
+                    idx && "pt-6",
+                    "pb-4 text-base font-medium"
+                  )}
+                >
+                  {name}
+                </div>
               )}
-            >
-              {item}
-            </div>
-          )
-        )}
+              {addresses.map(({ address, number }, idx) => (
+                <div
+                  className={classNames(idx && "pt-2", "flex justify-between")}
+                >
+                  <span className="max-w-xs w-8/12">{address}</span>
+                  <span className="w-4/12">{number}</span>
+                </div>
+              ))}
+            </>
+          );
+        })}
       </div>
-      {email && (
+      {item.email && (
         <div className="flex flex-col pt-14 ">
           <span className="text-base font-medium">Email</span>
-          <span className="text-base pt-6">{email}</span>
+          <span className="text-base pt-6">{item.email}</span>
         </div>
       )}
       {children}
     </div>
   );
 }
-
-export const ruContats = [
-  ["ул. Мясницкая, д. 11, 1 этаж, м. Лубянка", "+7 (977) 456 2221"],
-] as (string | [string, string])[];
-export const kzContats = [
-  "Алматы",
-  ["ул. Панфилова, 100", "+7 (727) 727-27-27"],
-  ["ул. Аль-Фараби, 1", "+7 (727) 727-27-27"],
-  ["мкр. Самал-2, 111, ТРЦ Dostyk Plaza, 3-й этаж", "+7 (727) 727-27-27"],
-  [
-    "ул. Розыбакиева 247А, ТРЦ Mega Center, 3-й этаж, Галерея ресторанов",
-    "+7 (727) 727-27-27",
-  ],
-  "Нур-Султан",
-  ["мкр. Самал-2, 111, ТРЦ Dostyk Plaza, 3-й этаж", "+7 (727) 727-27-27"],
-  [
-    "ул. Розыбакиева 247А, ТРЦ Mega Center, 3-й этаж, Галерея ресторанов",
-    "+7 (727) 727-27-27",
-  ],
-] as (string | [string, string])[];
 
 export function ContactsPage() {
   return (
@@ -85,22 +69,12 @@ export function ContactsPage() {
         <div className="pt-12 pb-2 lg:pb-4 xl:pb-32 bg-light text-body">
           <PageWaveHeader src={contactsIcon} />
           <div className="flex pt-20 md:px-4 lg:px-8 xl:px-32 justify-around">
-            <ContactsBlock
-              className="flex-grow max-w-lg"
-              email="marketing@oceanbasket.ru"
-              country={"Москва"}
-              contacts={ruContats}
-            >
+            <ContactsBlock className="flex-grow max-w-lg" item={addresses[0]}>
               <div className="flex justify-center items-center pt-20">
                 <img src={hook} className="bottom-16 right-11" />
               </div>
             </ContactsBlock>
-            <ContactsBlock
-              className="flex-grow max-w-lg"
-              email="marketing@oceanbasket.kz"
-              country={"Казахстан"}
-              contacts={kzContats}
-            />
+            <ContactsBlock className="flex-grow max-w-lg" item={addresses[1]} />
           </div>
         </div>
         <div

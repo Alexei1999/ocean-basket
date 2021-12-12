@@ -12,6 +12,7 @@ import {
 } from "@shared/components/drawer/managed-drawer";
 import { useStore } from "effector-react";
 import { $cartSizes } from "@features/choose-dishes/models";
+import { AddressSelection } from "./AddressSelection";
 
 export function Header() {
   const isOpen = useStore($isDrawerOpen);
@@ -36,6 +37,7 @@ export function Header() {
             className={cn("mx-auto lg:mx-0 -ml-3 cursor-pointer")}
             onClick={onLogoClickHandler}
           />
+          <AddressSelection className="ml-4 w-[150px]" />
         </div>
         <div className="flex">
           <ul className="hidden lg:flex items-center flex-shrink-0 space-s-10">

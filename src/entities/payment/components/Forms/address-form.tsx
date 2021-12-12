@@ -1,5 +1,6 @@
 import { getFromStorage, setToStorage } from "@features/choose-dishes/api";
 import Button from "@shared/button";
+import { AddressSelection } from "@widgets/header/components/AddressSelection";
 import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react";
 import { initial } from "lodash";
@@ -14,6 +15,7 @@ import { ValidationError } from "./place-order-action";
 
 export type FormValues = {
   title: string;
+  city: string;
   street: string;
   building: string;
   flat: string;
@@ -26,7 +28,7 @@ export type FormValues = {
 
 const addressSchema = yup.object().shape({
   title: yup.string(),
-  // city: yup.string().required("Город обязателен к заполнению"),
+  city: yup.string().required("Город обязателен к заполнению"),
   street: yup.string().required("Улица обязательна к заполнению"),
   building: yup.string().required("Дом обязателен к заполнению"),
   flat: yup.string().required("Кваритра обязательна к заполнению"),
@@ -67,9 +69,12 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
 
   return (
     <div className="p-5 sm:p-8 bg-light md:rounded-xl min-h-screen md:min-h-0">
-      <h1 className="text-body font-semibold text-lg text-center mb-4 sm:mb-6">
-        {address ? "Редактирование" : "Добавление"} адреса
-      </h1>
+      <div className="w-full mb-4 sm:mb-6 flex justify-center">
+        <AddressSelection className="mr-auto w-[150px]" />
+        <h1 className="text-body font-semibold text-lg text-center mr-auto pr-[150px]">
+          {address ? "Редактирование" : "Добавление"} адреса
+        </h1>
+      </div>
       <Form<FormValues>
         onSubmit={onSubmitHandler}
         className="grid grid-cols-4 gap-5 h-full"
@@ -84,6 +89,14 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
       >
         {({ register, watch, formState: { errors } }) => (
           <>
+            <Input
+              {...register("city")}
+              label={"Город"}
+              error={errors.city?.message!}
+              name="city"
+              variant="outline"
+              className="col-span-2"
+            />
             <Input
               label={"Улица"}
               {...register("street")}
@@ -119,7 +132,7 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
 
             <div>
               <Label>Наличие домофона</Label>
-              <div className="space-s-4 flex items-center">
+              <div className="space-s-4 pt-3 flex items-center">
                 <Radio
                   id="Exist"
                   {...register("intercom")}
@@ -140,6 +153,14 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
               <ValidationError message={errors.intercom?.message} />
             </div>
 
+            <TextArea
+              label={"Комментарий"}
+              {...register("comment")}
+              error={errors.comment?.message}
+              variant="outline"
+              className="col-span-4"
+            />
+
             <Input
               label={"Колличество персон"}
               {...register("persons_number")}
@@ -147,14 +168,6 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
               variant="outline"
               className="col-span-1"
               type="number"
-            />
-
-            <TextArea
-              label={"Комментарий"}
-              {...register("comment")}
-              error={errors.comment?.message}
-              variant="outline"
-              className="col-span-4"
             />
 
             <Input

@@ -45,6 +45,7 @@ export const EmptyCartPanel = ({
 
 const verifyPromocodeFx = createEffect(verifyPromocode);
 
+export const onResetPomocode = createEvent();
 const onSetPromocode = createEvent<{
   promocode: string;
   promocodeText: string | null;
@@ -52,7 +53,9 @@ const onSetPromocode = createEvent<{
 export const $promocode = createStore<{
   promocode: string;
   promocodeText: string | null;
-} | null>(null).on(onSetPromocode, (_, data) => data);
+} | null>(null)
+  .on(onSetPromocode, (_, data) => data)
+  .reset(onResetPomocode);
 
 const cartSidebarViewGate = createGate<{
   onSuccess: (promocodeText: string | null) => void;
@@ -214,7 +217,7 @@ export const CartSidebarView = ({
               <div
                 role="button"
                 onClick={() => setIsPromocodeInput(true)}
-                className="hover:text-accent font-bold button"
+                className="hover:text-accent font-bold button text-body"
               >
                 У тебя есть промокод?
               </div>

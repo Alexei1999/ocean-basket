@@ -143,24 +143,13 @@ export const $cart = createStore<PickedDish[]>(
     ];
   })
   .on(dropProductFromCart, (state, product) => {
-    console.log(" --- ");
-    console.log(product);
-    console.log(state);
-
     const indexOfItem = state.findIndex((item: PickedDish) =>
       isTwoPickedDishesEqual(item, product)
     );
 
-    console.log("indexOfItem", indexOfItem);
-
     if (indexOfItem === -1) {
       return state;
     }
-
-    console.log("new state", [
-      ...state.slice(0, indexOfItem),
-      ...state.slice(indexOfItem + 1),
-    ]);
 
     return [...state.slice(0, indexOfItem), ...state.slice(indexOfItem + 1)];
   })

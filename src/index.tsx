@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./app/styles/index.css";
+import "dayjs/locale/ru";
 import App from "./app";
 import reportWebVitals from "./app/reportWebVitals";
 

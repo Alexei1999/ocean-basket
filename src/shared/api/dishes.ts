@@ -78,8 +78,9 @@ export type OrderType = Omit<FormValues, "title"> & {
     tenge_price: number;
     modifiers: string[];
   }[];
+  promocode?: string;
+  restaurant: string;
 } & {
-  promocode: string;
   payment: string;
 };
 

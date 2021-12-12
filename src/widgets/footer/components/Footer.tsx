@@ -3,46 +3,51 @@ import styles from "./styles.module.scss";
 
 import logoMini from "@assets/logo-mini.svg";
 import logoFooter from "@assets/logo-footer.svg";
-import { kzContats } from "@pages/ContactsPage/ContactsPage";
 import classNames from "classnames";
+import { addresses, Country } from "@pages/ContactsPage/config";
 
 function FooterContactsBlock({
-  country,
-  contacts,
-  email,
+  item,
   className,
 }: {
-  country: string;
-  contacts: ([string, string] | string)[];
-  email: string;
+  item: Country;
   className?: string;
 }) {
   return (
     <div className={classNames(className)}>
-      <div className="text-base font-medium">{country}</div>
-
+      {item.country_label && (
+        <div className="text-base font-medium">{item.country_label}</div>
+      )}
       <div className="flex flex-col font-light text-sm pt-4">
-        {contacts.map((item, idx) =>
-          Array.isArray(item) ? (
-            <div className={classNames(idx && "pt-4", "flex justify-between")}>
-              <span className="max-w-xs w-8/12">{item[0]}</span>
-              <span className="w-4/12">{item[1]}</span>
-            </div>
-          ) : (
-            <div className="pt-4 text-base font-medium">{item}</div>
-          )
+        {item.regions.map(({ region_label: name, addresses }, idx) => {
+          return (
+            <>
+              {name && (
+                <div
+                  className={classNames(idx && "pt-4 text-base font-medium")}
+                >
+                  {name}
+                </div>
+              )}
+              {addresses.map(({ address, number }, idx) => (
+                <div className={classNames("pt-4", "flex justify-between")}>
+                  <span className="max-w-xs w-8/12">{address}</span>
+                  <span className="w-4/12">{number}</span>
+                </div>
+              ))}
+            </>
+          );
+        })}
+
+        {item.email && (
+          <div className="flex justify-end PT-4">
+            <span className="w-4/12 text-base">{item.email}</span>
+          </div>
         )}
-        <div className="flex justify-end PT-4">
-          <span className="w-4/12 text-base">{email}</span>
-        </div>
       </div>
     </div>
   );
 }
-
-export const ruContats = [
-  ["ул. Мясницкая, д. 11, 1 этаж, м. Лубянка", "+7 (977) 456 2221"],
-] as (string | [string, string])[];
 
 //TODO: Split to the components
 export function Footer() {
@@ -61,16 +66,9 @@ export function Footer() {
 
             <FooterContactsBlock
               className="flex-grow pt-12"
-              email="marketing@oceanbasket.ru"
-              country={"Москва"}
-              contacts={ruContats}
+              item={addresses[0]}
             />
-            <FooterContactsBlock
-              className="flex-grow"
-              email="marketing@oceanbasket.kz"
-              country={"Казахстан"}
-              contacts={kzContats}
-            />
+            <FooterContactsBlock className="flex-grow" item={addresses[1]} />
           </div>
 
           <div className="flex flex-col font-medium">

@@ -45,14 +45,14 @@ const AddressCard: React.FC<AddressProps> = ({
   return (
     <div
       className={classNames(
-        "relative p-4 rounded border cursor-pointer group hover:border-current",
+        "relative py-5 px-4 rounded-xl border cursor-pointer group hover:border-current",
         {
           "text-body border-current shadow-sm": checked,
           "bg-gray-100 border-transparent": !checked,
         }
       )}
     >
-      <p className="text-sm text-body font-semibold mb-3 capitalize">
+      <p className="mb-3 capitalize text-base text-body font-bold">
         {form.title || "Адрес"}
       </p>
       <p className="text-sm text-muted">{formatAddress(form)}</p>

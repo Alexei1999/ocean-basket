@@ -10,6 +10,7 @@ import { createEffect } from "effector";
 import { EMPTY_STRING, OrderType, postOrder } from "@shared/api/dishes";
 import { $promocode } from "@entities/cart/components/cart-sidebar-view";
 import { toast } from "react-toastify";
+import { $restaurant } from "@widgets/header/components/AddressSelection";
 
 const submitFormFx = createEffect<OrderType, { order_id?: number }>(
   (params: OrderType) => postOrder(params)
@@ -39,6 +40,7 @@ export const CheckAvailabilityAction: React.FC<
   const schedule = useStore($schedule);
   const phone = useStore($phone);
   const promocode = useStore($promocode);
+  const restaurant = useStore($restaurant);
 
   const isLoading = useStore(submitFormFx.pending);
 
@@ -79,10 +81,13 @@ export const CheckAvailabilityAction: React.FC<
 
     submitFormFx({
       ...form!,
+
+      payment: "payment",
+
+      restaurant: restaurant as string,
       time: schedule!.title,
       phone: `+${phone!}`,
       persons_number: 2,
-      payment: "payment",
       promocode: promocode?.promocode!,
       dishes: cart.map(({ product, priceObj, modifiers }) => {
         const parsedWeight = parseInt(priceObj.weight);

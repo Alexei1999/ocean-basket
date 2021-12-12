@@ -1,6 +1,9 @@
-import { $promocode } from "@entities/cart/components/cart-sidebar-view";
+import {
+  $promocode,
+  onResetPomocode,
+} from "@entities/cart/components/cart-sidebar-view";
 import usePrice from "@entities/cart/lib/use-price";
-import { $cart, $cartSizes, dropCart } from "@features/choose-dishes/models";
+import { $cartSizes, dropCart } from "@features/choose-dishes/models";
 import { getPlurals } from "@shared/lib/functional-utils";
 import { RoutesConfig } from "@shared/lib/routes-config";
 import classNames from "classnames";
@@ -14,7 +17,7 @@ import { $schedule } from "../Forms/schedule-grid";
 
 import styles from "./styles.module.scss";
 
-import "dayjs/locale/ru";
+dayjs.locale("ru");
 
 const Details = ({
   className,
@@ -72,10 +75,16 @@ export function OrderDescription({
     size: number;
     totalAmount: number | null;
   } | null>(null);
+  const [savedPromocode, setSavedPromocode] = useState<{
+    promocode: string;
+    promocodeText: string | null;
+  } | null>(null);
 
   useEffect(() => {
     setSavedCartSiezes(cartSizes);
+    setSavedPromocode(promocodeObj);
     dropCart();
+    onResetPomocode();
   }, []);
 
   const { price: total } = usePrice({
@@ -130,11 +139,11 @@ export function OrderDescription({
             ["Время заказа", orderDate?.format("HH:mm DD MMMM YYYY г.") ?? ""],
             ["Срок доставки", schedule?.description ?? ""],
             ["Место доставки", form ? formatAddress(form) ?? "" : ""],
-            Boolean(promocodeObj) && [
+            Boolean(savedPromocode) && [
               "Промокод",
-              `${promocodeObj!.promocode}${
-                promocodeObj!.promocodeText
-                  ? ": " + promocodeObj!.promocodeText
+              `${savedPromocode!.promocode}${
+                savedPromocode!.promocodeText
+                  ? ", " + savedPromocode!.promocodeText
                   : ""
               }`,
             ],
@@ -147,7 +156,7 @@ export function OrderDescription({
           items={[
             ["Итого", total],
             ["Метод оплаты", "Картой онлайн"],
-            ["Доставка", total],
+            // ["Доставка", total],
           ]}
         />
       </div>

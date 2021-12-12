@@ -34,10 +34,10 @@ export const RightSideView = () => {
             <EmptyCartPanel noGutters />
           </div>
         ) : (
-          list.map((item) => (
+          list.map((item, idx) => (
             <ItemCard
               item={item}
-              key={item.product.id}
+              key={`${item.product.id}-${idx}`}
               notAvailable={item.product.status !== DishStatus.Active}
             />
           ))
