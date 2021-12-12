@@ -9,7 +9,7 @@ import { useStore } from "effector-react";
 import { $cartSizes, $cartItems } from "@features/choose-dishes/models";
 import { DishStatus } from "@shared/api/dishes";
 
-export const UnverifiedItemList = () => {
+export const RightSideView = () => {
   const cartSizes = useStore($cartSizes);
   const { list } = useStore($cartItems);
   const promocode = useStore($promocode);
