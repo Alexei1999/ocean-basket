@@ -1,7 +1,10 @@
 @import "~@app/styles/variables";
 
 .container {
-  min-height: calc(100vh - #{$header-height});
+  height: calc(100vh - #{$header-height});
+  min-height: 490px;
+  max-height: 1500px;
+
   &Left {
     max-width: 40%;
     background: url("~@assets/footer.png");

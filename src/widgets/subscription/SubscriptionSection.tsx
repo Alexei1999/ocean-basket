@@ -154,22 +154,25 @@ const links = [
   "https://www.instagram.com/p/CVe9Q2FsP9E/embed/",
   "https://www.instagram.com/p/CU7PIw0s1ZI/embed/",
   "https://www.instagram.com/p/CSg1LwXCWHk/embed/",
-  "https://www.instagram.com/p/CSd9Xz3CUgh/embed/",
+  "https://www.instagram.com/p/CSMB3uqCfVW/embed/",
+  // "https://www.instagram.com/p/CR1Rjs9FQkD/embed/",
+  // "https://www.instagram.com/p/CRlt9IMiti9/embed/",
+  // "https://www.instagram.com/p/CROO8KlHL7a/embed/",
 ];
 
 function InstagramItem({ url }: { url: string }) {
   return (
-    <div className={classNames(styles.instagramBlock, "relative")}>
-      <div
-        className={classNames(
-          styles.instagramCover,
-          "absolute w-full bg-white"
-        )}
-      />
+    <div
+      className={classNames(
+        "relative w-[350px] h-[350px] 2xl:w-[376px] 2xl:h-[376px] overflow-hidden"
+      )}
+    >
       <iframe
         src={url}
-        width="100%"
-        height="100%"
+        className={classNames(
+          styles.instagramItem,
+          "w-[350px] 2xl:w-[376px] h-[404px] 2xl:h-[430px]"
+        )}
         frameBorder="0"
         scrolling="no"
         allowTransparency={true}
@@ -181,15 +184,15 @@ function InstagramItem({ url }: { url: string }) {
 function InstagramGalery() {
   return (
     <div className="flex justify-center md:px-4 lg:px-8 xl:px-32">
-      <div className="grid grid-cols-3 gap-5">
-        {/* {links.map((href, idx) => (
+      <div className="grid lg:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 grid-rows-2 gap-5">
+        {links.map((href, idx) => (
           <InstagramItem url={href} key={idx} />
-        ))} */}
-        {instagramImages.map(({ img, alt, href }, idx) => (
+        ))}
+        {/* {instagramImages.map(({ img, alt, href }, idx) => (
           <a href={href} key={idx}>
             <img width="376px" height="376px" src={img} alt={alt} />
           </a>
-        ))}
+        ))} */}
       </div>
     </div>
   );
@@ -200,7 +203,10 @@ export function SubscriptionSection({ isWaves: isWaves = false }) {
     <div>
       <EmailSection isWaves={isWaves} />
       <div className="flex justify-center pt-36 relative">
-        <img src={blueWaves} className="absolute right-0 top-28" />
+        <img
+          src={blueWaves}
+          className="absolute right-0 top-28 hidden lg:block"
+        />
         <InstagramHeader />
       </div>
       <div className="pt-9 pb-28">

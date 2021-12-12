@@ -24,13 +24,10 @@
 }
 
 .instagram {
-  &Block {
-    width: 376px;
-    height: 376px;
+  &Item {
+    margin-top: -54px;
   }
-  &Cover {
-    height: 54px;
-  }
+
   max-width: 300px;
 }
 

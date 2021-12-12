@@ -40,7 +40,7 @@ export function Header() {
           <AddressSelection className="ml-4 w-[150px]" />
         </div>
         <div className="flex">
-          <ul className="hidden lg:flex items-center flex-shrink-0 space-s-10">
+          <ul className="hidden lg:flex items-center flex-shrink-0 space-s-5 2xl:space-s-10">
             {headerLinks.map(({ href, matchingRoutes, label, icon: Icon }) => {
               const isCurrent = Array.isArray(matchingRoutes)
                 ? matchingRoutes.some((route) => route === pathname)

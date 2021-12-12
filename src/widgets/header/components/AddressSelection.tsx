@@ -31,7 +31,10 @@ export const AddressSelection = ({ className }: { className?: string }) => {
     <select
       value={restaurant ?? undefined}
       onChange={(e) => onRestaurantSelection(e.target.value)}
-      className={classNames(className, "text-body overflow-ellipsis text-sm")}
+      className={classNames(
+        className,
+        "text-body overflow-ellipsis text-sm pr-2"
+      )}
     >
       {addressesList.map(({ region, addresses }) => (
         <optgroup key={region} label={region}>

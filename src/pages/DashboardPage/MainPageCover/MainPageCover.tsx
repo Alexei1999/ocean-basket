@@ -36,7 +36,7 @@ export function MainPageCover() {
             Меню
           </Button>
         </div>
-        <Arrows className="absolute right-12 bottom-14" />
+        <Arrows className="hidden lg:block absolute right-12 bottom-14" />
       </div>
       <div className={classNames(styles.containerRight, "flex-grow")} />
     </div>
