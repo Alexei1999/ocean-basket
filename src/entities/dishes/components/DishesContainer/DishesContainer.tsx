@@ -1,5 +1,3 @@
-import Popup from "@entities/cart/components/Details/popup";
-import Modal from "@entities/payment/components/Forms/modal";
 import { SuggestionsBlock } from "@entities/suggestion/components/SuggestionsBlock/SuggestionsBlock";
 import {
   $category,
@@ -9,7 +7,6 @@ import {
   fetchPopularDishesFx,
   POPULAR_CATEGORY,
 } from "@features/choose-dishes/models";
-import { DishStatus } from "@shared/api/dishes";
 import cn from "classnames";
 import { useStore } from "effector-react";
 import { useEffect, useMemo, useState } from "react";

@@ -1,22 +1,16 @@
 import { AddToCartBtnBig } from "@entities/dishes/components/Card/AddToCartBtnBig";
-import Modal from "@entities/payment/components/Forms/modal";
 import { createPickedDish } from "@features/choose-dishes/lib";
 import {
-  $cart,
   $cartSizes,
   addProductToCart,
   deleteLastProductFromCart,
   PickedModifier,
-  removeProductFromCart,
 } from "@features/choose-dishes/models";
-import { Dish, DishStatus } from "@shared/api/dishes";
+import { Dish } from "@shared/api/dishes";
 
 import cn from "classnames";
 import { useStore } from "effector-react";
-import { AddToCartBtn } from "../../../dishes/components/Card/AddToCartBtn";
 import { Counter } from "../../../dishes/components/Counter/Counter";
-import { onDishModalOpen } from "../Details/add-dish-modal";
-import Popup from "../Details/popup";
 import styles from "./styles.module.scss";
 
 interface Props {

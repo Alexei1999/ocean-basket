@@ -1,7 +1,7 @@
 import { DishesContainer } from "../../entities/dishes/components/DishesContainer/DishesContainer";
 import { Categories } from "../../entities/сategories/components/Categories/Categories";
 import { Element } from "react-scroll";
-import { createEffect, createStore, forward } from "effector";
+import { forward } from "effector";
 import { createGate, useGate, useStore } from "effector-react";
 import {
   $category,
@@ -11,17 +11,7 @@ import {
   fetchPopularDishesFx,
   onResetCategory,
 } from "./models";
-import {
-  Category,
-  Dish,
-  getCategories,
-  getDishes,
-  getPopular,
-  getPromotions,
-  Promotion,
-} from "@shared/api/dishes";
 import { useEffect, useRef } from "react";
-import { SuggestionsBlock } from "@entities/suggestion/components/SuggestionsBlock/SuggestionsBlock";
 
 export const ChooseDishesGate = createGate();
 

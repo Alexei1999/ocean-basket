@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { ValidationError } from "./place-order-action";
 import Button, { ButtonProps } from "@shared/button";
 import { createGate, useGate, useStore } from "effector-react";

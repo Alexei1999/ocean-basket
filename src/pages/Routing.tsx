@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { NotFoundPage } from "./404/404";
 import { AboutPage } from "./AboutPage/AboutPage";
 import { PaymentPage } from "./PaymentPage/PaymentPage";

@@ -9,7 +9,6 @@ import territory from "./config/territory.svg";
 import { PageWaveHeader } from "@entities/promotions/components/PageWaveHeader";
 import { SubscriptionSection } from "@widgets/subscription/SubscriptionSection";
 import fishesFull from "./fishes-full.svg";
-import { hostUrl } from "@shared/api/base";
 
 function Card({
   src,

@@ -19,6 +19,7 @@ export function CertificatePage() {
         <div className="flex flex-col lg:flex-row lg:justify-center gap-8 lg:gap-20">
           <div className={classNames(styles.block, "w-full flex-grow")}>
             <img
+              alt="certificate dish"
               src={certificateDishImg}
               className="w-full lg:w-auto ml-auto mr-auto lg:mr-0"
             />
@@ -68,9 +69,13 @@ export function CertificatePage() {
         </div>
       </div>
       <div className="flex justify-center pt-10 pb-32 text-body relative">
-        <img src={twoWaves} className="absolute right-9 top-20 w-56" />
-        <img src={hook} className="absolute left-14 bottom-16" />
-        <img src={important} />
+        <img
+          alt="two waves"
+          src={twoWaves}
+          className="absolute right-9 top-20 w-56"
+        />
+        <img src={hook} className="absolute left-14 bottom-16" alt="hook" />
+        <img src={important} alt="important" />
         <div className="pl-16 max-w-xl">
           <p>
             Обналичить сертификат возможно только в ресторане, на доставку он не

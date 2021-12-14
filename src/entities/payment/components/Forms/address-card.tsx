@@ -1,7 +1,5 @@
-import { CloseIcon } from "@entities/cart/components/icons/close-icon";
 import classNames from "classnames";
 import { FormValues } from "./address-form";
-import { onSetEditModalOpen } from "./address-grid";
 import { PencilIcon } from "./pencil-icon";
 
 function removeFalsy(obj: any) {

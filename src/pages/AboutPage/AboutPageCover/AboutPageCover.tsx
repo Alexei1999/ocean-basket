@@ -1,7 +1,6 @@
 import styles from "./styles.module.scss";
 import classNames from "classnames";
 
-import { useNavigate } from "react-router";
 import { LogoFooter as Icon } from "@assets/Icons";
 
 import fishesLeft from "./fishes-left.svg";

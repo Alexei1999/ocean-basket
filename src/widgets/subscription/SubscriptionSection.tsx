@@ -7,7 +7,6 @@ import instagram from "./config/instagram.svg";
 
 import Button from "@shared/button";
 import Input from "@entities/payment/components/Forms/forms/input";
-import { instagramImages } from "./config/images/index";
 import productIcon from "@assets/product.svg";
 
 import { ReactComponent as WhiteWaves } from "@shared/icons/white-waves.svg";
@@ -17,9 +16,8 @@ import wave from "./wave.svg";
 import { createEffect } from "effector";
 import { postSubscribe } from "@shared/api/dishes";
 import { useStore } from "effector-react";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { reduce } from "lodash";
 
 const subscribeFx = createEffect(postSubscribe);
 
@@ -96,6 +94,7 @@ function EmailSection({ isWaves = false }) {
                     setError("");
                     setEmail(e.target.value);
                   }}
+                  isButtonInput
                   className={classNames(
                     "flex-grow text-base",
                     styles.emailInput
@@ -106,6 +105,7 @@ function EmailSection({ isWaves = false }) {
                     "text-accent hover:text-accent-hover",
                     styles.button
                   )}
+                  isInputButton
                   onClick={onSubscribeHandler}
                   disabled={isLoading}
                 >
@@ -183,6 +183,8 @@ function InstagramItem({ url }: { url: string }) {
     }
   }, [isLoaded, isTimeoutExpired]);
 
+  if (isError) return null;
+
   return (
     <div
       className={classNames(
@@ -208,7 +210,6 @@ function InstagramItem({ url }: { url: string }) {
           )}
           frameBorder="0"
           scrolling="no"
-          allowTransparency={true}
         />
       )}
     </div>

@@ -16,9 +16,7 @@
     }
   }
   &Right {
-    background: url("./cover-right.png");
-    background-repeat: no-repeat;
-    background-size: cover;
+    max-width: 60%;
   }
 }
 
@@ -40,8 +38,6 @@
   &Mini {
     max-width: 125px;
     max-height: 125px;
-  }
-  &Slogan {
   }
 }
 
