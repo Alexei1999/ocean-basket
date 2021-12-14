@@ -7,14 +7,13 @@ import { useNavigate } from "react-router-dom";
 import { Drawer } from "./drawer";
 
 export const setIsFilterMenuOpen = createEvent<boolean>();
-export const $isFilterMenuOpen = createStore<boolean>(true).on(
+export const $isFilterMenuOpen = createStore<boolean>(false).on(
   setIsFilterMenuOpen,
   (_, isOpen) => isOpen
 );
 
 export function FilterMenu() {
   const isOpen = useStore($isFilterMenuOpen);
-  const navigate = useNavigate();
 
   return (
     <Drawer
