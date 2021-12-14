@@ -30,7 +30,7 @@ export function Header() {
       className={"flex-shrink-0 site-header-with-search h-14 md:h-16 lg:h-22"}
     >
       <div className="flex justify-between items-center w-full h-14 md:h-16 lg:h-22 md:px-4 lg:px-8 xl:px-32 py-5 z-50 fixed bg-light border-b border-border-200 shadow-sm transition-transform duration-300">
-        <div className="flex items-center w-full lg:w-auto">
+        <div className="flex items-center w-full lg:w-auto h-full">
           <img
             src={logo}
             alt="logo"

@@ -4,6 +4,10 @@ import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react";
 import { useEffect } from "react";
 
+import gpsIcon from "./gps.svg";
+
+import styles from "./styles.module.scss";
+
 export const onRestaurantSelection = createEvent<string | null>();
 
 export const $restaurant = createStore<string | null>(null).on(
@@ -28,11 +32,12 @@ export const AddressSelection = ({ className }: { className?: string }) => {
   }, [restaurant, addressesList]);
 
   return (
-    <div className={classNames(className)}>
+    <div className={classNames(className, styles.select, "flex")}>
+      <img src={gpsIcon} className="mr-2" width={15} height={18} />
       <select
         value={restaurant ?? undefined}
         onChange={(e) => onRestaurantSelection(e.target.value)}
-        className={"text-body overflow-ellipsis text-sm w-full"}
+        className={classNames("text-body overflow-ellipsis text-sm w-full")}
       >
         {addressesList.map(({ region, addresses }) => (
           <optgroup key={region} label={region}>
