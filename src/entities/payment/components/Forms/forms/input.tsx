@@ -1,5 +1,5 @@
-import cn from 'classnames';
-import React, { InputHTMLAttributes } from 'react';
+import cn from "classnames";
+import React, { InputHTMLAttributes } from "react";
 
 export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
@@ -9,23 +9,24 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   type?: string;
   shadow?: boolean;
-  variant?: 'normal' | 'solid' | 'outline' | 'line';
-  dimension?: 'small' | 'medium' | 'big';
+  isButtonInput?: boolean;
+  variant?: "normal" | "solid" | "outline" | "line";
+  dimension?: "small" | "medium" | "big";
 }
 
 const variantClasses = {
   normal:
-    'bg-gray-100 border border-border-base rounded focus:shadow focus:bg-light focus:border-accent',
+    "bg-gray-100 border border-border-base rounded focus:shadow focus:bg-light focus:border-accent",
   solid:
-    'bg-gray-100 border border-border-100 rounded focus:bg-light focus:border-accent',
-  outline: 'border border-border-base rounded focus:border-accent',
-  line: 'ps-0 border-b border-border-base rounded-none focus:border-accent',
+    "bg-gray-100 border border-border-100 rounded focus:bg-light focus:border-accent",
+  outline: "border border-border-base rounded focus:border-accent",
+  line: "ps-0 border-b border-border-base rounded-none focus:border-accent",
 };
 
 const sizeClasses = {
-  small: 'text-sm h-10',
-  medium: 'h-12',
-  big: 'h-14',
+  small: "text-sm h-10",
+  medium: "h-12",
+  big: "h-14",
 };
 
 const Input = React.forwardRef<HTMLInputElement, Props>(
@@ -36,11 +37,12 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
       name,
       error,
       children,
-      variant = 'normal',
-      dimension = 'medium',
+      variant = "normal",
+      dimension = "medium",
       shadow = false,
       disabled = false,
-      type = 'text',
+      isButtonInput = false,
+      type = "text",
       inputClassName,
       ...rest
     },
@@ -62,19 +64,20 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
           type={type}
           ref={ref}
           className={cn(
-            'px-4 flex items-center w-full appearance-none transition duration-300 ease-in-out text-heading text-sm focus:outline-none focus:ring-0',
-            shadow && 'focus:shadow',
+            "px-4 flex items-center w-full appearance-none transition duration-300 ease-in-out text-heading text-sm focus:outline-none focus:ring-0",
+            shadow && "focus:shadow",
             variantClasses[variant],
             sizeClasses[dimension],
-            disabled && 'bg-gray-100 cursor-not-allowed',
-            inputClassName
+            disabled && "bg-gray-100 cursor-not-allowed",
+            inputClassName,
+            isButtonInput && "rounded-r-none"
           )}
           disabled={disabled}
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"
           spellCheck="false"
-          aria-invalid={error ? 'true' : 'false'}
+          aria-invalid={error ? "true" : "false"}
           {...rest}
         />
         {error && <p className="my-2 text-xs text-red-500">{error}</p>}
@@ -82,5 +85,5 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
     );
   }
 );
-Input.displayName = 'Input';
+Input.displayName = "Input";
 export default Input;

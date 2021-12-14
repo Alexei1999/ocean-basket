@@ -1,4 +1,3 @@
-import { capitalize } from "@shared/lib/functional-utils";
 import classNames from "classnames";
 import PhoneInput from "react-phone-input-2";
 

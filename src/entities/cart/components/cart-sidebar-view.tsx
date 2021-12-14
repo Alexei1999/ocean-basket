@@ -11,7 +11,6 @@ import { $cartSizes, $cartItems } from "@features/choose-dishes/models";
 import { getPlurals } from "@shared/lib/functional-utils";
 import { useState } from "react";
 import Input from "@entities/payment/components/Forms/forms/input";
-import { ValidationError } from "@entities/payment/components/Forms/place-order-action";
 import { createEffect, createEvent, createStore } from "effector";
 import { verifyPromocode } from "@shared/api/dishes";
 import Button from "@shared/button";

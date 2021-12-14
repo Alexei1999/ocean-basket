@@ -1,9 +1,7 @@
 import { getFromStorage, setToStorage } from "@features/choose-dishes/api";
 import Button from "@shared/button";
-import { AddressSelection } from "@widgets/header/components/AddressSelection";
 import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react";
-import { initial } from "lodash";
 import { SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { Form } from "./forms/form";

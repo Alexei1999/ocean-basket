@@ -13,9 +13,10 @@ const isNumberValid = (value?: string | null) =>
 const storageNumber = getFromStorage<string | null>("phone", false);
 
 export const onPhoneSubmit = createEvent<string | null>();
-export const $phone = createStore<string | null>(
-  isNumberValid(storageNumber) ? storageNumber : null
-).on(onPhoneSubmit, (_, phone) => phone);
+export const $phone = createStore<string | null>(null).on(
+  onPhoneSubmit,
+  (_, phone) => phone
+);
 
 $phone.watch((phone) => {
   setToStorage("phone", phone);

@@ -2,7 +2,7 @@ import cn from "classnames";
 import { AddToCart } from "../../../cart/components/Buttons/AddToCart";
 import productIcon from "@assets/product.svg";
 
-import usePrice, { formatPrice } from "@entities/cart/lib/use-price";
+import { formatPrice } from "@entities/cart/lib/use-price";
 import { Dish, DishStatus } from "@shared/api/dishes";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import classNames from "classnames";

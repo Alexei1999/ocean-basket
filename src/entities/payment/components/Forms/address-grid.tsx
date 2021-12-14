@@ -1,8 +1,7 @@
 import { RadioGroup } from "@headlessui/react";
 import { createEvent, createStore } from "effector";
-import { createGate, useGate, useStore } from "effector-react";
 import { useState } from "react";
-import AddressForm, { $form, onSubmitForm } from "./address-form";
+import { onSubmitForm } from "./address-form";
 import { AddressHeader } from "./address-header";
 import Modal from "./modal";
 

@@ -1,4 +1,3 @@
-import Modal from "@entities/payment/components/Forms/modal";
 import {
   $cartSizes,
   deleteLastProductFromCart,

@@ -37,7 +37,7 @@ export function Header() {
             className={cn("mx-auto lg:mx-0 -ml-3 cursor-pointer")}
             onClick={onLogoClickHandler}
           />
-          <AddressSelection className="ml-4 w-[150px]" />
+          <AddressSelection className="ml-4 min-w-[150px] max-w-[530px] pr-4" />
         </div>
         <div className="flex">
           <ul className="hidden lg:flex items-center flex-shrink-0 space-s-5 2xl:space-s-10">

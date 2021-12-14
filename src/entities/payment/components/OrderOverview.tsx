@@ -1,14 +1,7 @@
 import { CartSidebarView } from "@entities/cart/components/cart-sidebar-view";
 import { SuggestionsBlock } from "@entities/suggestion/components/SuggestionsBlock/SuggestionsBlock";
-import {
-  $dishes,
-  $popularDishes,
-  fetchPopularDishesFx,
-} from "@features/choose-dishes/models";
 import classNames from "classnames";
-import { forward } from "effector";
-import { createGate, useGate, useStore } from "effector-react";
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import style from "./styles.module.scss";
 
 export const OrderOverview = React.forwardRef<

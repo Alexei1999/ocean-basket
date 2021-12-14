@@ -1,4 +1,3 @@
-import { hostUrl } from "@shared/api/base";
 import classNames from "classnames";
 import { WavesIcon } from "./WavesIcon";
 

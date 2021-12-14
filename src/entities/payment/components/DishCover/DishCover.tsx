@@ -1,7 +1,7 @@
 import styles from "./styles.module.scss";
 import cover from "./cover.png";
 import classNames from "classnames";
-import { forwardRef, useCallback, useEffect, useRef } from "react";
+import { forwardRef } from "react";
 
 export const DishCover = forwardRef<HTMLDivElement>(() => {
   return (

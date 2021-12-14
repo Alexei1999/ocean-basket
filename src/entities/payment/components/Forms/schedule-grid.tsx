@@ -1,9 +1,9 @@
 import { RadioGroup } from "@headlessui/react";
 import ScheduleCard from "./schedule-card";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { AddressHeader } from "./address-header";
 import { createEvent, createStore } from "effector";
-import { getFromStorage, setToStorage } from "@features/choose-dishes/api";
+import { setToStorage } from "@features/choose-dishes/api";
 import { useStore } from "effector-react";
 
 type Schedule = {

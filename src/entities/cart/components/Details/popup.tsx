@@ -1,11 +1,8 @@
-import {
-  fetchPopularDishesFx,
-  ModifierType,
-} from "@features/choose-dishes/models";
+import { ModifierType } from "@features/choose-dishes/models";
 import { Dish, getModifiers } from "@shared/api/dishes";
 import Spinner from "@shared/components/spinner/spinner";
-import { createEffect, createStore, forward } from "effector";
-import { createGate, useGate, useStore } from "effector-react";
+import { createEffect, createStore } from "effector";
+import { useStore } from "effector-react";
 import { useEffect, useState } from "react";
 import Details from "./details";
 
