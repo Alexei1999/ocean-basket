@@ -5,28 +5,28 @@ import { useStore } from "effector-react";
 import { useNavigate } from "react-router-dom";
 import { Drawer } from "./drawer";
 
-export const setIsDrawerOpen = createEvent<boolean>();
-export const $isDrawerOpen = createStore<boolean>(false).on(
-  setIsDrawerOpen,
+export const setIsCartSidebarOpen = createEvent<boolean>();
+export const $isCartSidebarOpen = createStore<boolean>(false).on(
+  setIsCartSidebarOpen,
   (_, isOpen) => isOpen
 );
 
-export function ManagedDrawer() {
-  const isOpen = useStore($isDrawerOpen);
+export function CartSidebar() {
+  const isOpen = useStore($isCartSidebarOpen);
   const navigate = useNavigate();
 
   return (
     <Drawer
       open={isOpen}
-      onClose={() => setIsDrawerOpen(false)}
+      onClose={() => setIsCartSidebarOpen(false)}
       variant="right"
     >
       <CartSidebarView
         onSubmit={function () {
-          setIsDrawerOpen(false);
+          setIsCartSidebarOpen(false);
           navigate(RoutesConfig.Payment);
         }}
-        onClose={() => setIsDrawerOpen(false)}
+        onClose={() => setIsCartSidebarOpen(false)}
       />
       {/* TODO: Add another menu to drawer */}
       {/* {view === "FILTER_VIEW" && <MobileCategoryMenu />} */}

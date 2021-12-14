@@ -20,7 +20,6 @@ forward({
   to: [
     fetchDishesFx,
     fetchPopularDishesFx,
-    fetchCategoriesFx,
     fetchPomotionsFx,
   ],
 });

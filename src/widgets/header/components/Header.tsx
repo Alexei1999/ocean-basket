@@ -1,21 +1,21 @@
 import cn from "classnames";
 
-import logo from "../config/logo.svg";
+import logo from "@assets/logo.svg";
 import { headerLinks } from "../config/links";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCallback } from "react";
 import { CartHeaderIcon } from "../../../entities/cart/components/icons/CartHeaderIcon";
 import { RoutesConfig } from "../../../shared/lib/routes-config";
 import {
-  $isDrawerOpen,
-  setIsDrawerOpen,
-} from "@shared/components/drawer/managed-drawer";
+  $isCartSidebarOpen,
+  setIsCartSidebarOpen,
+} from "@shared/components/drawer/cart-sidebar";
 import { useStore } from "effector-react";
 import { $cartSizes } from "@features/choose-dishes/models";
 import { AddressSelection } from "./AddressSelection";
 
 export function Header() {
-  const isOpen = useStore($isDrawerOpen);
+  const isOpen = useStore($isCartSidebarOpen);
   const { size } = useStore($cartSizes);
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -89,7 +89,7 @@ export function Header() {
                 )}
                 counter={size}
                 onClick={() => {
-                  setIsDrawerOpen(true);
+                  setIsCartSidebarOpen(true);
                 }}
               />
             </li>

@@ -1,7 +1,7 @@
 import { Header } from "../widgets/header/components/Header";
 import { Routing } from "../pages/Routing";
 import { withProviders } from "./providers";
-import { ManagedDrawer } from "@shared/components/drawer/managed-drawer";
+import { CartSidebar } from "@shared/components/drawer/cart-sidebar";
 import { Footer } from "@widgets/footer/components/Footer";
 
 import styles from "./styles/global.module.scss";
@@ -11,6 +11,7 @@ import { useLocation } from "react-router-dom";
 import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react";
 import { AddDishModal } from "@entities/cart/components/Details/add-dish-modal";
+import { FilterMenu } from "@shared/components/drawer/filter-menu";
 
 export const onScrollPage = createEvent();
 const $updateStore = createStore<{}>({}).on(onScrollPage, () => ({}));
@@ -34,17 +35,20 @@ const ScrollContainer = ({ children }: { children: ReactNode }) => {
 
 function App() {
   return (
-    <div className="flex flex-col max-h-screen">
+    <>
       <AddDishModal />
-      <Header />
-      <ManagedDrawer />
-      <ScrollContainer>
-        <div className={styles.content}>
-          <Routing />
-        </div>
-        <Footer />
-      </ScrollContainer>
-    </div>
+      <CartSidebar />
+      <FilterMenu />
+      <div className="flex flex-col max-h-screen">
+        <Header />
+        <ScrollContainer>
+          <div className={styles.content}>
+            <Routing />
+          </div>
+          <Footer />
+        </ScrollContainer>
+      </div>
+    </>
   );
 }
 
