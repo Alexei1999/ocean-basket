@@ -89,7 +89,7 @@ export function PromotionSlider() {
                 >
                   <img
                     className={classNames(
-                      "rounded-xl object-cover w-full h-full",
+                      "rounded-xl object-fill w-full h-full",
                       styles.promotion
                     )}
                     src={!isError && photo ? `${hostUrl}/${photo}` : productSvg}

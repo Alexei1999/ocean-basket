@@ -33,11 +33,18 @@ export const AddressSelection = ({ className }: { className?: string }) => {
 
   return (
     <div className={classNames(className, styles.select, "flex")}>
-      <img src={gpsIcon} className="mr-2" width={15} height={18} />
+      <img
+        src={gpsIcon}
+        className="mx-2 order-1 lg:order-0"
+        width={15}
+        height={18}
+      />
       <select
         value={restaurant ?? undefined}
         onChange={(e) => onRestaurantSelection(e.target.value)}
-        className={classNames("text-body overflow-ellipsis text-sm w-full")}
+        className={classNames(
+          "text-body overflow-ellipsis text-sm w-full text-right lg:text-left"
+        )}
       >
         {addressesList.map(({ region, addresses }) => (
           <optgroup key={region} label={region}>

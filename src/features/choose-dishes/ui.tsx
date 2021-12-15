@@ -12,16 +12,13 @@ import {
   onResetCategory,
 } from "./models";
 import { useEffect, useRef } from "react";
+import FilterBar from "@widgets/filter-bar/filter-bar";
 
 export const ChooseDishesGate = createGate();
 
 forward({
   from: ChooseDishesGate.open,
-  to: [
-    fetchDishesFx,
-    fetchPopularDishesFx,
-    fetchPomotionsFx,
-  ],
+  to: [fetchDishesFx, fetchPopularDishesFx, fetchPomotionsFx],
 });
 
 forward({

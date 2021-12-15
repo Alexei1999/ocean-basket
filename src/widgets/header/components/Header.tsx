@@ -13,6 +13,9 @@ import {
 import { useStore } from "effector-react";
 import { $cartSizes } from "@features/choose-dishes/models";
 import { AddressSelection } from "./AddressSelection";
+import classNames from "classnames";
+
+import styles from "./styles.module.scss";
 
 export function Header() {
   const isOpen = useStore($isCartSidebarOpen);
@@ -29,18 +32,23 @@ export function Header() {
     <header
       className={"flex-shrink-0 site-header-with-search h-14 md:h-16 lg:h-22"}
     >
-      <div className="flex justify-between items-center w-full h-14 md:h-16 lg:h-22 md:px-4 lg:px-8 xl:px-32 py-5 z-50 fixed bg-light border-b border-border-200 shadow-sm transition-transform duration-300">
-        <div className="flex items-center w-full lg:w-auto h-full">
+      <div className="flex justify-between items-center w-full h-14 md:h-16 lg:h-22 md:px-2 xl:px-32 py-5 z-50 fixed bg-light border-b border-border-200 shadow-sm transition-transform duration-300">
+        <div className="flex items-center flex-grow lg:flex-grow-0 h-full">
           <img
             src={logo}
             alt="logo"
             className={cn("mx-auto lg:mx-0 -ml-3 cursor-pointer")}
             onClick={onLogoClickHandler}
           />
-          <AddressSelection className="ml-4 min-w-[150px] max-w-[530px] pr-4" />
         </div>
+        <AddressSelection
+          className={classNames(
+            styles.address,
+            "ml-4 min-w-[150px] max-w-[530px] pr-6 flex-grow"
+          )}
+        />
         <div className="flex">
-          <ul className="hidden lg:flex items-center flex-shrink-0 space-s-5 2xl:space-s-10">
+          <ul className="hidden lg:flex items-center flex-shrink-0 space-s-3 2xl:space-s-7">
             {headerLinks.map(({ href, matchingRoutes, label, icon: Icon }) => {
               const isCurrent = Array.isArray(matchingRoutes)
                 ? matchingRoutes.some((route) => route === pathname)
