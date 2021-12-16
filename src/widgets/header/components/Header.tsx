@@ -44,7 +44,7 @@ export function Header() {
         <AddressSelection
           className={classNames(
             styles.address,
-            "ml-4 min-w-[150px] max-w-[530px] pr-6 flex-grow"
+            "xl:ml-4 min-w-[150px] max-w-[530px] pr-6 flex-grow"
           )}
         />
         <div className="flex">

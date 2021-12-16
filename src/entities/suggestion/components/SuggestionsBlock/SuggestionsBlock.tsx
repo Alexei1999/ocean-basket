@@ -68,7 +68,7 @@ export function SuggestionsBlock({ className }: { className?: string }) {
           </React.Fragment>
         ))
       ) : (
-        <div className="w-full flex justify-center py-7 border-b border-border-200 border-opacity-75">
+        <div className="w-full flex justify-center py-7 px-3 border-b border-border-200 border-opacity-75">
           <h1 className="text-body text-lg font-bold">
             Нет подходящих блюд для рекомендации
           </h1>

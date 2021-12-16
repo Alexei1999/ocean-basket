@@ -1,6 +1,10 @@
 import { RoutesConfig } from "../../../shared/lib/routes-config";
 import { PresentIcon } from "./PresentIcon";
 
+export const extendedLinks = [
+  { href: RoutesConfig.Dashboard, label: "Главная" },
+];
+
 export const headerLinks = [
   { href: RoutesConfig.Menu, label: "Меню" },
   { href: RoutesConfig.About, label: "О компании" },

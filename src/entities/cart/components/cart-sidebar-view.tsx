@@ -120,7 +120,7 @@ export const CartSidebarView = ({
       <header
         className={classNames(
           !isFlat ? "fixed py-4" : "py-7",
-          "max-w-md w-full top-0 z-10 bg-light px-6 flex items-center justify-between border-b border-border-200 border-opacity-75"
+          "w-full top-0 z-10 bg-light px-6 flex items-center justify-between border-b border-border-200 border-opacity-75"
         )}
       >
         <div className="flex text-body text-lg font-bold">

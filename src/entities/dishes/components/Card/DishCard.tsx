@@ -126,7 +126,7 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
         <div>
           <h3
             onClick={handleProductQuickView}
-            className="text-md text-body font-bold truncate mb-1"
+            className="text-md text-body font-bold mb-1"
           >
             {name}
           </h3>
