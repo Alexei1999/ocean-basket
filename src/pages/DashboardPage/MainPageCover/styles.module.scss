@@ -3,44 +3,11 @@
 .container {
   height: calc(100vh - #{$header-height});
   min-height: 490px;
-  max-height: 1500px;
+  max-height: 800px;
 
   &Left {
-    max-width: 40%;
     background: url("~@assets/footer.png");
     background-repeat: no-repeat;
     background-size: cover;
-
-    &Wrapper {
-      padding: 10%;
-    }
   }
-  &Right {
-    max-width: 60%;
-  }
-}
-
-.image {
-  top: 0;
-  height: 100%;
-  z-index: -1;
-  &Left {
-    left: 0;
-    width: 40%;
-  }
-  &Right {
-    left: 40%;
-    width: 60%;
-  }
-}
-
-.logo {
-  &Mini {
-    max-width: 125px;
-    max-height: 125px;
-  }
-}
-
-.button {
-  max-width: 200px;
 }

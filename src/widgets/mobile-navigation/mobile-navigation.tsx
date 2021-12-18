@@ -24,7 +24,7 @@ const MobileNavigation: React.FC = () => {
 
   return (
     <div className="visible lg:hidden h-12 md:h-14">
-      <nav className="h-12 md:h-14 w-full py-1.5 px-2 flex justify-between fixed start-0 bottom-0 z-10 bg-light shadow-400">
+      <nav className="h-14 w-full py-1.5 px-2 flex justify-between fixed start-0 bottom-0 z-10 bg-light shadow-400">
         <motion.button
           whileTap={{ scale: 0.88 }}
           onClick={() => onSetPagesMenuOpen(true)}

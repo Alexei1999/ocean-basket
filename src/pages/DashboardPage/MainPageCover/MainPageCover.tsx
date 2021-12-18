@@ -31,20 +31,27 @@ export function MainPageCover() {
 
   return (
     <div className={classNames("flex relative", styles.container)}>
-      <div className={classNames(styles.containerLeft, "flex-grow relative")}>
+      <div
+        className={classNames(
+          styles.containerLeft,
+          "flex-grow relative sm:max-w-[40%]"
+        )}
+      >
         <div
-          className={classNames(
-            styles.containerLeftWrapper,
-            "flex flex-col h-full justify-between"
-          )}
+          className={classNames("flex flex-col h-full justify-between p-[10%]")}
         >
-          <LogoMini className={classNames(styles.logoMini, "w-full h-full")} />
-          <img className="w-full" src={logoMWriting} />
-          <img className="w-full" src={deliveryLogo} />
+          <LogoMini
+            className={classNames(
+              styles.logoMini,
+              "ml-auto mr-auto sm:ml-0 sm:mr-0 w-[150px] h-[150px] sm:w-full sm:h-full sm:max-w-[125px] sm:max-h-[125px] pb-7"
+            )}
+          />
+          <img className="w-full pb-7" src={logoMWriting} />
+          <img className="w-full pb-7" src={deliveryLogo} />
           <Button
             className={classNames(
               styles.button,
-              "w-full text-accent hover:text-accent-hover"
+              "w-full text-accent hover:text-accent-hover lg:max-w-[200px]"
             )}
             onClick={() => navigate(RoutesConfig.Menu)}
           >
@@ -64,7 +71,9 @@ export function MainPageCover() {
           />
         </div>
       </div>
-      <div className={classNames(styles.containerRight, "flex-grow")}>
+      <div
+        className={classNames("sm:flex-grow sm:max-w-[60%] hidden sm:block")}
+      >
         <Swiper
           loop
           initialSlide={initialSlide}

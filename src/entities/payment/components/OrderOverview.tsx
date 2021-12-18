@@ -13,7 +13,7 @@ export const OrderOverview = React.forwardRef<
       <div className="flex flex-col md:flex-row max-w-7xl w-full mx-auto py-10 min-h-140">
         <div
           className={classNames(
-            "w-full relative md:w-[45%] lg:w-96 flex-shrink-0 order-1 md:order-2 mb-8 md:mb-0 md:ms-7 lg:ms-9 bg-light max-h-140",
+            "w-full relative md:w-[45%] lg:w-96 flex-shrink-0 order-1 md:order-2 h-[400px] md:h-auto mb-8 md:mb-0 md:ms-7 lg:ms-9 bg-light max-h-140",
             style.shadow
           )}
         >

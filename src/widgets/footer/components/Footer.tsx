@@ -39,7 +39,9 @@ function FooterContactsBlock({
 
         {item.email && (
           <div className="flex justify-end pt-4">
-            <span className="w-4/12 text-base">{item.email}</span>
+            <span className="w-4/12 text-base whitespace-pre">
+              {item.email}
+            </span>
           </div>
         )}
       </div>
@@ -56,8 +58,8 @@ export function Footer() {
           <img width="65px" height="65px" src={logoMini} />
           <img className="pt-4 w-48" src={logoFooter} />
         </div>
-        <div className="flex justify-between flex-grow w-full pt-16 pb-10">
-          <div className="flex flex-col w-1/2">
+        <div className="flex-col items-center max-w-4xl xl:max-w-none xl:flex-row flex xl:justify-between flex-grow w-full pt-16 pb-10">
+          <div className="pt-10 xl:pt-0 order-1 xl:order-0  flex flex-col w-full">
             <span className="text-base font-bold uppercase">
               Наши рестораны
             </span>
@@ -69,61 +71,64 @@ export function Footer() {
             <FooterContactsBlock className="flex-grow" item={addresses[1]} />
           </div>
 
-          <div className="flex flex-col font-medium">
-            <span className="text-base font-bold uppercase">Блюда</span>
+          <div className="order-0 xl:order-1 grid grid-cols-2 w-full max-w-4xl flex-grow">
+            <div className="flex flex-col font-medium col-span-1">
+              <span className="text-base font-bold uppercase">Блюда</span>
 
-            <div className="mt-10 flex">
-              <div className="flex flex-col">
-                {[
-                  "Популярные",
-                  "Стартеры",
-                  "Супы",
-                  "Салаты",
-                  "Рыба",
-                  "Креветки",
-                  "Топ UPS",
-                ].map((item, index) => (
-                  <span className="mb-4 cursor-pointer" key={index}>
-                    {item}
-                  </span>
-                ))}
-              </div>
-              <div className="flex flex-col ml-11 cursor-pointer">
-                {["Платтеры и комбо", "Суши", "Десерты", "Напитки"].map(
-                  (item, index) => (
-                    <span className="mb-4" key={index}>
+              <div className="mt-10 flex">
+                <div className="flex flex-col">
+                  {[
+                    "Популярные",
+                    "Стартеры",
+                    "Супы",
+                    "Салаты",
+                    "Рыба",
+                    "Креветки",
+                    "Топ UPS",
+                  ].map((item, index) => (
+                    <span className="mb-4 cursor-pointer" key={index}>
                       {item}
                     </span>
-                  )
-                )}
+                  ))}
+                </div>
+                <div className="flex flex-col ml-11 cursor-pointer">
+                  {["Платтеры и комбо", "Суши", "Десерты", "Напитки"].map(
+                    (item, index) => (
+                      <span className="mb-4" key={index}>
+                        {item}
+                      </span>
+                    )
+                  )}
+                </div>
               </div>
             </div>
 
-            <div className="pt-16 flex flex-col text-sm font-normal">
+            <div className="flex flex-col col-span-1">
+              <span className="text-base font-bold uppercase">Страницы</span>
+
+              <div className="mt-10 flex">
+                <div className="flex flex-col">
+                  {[
+                    "Меню",
+                    "О ресторане",
+                    "Акции",
+                    "Сертификаты",
+                    "Оплата и доставка",
+                    "Контакты",
+                  ].map((item, index) => (
+                    <span className="mb-4 cursor-pointer" key={index}>
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="pt-16 flex flex-col text-sm font-normal col-span-2">
               <a href="#">Политика конфиденциальности</a>
               <a href="#" className="pt-3">
                 Доставка и оплата
               </a>
-            </div>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-base font-bold uppercase">Страницы</span>
-
-            <div className="mt-10 flex">
-              <div className="flex flex-col">
-                {[
-                  "Меню",
-                  "О ресторане",
-                  "Акции",
-                  "Сертификаты",
-                  "Оплата и доставка",
-                  "Контакты",
-                ].map((item, index) => (
-                  <span className="mb-4 cursor-pointer" key={index}>
-                    {item}
-                  </span>
-                ))}
-              </div>
             </div>
           </div>
         </div>

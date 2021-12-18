@@ -80,8 +80,13 @@ function EmailSection({ isWaves = false }) {
           )}
         >
           <img src={hook} className="absolute -bottom-32" />
-          <div className="flex flex-col text-3xl font-bold px-12 py-12 justify-between relative">
-            <div className="pt-3 text-body">
+          <div
+            className={classNames(
+              "flex flex-col text-3xl font-bold px-12 py-12 justify-between relative flex-grow",
+              styles.emailInput
+            )}
+          >
+            <div className="pt-3 text-body pb-7">
               Подпишись на наши обновления и получи подарок на первый заказ
             </div>
             <div className={classNames(error && styles.emailError)}>
@@ -95,10 +100,7 @@ function EmailSection({ isWaves = false }) {
                     setEmail(e.target.value);
                   }}
                   isButtonInput
-                  className={classNames(
-                    "flex-grow text-base",
-                    styles.emailInput
-                  )}
+                  className={classNames("text-base, flex-grow")}
                 />
                 <Button
                   className={classNames(
@@ -120,7 +122,12 @@ function EmailSection({ isWaves = false }) {
             </div>
           </div>
 
-          <div className={classNames("flex-shrink-0", styles.emailImg)}>
+          <div
+            className={classNames(
+              "flex-shrink-0 hidden sm:block",
+              styles.emailImg
+            )}
+          >
             <img
               className={classNames("w-full h-full object-cover")}
               src={emailDish}

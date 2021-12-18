@@ -28,7 +28,7 @@ export function CheckoutPage() {
   const phone = useStore($phone);
 
   return !isOrdered ? (
-    <div className="py-8 px-4 lg:py-10 lg:px-8 xl:py-14 xl:px-16 2xl:px-20 bg-gray-100">
+    <div className="py-8 sm:px-4 lg:py-10 lg:px-8 xl:py-14 xl:px-16 2xl:px-20 bg-gray-100">
       <div className="flex flex-col lg:flex-row items-center lg:items-start m-auto w-full max-w-6xl">
         <div className="lg:max-w-3xl w-full space-y-6 order-1 lg:order-0">
           <BlocksGrid
@@ -81,7 +81,7 @@ export function CheckoutPage() {
             Оформить заказ
           </CheckAvailabilityAction>
         </div>
-        <div className="w-full lg:w-96 mb-10 sm:mb-12 lg:mb-0 mt-10 lg:ml-16 order-0 lg:order-1">
+        <div className="w-full lg:w-96 mb-10 sm:mb-12 lg:mb-0 mt-10 lg:ml-16 order-0 lg:order-1 px-2 sm:px-0">
           <RightSideView />
         </div>
       </div>
