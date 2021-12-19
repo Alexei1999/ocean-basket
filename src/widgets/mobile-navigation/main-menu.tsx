@@ -1,5 +1,5 @@
 import { DrawerWrapper } from "@shared/components/drawer/drawer-wrapper";
-import { onSetPagesMenuOpen } from "@shared/components/drawer/mobile-main-menu";
+import { onSetPagesSidebarOpen } from "@shared/components/drawer/mobile-main-menu";
 import { extendedLinks, headerLinks } from "@widgets/header/config/links";
 import classNames from "classnames";
 import { useNavigate } from "react-router-dom";
@@ -13,12 +13,14 @@ export default function MainMenu() {
   const { pathname } = useLocation();
 
   return (
-    <DrawerWrapper onClose={() => onSetPagesMenuOpen(false)}>
+    <DrawerWrapper onClose={() => onSetPagesSidebarOpen(false)}>
       <ul className="flex-grow">
         {links.map(({ href, label }) => (
           <li key={`${href}${label}`}>
             <button
               onClick={() => {
+                onSetPagesSidebarOpen(false);
+
                 if (pathname === href) return;
                 navigate(href);
               }}

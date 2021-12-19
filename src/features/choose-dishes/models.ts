@@ -1,4 +1,5 @@
 import { filterCartObjects } from "@entities/cart/components/Details/details";
+import { fetchCategoriesFx } from "@entities/сategories/components/Categories/Categories";
 import { onCategoryClick } from "@entities/сategories/components/TreeMenu/TreeMenuItem";
 import {
   Category,
@@ -41,7 +42,6 @@ export type PickedModifier = Pick<ModifierType, "id" | "dish_id" | "name"> & {
 
 export const fetchDishesFx = createEffect(getDishes);
 export const fetchPopularDishesFx = createEffect(getPopular);
-export const fetchCategoriesFx = createEffect(getCategories);
 export const fetchPomotionsFx = createEffect(getPromotions);
 
 export const $dishes = createStore<Dish[] | null>(null).on(

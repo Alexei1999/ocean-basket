@@ -3,7 +3,7 @@ import cn from "classnames";
 import styles from "./styles.module.scss";
 
 const WIDTH = 51;
-const LARGE_CIRCLE_ADD_WIDTH = 4;
+const LARGE_CIRCLE_ADD_WIDTH = 6;
 const HEIGHT = 50;
 
 enum CircleSizes {

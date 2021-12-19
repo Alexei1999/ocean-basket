@@ -72,25 +72,25 @@ function EmailSection({ isWaves = false }) {
           alt="dish-background-2"
         />
       </div>
-      <div className="flex justify-center drop-shadow-md lg:-mt-56">
+      <div className="flex justify-center drop-shadow-md -mt-5 lg:-mt-56">
         <div
           className={classNames(
-            "bg-light flex justify-between rounded-3xl overflow-hidden",
+            "bg-light flex justify-between rounded-3xl overflow-hidden max-w-[980px] sm:max-h-[336px]",
             styles.card
           )}
         >
-          <img src={hook} className="absolute -bottom-32" />
+          <img src={hook} className="absolute -bottom-32 hidden md:block" />
           <div
             className={classNames(
               "flex flex-col text-3xl font-bold px-12 py-12 justify-between relative flex-grow",
               styles.emailInput
             )}
           >
-            <div className="pt-3 text-body pb-7">
+            <div className="sm:pt-3 text-body pb-7">
               Подпишись на наши обновления и получи подарок на первый заказ
             </div>
             <div className={classNames(error && styles.emailError)}>
-              <div className={classNames("flex text-lg")}>
+              <div className={classNames("flex flex-col sm:flex-row text-lg")}>
                 <Input
                   name="email"
                   placeholder="email"
@@ -104,8 +104,7 @@ function EmailSection({ isWaves = false }) {
                 />
                 <Button
                   className={classNames(
-                    "text-accent hover:text-accent-hover",
-                    styles.button
+                    "text-accent hover:text-accent-hover mt-4 sm:mt-0 sm:max-w-[150px]"
                   )}
                   isInputButton
                   onClick={onSubscribeHandler}
@@ -251,7 +250,7 @@ export function SubscriptionSection({ isWaves: isWaves = false }) {
         />
         <InstagramHeader />
       </div>
-      <div className="pt-9 pb-28">
+      <div className="pt-9 sm:pb-28">
         <InstagramGalery />
       </div>
     </div>

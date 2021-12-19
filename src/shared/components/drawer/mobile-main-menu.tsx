@@ -3,9 +3,9 @@ import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react";
 import { Drawer } from "./drawer";
 
-export const onSetPagesMenuOpen = createEvent<boolean>();
+export const onSetPagesSidebarOpen = createEvent<boolean>();
 export const $isPagesMenuOpen = createStore<boolean>(false).on(
-  onSetPagesMenuOpen,
+  onSetPagesSidebarOpen,
   (_, isOpen) => isOpen
 );
 
@@ -15,7 +15,7 @@ export function MobileMainMenu() {
   return (
     <Drawer
       open={isOpen}
-      onClose={() => onSetPagesMenuOpen(false)}
+      onClose={() => onSetPagesSidebarOpen(false)}
       variant="left"
     >
       <MainMenu />

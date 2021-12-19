@@ -42,7 +42,10 @@ export function DetailsPage() {
     <>
       <div className="relative">
         <PageWaveHeader className="absolute xl:top-12 left-0" />
-        <img src={fishesFull} className="absolute right-0 top-20" />
+        <img
+          src={fishesFull}
+          className="absolute right-0 top-20 hidden lg:block"
+        />
         <div className="pt-16 pb-24 gap-y-7  md:px-4 lg:px-8 xl:px-32 flex flex-col">
           <div className="gap-x-14 3xl:gap-x-20 gap-y-7 flex flex-wrap relative max-w-[70%] justify-start">
             <Card

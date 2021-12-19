@@ -70,7 +70,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
             sizeClasses[dimension],
             disabled && "bg-gray-100 cursor-not-allowed",
             inputClassName,
-            isButtonInput && "rounded-r-none"
+            isButtonInput && "sm:rounded-r-none"
           )}
           disabled={disabled}
           autoComplete="off"

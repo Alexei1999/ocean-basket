@@ -81,7 +81,7 @@ export function CheckoutPage() {
             Оформить заказ
           </CheckAvailabilityAction>
         </div>
-        <div className="w-full lg:w-96 mb-10 sm:mb-12 lg:mb-0 mt-10 lg:ml-16 order-0 lg:order-1 px-2 sm:px-0">
+        <div className="w-full lg:w-96 mb-10 sm:mb-12 lg:mb-0 lg:mt-10 lg:ml-16 order-0 lg:order-1 px-5 sm:px-0">
           <RightSideView />
         </div>
       </div>

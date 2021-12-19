@@ -6,19 +6,19 @@ import { useStore } from "effector-react";
 import { useNavigate } from "react-router-dom";
 import { Drawer } from "./drawer";
 
-export const onSetFilterMenuOpen = createEvent<boolean>();
-export const $isFilterMenuOpen = createStore<boolean>(false).on(
-  onSetFilterMenuOpen,
+export const onSetCategoriesSidebarOpen = createEvent<boolean>();
+export const $isCategoriesSidebarOpen = createStore<boolean>(false).on(
+  onSetCategoriesSidebarOpen,
   (_, isOpen) => isOpen
 );
 
 export function FilterMenu() {
-  const isOpen = useStore($isFilterMenuOpen);
+  const isOpen = useStore($isCategoriesSidebarOpen);
 
   return (
     <Drawer
       open={isOpen}
-      onClose={() => onSetFilterMenuOpen(false)}
+      onClose={() => onSetCategoriesSidebarOpen(false)}
       variant="left"
     >
       <MobileCategoryMenu />

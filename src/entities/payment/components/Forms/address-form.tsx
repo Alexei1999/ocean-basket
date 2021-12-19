@@ -94,42 +94,45 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
               error={errors.city?.message!}
               name="city"
               variant="outline"
-              className="col-span-2"
+              className="col-span-4 sm:col-span-2"
             />
             <Input
               label={"Улица"}
               {...register("street")}
               error={errors.street?.message!}
               variant="outline"
-              className="col-span-2"
+              className="col-span-4 sm:col-span-2"
             />
             <Input
               label={"Дом"}
               {...register("building")}
               error={errors.building?.message}
-              className="col-span-2"
+              className="col-span-4 sm:col-span-2"
               variant="outline"
             />
             <Input
               label={"Квартира"}
               {...register("flat")}
               error={errors.flat?.message}
+              className="col-span-2 sm:col-span-1"
               variant="outline"
             />
             <Input
               label={"Подъезд"}
               {...register("entrance")}
               error={errors.entrance?.message}
+              className="col-span-2 sm:col-span-1"
               variant="outline"
             />
             <Input
               label={"Этаж"}
               {...register("floor")}
               error={errors.floor?.message}
+              className="col-span-2 sm:col-span-1"
               variant="outline"
             />
 
-            <div>
+            <div className="col-span-2 sm:col-span-1">
               <Label>Наличие домофона</Label>
               <div className="space-s-4 pt-3 flex items-center">
                 <Radio
@@ -165,7 +168,7 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
               {...register("persons_number")}
               error={errors.persons_number?.message}
               variant="outline"
-              className="col-span-1"
+              className="col-span-2 sm:col-span-1"
               type="number"
             />
 
@@ -174,7 +177,7 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
               {...register("title")}
               error={errors.title?.message}
               variant="outline"
-              className="col-span-1"
+              className="col-span-2 sm:col-span-1"
               placeholder="Например: Домашний"
               min={1}
             />

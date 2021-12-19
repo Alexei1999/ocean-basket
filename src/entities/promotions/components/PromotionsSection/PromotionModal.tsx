@@ -38,7 +38,7 @@ export function PromotionModal({
 
   return (
     <Modal open={isOpen} onClose={() => setIsOpen(false)} showClose>
-      <div className="p-5 sm:p-8 bg-light min-h-screen md:min-h-0 max-w-3xl rounded-2xl">
+      <div className="p-5 sm:p-8 bg-light min-h-screen md:min-h-0 max-w-3xl md:rounded-2xl">
         <div className="flex justify-between">
           <h1 className="text-body font-bold text-xl mb-4 sm:mb-6 pr-10">
             {promotion?.title}

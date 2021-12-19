@@ -8,7 +8,7 @@ import { CartHeaderIcon } from "../../../entities/cart/components/icons/CartHead
 import { RoutesConfig } from "../../../shared/lib/routes-config";
 import {
   $isCartSidebarOpen,
-  setIsCartSidebarOpen,
+  setCartSidebarOpen,
 } from "@shared/components/drawer/cart-sidebar";
 import { useStore } from "effector-react";
 import { $cartSizes } from "@features/choose-dishes/models";
@@ -97,7 +97,7 @@ export function Header() {
                 )}
                 counter={size}
                 onClick={() => {
-                  setIsCartSidebarOpen(true);
+                  setCartSidebarOpen(true);
                 }}
               />
             </li>

@@ -28,9 +28,14 @@ function FooterContactsBlock({
                 </div>
               )}
               {addresses.map(({ address, number }, idx) => (
-                <div className={classNames("pt-4", "flex justify-between")}>
-                  <span className="max-w-xs w-8/12">{address}</span>
-                  <span className="w-4/12">{number}</span>
+                <div
+                  className={classNames(
+                    "pt-4",
+                    "flex flex-col sm:flex-row justify-between"
+                  )}
+                >
+                  <span className="max-w-xs sm:w-8/12">{address}</span>
+                  <span className="pt-1 sm:pt-0 sm:w-4/12">{number}</span>
                 </div>
               ))}
             </>
@@ -38,8 +43,8 @@ function FooterContactsBlock({
         })}
 
         {item.email && (
-          <div className="flex justify-end pt-4">
-            <span className="w-4/12 text-base whitespace-pre">
+          <div className="flex pb-4 sm:pb-0 sm:justify-end pt-7 sm:pt-4">
+            <span className="sm:w-4/12 text-base whitespace-pre">
               {item.email}
             </span>
           </div>
@@ -53,13 +58,13 @@ function FooterContactsBlock({
 export function Footer() {
   return (
     <footer className={cn(styles.container, "bg-local bg-gray-600")}>
-      <div className="flex h-full items-center pt-14 md:px-4 lg:px-8 xl:px-32 flex-col text-white text-sm">
+      <div className="flex h-full items-center pt-14 px-4 lg:px-8 xl:px-32 flex-col text-white text-sm">
         <div className="flex flex-col items-center">
           <img width="65px" height="65px" src={logoMini} />
           <img className="pt-4 w-48" src={logoFooter} />
         </div>
-        <div className="flex-col items-center max-w-4xl xl:max-w-none xl:flex-row flex xl:justify-between flex-grow w-full pt-16 pb-10">
-          <div className="pt-10 xl:pt-0 order-1 xl:order-0  flex flex-col w-full">
+        <div className="flex-col gap-x-36 items-center xl:items-start  max-w-4xl xl:max-w-none xl:flex-row flex xl:justify-between flex-grow w-full pt-16 pb-10">
+          <div className="pt-10 xl:pt-0 order-1 xl:order-0 gap-x-36 flex flex-col w-full">
             <span className="text-base font-bold uppercase">
               Наши рестораны
             </span>
@@ -71,8 +76,8 @@ export function Footer() {
             <FooterContactsBlock className="flex-grow" item={addresses[1]} />
           </div>
 
-          <div className="order-0 xl:order-1 grid grid-cols-2 w-full max-w-4xl flex-grow">
-            <div className="flex flex-col font-medium col-span-1">
+          <div className="order-0 xl:order-1 grid grid-cols-3 w-full max-w-4xl flex-grow">
+            <div className="flex flex-col font-medium sm:col-span-2 col-span-3">
               <span className="text-base font-bold uppercase">Блюда</span>
 
               <div className="mt-10 flex">
@@ -103,7 +108,7 @@ export function Footer() {
               </div>
             </div>
 
-            <div className="flex flex-col col-span-1">
+            <div className="flex flex-col pt-8 sm:pt-0 sm:col-span-1 col-span-3">
               <span className="text-base font-bold uppercase">Страницы</span>
 
               <div className="mt-10 flex">
@@ -124,12 +129,18 @@ export function Footer() {
               </div>
             </div>
 
-            <div className="pt-16 flex flex-col text-sm font-normal col-span-2">
+            <div className="hidden xl:flex pt-16 flex-col text-sm font-normal col-span-3">
               <a href="#">Политика конфиденциальности</a>
               <a href="#" className="pt-3">
                 Доставка и оплата
               </a>
             </div>
+          </div>
+          <div className="flex xl:hidden order-2 mr-auto pt-4 flex-col text-sm font-normal col-span-2">
+            <a href="#">Политика конфиденциальности</a>
+            <a href="#" className="pt-3">
+              Доставка и оплата
+            </a>
           </div>
         </div>
         <hr className="border bg-light w-full" />

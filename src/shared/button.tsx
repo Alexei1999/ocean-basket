@@ -51,7 +51,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         [classes.big]: size === "big",
       },
       className,
-      isInputButton && "rounded-l-none"
+      isInputButton && "sm:rounded-l-none"
     );
 
     return (

@@ -5,10 +5,10 @@ import { HomeIcon } from "./home-icon";
 import { NavbarIcon } from "./navbar-icon";
 import {
   $isCartSidebarOpen,
-  setIsCartSidebarOpen,
+  setCartSidebarOpen,
 } from "@shared/components/drawer/cart-sidebar";
 import { CartHeaderIcon } from "@entities/cart/components/icons/CartHeaderIcon";
-import { onSetPagesMenuOpen } from "@shared/components/drawer/mobile-main-menu";
+import { onSetPagesSidebarOpen } from "@shared/components/drawer/mobile-main-menu";
 import { useLocation, useNavigate } from "react-router-dom";
 import { RoutesConfig } from "@shared/lib/routes-config";
 import { $cartSizes } from "@features/choose-dishes/models";
@@ -27,7 +27,7 @@ const MobileNavigation: React.FC = () => {
       <nav className="h-14 w-full py-1.5 px-2 flex justify-between fixed start-0 bottom-0 z-10 bg-light shadow-400">
         <motion.button
           whileTap={{ scale: 0.88 }}
-          onClick={() => onSetPagesMenuOpen(true)}
+          onClick={() => onSetPagesSidebarOpen(true)}
           className="flex p-2 h-full items-center justify-center focus:outline-none focus:text-accent"
         >
           <span className="sr-only">Страницы</span>
@@ -49,7 +49,7 @@ const MobileNavigation: React.FC = () => {
         <motion.button
           whileTap={{ scale: 0.88 }}
           onClick={() => {
-            setIsCartSidebarOpen(true);
+            setCartSidebarOpen(true);
           }}
           className="flex p-2 product-cart h-full relative items-center justify-center focus:outline-none focus:text-accent"
         >

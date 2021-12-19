@@ -5,7 +5,6 @@ import { forward } from "effector";
 import { createGate, useGate, useStore } from "effector-react";
 import {
   $category,
-  fetchCategoriesFx,
   fetchDishesFx,
   fetchPomotionsFx,
   fetchPopularDishesFx,
