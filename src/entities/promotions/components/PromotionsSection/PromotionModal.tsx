@@ -49,7 +49,7 @@ export function PromotionModal({
         </p>
         {Boolean(promotion?.basket.length) && (
           <Button
-            className="mt-auto md:mt-0 w-full md:w-autotext-accent hover:text-accent-hover"
+            className="mt-auto md:mt-0 w-full md:w-auto text-accent hover:text-accent-hover"
             disabled={filteredBasket.length === 0}
             onClick={() => {
               filteredBasket.forEach((basket: Dish) => {

@@ -44,10 +44,13 @@ function ContactsBlock({
               )}
               {addresses.map(({ address, number }, idx) => (
                 <div
-                  className={classNames(idx && "pt-2", "flex justify-between")}
+                  className={classNames(
+                    idx && "pt-2",
+                    "flex justify-between gap-x-5"
+                  )}
                 >
-                  <span className="max-w-xs w-8/12">{address}</span>
-                  <span className="w-4/12">{number}</span>
+                  <span className="max-w-xs w-1/2 lg:w-8/12">{address}</span>
+                  <span className="w-1/2 lg:w-4/12">{number}</span>
                 </div>
               ))}
             </>
@@ -79,7 +82,7 @@ export function ContactsPage() {
       <div>
         <div className="pt-12 pb-8 lg:pb-16 xl:pb-32 bg-light text-body">
           <PageWaveHeader src={contactsIcon} />
-          <div className="flex flex-col items-stretch lg:items-start lg:flex-row pt-20 md:px-4 lg:px-8 xl:px-32 justify-around max-w-7xl box-content mx-auto gap-x-8">
+          <div className="flex flex-col items-stretch lg:items-start lg:flex-row pt-20 px-4 lg:px-8 xl:px-32 justify-around max-w-7xl box-content mx-auto gap-x-8">
             <ContactsBlock
               className="flex-grow lg:max-w-lg"
               item={addresses[0]}

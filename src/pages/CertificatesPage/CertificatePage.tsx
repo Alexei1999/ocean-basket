@@ -68,7 +68,7 @@ export function CertificatePage() {
           </div>
         </div>
       </div>
-      <div className="px-4 flex justify-center pt-10 pb-32 text-body relative">
+      <div className="lg:gap-x-16 px-4 flex flex-col lg:flex-row justify-center lg:pt-10 pb-32 text-body relative">
         <img
           alt="two waves"
           src={twoWaves}
@@ -79,8 +79,12 @@ export function CertificatePage() {
           className="absolute left-14 bottom-8 xl:bottom-16"
           alt="hook"
         />
-        <img src={important} alt="important" />
-        <div className="pl-16 max-w-xl">
+        <img
+          src={important}
+          className="max-w-[100px] lg:max-w-none"
+          alt="important"
+        />
+        <div className="pt-7 lg:pt-0 lg:pl-16 max-w-xl">
           <p>
             Обналичить сертификат возможно только в ресторане, на доставку он не
             распространяется.
