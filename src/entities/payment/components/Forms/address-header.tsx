@@ -30,7 +30,7 @@ export const AddressHeader: React.FC<AddressHeaderProps> = ({
       </div>
       {onAdd && (
         <button
-          className="flex items-center text-body text-base font-normal transition-colors duration-200 focus:outline-none focus:text-accent-hover hover:text-accent-hover"
+          className="flex items-center text-body text-base font-normal transition-colors duration-200 focus:outline-none focus:text-accent-hover hover:text-accent-hover text-right"
           onClick={onAdd}
         >
           {!isEdit && <PlusIcon className="w-4 h-4 stroke-2 me-0.5" />}

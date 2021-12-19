@@ -68,13 +68,17 @@ export function CertificatePage() {
           </div>
         </div>
       </div>
-      <div className="flex justify-center pt-10 pb-32 text-body relative">
+      <div className="px-4 flex justify-center pt-10 pb-32 text-body relative">
         <img
           alt="two waves"
           src={twoWaves}
-          className="absolute right-9 top-20 w-56"
+          className="absolute right-9 top-20 w-56 hidden lg:block"
         />
-        <img src={hook} className="absolute left-14 bottom-16" alt="hook" />
+        <img
+          src={hook}
+          className="absolute left-14 bottom-8 xl:bottom-16"
+          alt="hook"
+        />
         <img src={important} alt="important" />
         <div className="pl-16 max-w-xl">
           <p>

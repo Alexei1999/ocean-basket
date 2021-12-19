@@ -58,7 +58,7 @@ function EmailSection({ isWaves = false }) {
   return (
     <div className="relative">
       {isWaves && (
-        <WhiteWaves className="absolute -mt-10 z-10 hidden lg:block" />
+        <WhiteWaves className="absolute -mt-10 z-10 hidden md:block" />
       )}
       <div
         className={classNames(
@@ -250,7 +250,7 @@ export function SubscriptionSection({ isWaves: isWaves = false }) {
         />
         <InstagramHeader />
       </div>
-      <div className="pt-9 sm:pb-28">
+      <div className="pt-9 sm:pb-18 lg:pb-28">
         <InstagramGalery />
       </div>
     </div>

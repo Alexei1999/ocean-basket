@@ -77,21 +77,27 @@ export function ContactsPage() {
   return (
     <YMaps>
       <div>
-        <div className="pt-12 pb-2 lg:pb-4 xl:pb-32 bg-light text-body">
+        <div className="pt-12 pb-8 lg:pb-16 xl:pb-32 bg-light text-body">
           <PageWaveHeader src={contactsIcon} />
-          <div className="flex flex-col items-center lg:items-start lg:flex-row pt-20 md:px-4 lg:px-8 xl:px-32 justify-around max-w-7xl box-content mx-auto">
-            <ContactsBlock className="flex-grow max-w-lg" item={addresses[0]}>
-              <div className="flex justify-center items-center pt-20">
+          <div className="flex flex-col items-stretch lg:items-start lg:flex-row pt-20 md:px-4 lg:px-8 xl:px-32 justify-around max-w-7xl box-content mx-auto gap-x-8">
+            <ContactsBlock
+              className="flex-grow lg:max-w-lg"
+              item={addresses[0]}
+            >
+              <div className="flex justify-center items-center pt-7 pb-7 lg:pt-20 lg:pb-0">
                 <img src={hook} className="bottom-16 right-11" />
               </div>
             </ContactsBlock>
-            <ContactsBlock className="flex-grow max-w-lg" item={addresses[1]} />
+            <ContactsBlock
+              className="flex-grow lg:max-w-lg"
+              item={addresses[1]}
+            />
           </div>
         </div>
         <div
           className={classNames(
             styles.map,
-            "w-full md:px-4 lg:px-8 xl:px-32 pb-36"
+            "w-full px-4 lg:px-8 xl:px-32 pb-4 lg:pb-8 xl:pb-36"
           )}
         >
           <Map

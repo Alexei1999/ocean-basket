@@ -104,7 +104,7 @@ const Details: React.FC<Props> = ({
     <article className="rounded-lg bg-light w-full">
       <div
         className={classNames(
-          "flex flex-col gap-16 md:flex-row border-b border-border-200 border-opacity-70 p-6 lg:p-14 xl:p-16 max-h-full"
+          "flex flex-col gap-x-16 md:flex-row border-b border-border-200 border-opacity-70 p-6 lg:p-14 xl:p-16 max-h-full"
         )}
       >
         <div

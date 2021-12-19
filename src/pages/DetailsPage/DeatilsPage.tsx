@@ -44,14 +44,14 @@ export function DetailsPage() {
         <PageWaveHeader className="absolute xl:top-12 left-0" />
         <img
           src={fishesFull}
-          className="absolute right-0 top-20 hidden lg:block"
+          className="absolute hidden lg:block right-0 top-20"
         />
-        <div className="pt-16 pb-24 gap-y-7  md:px-4 lg:px-8 xl:px-32 flex flex-col">
-          <div className="gap-x-14 3xl:gap-x-20 gap-y-7 flex flex-wrap relative max-w-[70%] justify-start">
+        <div className="pt-16 pb-16 gap-y-7 px-4 md:px-8 xl:px-32 flex flex-col">
+          <div className="gap-x-14 3xl:gap-x-20 gap-y-7 flex flex-wrap flex-col md:flex-row relative md:max-w-[70%] justify-start">
             <Card
               src={delivery}
               description="Прием заказов осуществляется во время работы ресторанов."
-              className="flex-grow basis-80 max-w-xl"
+              className="flex-grow md:basis-80 md:max-w-xl"
             />
             <Card
               src={territory}
@@ -59,15 +59,15 @@ export function DetailsPage() {
               className=""
             />
           </div>
-          <div className="flex flex-wrap gap-y-7 gap-x-14 3xl:gap-x-20">
+          <div className="flex flex-wrap md:items-start flex-col md:flex-row gap-y-7 gap-x-14 3xl:gap-x-20">
             <Card
               src={minSum}
               label="2000 РУБ*"
               description="*С учетом всех специальных предложений."
-              className="max-w-lg"
+              className="md:max-w-lg"
             />
             <Card
-              className="max-w-2xl"
+              className="md:max-w-2xl"
               src={cost}
               description={
                 <ul>
@@ -81,16 +81,16 @@ export function DetailsPage() {
               }
             />
           </div>
-          <div className="flex flex-wrap gap-y-7 max-w-[70%] gap-x-14 3xl:gap-x-20">
+          <div className="flex flex-wrap md:items-start flex-col md:flex-row gap-y-7 md:max-w-[70%] gap-x-14 3xl:gap-x-20">
             <Card
               src={method}
               description="Сейчас мы работаем по системе предоплаты на сайте."
-              className="flex-grow basis-80 max-w-lg"
+              className="flex-grow md:basis-80 md:max-w-lg"
             />
             <Card
               src={howGet}
               description="Доставка осуществляется курьерскими службами."
-              className="basis-96 max-w-lg"
+              className="md:basis-96 md:max-w-lg"
             />
           </div>
         </div>

@@ -93,16 +93,16 @@ export function OrderDescription({
 
   return (
     <div className="py-8 px-4 lg:py-10 lg:px-8 xl:py-14 xl:px-24 2xl:px-64 bg-gray-100 rounded-2xl text-body text-sm">
-      <div className="shadow-700 bg-light px-16 py-14">
+      <div className="shadow-700 bg-light px-8 md:px-16 py-14">
         <div className="flex flex-col sm:flex-row justify-between">
           <div className="pt-4 sm:pt-0 order-1 sm:order-0">
             <div className="font-bold text-2xl">Заказ получен</div>
             <div className="mt-1">Спасибо. Ваш заказ получен</div>
           </div>
-          <div className="ml-auto order-0 sm:order-1 sm:-mt-8 sm:-mr-9">
+          <div className="w-full sm:w-auto ml-auto order-0 sm:order-1 sm:-mt-8 md:-mr-9">
             <button
               onClick={() => navigate(RoutesConfig.Dashboard)}
-              className="text-body text-sm py-3 px-8 border border-current rounded-xl hover:bg-accent hover:text-light"
+              className="w-full sm:w-auto text-body text-sm py-3 px-8 border border-current rounded-xl hover:bg-accent hover:text-light"
             >
               Вернуться на главную
             </button>
@@ -119,7 +119,7 @@ export function OrderDescription({
             <div
               className={classNames(
                 "mt-3",
-                idx && "border-l border-border-200 min-w-150 pl-3"
+                idx && "border-l border-border-200 min-w-150 pl-3 ml-3.5"
               )}
             >
               <div className="text-base font-bold">{label}</div>

@@ -32,7 +32,7 @@ export function Header() {
     <header
       className={"flex-shrink-0 site-header-with-search h-14 md:h-16 lg:h-22"}
     >
-      <div className="flex justify-between items-center w-full h-14 md:h-16 lg:h-22 md:px-2 xl:px-32 py-5 z-50 fixed bg-light border-b border-border-200 shadow-sm transition-transform duration-300">
+      <div className="flex justify-between items-center w-full h-14 md:h-16 lg:h-22 px-2 xl:px-32 py-5 z-50 fixed bg-light border-b border-border-200 shadow-sm transition-transform duration-300">
         <div className="flex items-center flex-grow lg:flex-grow-0 h-full">
           <img
             src={logo}
@@ -44,7 +44,7 @@ export function Header() {
         <AddressSelection
           className={classNames(
             styles.address,
-            "xl:ml-4 min-w-[150px] max-w-[530px] pr-6 flex-grow"
+            "xl:ml-4 min-w-[150px] max-w-[530px] lg:pr-6 flex-grow"
           )}
         />
         <div className="flex">

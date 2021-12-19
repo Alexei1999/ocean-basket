@@ -38,7 +38,7 @@ export function PromotionModal({
 
   return (
     <Modal open={isOpen} onClose={() => setIsOpen(false)} showClose>
-      <div className="p-5 sm:p-8 bg-light min-h-screen md:min-h-0 max-w-3xl md:rounded-2xl">
+      <div className="flex flex-col justify-items-start items-start p-5 sm:p-8 bg-light min-h-screen md:min-h-0 max-w-3xl md:rounded-2xl">
         <div className="flex justify-between">
           <h1 className="text-body font-bold text-xl mb-4 sm:mb-6 pr-10">
             {promotion?.title}
@@ -49,7 +49,7 @@ export function PromotionModal({
         </p>
         {Boolean(promotion?.basket.length) && (
           <Button
-            className="mt-16 text-accent hover:text-accent-hover"
+            className="mt-auto w-full md:w-auto md:mt-16 text-accent hover:text-accent-hover"
             disabled={filteredBasket.length === 0}
             onClick={() => {
               filteredBasket.forEach((basket: Dish) => {
