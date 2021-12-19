@@ -232,20 +232,20 @@ export function AboutPageCover() {
           <div className="pt-20 lg:pt-24 flex justify-center relative">
             <img
               src={fishesRight}
-              className="absolute md:-ml-4 lg:-ml-8 xl:-ml-32 w-64 left-0 top-0 mt-0 lg:mt-8 -mt-24"
+              className="absolute md:-ml-4 lg:-ml-8 xl:-ml-32 w-64 left-0 top-0 lg:mt-8 -mt-24"
             />
             <img src={ourFetures} />
           </div>
 
           <div className="flex flex-col lg:flex-row pt-20 items-center lg:items-stretch gap-x-20">
-            <div className="flex-grow flex justify-center relative max-w-[50%]">
+            <div className="flex-grow flex justify-center relative lg:max-w-[50%]">
               <img src={hands} />
               <img
                 src={mediumWaves}
                 className="absolute lg:-ml-8 xl:-ml-32 left-0 -bottom-7 hidden lg:block"
               />
             </div>
-            <div className="flex-grow pt-14 lg:pt-6 w-full max-w-[50%]">
+            <div className="flex-grow pt-14 lg:pt-6 w-full lg:max-w-[50%]">
               <div className="w-full flex justify-end ">
                 <img src={twoWaves} className="w-60 -mt-20" />
               </div>

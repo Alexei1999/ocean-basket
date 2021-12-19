@@ -43,7 +43,7 @@ export const AddressSelection = ({ className }: { className?: string }) => {
         value={restaurant ?? undefined}
         onChange={(e) => onRestaurantSelection(e.target.value)}
         className={classNames(
-          "text-body overflow-ellipsis text-sm w-full text-right lg:text-left"
+          "text-body overflow-ellipsis text-sm w-full text-right lg:text-left bg-light"
         )}
       >
         {addressesList.map(({ region, addresses }) => (
