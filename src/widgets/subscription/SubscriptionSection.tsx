@@ -58,7 +58,7 @@ function EmailSection({ isWaves = false }) {
   return (
     <div className="relative">
       {isWaves && (
-        <WhiteWaves className="absolute -mt-10 z-10 hidden md:block" />
+        <WhiteWaves className="absolute -mt-6 lg:-mt-10 z-10 hidden md:block" />
       )}
       <div
         className={classNames(

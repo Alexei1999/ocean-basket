@@ -30,7 +30,7 @@ export function CertificatePage() {
               "flex-grow xl:pt-9 pb-10 xl:pr-6"
             )}
           >
-            <div className="max-w-2xl">
+            <div className="px-4 md:px-0 max-w-2xl">
               <p>
                 Подарочный сертификат от Ocean Basket — универсальный подарок
                 для всех любителей морепродуктов.

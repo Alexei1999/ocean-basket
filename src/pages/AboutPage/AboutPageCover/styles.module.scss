@@ -5,7 +5,6 @@
   min-height: 800px;
 
   &Left {
-    max-width: 50%;
     background: url("~@assets/footer.png");
     background-repeat: no-repeat;
     background-size: cover;
@@ -27,18 +26,8 @@
     background: url("./cover-right.png");
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: bottom;
 
     z-index: -1;
   }
-}
-
-.wave {
-  margin-left: 0;
-  margin-right: -30px;
-  max-width: none;
-}
-
-.mainText {
-  max-width: 482px;
-  box-sizing: content-box;
 }
