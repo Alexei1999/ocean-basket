@@ -44,12 +44,12 @@ export function PromotionModal({
             {promotion?.title}
           </h1>
         </div>
-        <p className="text-body max-w-lg pr-8 whitespace-pre-line">
+        <p className="mb-16 text-body max-w-lg pr-8 whitespace-pre-line">
           {promotion?.description}
         </p>
         {Boolean(promotion?.basket.length) && (
           <Button
-            className="mt-auto w-full md:w-auto md:mt-16 text-accent hover:text-accent-hover"
+            className="mt-auto md:mt-0 w-full md:w-autotext-accent hover:text-accent-hover"
             disabled={filteredBasket.length === 0}
             onClick={() => {
               filteredBasket.forEach((basket: Dish) => {
