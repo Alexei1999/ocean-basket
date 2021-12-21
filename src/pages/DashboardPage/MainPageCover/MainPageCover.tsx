@@ -46,7 +46,9 @@ export function MainPageCover() {
               "ml-auto mr-auto sm:ml-0 sm:mr-0 w-[150px] h-[150px] sm:w-full sm:h-full sm:max-w-[125px] sm:max-h-[125px] pb-7"
             )}
           />
-          <img className="w-full pb-7" src={logoMWriting} />
+          <span className="w-full pb-7 font-friends text-light text-3xl lg:text-[41px] leading-10 font-normal">
+            Океан доставки на дом из ресторана морепродкуктов
+          </span>
           <img className="w-full pb-7" src={deliveryLogo} />
           <Button
             className={classNames(

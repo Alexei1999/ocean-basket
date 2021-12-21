@@ -14,25 +14,21 @@ import N215 from "./215.svg";
 
 import staff from "./staff.png";
 
-import begginText from "./beggin-text-1.svg";
 import twoFish from "./2-fish.svg";
 import founders from "./founders.png";
 import photo from "./photo.png";
 
 import twoWaves from "./2-waves.svg";
 
-import today from "./today.svg";
 import worker1 from "./worker-1.png";
 
-import ourFetures from "./our-features.svg";
-
 import hands from "./hands.png";
-import weGood from "./we-good.svg";
 
 import mediumWaves from "./medium-waves.svg";
 
 import fullFishes from "./full-fishes.svg";
-import React from "react";
+
+const header = " font-friends text-[66px] leading-none";
 
 export function NumberLabel({
   src,
@@ -130,7 +126,7 @@ export function AboutPageCover() {
         <div className="flex w-full flex-col flex-grow max-w-[1300px]">
           <div className="flex flex-col lg:flex-row">
             <div className="lg:w-1/2 flex flex-col">
-              <img className="max-w-lg" src={begginText} />
+              <span className={"max-w-lg" + header}>С чего всё началось</span>
               <p className="lg:max-w-lg pt-14 lg:pl-9">
                 Когда первый ресторан Ocean Basket открыл свои двери в 1995
                 году, в Южной Африке только что прошли первые демократические
@@ -164,7 +160,7 @@ export function AboutPageCover() {
                       className="absolute -bottom-40 -right-16 hidden lg:block"
                     />
                   </div>
-                  <div className="flex flex-col text-base pl-2 pt-9 max-w-[50%]">
+                  <div className="flex flex-col text-base pl-2 pt-9 lg:max-w-[50%]">
                     <span className="font-medium">Основатели</span>
                     <span className="pt-1">Фатс и Джордж Лазаридис</span>
                     <span className="text-xs mt-4 font-light">
@@ -205,7 +201,7 @@ export function AboutPageCover() {
 
           <div className="flex flex-col lg:flex-row pt-12 relative gap-x-20">
             <div className="flex-grow">
-              <img src={today} />
+              <span className={header}>OCEAN BASKET СЕГОДНЯ</span>
               <p className="lg:max-w-lg pt-14 lg:pl-9">
                 На сегодняшний день существует более 215 ресторанов в 18 странах
                 (включая Россию) по всему земному шару. От Дубая до Дурбана, от
@@ -234,7 +230,7 @@ export function AboutPageCover() {
               src={fishesRight}
               className="absolute md:-ml-4 lg:-ml-8 xl:-ml-32 w-64 left-0 top-0 lg:mt-8 -mt-24"
             />
-            <img src={ourFetures} />
+            <span className={header}>НАШИ ОТЛИЧИТЕЛЬНЫЕ ОСОБЕННОСТИ:</span>
           </div>
 
           <div className="flex flex-col lg:flex-row pt-20 items-center lg:items-stretch gap-x-20">
@@ -249,7 +245,7 @@ export function AboutPageCover() {
               <div className="w-full flex justify-end ">
                 <img src={twoWaves} className="w-60 -mt-20" />
               </div>
-              <ul className="max-w-xl">
+              <ul className="lg:max-w-xl">
                 <li>- доступные цены на морепродукты;</li>
                 <li className="pt-3">
                   - морепродукты со всех уголков Земли: Япония, Аргентина,
@@ -263,19 +259,19 @@ export function AboutPageCover() {
                 <li className="pt-3">
                   - всегда свежие и вкусные морепродукты — специальная система
                   транспортировки;
-                </li>{" "}
+                </li>
                 <li className="pt-3">
                   - комплимент каждому гостю: теплые булочки чиабатта и три вида
                   соуса (перец чили в оливковом масле, тартар и чесночный
                   соусы);
-                </li>{" "}
+                </li>
                 <li className="pt-3">
                   - отдельная детская зона в каждом ресторане и детское меню; -
                   история Ocean Basket начинается с 1995 г.
-                </li>{" "}
+                </li>
+                <li className="pt-3">- накопленный опыт, знания и традиции;</li>
                 <li className="pt-3">
-                  — накопленный опыт, знания и традиции; - ресторан для
-                  Повседневной трапезы, мы рады каждому.
+                  - ресторан для Повседневной трапезы, мы рады каждому.
                 </li>
               </ul>
               <div className="flex flex-col items-center pt-14 lg:pt-20 max-w-full overflow-hidden">
@@ -290,10 +286,12 @@ export function AboutPageCover() {
 
           <div className="flex flex-col lg:flex-row pt-20 lg:pt-32 pb-10 lg:pb-28 gap-x-20">
             <div className="flex justify-center">
-              <img src={weGood} />
+              <span className={"flex-grow  max-w-[576px]" + header}>
+                МЫ НЕ БЕЗРАЗЛИЧНЫ К ПОПУЛЯЦИИ МОРСКИХ ОБИТАТЕЛЕЙ
+              </span>
             </div>
             <div className="flex-grow pt-14 lg:pt-6 font-normal flex">
-              <div className="mx-auto lg:mx-none max-w-md">
+              <div className="mx-auto lg:mx-none max-w-[576px] lg:max-w-md">
                 Ocean Basket работает в сотрудничестве с SASSI (Southern African
                 Sustainable Seafood Intiative), которая следит за популяцией
                 морских обитателей в Мировом океане. Мы не используем в своих

@@ -1,6 +1,7 @@
-export function WavesIcon() {
+export function WavesIcon({ className }: { className?: string }) {
   return (
     <svg
+      className={className}
       width="149"
       height="57"
       viewBox="0 0 149 57"

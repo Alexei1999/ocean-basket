@@ -217,3 +217,17 @@
 html {
   overflow: hidden;
 }
+
+@font-face {
+  font-family: OceanFriends;
+  src: url("../assets/ocean-friends.otf") format("opentype");
+}
+
+@font-face {
+  font-family: OceanFriends;
+  src: url("../assets/ocean-friends.ttf") format("opentype");
+}
+
+.font-friends {
+  font-family: OceanFriends, "Brush Script MT", cursive;
+}

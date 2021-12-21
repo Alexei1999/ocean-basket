@@ -3,7 +3,6 @@ import classNames from "classnames";
 
 import dishBacground2 from "./config/dish-background-2.png";
 import emailDish from "./config/email-dish.png";
-import instagram from "./config/instagram.svg";
 
 import Button from "@shared/button";
 import Input from "@entities/payment/components/Forms/forms/input";
@@ -142,7 +141,7 @@ function EmailSection({ isWaves = false }) {
 function InstagramHeader() {
   return (
     <div className="flex flex-col justify-center items-center">
-      <img src={instagram} className={styles.instagram} />
+      <span className="font-friends text-body text-6xl">Наш инстаграм</span>
       <span className="text-accent pt-2">Все последние новости о нас там</span>
       <a
         target="_blank"
@@ -239,7 +238,7 @@ function InstagramGalery() {
   );
 }
 
-export function SubscriptionSection({ isWaves: isWaves = false }) {
+export function   SubscriptionSection({ isWaves: isWaves = false }) {
   return (
     <div>
       <EmailSection isWaves={isWaves} />

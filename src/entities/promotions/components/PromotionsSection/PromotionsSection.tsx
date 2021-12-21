@@ -1,4 +1,3 @@
-import promotionsHeader from "./promotions-header.svg";
 import { useCallback, useState } from "react";
 import { PromotionModal } from "./PromotionModal";
 import { PageWaveHeader } from "../PageWaveHeader";
@@ -55,7 +54,7 @@ export function PromotionsSection() {
         setIsOpen={setIsModalOpen}
         promotion={promotion}
       />
-      <PageWaveHeader src={promotionsHeader} />
+      <PageWaveHeader text="Акции" />
       <div className="grid lg:grid-cols-2 3xl:grid-cols-3 gap-2 md:gap-4 lg:gap-6 lg:px-4 xl:px-32 pt-12">
         {promotions?.map((promotion) => (
           <PromotionImage

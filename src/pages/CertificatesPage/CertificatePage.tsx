@@ -14,7 +14,11 @@ import twoWaves from "@pages/AboutPage/AboutPageCover/2-waves.svg";
 export function CertificatePage() {
   return (
     <>
-      <PageWaveHeader src={certificates} className="pt-12 pb-16" />
+      <PageWaveHeader
+        text="Подарочные сертификаты Ocean Basket "
+        textClassName="text-5xl"
+        className="pt-12 pb-16"
+      />
       <div className="md:px-4 lg:px-8 xl:px-32 bg-light text-body">
         <div className="flex flex-col lg:flex-row lg:justify-center gap-8 lg:gap-20">
           <div className={classNames(styles.block, "w-full flex-grow")}>
@@ -79,11 +83,7 @@ export function CertificatePage() {
           className="absolute left-14 bottom-8 xl:bottom-16"
           alt="hook"
         />
-        <img
-          src={important}
-          className="max-w-[100px] lg:max-w-none"
-          alt="important"
-        />
+        <span className="font-friends text-body text-[66px]">Важно!</span>
         <div className="pt-7 lg:pt-0 lg:pl-16 max-w-xl">
           <p>
             Обналичить сертификат возможно только в ресторане, на доставку он не

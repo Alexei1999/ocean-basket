@@ -4,7 +4,6 @@ import classNames from "classnames";
 
 import { YMaps, Map, Placemark } from "react-yandex-maps";
 
-import contactsIcon from "./contacts-text.svg";
 import hook from "@widgets/subscription/hook.svg";
 import styles from "./styles.module.scss";
 import { addresses, Country } from "./config";
@@ -81,7 +80,7 @@ export function ContactsPage() {
     <YMaps>
       <div>
         <div className="pt-12 pb-8 lg:pb-16 xl:pb-32 bg-light text-body">
-          <PageWaveHeader src={contactsIcon} />
+          <PageWaveHeader text="Контакты" />
           <div className="flex flex-col items-stretch lg:items-start lg:flex-row pt-20 px-4 lg:px-8 xl:px-32 justify-around max-w-7xl box-content mx-auto gap-x-8">
             <ContactsBlock
               className="flex-grow lg:max-w-lg"
