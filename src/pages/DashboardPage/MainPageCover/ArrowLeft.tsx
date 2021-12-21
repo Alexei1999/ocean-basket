@@ -21,8 +21,8 @@ export const ArrowLeft = ({
         d="M33 1H1L11 11"
         color="inherit"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

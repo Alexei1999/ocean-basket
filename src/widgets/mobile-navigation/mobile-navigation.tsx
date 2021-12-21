@@ -14,10 +14,18 @@ import { RoutesConfig } from "@shared/lib/routes-config";
 import { $cartSizes } from "@features/choose-dishes/models";
 import { useStore } from "effector-react";
 import classNames from "classnames";
+import { SushiIcon } from "./sushi-icon";
+import { useEffect, useRef, useState } from "react";
 
 const MobileNavigation: React.FC = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
+  const containerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    containerRef.current?.blur();
+  }, [pathname]);
 
   const { size } = useStore($cartSizes);
   const isOpen = useStore($isCartSidebarOpen);
@@ -31,19 +39,33 @@ const MobileNavigation: React.FC = () => {
           className="flex p-2 h-full items-center justify-center focus:outline-none focus:text-accent"
         >
           <span className="sr-only">Страницы</span>
-          <NavbarIcon />
+          <NavbarIcon className="text-heading" />
         </motion.button>
 
         <motion.button
           whileTap={{ scale: 0.88 }}
-          onClick={() => navigate(RoutesConfig.Dashboard)}
+          onClick={() => {
+            pathname === RoutesConfig.Dashboard
+              ? navigate(RoutesConfig.Menu)
+              : navigate(RoutesConfig.Dashboard);
+          }}
           className={classNames(
-            "flex p-2 h-full items-center justify-center focus:outline-none focus:text-accent",
-            pathname === RoutesConfig.Dashboard && "text-accent"
+            "flex p-2 h-full items-center justify-center focus:outline-none",
+            "text-heading focus:text-accent"
           )}
+          ref={containerRef}
         >
-          <span className="sr-only">Главная страница</span>
-          <HomeIcon />
+          {pathname === RoutesConfig.Dashboard ? (
+            <>
+              <span className="sr-only">Меню</span>
+              <SushiIcon />
+            </>
+          ) : (
+            <>
+              <span className="sr-only">Главная страница</span>
+              <HomeIcon />
+            </>
+          )}
         </motion.button>
 
         <motion.button
@@ -51,7 +73,7 @@ const MobileNavigation: React.FC = () => {
           onClick={() => {
             setCartSidebarOpen(true);
           }}
-          className="flex p-2 product-cart h-full relative items-center justify-center focus:outline-none focus:text-accent"
+          className="flex product-cart h-full relative items-center justify-center focus:outline-none focus:text-accent"
         >
           <span className="sr-only">Корзина</span>
           <CartHeaderIcon
