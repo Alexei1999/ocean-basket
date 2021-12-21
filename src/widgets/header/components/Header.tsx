@@ -1,6 +1,6 @@
 import cn from "classnames";
 
-import logo from "@assets/logo.svg";
+import logo from "@assets/logo.png";
 import { headerLinks } from "../config/links";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCallback } from "react";
@@ -37,7 +37,9 @@ export function Header() {
           <img
             src={logo}
             alt="logo"
-            className={cn("mx-auto lg:mx-0 -ml-3 cursor-pointer")}
+            className={cn(
+              "mx-auto lg:mx-0 w-[187px] h-[49px] -ml-3 cursor-pointer"
+            )}
             onClick={onLogoClickHandler}
           />
         </div>
