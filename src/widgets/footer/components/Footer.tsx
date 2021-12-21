@@ -58,7 +58,7 @@ function FooterContactsBlock({
 export function Footer() {
   return (
     <footer className={cn(styles.container, "bg-local bg-gray-600")}>
-      <div className="flex h-full items-center pt-14 px-4 lg:px-8 xl:px-32 flex-col text-white text-sm">
+      <div className="flex h-full items-center pt-14 px-4 lg:px-8 xl:px-32 flex-col text-white text-sm pb-12 lg:pb-0">
         <div className="flex flex-col items-center">
           <img width="65px" height="65px" src={logoMini} />
           <img className="pt-4 w-48" src={logoFooter} />

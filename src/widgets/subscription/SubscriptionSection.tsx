@@ -238,11 +238,11 @@ function InstagramGalery() {
   );
 }
 
-export function   SubscriptionSection({ isWaves: isWaves = false }) {
+export function SubscriptionSection({ isWaves: isWaves = false }) {
   return (
     <div>
       <EmailSection isWaves={isWaves} />
-      <div className="flex justify-center pt-36 relative">
+      <div className="flex justify-center pt-24 lg:pt-36 relative">
         <img
           src={blueWaves}
           className="absolute right-0 top-28 hidden lg:block"

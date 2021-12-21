@@ -72,9 +72,8 @@ export function PromotionSlider() {
               <SwiperSlide key={id}>
                 <div
                   className={cn(
-                    "cursor-pointer relative",
-                    "flex rounded-xl overflow-hidden",
-                    "w-full h-[250px]",
+                    "relative",
+                    "flex items-center rounded-xl justify-center w-full h-[250px]",
                     isError && styles.promotionWrapperBackground
                   )}
                   onClick={() => {
@@ -87,21 +86,31 @@ export function PromotionSlider() {
                     setIsModalOpen(true);
                   }}
                 >
-                  <img
-                    className={classNames(
-                      "rounded-xl object-fill w-full h-full",
-                      styles.promotion
-                    )}
-                    src={!isError && photo ? `${hostUrl}/${photo}` : productSvg}
-                    onError={() => setErrorObj({ ...errorObj, [id]: true })}
-                    alt={id}
-                  />
                   <div
-                    className={cn(
-                      "absolute left-12 top-10 opacity-100 flex flex-col justify-between max-w-[50%] max-h-[60%] h-full"
+                    className={classNames(
+                      styles.promotion,
+                      "w-full cursor-pointer rounded-xl overflow-hidden"
                     )}
                   >
-                    {isError && name && (
+                    <img
+                      className={classNames(
+                        "object-contain object-left w-full h-full",
+                        styles.promotion
+                      )}
+                      src={
+                        !isError && photo ? `${hostUrl}/${photo}` : productSvg
+                      }
+                      onError={() => setErrorObj({ ...errorObj, [id]: true })}
+                      alt={id}
+                    />
+                  </div>
+
+                  {isError && name && (
+                    <div
+                      className={cn(
+                        "absolute left-12 top-10 opacity-100 flex flex-col justify-between max-w-[50%] max-h-[60%] h-full"
+                      )}
+                    >
                       <div
                         className={cn(
                           "text-white text-2xl font-bold leading-7"
@@ -109,13 +118,13 @@ export function PromotionSlider() {
                       >
                         {name}
                       </div>
-                    )}
-                    {/* {discount && (
+                      {/* {discount && (
                       <div className={cn("text-white font-bold text-4xl")}>
                         {discount}%
                       </div>
                     )} */}
-                  </div>
+                    </div>
+                  )}
                 </div>
               </SwiperSlide>
             );

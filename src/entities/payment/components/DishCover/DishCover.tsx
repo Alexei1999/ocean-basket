@@ -5,7 +5,12 @@ import { forwardRef } from "react";
 
 export const DishCover = forwardRef<HTMLDivElement>(() => {
   return (
-    <div className={styles.container}>
+    <div
+      className={classNames(
+        "h-full max-h-[50vh] lg:max-h-[450px]",
+        styles.container
+      )}
+    >
       <img
         alt="dish cover"
         src={cover}

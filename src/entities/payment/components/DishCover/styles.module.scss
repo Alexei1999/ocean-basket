@@ -1,10 +1,8 @@
 @import "~@app/styles/variables";
 
 .container {
-  height: 100%;
   // max-height: calc(100vh - #{$header-height} - 113px);
   height: calc(100vh - #{$header-height});
-  max-height: 450px;
 }
 
 .image {

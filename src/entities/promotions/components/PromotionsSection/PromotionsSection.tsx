@@ -46,9 +46,10 @@ export function PromotionsSection() {
   }, []);
 
   const promotions = useStore($promotions);
+  const isLoading = useStore(fetchPomotionsFx.pending);
 
   return (
-    <div className="pt-12 pb-2 lg:pb-4 xl:pb-32 bg-light">
+    <div className="pt-12 pb-12 xl:pb-32 bg-light">
       <PromotionModal
         isOpen={isModalOpen}
         setIsOpen={setIsModalOpen}
@@ -56,12 +57,20 @@ export function PromotionsSection() {
       />
       <PageWaveHeader text="Акции" />
       <div className="grid lg:grid-cols-2 3xl:grid-cols-3 gap-2 md:gap-4 lg:gap-6 lg:px-4 xl:px-32 pt-12">
-        {promotions?.map((promotion) => (
-          <PromotionImage
-            onClick={() => openModal(promotion)}
-            src={promotion.photo}
-          />
-        ))}
+        {promotions?.length
+          ? promotions.map((promotion) => (
+              <PromotionImage
+                onClick={() => openModal(promotion)}
+                src={promotion.photo}
+              />
+            ))
+          : !isLoading && (
+              <div className="col-span-4 flex justify-center">
+                <span className="text-xl font-semibold text-body">
+                  Акций нет
+                </span>
+              </div>
+            )}
       </div>
     </div>
   );
