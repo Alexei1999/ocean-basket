@@ -7,7 +7,7 @@ export const DishCover = forwardRef<HTMLDivElement>(() => {
   return (
     <div
       className={classNames(
-        "h-full max-h-[50vh] lg:max-h-[450px]",
+        "h-full max-h-[450px] hidden lg:block",
         styles.container
       )}
     >
