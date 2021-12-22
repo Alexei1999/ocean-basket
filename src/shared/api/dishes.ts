@@ -30,7 +30,7 @@ export type Dish = {
   updated_at: string;
 };
 
-export const getDishes = (): Promise<Dish[]> => {
+export const getDishes = (): Promise<{ [category: string]: Dish[] }> => {
   return baseApi.get(`${apiBaseUrl}/dishes`).then((response) => response.data);
 };
 

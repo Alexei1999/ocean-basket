@@ -44,8 +44,14 @@ export const fetchDishesFx = createEffect(getDishes);
 export const fetchPopularDishesFx = createEffect(getPopular);
 export const fetchPomotionsFx = createEffect(getPromotions);
 
+const flattedDishes = fetchDishesFx.doneData.map((data) =>
+  Object.entries(data)
+    .map(([key, value]) => value.map((dish) => ({ ...dish, category: key })))
+    .flat()
+);
+
 export const $dishes = createStore<Dish[] | null>(null).on(
-  fetchDishesFx.doneData,
+  flattedDishes,
   (_, data) => data
 );
 export const $popularDishes = createStore<Dish[] | null>(null).on(
@@ -84,7 +90,7 @@ export type PickedDish = {
 export const $cart = createStore<PickedDish[]>(
   filterCartObjects(getFromStorage("cart"))
 )
-  .on(fetchDishesFx.doneData, (state, dishes) => {
+  .on(flattedDishes, (state, dishes) => {
     const ids = dishes.map((dish) => dish.id);
     return state.filter(({ product: { id } }) => {
       return ids.includes(id);

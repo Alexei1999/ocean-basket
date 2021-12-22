@@ -1,5 +1,5 @@
 import { formatPrice } from "@entities/cart/lib/use-price";
-import { Dish } from "@shared/api/dishes";
+import { Dish, EMPTY_STRING } from "@shared/api/dishes";
 import { useEffect, useMemo } from "react";
 import Attribute from "./attribute";
 
@@ -8,7 +8,7 @@ export const filterPrices = (prices: Dish["prices"]) =>
     .map((price, idx) => {
       const { weight, rouble_price, tenge_price } = price;
       return {
-        weight: parseInt(weight),
+        weight: weight === EMPTY_STRING ? null : weight,
         rouble_price: parseInt(rouble_price),
         tenge_price,
         price: {
@@ -18,7 +18,7 @@ export const filterPrices = (prices: Dish["prices"]) =>
       };
     })
     .filter(
-      ({ weight, rouble_price }) => !isNaN(weight) && !isNaN(rouble_price)
+      ({ weight, rouble_price }) => weight?.length && !isNaN(rouble_price)
     )
     .sort((a, b) => a.rouble_price - b.rouble_price);
 
