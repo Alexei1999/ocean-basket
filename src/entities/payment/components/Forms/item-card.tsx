@@ -9,8 +9,8 @@ interface Props {
 }
 
 const ItemCard = ({ className, item, notAvailable }: Props) => {
-  const { product, count, priceObj, modifiers } = item;
-  const { rouble_price: price, weight } = priceObj;
+  const { product, count, priceObj, modifiers, totalPrice } = item;
+  const { weight } = priceObj;
 
   const { name } = product;
 
@@ -20,7 +20,7 @@ const ItemCard = ({ className, item, notAvailable }: Props) => {
   );
 
   const { price: formatedPrice } = usePrice({
-    amount: (parseInt(price) ?? 0) * count,
+    amount: (totalPrice ?? 0) * count,
   });
 
   return (

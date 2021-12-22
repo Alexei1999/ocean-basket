@@ -1,15 +1,18 @@
+import { formatPrice } from "@entities/cart/lib/use-price";
 import { ModifierType, PickedModifier } from "@features/choose-dishes/models";
 import Attribute from "./attribute";
 
 export const createPickedModifier = (
   modifier: ModifierType,
-  option: string | null
+  option: string | null,
+  price: number | null
 ): PickedModifier => {
   return {
     id: modifier.id,
     dish_id: modifier.dish_id,
     name: modifier.name,
     option: option ?? undefined,
+    price: price ?? undefined,
   };
 };
 
@@ -30,13 +33,21 @@ const ModifierGroups = ({
     <>
       {modifiers.map((modifier, idx) => {
         const { option1, option2, option3, option4, option5 } = modifier;
+        const {
+          option1_price,
+          option2_price,
+          option3_price,
+          option4_price,
+          option5_price,
+        } = modifier;
+
         const optionsObject = [
-          option1,
-          option2,
-          option3,
-          option4,
-          option5,
-        ].filter((option) => option);
+          [option1, option1_price],
+          [option2, option2_price],
+          [option3, option3_price],
+          [option4, option4_price],
+          [option5, option5_price],
+        ].filter(([option]) => option);
 
         if (!optionsObject.length) {
           return null;
@@ -51,23 +62,42 @@ const ModifierGroups = ({
               {modifier.name}
             </span>
             <div className="pt-3 w-full flex flex-wrap">
-              {optionsObject.map((option, idx) => (
-                <Attribute
-                  className="mt-3 mr-3"
-                  active={activeModifier[modifier.id]?.option === option}
-                  value={option}
-                  key={`${option}-${idx}`}
-                  onClick={() => {
-                    setActiveModifier({
-                      ...activeModifier,
-                      [modifier.id]:
-                        option === activeModifier[modifier.id]?.option
-                          ? undefined
-                          : createPickedModifier(modifier, option),
-                    });
-                  }}
-                />
-              ))}
+              {optionsObject.map(([option, optionPrice], idx) => {
+                const parcedPrice = parseInt(
+                  (optionPrice ?? undefined) as string
+                );
+
+                const nextPrice = isNaN(parcedPrice) ? null : parcedPrice;
+
+                const nextModifier =
+                  option === activeModifier[modifier.id]?.option
+                    ? undefined
+                    : createPickedModifier(modifier, option, nextPrice);
+
+                return (
+                  <Attribute
+                    className="mt-3 mr-3"
+                    active={activeModifier[modifier.id]?.option === option}
+                    value={`${option}${
+                      nextPrice && nextPrice > 0
+                        ? " - " +
+                          formatPrice({
+                            amount: nextPrice,
+                            currencyCode: "RUB",
+                            locale: "ru",
+                          })
+                        : ""
+                    }`}
+                    key={`${option}-${idx}`}
+                    onClick={() => {
+                      setActiveModifier({
+                        ...activeModifier,
+                        [modifier.id]: nextModifier,
+                      });
+                    }}
+                  />
+                );
+              })}
             </div>
           </div>
         );

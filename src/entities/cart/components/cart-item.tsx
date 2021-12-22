@@ -24,8 +24,8 @@ const CartItem = ({
   isCounter = false,
   isResult = false,
 }: CartItemProps) => {
-  const { priceObj, count, product, modifiers } = item;
-  const { rouble_price: price, weight } = priceObj;
+  const { priceObj, count, product, modifiers, totalPrice: price } = item;
+  const { weight } = priceObj;
   const { name } = product;
 
   const modifiersString = useMemo(
@@ -34,7 +34,7 @@ const CartItem = ({
   );
 
   const { price: formatedPrice } = usePrice({
-    amount: (parseInt(price) ?? 0) * count,
+    amount: price * count,
   });
 
   function handleIncrement(

@@ -28,16 +28,22 @@ export type ModifierType = {
   dish_id: number;
   name: string;
   option1: string | null;
+  option1_price: string | "0";
   option2: string | null;
+  option2_price: string | "0";
   option3: string | null;
+  option3_price: string | "0";
   option4: string | null;
+  option4_price: string | "0";
   option5: string | null;
+  option5_price: string | "0";
   created_at: string | null;
   updated_at: string | null;
 };
 
 export type PickedModifier = Pick<ModifierType, "id" | "dish_id" | "name"> & {
   option?: string;
+  price?: number;
 };
 
 export const fetchDishesFx = createEffect(getDishes);
@@ -85,6 +91,7 @@ export type PickedDish = {
   product: Dish;
   priceObj: PickedPrice;
   modifiers: PickedModifier[];
+  totalPrice: number;
 };
 
 export const $cart = createStore<PickedDish[]>(
@@ -199,7 +206,7 @@ export const $cartSizes = $cart.map((state) => {
       };
     }>(
       (obj, item) => {
-        const amount = parseInt(item.priceObj?.rouble_price) * item.count;
+        const amount = (item.totalPrice ?? 0) * item.count;
 
         return {
           size: obj.size + item!.count,

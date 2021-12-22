@@ -17,6 +17,7 @@ export const pickDishForce = (dish: Dish): Omit<PickedDish, "count"> => {
     },
     product: dish,
     modifiers: [],
+    totalPrice: filteredPrice[0].rouble_price,
   };
 };
 

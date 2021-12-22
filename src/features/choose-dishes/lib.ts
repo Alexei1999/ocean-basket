@@ -52,5 +52,8 @@ export const createPickedDish = (
     product: dish,
     priceObj,
     modifiers,
+    totalPrice:
+      (parseInt(priceObj.rouble_price) ?? 0) +
+      modifiers.reduce((acc, { price }) => acc + (price ?? 0), 0),
   };
 };
