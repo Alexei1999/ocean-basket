@@ -51,14 +51,15 @@ const MobileNavigation: React.FC = () => {
           }}
           className={classNames(
             "flex p-2 h-full items-center justify-center focus:outline-none",
-            "text-heading focus:text-accent"
+            "text-heading focus:text-accent hover:text-accent"
           )}
           ref={containerRef}
         >
           {pathname === RoutesConfig.Dashboard ? (
             <>
               <span className="sr-only">Меню</span>
-              <SushiIcon />
+              <span className="text-body hover:text-accent">Меню</span>
+              {/* <SushiIcon /> */}
             </>
           ) : (
             <>
