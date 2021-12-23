@@ -71,7 +71,7 @@ const Description = ({ className }: { className?: string }) => {
 export function AboutPageCover() {
   return (
     <>
-      <div>
+      <div className="flex flex-col">
         <div className={classNames("flex relative", styles.container)}>
           <div
             className={classNames(

@@ -16,6 +16,7 @@ export type FormValues = {
   city: string;
   street: string;
   building: string;
+  part: string;
   flat: string;
   entrance: string;
   floor: string;
@@ -29,9 +30,10 @@ const addressSchema = yup.object().shape({
   city: yup.string().required("Город обязателен к заполнению"),
   street: yup.string().required("Улица обязательна к заполнению"),
   building: yup.string().required("Дом обязателен к заполнению"),
-  flat: yup.string().required("Кваритра обязательна к заполнению"),
-  entrance: yup.string().required("Подъезд обязательен к заполнению"),
-  floor: yup.string().required("Этаж обязательен к заполнению"),
+  part: yup.string(),
+  flat: yup.string(),
+  entrance: yup.string(),
+  floor: yup.string(),
   intercom: yup.string().nullable().notRequired(),
   comment: yup.string().required("Комментарий обязателен к заполнению"),
   persons_number: yup
@@ -108,6 +110,13 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
               {...register("building")}
               error={errors.building?.message}
               className="col-span-4 sm:col-span-2"
+              variant="outline"
+            />
+            <Input
+              label={"Корпус / строение"}
+              {...register("part")}
+              error={errors.flat?.message}
+              className="col-span-2 sm:col-span-1"
               variant="outline"
             />
             <Input
