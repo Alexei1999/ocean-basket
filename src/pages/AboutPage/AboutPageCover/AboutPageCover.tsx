@@ -8,10 +8,6 @@ import fishesRight from "./fishes-right.svg";
 
 import bigWave from "./big-wave.svg";
 
-import N18 from "./18.svg";
-import N26 from "./26.svg";
-import N215 from "./215.svg";
-
 import staff from "./staff.png";
 
 import twoFish from "./2-fish.svg";
@@ -31,11 +27,11 @@ import fullFishes from "./full-fishes.svg";
 const header = " font-friends text-[66px] leading-none";
 
 export function NumberLabel({
-  src,
+  number,
   label,
   className = "w-32 h-28",
 }: {
-  src: string;
+  number: string;
   label: string;
   className?: string;
 }) {
@@ -46,7 +42,9 @@ export function NumberLabel({
         "grid grid-rows-2 justify-center items-center"
       )}
     >
-      <img className="mx-auto" src={src} />
+      <span className="mx-auto font-friends text-[86px] leading-none text-[#E26F44]">
+        {number}
+      </span>
       <span className="uppercase text-light text-center text-lg font-medium">
         {label}
       </span>
@@ -70,8 +68,8 @@ const Description = ({ className }: { className?: string }) => {
 
 export function AboutPageCover() {
   return (
-    <>
-      <div className="flex flex-col">
+    <div className="flex flex-col">
+      <div className="order-1 sm:order-0">
         <div className={classNames("flex relative", styles.container)}>
           <div
             className={classNames(
@@ -80,17 +78,14 @@ export function AboutPageCover() {
             )}
           >
             <div
-              className={classNames(
-                styles.containerLeftWrapper,
-                "flex flex-col h-full justify-between"
-              )}
+              className={classNames("flex flex-col h-full justify-between ")}
             >
-              <div className="flex max-w-full">
+              <div className="flex max-w-full order-2 sm:pt-[10%] px-[10%]">
                 <Icon />
               </div>
               <p
                 className={classNames(
-                  "text-light lg:pr-4 max-w-[482px] box-content"
+                  "text-light lg:pr-4 max-w-[482px] box-content order-2 pb-[10%] sm:pb-0 px-[10%]"
                 )}
               >
                 – это более 20 лет упорной работы в ресторанном бизнесе, свыше
@@ -101,12 +96,12 @@ export function AboutPageCover() {
               </p>
               <img
                 src={bigWave}
-                className="!ml-0 w-full sm:w-auto sm:!-mr-7 !max-w-none"
+                className="!ml-0 w-full sm:w-auto sm:!-mr-7 !max-w-none order-1 sm:order-2"
               />
-              <div className="flex justify-around items-end">
-                <NumberLabel src={N215} label={"ресторанов"} />
-                <NumberLabel src={N26} label={"стран"} />
-                <NumberLabel src={N18} label={"лет"} />
+              <div className="flex justify-between sm:justify-around items-end order-0 sm:order-2 px-[10%] pt-[10%] sm:pt-0 sm:pb-[10%]">
+                <NumberLabel number="215" label={"ресторанов"} />
+                <NumberLabel number="26" label={"стран"} />
+                <NumberLabel number="18" label={"лет"} />
               </div>
             </div>
           </div>
@@ -121,8 +116,8 @@ export function AboutPageCover() {
         </div>
         <div className={styles.staff} />
       </div>
-      <img className="w-full" src={staff} />
-      <div className="flex px-4 lg:px-8 xl:px-32 pt-20 text-body font-normal justify-center">
+      <img className="w-ful order-0 sm:order-1" src={staff} />
+      <div className="flex px-4 lg:px-8 xl:px-32 pt-20 text-body font-normal justify-center order-2">
         <div className="flex w-full flex-col flex-grow max-w-[1300px]">
           <div className="flex flex-col lg:flex-row">
             <div className="lg:w-1/2 flex flex-col">
@@ -305,6 +300,6 @@ export function AboutPageCover() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

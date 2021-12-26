@@ -2,7 +2,10 @@
 
 .container {
   height: calc(100vh - #{$header-height});
-  min-height: 800px;
+  min-height: 600px;
+  @media (min-width: 640px) {
+    min-height: 800px;
+  }
 
   &Left {
     background: url("~@assets/footer.png");
