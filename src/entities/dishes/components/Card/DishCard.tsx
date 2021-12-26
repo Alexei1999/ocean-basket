@@ -2,23 +2,13 @@ import cn from "classnames";
 import { AddToCart } from "../../../cart/components/Buttons/AddToCart";
 import productIcon from "@assets/product.svg";
 
-import Spinner from "@shared/components/spinner/spinner";
 import { formatPrice } from "@entities/cart/lib/use-price";
 import { Dish, DishStatus } from "@shared/api/dishes";
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
 import { useSortedPrices } from "@entities/cart/components/Details/variation-price";
 import { onDishModalOpen } from "@entities/cart/components/Details/add-dish-modal";
 import { hostUrl } from "@shared/api/base";
-
-//@ts-ignore
-import { drawImage } from "canvas-object-fit";
 
 type DishCardProps = {
   product: Dish;
@@ -72,8 +62,6 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
   const { name, photo, description, status, prices } = product ?? {};
 
   const mappedPrices = useSortedPrices(prices);
-  const imageRef = useRef<HTMLImageElement | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const price = useMemo(() => {
     if (mappedPrices.length === 0) return;
@@ -87,39 +75,12 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
     return mappedPrices.length > 1 ? `от ${price}` : price;
   }, []);
 
-  const [isError, setIsError] = useState<boolean>(false);
+  const [isDisplaying, setIsDisplaying] = useState<boolean>(true);
 
   const { containerRef, isVisible, isStartLoading } = useObserver();
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
-  const canLoadImage = !isError && photo && isStartLoading;
-  const isLoading = isStartLoading && !isLoaded;
-  const isCanvas = isLoaded && canLoadImage;
-
-  const drawImageCb = useCallback(() => {
-    if (!canvasRef.current || !imageRef.current) return;
-    if (!isCanvas) return;
-
-    const ctx = canvasRef.current.getContext("2d");
-
-    drawImage(
-      ctx,
-      imageRef.current,
-      0,
-      0,
-      canvasRef.current.width,
-      canvasRef.current.height,
-      { objectFit: "cover" }
-    );
-  }, [isCanvas]);
-
-  useEffect(() => {
-    drawImageCb();
-  }, [isError, photo, isCanvas]);
-
-  const onImgaeErrorHandle = useCallback((err) => {
-    console.error("pizda blyad", name, err);
-    setIsError(true);
+  const onImgaeErrorHandle = useCallback(() => {
+    setIsDisplaying(false);
   }, []);
 
   function handleProductQuickView() {
@@ -141,32 +102,16 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
       >
         <span className="sr-only">{name}</span>
         <img
-          ref={imageRef}
-          src={canLoadImage ? `${hostUrl}/${photo}` : productIcon}
+          src={
+            isDisplaying && isStartLoading && photo
+              ? `${hostUrl}/${photo}`
+              : productIcon
+          }
           onError={onImgaeErrorHandle}
           alt={name}
           className={classNames(
             "product-image w-full h-full object-cover",
-            (isLoading || !isVisible || isCanvas) && "hidden"
-          )}
-          onLoad={() => {
-            setIsLoaded(true);
-            drawImageCb();
-          }}
-        />
-        {/* <div
-          className={classNames(
-            "bg-gray-900 bg-opacity-5 w-full h-full flex justify-center items-center relative md:rounded-xl",
-            !isLoading && "hidden"
-          )}
-        >
-          <Spinner showText={false} />
-        </div> */}
-        <canvas
-          ref={canvasRef}
-          className={classNames(
-            "product-image w-full h-full",
-            (isLoading || !isVisible || !isCanvas) && "hidden"
+            !isVisible && "hidden"
           )}
         />
         {/* {isDiscount && (
