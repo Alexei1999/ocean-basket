@@ -4,10 +4,10 @@ import { PageWaveHeader } from "../PageWaveHeader";
 import { createGate, useGate, useStore } from "effector-react";
 import { Promotion } from "@shared/api/dishes";
 import { $promotions, fetchPomotionsFx } from "@features/choose-dishes/models";
-import { useObserver } from "@entities/dishes/components/Card/DishCard";
 import classNames from "classnames";
 import { forward } from "effector";
 import { hostUrl } from "@shared/api/base";
+import { useObserver } from "@shared/lib/functional-utils";
 
 function PromotionImage({
   src,

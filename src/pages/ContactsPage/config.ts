@@ -25,7 +25,7 @@ export const addresses: Country[] = [
         region: "Москва",
         addresses: [
           {
-            address: "ул. Мясницкая, д. 11, 1 этаж, м. Лубянка",
+            address: "ул. Мясницкая, д. 11, м. Лубянка",
             number: "+7 (977) 456 2221",
             gps: [55.761677, 37.632745],
           },

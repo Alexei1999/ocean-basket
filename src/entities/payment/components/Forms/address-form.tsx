@@ -35,7 +35,7 @@ const addressSchema = yup.object().shape({
   entrance: yup.string(),
   floor: yup.string(),
   intercom: yup.string().nullable().notRequired(),
-  comment: yup.string().required("Комментарий обязателен к заполнению"),
+  comment: yup.string(),
   persons_number: yup
     .number()
     .transform((value) => (isNaN(value) ? null : parseInt(value)))

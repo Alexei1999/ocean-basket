@@ -1,3 +1,6 @@
+import { createEffect } from "effector";
+import { useCallback, useEffect, useMemo, useState } from "react";
+
 export const capitalize = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
@@ -19,3 +22,48 @@ export function getPlurals<T>(num: number, options: T[]): T {
 
   return options[2];
 }
+
+const fetchImageXFx = createEffect()
+
+export const useObserver = () => {
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [isStartLoading, setIsStartLoading] = useState<boolean>(false);
+
+  const [oberver, setObserver] = useState<IntersectionObserver | null>(null);
+
+  const containerRef = useCallback(
+    (ref: HTMLElement | null) => {
+      if (oberver && ref) {
+        oberver.unobserve(ref);
+        oberver.observe(ref);
+      }
+    },
+    [oberver]
+  );
+
+  useEffect(() => {
+    const intObs = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting)) {
+        setIsVisible(true);
+        setIsStartLoading(true);
+      } else {
+        setIsVisible(false);
+      }
+    });
+
+    setObserver(intObs);
+
+    return () => {
+      intObs.disconnect();
+    };
+  }, []);
+
+  return useMemo(
+    () => ({
+      containerRef,
+      isVisible,
+      isStartLoading,
+    }),
+    [containerRef, isVisible, isStartLoading]
+  );
+};
