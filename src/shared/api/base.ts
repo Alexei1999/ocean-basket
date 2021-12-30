@@ -1,6 +1,8 @@
 import axios from "axios";
 
-export const hostUrl = "http://2.56.213.189:81";
+import { proxy } from "../../../package.json";
+
+export const hostUrl = proxy;
 
 export type ResponseType = {
   status: number;

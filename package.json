@@ -2,7 +2,7 @@
   "name": "ocean-basker",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://2.56.213.189:81",
+  "proxy": "http://185.20.226.197:81",
   "dependencies": {
     "@craco/craco": "^6.4.2",
     "@headlessui/react": "^1.4.2",
