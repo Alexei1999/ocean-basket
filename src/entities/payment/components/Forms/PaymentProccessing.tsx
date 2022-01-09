@@ -1,7 +1,9 @@
 import { onScrollPage } from "@app/";
+import { $cartSizes } from "@features/choose-dishes/models";
 import dayjs, { Dayjs } from "dayjs";
 import { useStore } from "effector-react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { toast } from "react-toastify";
 import { OrderDescription } from "../OrderDescription/OrderDescription";
 import AddOrUpdateCheckoutContact, { $phone } from "./add-or-update";
 import AddressCard from "./address-card";
@@ -11,6 +13,8 @@ import { CheckAvailabilityAction } from "./check-availability-action";
 import ContactCard from "./contact-card";
 import ScheduleGrid from "./schedule-grid";
 import { RightSideView } from "./unverified-item-list";
+
+const sign = "1b60bd99098c450ac3ff86c7ad6c2fee";
 
 export enum AddressType {
   Billing = "billing",
@@ -26,66 +30,78 @@ export function CheckoutPage() {
 
   const form = useStore($form);
   const phone = useStore($phone);
+  const cartSizes = useStore($cartSizes);
+
+  const onSubmitHandler = useCallback((orderNumber?: number) => {
+    const paymentWindow = window.open("", "_blank");
+
+    if (!paymentWindow || paymentWindow.closed) {
+      toast.error("Ошибка при совершении оплаты, попробуйте еще раз");
+      paymentWindow?.close();
+      return;
+    }
+
+    paymentWindow.document.write(
+      `<html><body>
+      <script type="text/javascript" src="https://auth.robokassa.ru/Merchant/PaymentForm/FormFLS.js?MerchantLogin=Ocean_Basket&InvoiceID=0&Culture=ru&Encoding=utf-8&DefaultSum=${
+        cartSizes.totalAmount ?? 0
+      }&SignatureValue=${sign}"></script></body></html>`
+    );
+
+    setOrderNumber(orderNumber);
+    setOrderDate(dayjs());
+    setIsOrdered(true);
+    onScrollPage();
+  }, []);
 
   return !isOrdered ? (
-    <div className="py-8 sm:px-4 lg:py-10 lg:px-8 xl:py-14 xl:px-16 2xl:px-20 bg-gray-100">
-      <div className="flex flex-col lg:flex-row items-center lg:items-start m-auto w-full max-w-6xl">
-        <div className="lg:max-w-3xl w-full space-y-6 order-1 lg:order-0">
-          <BlocksGrid
-            addLabel="Добавить адрес"
-            editLabel="Изменить адрес"
-            className="shadow-700 bg-light p-5 md:p-8"
-            label="Адрес доставки"
-            count={1}
-            form={AddressForm}
-            data={form}
-            card={AddressCard}
-            isModalOpen={isAddressModalOpen}
-            onEdit={() => setIsAddressModalOpen(true)}
-            onClose={() => setIsAddressModalOpen(false)}
-            emptyMessage="Адрес не заполнен"
-          />
-          <ScheduleGrid
-            className="shadow-700 bg-light p-5 md:p-8"
-            label="Время доставки"
-            count={2}
-          />
-          <BlocksGrid
-            addLabel="Добавить телефон"
-            editLabel="Изменить телефон"
-            className="shadow-700 bg-light p-5 md:p-8"
-            count={3}
-            label="Контактный телефон"
-            card={ContactCard}
-            form={AddOrUpdateCheckoutContact}
-            data={phone}
-            isModalOpen={isPhoneModalOpen}
-            onEdit={() => setIsPhoneModalOpen(true)}
-            onClose={() => setIsPhoneModalOpen(false)}
-            emptyMessage="Телефон не заполнен"
-          />
-          <CheckAvailabilityAction
-            onSubmit={(orderNumber?: number) => {
-              // window
-              //   .open(
-              //     "",
-              //     "_blank"
-              //   )
-              //   ?.focus();
-              setOrderNumber(orderNumber);
-              setOrderDate(dayjs());
-              setIsOrdered(true);
-              onScrollPage();
-            }}
-          >
-            Оформить заказ
-          </CheckAvailabilityAction>
-        </div>
-        <div className="w-full lg:w-96 mb-10 sm:mb-12 lg:mb-0 lg:mt-10 lg:ml-16 order-0 lg:order-1 px-5 sm:px-0">
-          <RightSideView />
+    <>
+      <div className="py-8 sm:px-4 lg:py-10 lg:px-8 xl:py-14 xl:px-16 2xl:px-20 bg-gray-100">
+        <div className="flex flex-col lg:flex-row items-center lg:items-start m-auto w-full max-w-6xl">
+          <div className="lg:max-w-3xl w-full space-y-6 order-1 lg:order-0">
+            <BlocksGrid
+              addLabel="Добавить адрес"
+              editLabel="Изменить адрес"
+              className="shadow-700 bg-light p-5 md:p-8"
+              label="Адрес доставки"
+              count={1}
+              form={AddressForm}
+              data={form}
+              card={AddressCard}
+              isModalOpen={isAddressModalOpen}
+              onEdit={() => setIsAddressModalOpen(true)}
+              onClose={() => setIsAddressModalOpen(false)}
+              emptyMessage="Адрес не заполнен"
+            />
+            <ScheduleGrid
+              className="shadow-700 bg-light p-5 md:p-8"
+              label="Время доставки"
+              count={2}
+            />
+            <BlocksGrid
+              addLabel="Добавить телефон"
+              editLabel="Изменить телефон"
+              className="shadow-700 bg-light p-5 md:p-8"
+              count={3}
+              label="Контактный телефон"
+              card={ContactCard}
+              form={AddOrUpdateCheckoutContact}
+              data={phone}
+              isModalOpen={isPhoneModalOpen}
+              onEdit={() => setIsPhoneModalOpen(true)}
+              onClose={() => setIsPhoneModalOpen(false)}
+              emptyMessage="Телефон не заполнен"
+            />
+            <CheckAvailabilityAction onSubmit={onSubmitHandler}>
+              Оформить заказ
+            </CheckAvailabilityAction>
+          </div>
+          <div className="w-full lg:w-96 mb-10 sm:mb-12 lg:mb-0 lg:mt-10 lg:ml-16 order-0 lg:order-1 px-5 sm:px-0">
+            <RightSideView />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   ) : (
     <OrderDescription orderNumber={orderNumber} orderDate={orderDate} />
   );
