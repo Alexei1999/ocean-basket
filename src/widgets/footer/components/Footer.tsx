@@ -23,12 +23,16 @@ function FooterContactsBlock({
           return (
             <>
               {name && (
-                <div className={classNames("pt-4 text-sm font-medium")}>
+                <div
+                  key={idx}
+                  className={classNames("pt-4 text-sm font-medium")}
+                >
                   {name}
                 </div>
               )}
               {addresses.map(({ address, number }, idx) => (
                 <div
+                  key={idx}
                   className={classNames(
                     "pt-4",
                     "flex flex-col sm:flex-row justify-between"

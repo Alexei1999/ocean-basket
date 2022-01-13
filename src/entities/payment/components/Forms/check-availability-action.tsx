@@ -11,6 +11,7 @@ import { EMPTY_STRING, OrderType, postOrder } from "@shared/api/dishes";
 import { $promocode } from "@entities/cart/components/cart-sidebar-view";
 import { toast } from "react-toastify";
 import { $restaurant } from "@widgets/header/components/AddressSelection";
+import { InvoiceID, MerchantLogin, SignatureValue } from "./PaymentProccessing";
 
 const submitFormFx = createEffect<OrderType, { order_id?: number }>(
   (params: OrderType) => postOrder(params)
@@ -108,6 +109,9 @@ export const CheckAvailabilityAction: React.FC<
             .filter((option) => option) as string[],
         };
       }),
+      InvoiceID: InvoiceID,
+      MerchantLogin: MerchantLogin,
+      Signature: SignatureValue,
     });
     // onSubmit?.();
   }

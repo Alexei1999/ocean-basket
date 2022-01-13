@@ -82,6 +82,10 @@ export type OrderType = Omit<FormValues, "title"> & {
   restaurant: string;
 } & {
   payment: string;
+} & {
+  MerchantLogin: string;
+  InvoiceID: number;
+  Signature: string;
 };
 
 export const postOrder = (

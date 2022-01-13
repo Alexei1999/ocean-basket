@@ -14,7 +14,9 @@ import ContactCard from "./contact-card";
 import ScheduleGrid from "./schedule-grid";
 import { RightSideView } from "./unverified-item-list";
 
-const sign = "1b60bd99098c450ac3ff86c7ad6c2fee";
+export const SignatureValue = "1b60bd99098c450ac3ff86c7ad6c2fee";
+export const InvoiceID = 0;
+export const MerchantLogin = "Ocean_Basket";
 
 export enum AddressType {
   Billing = "billing",
@@ -33,20 +35,18 @@ export function CheckoutPage() {
   const cartSizes = useStore($cartSizes);
 
   const onSubmitHandler = useCallback((orderNumber?: number) => {
-    const paymentWindow = window.open("", "_blank");
+    const paymentWindow = window.open(
+      `https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=${MerchantLogin}&InvoiceID=${InvoiceID}&Culture=ru&Encoding=utf-8&DefaultSum=${
+        cartSizes.totalAmount ?? 0
+      }&SignatureValue=${SignatureValue}`,
+      "_blank"
+    );
 
     if (!paymentWindow || paymentWindow.closed) {
       toast.error("Ошибка при совершении оплаты, попробуйте еще раз");
       paymentWindow?.close();
       return;
     }
-
-    paymentWindow.document.write(
-      `<html><body>
-      <script type="text/javascript" src="https://auth.robokassa.ru/Merchant/PaymentForm/FormFLS.js?MerchantLogin=Ocean_Basket&InvoiceID=0&Culture=ru&Encoding=utf-8&DefaultSum=${
-        cartSizes.totalAmount ?? 0
-      }&SignatureValue=${sign}"></script></body></html>`
-    );
 
     setOrderNumber(orderNumber);
     setOrderDate(dayjs());
