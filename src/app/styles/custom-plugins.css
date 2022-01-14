@@ -376,6 +376,12 @@ body[dir="rtl"] .react-tel-input .country-list .flag {
   }
 }
 
+@media (min-width: 1024px) {
+  .lg\:basis-80 {
+    flex-basis: 20rem;
+  }
+}
+
 @media (min-width: 768px) {
   .basis-\[25rem\] {
     flex-basis: 25rem;

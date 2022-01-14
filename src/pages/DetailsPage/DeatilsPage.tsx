@@ -90,6 +90,27 @@ export function DetailsPage() {
               className="basis-[25rem] md:max-w-lg"
             />
           </div>
+          <div className="flex flex-wrap lg:items-start flex-col lg:flex-row gap-y-7 gap-x-14 3xl:gap-x-20">
+            <Card
+              text="Условия возврата"
+              description="Eсли вас не устроила доставка, качество блюд, вы можете напрямую позвонить в ресторан по номеру +7 (977) 456 2221 (цифра 1), а также написать письмо на почту info@oceanbasket.ru. Мы оперативно ответим и решим проблему."
+              className="flex-grow lg:basis-80 max-w-xl"
+            />
+            <Card
+              text="Юридический адрес"
+              description={
+                <ul>
+                  <li>ООО ОБ Мясницкая</li>
+                  <li>
+                    101000, г. Москва, ул. Мясницкая, д.11, этаж 1, помещение V,
+                    комната 6
+                  </li>
+                  <li>ИНН 7708376250 ОГРН 1207700108219</li>
+                </ul>
+              }
+              className="flex-grow lg:basis-80 max-w-xl"
+            />
+          </div>
         </div>
       </div>
       <SubscriptionSection />
