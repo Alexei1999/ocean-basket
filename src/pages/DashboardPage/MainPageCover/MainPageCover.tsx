@@ -14,7 +14,7 @@ import React, { useEffect } from "react";
 import { ArrowLeft } from "./ArrowLeft";
 import { ArrowRight } from "./ArrowRight";
 import { covers } from "./images";
-import { createEvent, createStore } from "effector/effector.cjs";
+import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react/effector-react.cjs";
 import { Autoplay } from "swiper";
 

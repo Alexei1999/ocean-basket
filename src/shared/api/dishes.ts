@@ -68,7 +68,7 @@ export const getPromotions = (): Promise<Promotion[]> => {
   return baseApi.get(`${apiBaseUrl}/actions`).then((response) => response.data);
 };
 
-export type OrderType = Omit<FormValues, "title"> & {
+export type OrderTypeParams = Omit<FormValues, "title"> & {
   time: string;
   phone: string;
   dishes: {
@@ -89,7 +89,7 @@ export type OrderType = Omit<FormValues, "title"> & {
 };
 
 export const postOrder = (
-  params: OrderType
+  params: OrderTypeParams
 ): Promise<{ order_id?: number }> => {
   return baseApi
     .post(`orders/submit`, params)
@@ -117,5 +117,37 @@ export const getModifiers = (id: string | number): Promise<ModifierType[]> => {
 
   return baseApi
     .get(`${apiBaseUrl}/modifiers/${id}`)
+    .then((response) => response.data);
+};
+
+export type PaymentArgumentsParams = {
+  OutSum: number;
+};
+export type PaymentArguments = {
+  InvoiceId: number;
+  OutSum: number;
+  SignatureValue: string;
+};
+
+export const postPaymentArguments = (
+  params: PaymentArgumentsParams
+): Promise<PaymentArguments> => {
+  return baseApi
+    .post(`${apiBaseUrl}/paymentParams`, params)
+    .then((response) => response.data);
+};
+
+export type PaymentStatusParams = {
+  InvID: number;
+};
+export type PaymentStatus = {
+  result: boolean;
+};
+
+export const postPaymentStatus = (
+  params: PaymentStatusParams
+): Promise<PaymentArguments> => {
+  return baseApi
+    .post(`${apiBaseUrl}/paymentStatus`, params)
     .then((response) => response.data);
 };

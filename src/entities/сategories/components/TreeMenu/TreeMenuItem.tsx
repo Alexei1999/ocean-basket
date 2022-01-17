@@ -7,8 +7,6 @@ import { createEvent } from "effector";
 import { useStore } from "effector-react";
 import { $category } from "@features/choose-dishes/models";
 import { Category } from "@shared/api/dishes";
-import { setCartSidebarOpen } from "@shared/components/drawer/cart-sidebar";
-import { onSetPagesSidebarOpen } from "@shared/components/drawer/mobile-main-menu";
 import { onSetCategoriesSidebarOpen } from "@shared/components/drawer/filter-menu";
 
 interface TreeMenuItemProps {

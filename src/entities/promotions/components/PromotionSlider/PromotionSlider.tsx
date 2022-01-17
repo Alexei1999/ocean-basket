@@ -72,8 +72,7 @@ export function PromotionSlider() {
               <SwiperSlide key={id}>
                 <div
                   className={cn(
-                    "relative",
-                    "flex items-center rounded-xl justify-center w-full h-[250px]",
+                    "relative flex items-center rounded-xl justify-center w-full h-[250px] cursor-pointer",
                     isError && styles.promotionWrapperBackground
                   )}
                   onClick={() => {

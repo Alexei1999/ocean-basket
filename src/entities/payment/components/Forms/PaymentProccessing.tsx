@@ -1,10 +1,10 @@
 import { onScrollPage } from "@app/";
-import { $cartSizes } from "@features/choose-dishes/models";
+import { PaymentArguments } from "@shared/api/dishes";
 import dayjs, { Dayjs } from "dayjs";
 import { useStore } from "effector-react";
 import { useCallback, useState } from "react";
 import { toast } from "react-toastify";
-import { OrderDescription } from "../OrderDescription/OrderDescription";
+import { OrderDescriptionContainerCart } from "../OrderDescription/OrderDescriptionContainerCart";
 import AddOrUpdateCheckoutContact, { $phone } from "./add-or-update";
 import AddressCard from "./address-card";
 import AddressForm, { $form } from "./address-form";
@@ -14,8 +14,6 @@ import ContactCard from "./contact-card";
 import ScheduleGrid from "./schedule-grid";
 import { RightSideView } from "./unverified-item-list";
 
-export const SignatureValue = "1b60bd99098c450ac3ff86c7ad6c2fee";
-export const InvoiceID = 0;
 export const MerchantLogin = "Ocean_Basket";
 
 export enum AddressType {
@@ -32,27 +30,34 @@ export function CheckoutPage() {
 
   const form = useStore($form);
   const phone = useStore($phone);
-  const cartSizes = useStore($cartSizes);
 
-  const onSubmitHandler = useCallback((orderNumber?: number) => {
-    const paymentWindow = window.open(
-      `https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=${MerchantLogin}&InvoiceID=${InvoiceID}&Culture=ru&Encoding=utf-8&DefaultSum=${
-        cartSizes.totalAmount ?? 0
-      }&SignatureValue=${SignatureValue}`,
-      "_blank"
-    );
+  const onSubmitHandler = useCallback(
+    ({
+      InvoiceId,
+      OutSum,
+      SignatureValue,
+      order_id,
+    }: Partial<PaymentArguments> & {
+      order_id?: number | undefined;
+    }) => {
+      const paymentWindow = window.open(
+        `https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=${MerchantLogin}&InvoiceID=${InvoiceId}&Culture=ru&Encoding=utf-8&DefaultSum=${OutSum}&SignatureValue=${SignatureValue}`,
+        "_blank"
+      );
 
-    if (!paymentWindow || paymentWindow.closed) {
-      toast.error("Ошибка при совершении оплаты, попробуйте еще раз");
-      paymentWindow?.close();
-      return;
-    }
+      if (!paymentWindow || paymentWindow.closed) {
+        toast.error("Ошибка при совершении оплаты, попробуйте еще раз");
+        paymentWindow?.close();
+        return;
+      }
 
-    setOrderNumber(orderNumber);
-    setOrderDate(dayjs());
-    setIsOrdered(true);
-    onScrollPage();
-  }, []);
+      setOrderNumber(order_id);
+      setOrderDate(dayjs());
+      setIsOrdered(true);
+      onScrollPage();
+    },
+    []
+  );
 
   return !isOrdered ? (
     <>
@@ -103,6 +108,9 @@ export function CheckoutPage() {
       </div>
     </>
   ) : (
-    <OrderDescription orderNumber={orderNumber} orderDate={orderDate} />
+    <OrderDescriptionContainerCart
+      orderNumber={orderNumber}
+      orderDate={orderDate}
+    />
   );
 }
