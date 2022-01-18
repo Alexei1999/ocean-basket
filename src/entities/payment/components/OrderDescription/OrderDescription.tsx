@@ -119,7 +119,7 @@ export function OrderDescription({
               <div
                 className={classNames(
                   "mt-3",
-                  idx && "border-l border-border-200 min-w-150 pl-3 ml-3.5"
+                  idx && "border-l border-border-200 min-w-150 pl-3"
                 )}
                 key={idx}
               >
