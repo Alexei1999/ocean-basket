@@ -51,6 +51,8 @@ export function CheckoutPage() {
         return;
       }
 
+      paymentWindow.focus();
+
       setOrderNumber(order_id);
       setOrderDate(dayjs());
       setIsOrdered(true);

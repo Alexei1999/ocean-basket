@@ -1,6 +1,6 @@
 {
   "name": "ocean-basker",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "proxy": "https://oceanbasket.ru/oceanBasket/public",
   "dependencies": {

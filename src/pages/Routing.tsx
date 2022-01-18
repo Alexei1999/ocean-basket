@@ -12,6 +12,7 @@ import { CheckoutPage } from "@entities/payment/components/Forms/PaymentProccess
 import { CertificatePage } from "./CertificatesPage/CertificatePage";
 import { DetailsPage } from "./DetailsPage/DeatilsPage";
 import { OrderDescription } from "@entities/payment/components/OrderDescription/OrderDescription";
+import { OrderDescriptionContainerFetch } from "@entities/payment/components/OrderDescription/OrderDescriptionContainerFetch";
 
 export const Routing = () => {
   return (
@@ -22,11 +23,15 @@ export const Routing = () => {
       <Route path={RoutesConfig.Checkout} element={<CheckoutPage />} />
       <Route
         path={`${RoutesConfig.Checkout}/false`}
-        element={<OrderDescription isFailure />}
+        element={
+          <OrderDescriptionContainerFetch key="failrue" status="failrue" />
+        }
       />
       <Route
         path={`${RoutesConfig.Checkout}/true`}
-        element={<OrderDescription isSuccess />}
+        element={
+          <OrderDescriptionContainerFetch key="success" status="success" />
+        }
       />
       <Route path={RoutesConfig.About} element={<AboutPage />} />
       <Route path={RoutesConfig.Promotions} element={<PromotionsPage />} />
