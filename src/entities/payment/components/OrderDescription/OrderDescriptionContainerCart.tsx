@@ -7,7 +7,8 @@ import { $cartSizes, dropCart } from "@features/choose-dishes/models";
 import { Dayjs } from "dayjs";
 import { useStore } from "effector-react";
 import { useState, useEffect } from "react";
-import { $form } from "../Forms/address-form";
+import { formatAddress } from "../Forms/address-card";
+import { $form, FormValues } from "../Forms/address-form";
 import { $schedule } from "../Forms/schedule-grid";
 import { OrderDescription } from "./OrderDescription";
 
@@ -49,7 +50,7 @@ export function OrderDescriptionContainerCart({
       orderNumber={orderNumber}
       positionsNumber={savedCartSiezes?.size}
       total={total}
-      form={form}
+      address={form ? formatAddress(form as FormValues) ?? "" : ""}
       savedPromocode={savedPromocode}
       orderDate={orderDate}
     />

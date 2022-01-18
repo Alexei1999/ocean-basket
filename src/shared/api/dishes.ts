@@ -142,11 +142,21 @@ export type PaymentStatusParams = {
 };
 export type PaymentStatus = {
   result: boolean;
+  goodsNum: number;
+  requestDate: string;
+  deliveryTime: string;
+  deliveryPlace: string;
+  outSum: string;
+  paymentMethod: string;
+  deliveryPrice: number;
+  totalSum: string;
+  SignatureValue: string;
+  orderNumber: number;
 };
 
 export const postPaymentStatus = (
   params: PaymentStatusParams
-): Promise<PaymentArguments> => {
+): Promise<PaymentStatus> => {
   return baseApi
     .post(`${apiBaseUrl}/paymentStatus`, params)
     .then((response) => response.data);
