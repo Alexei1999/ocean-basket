@@ -11,6 +11,15 @@ import { toast } from "react-toastify";
 import { MerchantLogin } from "../Forms/PaymentProccessing";
 import { OrderDescription } from "./OrderDescription";
 
+export const getPaymentLink = (
+  sum?: string | null,
+  invId?: string | null,
+  signature?: string | null
+) =>
+  `https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=${MerchantLogin}&Culture=ru&Encoding=utf-8&OutSum=${
+    sum ?? 0
+  }&InvId=${invId}&SignatureValue=${signature}`;
+
 const postPaymentStatusFx = createEffect(postPaymentStatus);
 
 const paymentStatusData = restore(postPaymentStatusFx.doneData, null);
@@ -19,6 +28,8 @@ postPaymentStatusFx.fail.watch(() => {
   toast("Ошибка при получении статуса, попробуйте еще раз", {
     type: "error",
     autoClose: false,
+    toastId: "payment-status-error",
+    updateId: "payment-status-error",
   });
 });
 
@@ -44,6 +55,17 @@ export function OrderDescriptionContainerFetch({
   const navigate = useNavigate();
 
   useEffect(() => {
+    toast.update("payment-status-error", {
+      autoClose: false,
+    });
+    return () => {
+      toast.update("payment-status-error", {
+        autoClose: 1500,
+      });
+    };
+  }, []);
+
+  useEffect(() => {
     if (!data) return;
 
     if (data.result && status === "failrue") {
@@ -55,13 +77,13 @@ export function OrderDescriptionContainerFetch({
   }, [data?.result, status]);
 
   useEffect(() => {
-    if (!invId || isNaN(parseInt(invId))) {
+    if (isNaN(parseInt(invId as string))) {
       setIsNoInvId(true);
       return;
     }
 
     postPaymentStatusFx({
-      InvID: parseInt(invId),
+      InvID: parseInt(invId as string),
     });
   }, [invId]);
 
@@ -84,6 +106,7 @@ export function OrderDescriptionContainerFetch({
       retryButton={
         <Button
           className="text-body rounded-xl hover:bg-accent w-full max-w-[200px] mt-6"
+          disabled={isNoInvId || !data?.SignatureValue}
           onClick={() => {
             if (isNoInvId || !data?.SignatureValue) {
               toast.error("Ошибка при совершении оплаты, попробуйте еще раз");
@@ -91,9 +114,7 @@ export function OrderDescriptionContainerFetch({
             }
 
             window.location.replace(
-              `https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=${MerchantLogin}&InvoiceID=${invId}&Culture=ru&Encoding=utf-8&DefaultSum=${
-                data?.outSum ?? 0
-              }&SignatureValue=${data?.SignatureValue}`
+              getPaymentLink(data?.outSum, invId, data?.SignatureValue)
             );
           }}
         >

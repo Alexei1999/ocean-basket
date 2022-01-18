@@ -1,5 +1,5 @@
-import styles from './spinner.module.css';
-import cn from 'classnames';
+import styles from "./spinner.module.css";
+import cn from "classnames";
 
 interface Props {
   className?: string;
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const Spinner = (props: Props) => {
-  const { className, showText = true, text = 'Loading', simple } = props;
+  const { className, showText = true, text = "Loading", simple } = props;
   return (
     <>
       {simple ? (
@@ -17,7 +17,7 @@ const Spinner = (props: Props) => {
       ) : (
         <span
           className={cn(
-            'w-full flex flex-col items-center justify-center h-screen',
+            "w-full flex flex-col items-center justify-center h-full",
             className
           )}
         >

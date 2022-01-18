@@ -5,6 +5,7 @@ import { useStore } from "effector-react";
 import { useCallback, useState } from "react";
 import { toast } from "react-toastify";
 import { OrderDescriptionContainerCart } from "../OrderDescription/OrderDescriptionContainerCart";
+import { getPaymentLink } from "../OrderDescription/OrderDescriptionContainerFetch";
 import AddOrUpdateCheckoutContact, { $phone } from "./add-or-update";
 import AddressCard from "./address-card";
 import AddressForm, { $form } from "./address-form";
@@ -41,7 +42,7 @@ export function CheckoutPage() {
       order_id?: number | undefined;
     }) => {
       const paymentWindow = window.open(
-        `https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=${MerchantLogin}&InvoiceID=${InvoiceId}&Culture=ru&Encoding=utf-8&DefaultSum=${OutSum}&SignatureValue=${SignatureValue}`,
+        getPaymentLink(`${OutSum}`, `${InvoiceId}`, SignatureValue),
         "_blank"
       );
 
