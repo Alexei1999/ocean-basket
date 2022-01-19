@@ -2,6 +2,14 @@ import { formatPrice } from "@entities/cart/lib/use-price";
 import { ModifierType, PickedModifier } from "@features/choose-dishes/models";
 import Attribute from "./attribute";
 
+export const formatRub = (price: number) => {
+  return formatPrice({
+    amount: price,
+    currencyCode: "RUB",
+    locale: "ru",
+  });
+};
+
 export const createPickedModifier = (
   modifier: ModifierType,
   option: string | null,
@@ -80,12 +88,7 @@ const ModifierGroups = ({
                     active={activeModifier[modifier.id]?.option === option}
                     value={`${option}${
                       nextPrice && nextPrice > 0
-                        ? " - " +
-                          formatPrice({
-                            amount: nextPrice,
-                            currencyCode: "RUB",
-                            locale: "ru",
-                          })
+                        ? " - " + formatRub(nextPrice)
                         : ""
                     }`}
                     key={`${option}-${idx}`}

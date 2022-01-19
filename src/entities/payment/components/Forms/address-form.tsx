@@ -17,9 +17,9 @@ export type FormValues = {
   street: string;
   building: string;
   part: string;
-  flat: string;
-  entrance: string;
-  floor: string;
+  flat: number;
+  entrance: number;
+  floor: number;
   intercom: string | null;
   comment: string;
   persons_number: number;
@@ -31,9 +31,18 @@ const addressSchema = yup.object().shape({
   street: yup.string().required("Улица обязательна к заполнению"),
   building: yup.string().required("Дом обязателен к заполнению"),
   part: yup.string(),
-  flat: yup.string(),
-  entrance: yup.string(),
-  floor: yup.string(),
+  flat: yup
+    .number()
+    .transform((value) => (isNaN(value) ? null : parseInt(value)))
+    .nullable(),
+  entrance: yup
+    .number()
+    .transform((value) => (isNaN(value) ? null : parseInt(value)))
+    .nullable(),
+  floor: yup
+    .number()
+    .transform((value) => (isNaN(value) ? null : parseInt(value)))
+    .nullable(),
   intercom: yup.string().nullable().notRequired(),
   comment: yup.string(),
   persons_number: yup
@@ -115,7 +124,7 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
             <Input
               label={"Корпус / строение"}
               {...register("part")}
-              error={errors.flat?.message}
+              error={errors.part?.message}
               className="col-span-2 sm:col-span-1"
               variant="outline"
             />
@@ -123,22 +132,25 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
               label={"Квартира"}
               {...register("flat")}
               error={errors.flat?.message}
-              className="col-span-2 sm:col-span-1"
+              className="col-span-2 sm:col-span-1 no-arrows"
               variant="outline"
+              type="number"
             />
             <Input
               label={"Подъезд"}
               {...register("entrance")}
               error={errors.entrance?.message}
-              className="col-span-2 sm:col-span-1"
+              className="col-span-2 sm:col-span-1 no-arrows"
               variant="outline"
+              type="number"
             />
             <Input
               label={"Этаж"}
               {...register("floor")}
               error={errors.floor?.message}
-              className="col-span-2 sm:col-span-1"
+              className="col-span-2 sm:col-span-1 no-arrows"
               variant="outline"
+              type="number"
             />
 
             <div className="col-span-2 sm:col-span-1">

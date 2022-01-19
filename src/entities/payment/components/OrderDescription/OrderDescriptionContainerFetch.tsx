@@ -1,4 +1,5 @@
 import usePrice from "@entities/cart/lib/use-price";
+import { $cartItems } from "@features/choose-dishes/models";
 import { postPaymentStatus } from "@shared/api/dishes";
 import Button from "@shared/button";
 import { RoutesConfig } from "@shared/lib/routes-config";
@@ -8,17 +9,24 @@ import { useStore } from "effector-react";
 import { useMemo, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { MerchantLogin } from "../Forms/PaymentProccessing";
+import {
+  makeTelegrammDescription,
+  MerchantLogin,
+} from "../Forms/PaymentProccessing";
 import { OrderDescription } from "./OrderDescription";
 
 export const getPaymentLink = (
   sum?: string | null,
   invId?: string | null,
-  signature?: string | null
+  signature?: string | null,
+  description?: string | null,
+  orderNumber?: number | string | null
 ) =>
   `https://auth.robokassa.ru/Merchant/Index.aspx?MerchantLogin=${MerchantLogin}&Culture=ru&Encoding=utf-8&OutSum=${
     sum ?? 0
-  }&InvId=${invId}&SignatureValue=${signature}`;
+  }&InvId=${invId}&SignatureValue=${signature}&Title=Оплата заказа${
+    orderNumber ? " №" + orderNumber : ""
+  }&Description=${description}`;
 
 const postPaymentStatusFx = createEffect(postPaymentStatus);
 
@@ -40,6 +48,8 @@ export function OrderDescriptionContainerFetch({
 }: {
   status: "success" | "failrue";
 }) {
+  const cartItems = useStore($cartItems);
+
   const invId = useMemo(() => {
     const url = new URLSearchParams(window.location.search);
     return url.get("InvId");
@@ -114,7 +124,13 @@ export function OrderDescriptionContainerFetch({
             }
 
             window.location.replace(
-              getPaymentLink(data?.outSum, invId, data?.SignatureValue)
+              getPaymentLink(
+                data?.outSum,
+                invId,
+                data?.SignatureValue,
+                makeTelegrammDescription(cartItems.list),
+                data?.orderNumber
+              )
             );
           }}
         >

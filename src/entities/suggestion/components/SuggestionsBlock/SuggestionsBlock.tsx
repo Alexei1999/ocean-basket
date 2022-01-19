@@ -7,7 +7,13 @@ import React, { useEffect, useMemo, useState } from "react";
 import { SuggestionsAction } from "./SuggestionsAction";
 import { SuggestionsCategory } from "./SuggestionsCategory";
 
-export function SuggestionsBlock({ className }: { className?: string }) {
+export function SuggestionsBlock({
+  className,
+  hideOnEmpty,
+}: {
+  className?: string;
+  hideOnEmpty?: boolean;
+}) {
   const { unicItemsList } = useStore($cartItems);
 
   const [categorizedDishes, setCategorizedDishes] = useState<{
@@ -67,7 +73,7 @@ export function SuggestionsBlock({ className }: { className?: string }) {
             ))}
           </React.Fragment>
         ))
-      ) : (
+      ) : hideOnEmpty ? null : (
         <div className="w-full flex justify-center py-7 px-3 border-b border-border-200 border-opacity-75">
           <h1 className="text-body text-lg font-bold">
             Нет подходящих блюд для рекомендации

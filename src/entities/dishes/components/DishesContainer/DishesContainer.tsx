@@ -87,7 +87,7 @@ export function DishesContainer() {
             ))
           )}
         </div>
-        <SuggestionsBlock className="bg-light rounded-2xl mt-7" />
+        <SuggestionsBlock className="bg-light rounded-2xl mt-7" hideOnEmpty />
       </div>
     </>
   );

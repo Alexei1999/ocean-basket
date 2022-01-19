@@ -211,8 +211,8 @@ export const $cartSizes = $cart.map((state) => {
         return {
           size: obj.size + item!.count,
           totalAmount:
-            !isNaN(amount) && typeof amount === "number"
-              ? (obj.totalAmount ?? 0) + amount * item!.count
+            amount && !isNaN(amount)
+              ? (obj.totalAmount ?? 0) + amount
               : obj.totalAmount,
           unicItemsNumber: {
             ...obj.unicItemsNumber,

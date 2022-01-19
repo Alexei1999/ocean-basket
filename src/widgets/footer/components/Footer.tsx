@@ -13,6 +13,8 @@ function FooterContactsBlock({
   item: Country;
   className?: string;
 }) {
+  if (!item) return null;
+
   return (
     <div className={classNames(className)}>
       {item.country_label && (

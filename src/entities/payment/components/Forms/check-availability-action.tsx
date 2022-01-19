@@ -15,11 +15,15 @@ import {
   postPaymentArguments,
   PaymentArgumentsParams,
 } from "@shared/api/dishes";
-import { $promocode } from "@entities/cart/components/cart-sidebar-view";
+import {
+  $promocode,
+  MIN_SUM,
+} from "@entities/cart/components/cart-sidebar-view";
 import { toast } from "react-toastify";
 import { $restaurant } from "@widgets/header/components/AddressSelection";
 import { MerchantLogin } from "./PaymentProccessing";
 import { createEvent, createStore } from "effector";
+import { formatRub } from "@entities/cart/components/Details/variation-groups";
 
 type SubmitFormParams = {
   form: Omit<OrderTypeParams, "InvoiceID" | "Signature">;
@@ -154,6 +158,11 @@ export const CheckAvailabilityAction: React.FC<
       return false;
     }
 
+    if ((totalAmount ?? 0) < MIN_SUM) {
+      setError(`Заказ должен быть на сумму от ${formatRub(MIN_SUM)}`);
+      return false;
+    }
+
     if (!form) {
       setError("Необходимо заполнить адрес");
       return false;
@@ -170,7 +179,7 @@ export const CheckAvailabilityAction: React.FC<
     }
 
     return true;
-  }, [cart, form, schedule, phone]);
+  }, [cart, form, schedule, phone, totalAmount]);
 
   function handleVerifyCheckout() {
     if (!isValid) {

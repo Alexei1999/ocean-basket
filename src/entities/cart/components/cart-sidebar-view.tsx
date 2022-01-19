@@ -15,6 +15,9 @@ import { createEffect, createEvent, createStore } from "effector";
 import { verifyPromocode } from "@shared/api/dishes";
 import Button from "@shared/button";
 import { toast } from "react-toastify";
+import { formatRub } from "./Details/variation-groups";
+
+export const MIN_SUM = 5000;
 
 export const EmptyCartPanel = ({
   noGutters = false,
@@ -65,9 +68,15 @@ cartSidebarViewGate.state.on(
   ({ onSuccess, onFail }, { result, promocode_text } = {} as any) => {
     if (result === true) {
       onSuccess(promocode_text);
-    } else onFail();
+      return;
+    }
+    onFail();
   }
 );
+
+verifyPromocodeFx.fail.watch(() => {
+  toast.error("Ошибка при отправке промокода, попробуйте еще раз");
+});
 
 export const CartSidebarView = ({
   onSubmit,
@@ -87,6 +96,9 @@ export const CartSidebarView = ({
 
   const isLoading = useStore(verifyPromocodeFx.pending);
 
+  const isLessMinSum = (cartSizes.totalAmount ?? 0) < MIN_SUM;
+  const isDisabled = !cartSizes.size || isLessMinSum;
+
   useGate(cartSidebarViewGate, {
     onSuccess: (promocodeText) => {
       onSetPromocode({ promocode, promocodeText });
@@ -99,7 +111,7 @@ export const CartSidebarView = ({
   });
 
   function handleCheckout() {
-    if (!cartSizes.size) return;
+    if (isDisabled) return;
     onSubmit?.();
   }
 
@@ -222,12 +234,12 @@ export const CartSidebarView = ({
               </div>
             </div>
           ))}
+
         <button
           className={classNames(
             "flex text-body justify-between w-full h-12 md:h-14 p-1 text-sm font-bold bg-current rounded-full shadow-700 transition-colors focus:outline-none hover:bg-accent-hover focus:bg-accent-hover",
-            !cartSizes.size
-              ? "bg-gray-300 text-accent hover:bg-gray-300 border-border-400 cursor-not-allowed"
-              : ""
+            isDisabled &&
+              "bg-gray-300 text-accent hover:bg-gray-300 border-border-400 cursor-not-allowed"
           )}
           onClick={handleCheckout}
         >
@@ -238,6 +250,11 @@ export const CartSidebarView = ({
             {totalPrice}
           </span>
         </button>
+        {isLessMinSum && (
+          <p className="pt-[6px] text-sm text-center justify-self-end text-body">
+            Заказ должен быть на сумму от {formatRub(MIN_SUM)}
+          </p>
+        )}
       </footer>
       {/* End of footer */}
     </section>

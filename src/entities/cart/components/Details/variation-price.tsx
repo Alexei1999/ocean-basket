@@ -2,6 +2,7 @@ import { formatPrice } from "@entities/cart/lib/use-price";
 import { Dish, EMPTY_STRING } from "@shared/api/dishes";
 import { useEffect, useMemo } from "react";
 import Attribute from "./attribute";
+import { formatRub } from "./variation-groups";
 
 export const filterPrices = (prices: Dish["prices"]) =>
   (prices || [])
@@ -65,11 +66,7 @@ export default function VariationPrice({
                 <span className="whitespace-nowrap">{weight}</span>
                 <span className="pl-4">—</span>
                 <span className="whitespace-nowrap pl-4">
-                  {formatPrice({
-                    amount: rouble_price,
-                    currencyCode: "RUB",
-                    locale: "ru",
-                  })}
+                  {formatRub(rouble_price)}
                 </span>
               </div>
             }

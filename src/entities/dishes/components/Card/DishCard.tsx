@@ -9,6 +9,7 @@ import classNames from "classnames";
 import { useSortedPrices } from "@entities/cart/components/Details/variation-price";
 import { onDishModalOpen } from "@entities/cart/components/Details/add-dish-modal";
 import { hostUrl } from "@shared/api/base";
+import { formatRub } from "@entities/cart/components/Details/variation-groups";
 
 type DishCardProps = {
   product: Dish;
@@ -66,11 +67,7 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
   const price = useMemo(() => {
     if (mappedPrices.length === 0) return;
 
-    const price = formatPrice({
-      amount: mappedPrices[0].rouble_price,
-      currencyCode: "RUB",
-      locale: "ru",
-    });
+    const price = formatRub(mappedPrices[0].rouble_price);
 
     return mappedPrices.length > 1 ? `от ${price}` : price;
   }, []);

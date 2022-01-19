@@ -1,4 +1,6 @@
 import { onScrollPage } from "@app/";
+import { formatRub } from "@entities/cart/components/Details/variation-groups";
+import { $cart, $cartItems, PickedDish } from "@features/choose-dishes/models";
 import { PaymentArguments } from "@shared/api/dishes";
 import dayjs, { Dayjs } from "dayjs";
 import { useStore } from "effector-react";
@@ -15,6 +17,17 @@ import ContactCard from "./contact-card";
 import ScheduleGrid from "./schedule-grid";
 import { RightSideView } from "./unverified-item-list";
 
+export const makeTelegrammDescription = (dishes: PickedDish[]) => {
+  return dishes
+    .map(
+      ({ product: { name }, modifiers, count, totalPrice }) =>
+        `${name}, ${modifiers.map(
+          ({ name, option }) => `${name} - ${option}`
+        )}, ${count} шт., ${formatRub(totalPrice)}`
+    )
+    .join(";");
+};
+
 export const MerchantLogin = "Ocean_Basket";
 
 export enum AddressType {
@@ -23,6 +36,8 @@ export enum AddressType {
 }
 
 export function CheckoutPage() {
+  const cartItems = useStore($cartItems);
+
   const [isOrdered, setIsOrdered] = useState(false);
   const [orderNumber, setOrderNumber] = useState<undefined | number>(undefined);
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
@@ -42,7 +57,13 @@ export function CheckoutPage() {
       order_id?: number | undefined;
     }) => {
       const paymentWindow = window.open(
-        getPaymentLink(`${OutSum}`, `${InvoiceId}`, SignatureValue),
+        getPaymentLink(
+          `${OutSum}`,
+          `${InvoiceId}`,
+          SignatureValue,
+          makeTelegrammDescription(cartItems.list),
+          order_id
+        ),
         "_blank"
       );
 

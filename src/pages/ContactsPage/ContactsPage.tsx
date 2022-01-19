@@ -18,6 +18,8 @@ function ContactsBlock({
   className?: string;
   children?: React.ReactNode;
 }) {
+  if (!item) return null;
+
   return (
     <div className={classNames(className)}>
       {item.country_label && (
