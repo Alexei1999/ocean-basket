@@ -113,6 +113,7 @@ export function OrderDescriptionContainerFetch({
       orderDate={dayjs(data?.requestDate)}
       schedule={data?.deliveryTime}
       total={total}
+      location={data?.location}
       retryButton={
         <Button
           className="text-body rounded-xl hover:bg-accent w-full max-w-[200px] mt-6"

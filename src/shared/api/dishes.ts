@@ -80,6 +80,7 @@ export type OrderTypeParams = Omit<FormValues, "title"> & {
   }[];
   promocode?: string;
   restaurant: string;
+  location: boolean | null;
 } & {
   payment: string;
 } & {
@@ -152,6 +153,7 @@ export type PaymentStatus = {
   totalSum: string;
   SignatureValue: string;
   orderNumber: number;
+  location: boolean | false;
 };
 
 export const postPaymentStatus = (

@@ -21,7 +21,12 @@ import {
 } from "@entities/cart/components/cart-sidebar-view";
 import { toast } from "react-toastify";
 import { $restaurant } from "@widgets/header/components/AddressSelection";
-import { MerchantLogin } from "./PaymentProccessing";
+import {
+  $grandTotal,
+  $location,
+  FREE_DELIVERY_SUM,
+  MerchantLogin,
+} from "./PaymentProccessing";
 import { createEvent, createStore } from "effector";
 import { formatRub } from "@entities/cart/components/Details/variation-groups";
 
@@ -145,6 +150,8 @@ export const CheckAvailabilityAction: React.FC<
   const phone = useStore($phone);
   const promocode = useStore($promocode);
   const restaurant = useStore($restaurant);
+  const location = useStore($location);
+  const grandTotal = useStore($grandTotal);
 
   const isLoading = useStore($pending);
 
@@ -165,6 +172,11 @@ export const CheckAvailabilityAction: React.FC<
 
     if (!form) {
       setError("Необходимо заполнить адрес");
+      return false;
+    }
+
+    if (location === null) {
+      setError("Необходимо выбрать зону доставки");
       return false;
     }
 
@@ -219,9 +231,10 @@ export const CheckAvailabilityAction: React.FC<
         promocode: promocode?.promocode!,
         dishes: formattedDishes,
         MerchantLogin: MerchantLogin,
+        location: (totalAmount ?? 0) >= FREE_DELIVERY_SUM ? null : location,
       },
       paymentArguments: {
-        OutSum: totalAmount ?? 0,
+        OutSum: grandTotal,
       },
     });
 

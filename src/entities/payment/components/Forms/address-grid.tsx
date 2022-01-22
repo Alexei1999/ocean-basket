@@ -1,6 +1,6 @@
 import { RadioGroup } from "@headlessui/react";
 import { createEvent, createStore } from "effector";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { onSubmitForm } from "./address-form";
 import { AddressHeader } from "./address-header";
 import Modal from "./modal";
@@ -22,6 +22,7 @@ interface AddressesProps<T> {
   onClose: () => void;
   emptyMessage?: string;
   count: number;
+  after?: ReactNode;
 }
 
 export const onSetEditModalOpen = createEvent<boolean>();
@@ -42,6 +43,7 @@ export function BlocksGrid<T>({
   onClose,
   emptyMessage,
   count,
+  after,
 }: AddressesProps<T>) {
   const [selectedAddress, setAddress] = useState<Address | undefined>(
     undefined
@@ -77,6 +79,11 @@ export function BlocksGrid<T>({
           <span className="relative px-5 py-6 text-base text-center bg-gray-100 rounded border border-border-200">
             {emptyMessage}
           </span>
+        </div>
+      )}
+      {after && (
+        <div className="pt-5 mt-5 border-t border-border-200 border-opacity-70">
+          {after}
         </div>
       )}
     </div>

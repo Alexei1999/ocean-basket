@@ -8,20 +8,29 @@ import {
 import { useStore } from "effector-react";
 import { $cartSizes, $cartItems } from "@features/choose-dishes/models";
 import { DishStatus } from "@shared/api/dishes";
+import {
+  $grandTotal,
+  $location,
+  FREE_DELIVERY_SUM,
+  LOCATION_FALSE_SUM,
+  LOCATION_TRUE_SUM,
+} from "./PaymentProccessing";
+import { formatRub } from "@entities/cart/components/Details/variation-groups";
+import { createStore, sample } from "effector";
 
 export const RightSideView = () => {
   const cartSizes = useStore($cartSizes);
   const { list } = useStore($cartItems);
   const promocode = useStore($promocode);
 
-  // const { price: delivery } = usePrice({
-  //   amount: 0,
-  // });
+  const location = useStore($location);
+  const grandTotal = useStore($grandTotal);
+
   // const { price: discount } = usePrice({
   //   amount: 0,
   // });
   const { price: total } = usePrice({
-    amount: cartSizes.totalAmount ?? 0,
+    amount: grandTotal,
   });
   return (
     <div className="w-full">
@@ -58,12 +67,20 @@ export const RightSideView = () => {
             </p>
           </div>
         )}
-        {/* <ItemInfoRow
+        <ItemInfoRow
           keyClassName="text-gray-500"
           title={"Доставка"}
-          value={delivery}
+          value={
+            (cartSizes.totalAmount ?? 0) >= FREE_DELIVERY_SUM
+              ? "Бесплатно"
+              : location === true
+              ? formatRub(LOCATION_TRUE_SUM)
+              : location === false
+              ? formatRub(LOCATION_FALSE_SUM)
+              : ""
+          }
         />
-        <ItemInfoRow
+        {/* <ItemInfoRow
           keyClassName="text-gray-500"
           title={"Скидка"}
           value={discount}

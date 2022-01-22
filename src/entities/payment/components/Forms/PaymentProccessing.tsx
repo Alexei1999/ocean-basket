@@ -1,8 +1,15 @@
 import { onScrollPage } from "@app/";
 import { formatRub } from "@entities/cart/components/Details/variation-groups";
-import { $cart, $cartItems, PickedDish } from "@features/choose-dishes/models";
+import { getFromStorage, setToStorage } from "@features/choose-dishes/api";
+import {
+  $cart,
+  $cartItems,
+  $cartSizes,
+  PickedDish,
+} from "@features/choose-dishes/models";
 import { PaymentArguments } from "@shared/api/dishes";
 import dayjs, { Dayjs } from "dayjs";
+import { createEvent, createStore, sample } from "effector";
 import { useStore } from "effector-react";
 import { useCallback, useState } from "react";
 import { toast } from "react-toastify";
@@ -14,8 +21,11 @@ import AddressForm, { $form } from "./address-form";
 import { BlocksGrid } from "./address-grid";
 import { CheckAvailabilityAction } from "./check-availability-action";
 import ContactCard from "./contact-card";
+import Radio from "./forms/radio/radio";
 import ScheduleGrid from "./schedule-grid";
 import { RightSideView } from "./unverified-item-list";
+
+export const FREE_DELIVERY_SUM = 5000;
 
 export const makeTelegrammDescription = (dishes: PickedDish[]) => {
   return dishes
@@ -35,6 +45,50 @@ export enum AddressType {
   Shipping = "shipping",
 }
 
+export const LOCATION_FALSE_SUM = 500;
+export const LOCATION_TRUE_SUM = 250;
+
+const onLocation = createEvent<boolean>();
+export const $location = createStore<boolean | null>(
+  getFromStorage("location", false)
+).on(onLocation, (_, value) => value);
+
+$location.watch((value) => setToStorage("location", value));
+
+const locationInitial = $location.getState();
+const deliveryInitial =
+  locationInitial === true
+    ? LOCATION_TRUE_SUM
+    : locationInitial === false
+    ? LOCATION_FALSE_SUM
+    : 0;
+
+export const $grandTotal = createStore<number>(
+  ($cartSizes.getState().totalAmount ?? 0) + deliveryInitial
+);
+
+sample({
+  source: [$cartSizes, $location],
+  clock: [$cartSizes, $location],
+  fn: ([cartSizes, location]) => {
+    const totalAmount = cartSizes.totalAmount ?? 0;
+
+    if (totalAmount >= FREE_DELIVERY_SUM) {
+      return totalAmount;
+    }
+
+    const locationFee =
+      location === true
+        ? LOCATION_TRUE_SUM
+        : location === false
+        ? LOCATION_FALSE_SUM
+        : 0;
+
+    return totalAmount + locationFee;
+  },
+  target: $grandTotal,
+});
+
 export function CheckoutPage() {
   const cartItems = useStore($cartItems);
 
@@ -46,6 +100,8 @@ export function CheckoutPage() {
 
   const form = useStore($form);
   const phone = useStore($phone);
+  const location = useStore($location);
+  const { totalAmount } = useStore($cartSizes);
 
   const onSubmitHandler = useCallback(
     ({
@@ -101,6 +157,46 @@ export function CheckoutPage() {
               onEdit={() => setIsAddressModalOpen(true)}
               onClose={() => setIsAddressModalOpen(false)}
               emptyMessage="Адрес не заполнен"
+              after={
+                (totalAmount ?? 0) >= FREE_DELIVERY_SUM ? undefined : (
+                  <div className="flex gap-3 flex-wrap">
+                    <div className="w-[16rem] text-xs flex justify-between">
+                      <Radio
+                        checked={location === true}
+                        onClick={() => onLocation(true)}
+                        className="pt-2"
+                        isBig
+                        name={"inside TTK"}
+                        id={"inside TTK"}
+                      />
+                      <div
+                        className="cursor-pointer"
+                        onClick={() => onLocation(true)}
+                      >
+                        Указанный адрес входит в зону доставки ВНУТРИ ТТК +{" "}
+                        {formatRub(LOCATION_TRUE_SUM)}.
+                      </div>
+                    </div>
+                    <div className="w-[16rem] text-xs flex justify-between">
+                      <Radio
+                        checked={location === false}
+                        onClick={() => onLocation(false)}
+                        className="pt-2"
+                        isBig
+                        name={"outside TTK"}
+                        id={"outside TTK"}
+                      />
+                      <div
+                        className="cursor-pointer"
+                        onClick={() => onLocation(false)}
+                      >
+                        Указанный адрес входит в зону доставки от МКАД до ТТК +{" "}
+                        {formatRub(LOCATION_FALSE_SUM)}.
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
             />
             <ScheduleGrid
               className="shadow-700 bg-light p-5 md:p-8"

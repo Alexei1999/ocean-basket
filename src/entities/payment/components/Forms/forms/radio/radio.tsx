@@ -1,5 +1,6 @@
-import React, { InputHTMLAttributes } from 'react';
-import styles from './radio.module.css';
+import React, { InputHTMLAttributes } from "react";
+import stylesSimple from "./radio-simple.module.css";
+import stylesBig from "./radio-big.module.css";
 
 export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
@@ -7,10 +8,11 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   id: string;
   error?: string;
+  isBig?: boolean;
 }
 
 const Radio = React.forwardRef<HTMLInputElement, Props>(
-  ({ className, label, name, id, error, ...rest }, ref) => {
+  ({ className, label, name, id, error, isBig = false, ...rest }, ref) => {
     return (
       <div className={className}>
         <div className="flex items-center">
@@ -19,7 +21,9 @@ const Radio = React.forwardRef<HTMLInputElement, Props>(
             name={name}
             type="radio"
             ref={ref}
-            className={styles.radio_input}
+            className={
+              !isBig ? stylesSimple.radio_input : stylesBig.radio_input
+            }
             {...rest}
           />
 
@@ -33,5 +37,5 @@ const Radio = React.forwardRef<HTMLInputElement, Props>(
     );
   }
 );
-Radio.displayName = 'Radio';
+Radio.displayName = "Radio";
 export default Radio;

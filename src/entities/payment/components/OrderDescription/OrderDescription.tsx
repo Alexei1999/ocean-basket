@@ -15,6 +15,12 @@ import { FormValues } from "../Forms/address-form";
 import { Details } from "./Details";
 import { OrderDescriptionContainer } from "./OrderDescriptionContainer";
 import { toast } from "react-toastify";
+import {
+  FREE_DELIVERY_SUM,
+  LOCATION_FALSE_SUM,
+  LOCATION_TRUE_SUM,
+} from "../Forms/PaymentProccessing";
+import { formatRub } from "@entities/cart/components/Details/variation-groups";
 
 dayjs.locale("ru");
 
@@ -30,6 +36,7 @@ export function OrderDescription({
   schedule,
   address,
   savedPromocode = null,
+  location,
 }: {
   orderNumber?: number;
   orderDate?: Dayjs | null;
@@ -45,6 +52,7 @@ export function OrderDescription({
     promocode: string;
     promocodeText: string | null;
   } | null;
+  location?: boolean | null;
 }) {
   const navigate = useNavigate();
 
@@ -163,7 +171,16 @@ export function OrderDescription({
             items={[
               ["Итого", total],
               ["Метод оплаты", "Картой онлайн"],
-              // ["Доставка", total],
+              [
+                "Доставка",
+                (parseInt(total) ?? 0) >= FREE_DELIVERY_SUM
+                  ? "Бесплатно"
+                  : location === true
+                  ? formatRub(LOCATION_TRUE_SUM)
+                  : location === false
+                  ? formatRub(LOCATION_FALSE_SUM)
+                  : "",
+              ],
             ]}
           />
         </>

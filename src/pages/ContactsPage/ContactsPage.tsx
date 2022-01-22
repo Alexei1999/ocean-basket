@@ -73,6 +73,7 @@ export function ContactsPage() {
   const gps = useMemo(
     () =>
       addresses
+        .filter(({ onlyDisplay }) => !onlyDisplay)
         .flatMap(({ regions }) => regions)
         .flatMap(({ addresses }) => addresses.map(({ gps }) => gps)),
     []
@@ -107,8 +108,10 @@ export function ContactsPage() {
           <Map
             className={"w-full h-full"}
             defaultState={{
-              center: [50.7617, 60.632682],
-              zoom: 4,
+              // center: [50.7617, 60.632682],
+              // zoom: 4,
+              center: [55.752, 37.6237],
+              zoom: 12,
               controls: ["zoomControl", "fullscreenControl"],
             }}
             modules={["control.ZoomControl", "control.FullscreenControl"]}

@@ -17,7 +17,7 @@ import Button from "@shared/button";
 import { toast } from "react-toastify";
 import { formatRub } from "./Details/variation-groups";
 
-export const MIN_SUM = 5000;
+export const MIN_SUM = 2000;
 
 export const EmptyCartPanel = ({
   noGutters = false,

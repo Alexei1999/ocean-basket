@@ -19,6 +19,7 @@ export const AddressSelection = ({ className }: { className?: string }) => {
   const restaurant = useStore($restaurant);
 
   const addressesList = addresses
+    .filter(({ onlyDisplay }) => !onlyDisplay)
     .flatMap(({ regions }) => regions)
     .flatMap(({ region, addresses }) => ({
       region,
