@@ -1,29 +1,20 @@
 import { DishesContainer } from "../../entities/dishes/components/DishesContainer/DishesContainer";
 import { Categories } from "../../entities/сategories/components/Categories/Categories";
 import { Element } from "react-scroll";
-import { forward } from "effector";
+import { createEffect, forward, restore } from "effector";
 import { createGate, useGate, useStore } from "effector-react";
 import {
   $category,
-  fetchDishesFx,
+  $isRestaurantOpen,
+  ChooseDishesGate,
   fetchPomotionsFx,
   fetchPopularDishesFx,
+  fetchTimeValidateFx,
   onResetCategory,
 } from "./models";
-import { useEffect, useRef } from "react";
-import FilterBar from "@widgets/filter-bar/filter-bar";
-
-export const ChooseDishesGate = createGate();
-
-forward({
-  from: ChooseDishesGate.open,
-  to: [fetchDishesFx, fetchPopularDishesFx, fetchPomotionsFx],
-});
-
-forward({
-  from: ChooseDishesGate.close,
-  to: onResetCategory,
-});
+import { useEffect, useRef, useState } from "react";
+import Modal from "@entities/payment/components/Forms/modal";
+import { getDishes } from "@shared/api/dishes";
 
 export function ChooseDishes() {
   useGate(ChooseDishesGate);

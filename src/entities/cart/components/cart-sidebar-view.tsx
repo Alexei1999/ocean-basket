@@ -7,7 +7,11 @@ import usePrice from "../lib/use-price";
 import { createGate, useGate, useStore } from "effector-react";
 import classNames from "classnames";
 import { Scrollbar } from "@shared/components/Scrollbar";
-import { $cartSizes, $cartItems } from "@features/choose-dishes/models";
+import {
+  $cartSizes,
+  $cartItems,
+  $isRestaurantOpen,
+} from "@features/choose-dishes/models";
 import { getPlurals } from "@shared/lib/functional-utils";
 import { useState } from "react";
 import Input from "@entities/payment/components/Forms/forms/input";
@@ -95,9 +99,10 @@ export const CartSidebarView = ({
   const [isSuccessful, setIsSuccessful] = useState<boolean>(false);
 
   const isLoading = useStore(verifyPromocodeFx.pending);
+  const isOpen = useStore($isRestaurantOpen);
 
   const isLessMinSum = (cartSizes.totalAmount ?? 0) < MIN_SUM;
-  const isDisabled = !cartSizes.size || isLessMinSum;
+  const isDisabled = !cartSizes.size || isLessMinSum || isOpen === false;
 
   useGate(cartSidebarViewGate, {
     onSuccess: (promocodeText) => {
@@ -250,10 +255,16 @@ export const CartSidebarView = ({
             {totalPrice}
           </span>
         </button>
-        {isLessMinSum && (
+        {isOpen === false ? (
           <p className="pt-[6px] text-sm text-center justify-self-end text-body">
-            Заказ должен быть на сумму от {formatRub(MIN_SUM)}
+            Ресторан закрыт до 10:00
           </p>
+        ) : (
+          isLessMinSum && (
+            <p className="pt-[6px] text-sm text-center justify-self-end text-body">
+              Заказ должен быть на сумму от {formatRub(MIN_SUM)}
+            </p>
+          )
         )}
       </footer>
       {/* End of footer */}

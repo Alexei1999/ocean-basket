@@ -8,6 +8,7 @@ import VariationPrice, { filterPrices } from "./variation-price";
 import { useState } from "react";
 import ModifierGroups from "./variation-groups";
 import {
+  $isRestaurantOpen,
   ModifierType,
   PickedDish,
   PickedModifier,
@@ -16,6 +17,7 @@ import { AddToCartBig } from "../Buttons/AddToCartBig";
 import { hostUrl } from "@shared/api/base";
 
 import styles from "./styles.module.scss";
+import { useStore } from "effector-react";
 
 export const filterCartObjects = (
   items: Partial<PickedDish[]>
@@ -74,6 +76,8 @@ const Details: React.FC<Props> = ({
   setShowStickyShortDetails,
 }) => {
   const [isError, setIsError] = useState(false);
+
+  const isOpen = useStore($isRestaurantOpen);
 
   const { name, description, prices, photo } = product ?? {};
 
@@ -177,7 +181,9 @@ const Details: React.FC<Props> = ({
                   product={product}
                   activeModifiers={activeModifier}
                   disabled={
-                    product.status !== DishStatus.Active && !prices.length
+                    product.status !== DishStatus.Active ||
+                    !prices.length ||
+                    isOpen === false
                   }
                 />
               </div>

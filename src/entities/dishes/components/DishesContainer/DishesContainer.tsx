@@ -5,6 +5,7 @@ import {
   $popularDishes,
   fetchDishesFx,
   fetchPopularDishesFx,
+  fetchTimeValidateFx,
   POPULAR_CATEGORY,
 } from "@features/choose-dishes/models";
 import cn from "classnames";
@@ -29,9 +30,13 @@ export function DishesContainer() {
     const dishesSubscribe = fetchDishesFx.fail.watch(() => {
       setIsError(true);
     });
+    const timeValidateSubscribe = fetchTimeValidateFx.fail.watch(() => {
+      setIsError(true);
+    });
 
     return () => {
       dishesSubscribe();
+      timeValidateSubscribe();
     };
   }, []);
 

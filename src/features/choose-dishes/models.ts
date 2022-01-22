@@ -10,9 +10,17 @@ import {
   getDishes,
   getPopular,
   getPromotions,
+  getTimeValidate,
   Promotion,
 } from "@shared/api/dishes";
-import { createEffect, createEvent, createStore, forward } from "effector";
+import {
+  createEffect,
+  createEvent,
+  createStore,
+  forward,
+  restore,
+} from "effector";
+import { createGate } from "effector-react";
 import { getFromStorage } from "./api";
 import { isTwoPickedDishesEqual } from "./lib";
 
@@ -41,14 +49,23 @@ export type ModifierType = {
   updated_at: string | null;
 };
 
+export const ChooseDishesGate = createGate();
+
 export type PickedModifier = Pick<ModifierType, "id" | "dish_id" | "name"> & {
   option?: string;
   price?: number;
 };
-
 export const fetchDishesFx = createEffect(getDishes);
+export const fetchTimeValidateFx = createEffect(getTimeValidate);
 export const fetchPopularDishesFx = createEffect(getPopular);
 export const fetchPomotionsFx = createEffect(getPromotions);
+
+export const $isRestaurantOpen = restore(fetchTimeValidateFx.doneData, null);
+
+forward({
+  from: ChooseDishesGate.open,
+  to: [fetchDishesFx, fetchPopularDishesFx, fetchPomotionsFx],
+});
 
 const flattedDishes = fetchDishesFx.doneData.map((data) =>
   Object.entries(data)
@@ -255,4 +272,9 @@ export const $cartItems = $cart.map<{
     list: values,
     unicItemsList: Object.values(unicItems),
   };
+});
+
+forward({
+  from: ChooseDishesGate.close,
+  to: onResetCategory,
 });

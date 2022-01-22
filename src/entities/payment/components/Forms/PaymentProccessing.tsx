@@ -89,7 +89,7 @@ sample({
   target: $grandTotal,
 });
 
-export function CheckoutPage() {
+export function PaymentProccessing() {
   const cartItems = useStore($cartItems);
 
   const [isOrdered, setIsOrdered] = useState(false);

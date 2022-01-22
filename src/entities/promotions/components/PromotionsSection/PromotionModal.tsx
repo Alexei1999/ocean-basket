@@ -1,9 +1,14 @@
 import { isDishValid } from "@entities/cart/components/Details/details";
 import { filterPrices } from "@entities/cart/components/Details/variation-price";
 import Modal from "@entities/payment/components/Forms/modal";
-import { addProductToCart, PickedDish } from "@features/choose-dishes/models";
+import {
+  $isRestaurantOpen,
+  addProductToCart,
+  PickedDish,
+} from "@features/choose-dishes/models";
 import { Dish, Promotion } from "@shared/api/dishes";
 import Button from "@shared/button";
+import { useStore } from "effector-react";
 import { useMemo } from "react";
 
 export const pickDishForce = (dish: Dish): Omit<PickedDish, "count"> => {
@@ -32,10 +37,14 @@ export function PromotionModal({
   onProductAdd?: () => void;
   promotion: Promotion | null;
 }) {
+  const isRestaurantOpen = useStore($isRestaurantOpen);
+
   const filteredBasket = useMemo(
     () => (promotion?.basket ?? []).filter((dish) => isDishValid(dish)),
     [promotion]
   );
+
+  const isDisabled = filteredBasket.length === 0 || isRestaurantOpen === false;
 
   return (
     <Modal open={isOpen} onClose={() => setIsOpen(false)} showClose>
@@ -51,8 +60,9 @@ export function PromotionModal({
         {Boolean(promotion?.basket.length) && (
           <Button
             className="mt-auto md:mt-0 w-full md:w-auto text-accent hover:text-accent-hover"
-            disabled={filteredBasket.length === 0}
+            disabled={isDisabled}
             onClick={() => {
+              if (isDisabled) return;
               filteredBasket.forEach((basket: Dish) => {
                 setIsOpen(false);
                 addProductToCart(pickDishForce(basket));

@@ -5,20 +5,19 @@ import { PaymentPage } from "./PaymentPage/PaymentPage";
 import { ContactsPage } from "./ContactsPage/ContactsPage";
 import { DashboardPage } from "./DashboardPage/DashboardPage";
 import { MenuPage } from "./MenuPage/MenuPage";
-import { OrderPage } from "./OrderPage/OrderPage";
 import { PromotionsPage } from "./PromotionsPage/PromotionsPage";
 import { RoutesConfig } from "../shared/lib/routes-config";
-import { CheckoutPage } from "@entities/payment/components/Forms/PaymentProccessing";
+import { PaymentProccessing } from "@entities/payment/components/Forms/PaymentProccessing";
 import { CertificatePage } from "./CertificatesPage/CertificatePage";
 import { DetailsPage } from "./DetailsPage/DeatilsPage";
 import { OrderDescription } from "@entities/payment/components/OrderDescription/OrderDescription";
 import { OrderDescriptionContainerFetch } from "@entities/payment/components/OrderDescription/OrderDescriptionContainerFetch";
+import { CheckoutPage } from "./CheckoutPage/CheckoutPage";
 
 export const Routing = () => {
   return (
     <Routes>
       <Route path={RoutesConfig.Menu} element={<MenuPage />} />
-      <Route path={RoutesConfig.Order} element={<OrderPage />} />
       <Route path={RoutesConfig.Payment} element={<PaymentPage />} />
       <Route path={RoutesConfig.Checkout} element={<CheckoutPage />} />
       <Route

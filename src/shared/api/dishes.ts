@@ -163,3 +163,14 @@ export const postPaymentStatus = (
     .post(`${apiBaseUrl}/paymentStatus`, params)
     .then((response) => response.data);
 };
+
+export type ValidateTimeStatus = {
+  result: boolean;
+};
+
+export const getTimeValidate = (): Promise<boolean> => {
+  return baseApi
+    .get(`${apiBaseUrl}/timeValidate`)
+    .then((response) => response.data)
+    .then((data) => data.result);
+};

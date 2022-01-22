@@ -2,7 +2,12 @@ import { useMemo, useState } from "react";
 import { ValidationError } from "./place-order-action";
 import Button, { ButtonProps } from "@shared/button";
 import { createGate, useGate, useStore } from "effector-react";
-import { $cart, $cartSizes } from "@features/choose-dishes/models";
+import {
+  $cart,
+  $cartSizes,
+  $isRestaurantOpen,
+  fetchTimeValidateFx,
+} from "@features/choose-dishes/models";
 import { $form } from "./address-form";
 import { $schedule } from "./schedule-grid";
 import { $phone } from "./add-or-update";
@@ -128,9 +133,10 @@ sample({
 actionGate.state.on(submitFormFx.fail, ({ onFail }) => onFail());
 
 const $pending = combine({
-  submitFormFx: submitFormFx.pending,
-  postDetailsFx: postDetailsFx.pending,
-}).map(({ submitFormFx, postDetailsFx }) => submitFormFx || postDetailsFx);
+  submitFormPending: submitFormFx.pending,
+  postDetailsPending: postDetailsFx.pending,
+  timeFetchingPending: fetchTimeValidateFx.pending,
+}).map((store) => Object.values(store).some((value) => value === true));
 
 export const CheckAvailabilityAction: React.FC<
   Omit<ButtonProps, "onSubmit"> & {
@@ -152,6 +158,7 @@ export const CheckAvailabilityAction: React.FC<
   const restaurant = useStore($restaurant);
   const location = useStore($location);
   const grandTotal = useStore($grandTotal);
+  const isOpen = useStore($isRestaurantOpen);
 
   const isLoading = useStore($pending);
 
@@ -160,6 +167,12 @@ export const CheckAvailabilityAction: React.FC<
 
   const isValid = useMemo(() => {
     setIsShownError(false);
+
+    if (isOpen === false) {
+      setError("Ресторан закрыт до 10:00");
+      return false;
+    }
+
     if (!cart) {
       setError("Выберите блюда");
       return false;
@@ -191,7 +204,7 @@ export const CheckAvailabilityAction: React.FC<
     }
 
     return true;
-  }, [cart, form, schedule, phone, totalAmount]);
+  }, [cart, form, schedule, phone, totalAmount, isOpen]);
 
   function handleVerifyCheckout() {
     if (!isValid) {

@@ -1,5 +1,6 @@
 import {
   $cartSizes,
+  $isRestaurantOpen,
   deleteLastProductFromCart,
 } from "@features/choose-dishes/models";
 import { Dish, DishStatus } from "@shared/api/dishes";
@@ -31,6 +32,7 @@ export const AddToCart = ({ data, counterClass }: Props) => {
     deleteLastProductFromCart(data);
   };
 
+  const isOpen = useStore($isRestaurantOpen);
   const count = unicItemsNumber[data.id];
 
   return (
@@ -47,7 +49,7 @@ export const AddToCart = ({ data, counterClass }: Props) => {
       ) : (
         <AddToCartBtn
           className={cn(styles.button, "max-h-8")}
-          disabled={data.status !== DishStatus.Active}
+          disabled={data.status !== DishStatus.Active || isOpen === false}
           onClick={handleAddClick}
         />
       )}
