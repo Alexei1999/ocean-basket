@@ -28,19 +28,28 @@ import { RightSideView } from "./unverified-item-list";
 export const FREE_DELIVERY_SUM = 5000;
 
 export const makeTelegrammDescription = (
-  dishes: PickedDish[],
-  grandTotal?: string | number
+  size?: number,
+  unicItemsNumber?: {
+    [key: string]: number;
+  }
 ) => {
-  return (
-    dishes
-      .map(
-        ({ product: { name }, modifiers, count, totalPrice }) =>
-          `${name}, ${modifiers.map(
-            ({ name, option }) => `${name} - ${option}`
-          )}, ${count} шт., ${formatRub(totalPrice)}`
-      )
-      .join(";") + `; Итого: ${grandTotal ? `${grandTotal}` : ""}`
-  );
+  if (!size || !unicItemsNumber) {
+    return null;
+  }
+
+  return `количество блюд - ${size}, количество уникальных блюд - ${
+    Object.keys(unicItemsNumber).length
+  }`;
+  // return encodeURIComponent(
+  //   dishes
+  //     .map(
+  //       ({ product: { name }, modifiers, count, totalPrice }) =>
+  //         `${name}, ${modifiers.map(
+  //           ({ name, option }) => `${name} ${option}`
+  //         )} — ${count} шт, ${formatRub(totalPrice)}`
+  //     )
+  //     .join(";")
+  // );
 };
 
 export const MerchantLogin = "Ocean_Basket";
@@ -110,7 +119,7 @@ sample({
 });
 
 export function PaymentProccessing() {
-  const cartItems = useStore($cartItems);
+  const cartSizes = useStore($cartSizes);
 
   const [isOrdered, setIsOrdered] = useState(false);
   const [orderNumber, setOrderNumber] = useState<undefined | number>(undefined);
@@ -137,7 +146,7 @@ export function PaymentProccessing() {
           `${OutSum}`,
           `${InvoiceId}`,
           SignatureValue,
-          makeTelegrammDescription(cartItems.list, OutSum),
+          makeTelegrammDescription(cartSizes.size, cartSizes.unicItemsNumber),
           order_id
         ),
         "_blank"

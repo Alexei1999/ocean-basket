@@ -188,7 +188,7 @@ export const CheckAvailabilityAction: React.FC<
       return false;
     }
 
-    if (location === null) {
+    if ((totalAmount ?? 0) < FREE_DELIVERY_SUM && location === null) {
       setError("Необходимо выбрать зону доставки");
       return false;
     }

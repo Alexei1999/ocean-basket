@@ -1,5 +1,5 @@
 import usePrice from "@entities/cart/lib/use-price";
-import { $cartItems } from "@features/choose-dishes/models";
+import { $cartItems, $cartSizes } from "@features/choose-dishes/models";
 import { postPaymentStatus } from "@shared/api/dishes";
 import Button from "@shared/button";
 import { RoutesConfig } from "@shared/lib/routes-config";
@@ -26,7 +26,7 @@ export const getPaymentLink = (
     sum ?? 0
   }&InvId=${invId}&SignatureValue=${signature}&Title=Оплата заказа${
     orderNumber ? " №" + orderNumber : ""
-  }&Description=${description}`;
+  }&Description=${description || ""}`;
 
 const postPaymentStatusFx = createEffect(postPaymentStatus);
 
@@ -48,7 +48,7 @@ export function OrderDescriptionContainerFetch({
 }: {
   status: "success" | "failrue";
 }) {
-  const cartItems = useStore($cartItems);
+  const cartSizes = useStore($cartSizes);
 
   const invId = useMemo(() => {
     const url = new URLSearchParams(window.location.search);
@@ -129,7 +129,7 @@ export function OrderDescriptionContainerFetch({
                 data?.outSum,
                 invId,
                 data?.SignatureValue,
-                makeTelegrammDescription(cartItems.list, data?.outSum),
+                makeTelegrammDescription(),
                 data?.orderNumber
               )
             );
