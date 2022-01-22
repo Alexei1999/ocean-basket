@@ -11,12 +11,8 @@ import { DishStatus } from "@shared/api/dishes";
 import {
   $grandTotal,
   $location,
-  FREE_DELIVERY_SUM,
-  LOCATION_FALSE_SUM,
-  LOCATION_TRUE_SUM,
+  getDeliveryFeeName,
 } from "./PaymentProccessing";
-import { formatRub } from "@entities/cart/components/Details/variation-groups";
-import { createStore, sample } from "effector";
 
 export const RightSideView = () => {
   const cartSizes = useStore($cartSizes);
@@ -70,15 +66,7 @@ export const RightSideView = () => {
         <ItemInfoRow
           keyClassName="text-gray-500"
           title={"Доставка"}
-          value={
-            (cartSizes.totalAmount ?? 0) >= FREE_DELIVERY_SUM
-              ? "Бесплатно"
-              : location === true
-              ? formatRub(LOCATION_TRUE_SUM)
-              : location === false
-              ? formatRub(LOCATION_FALSE_SUM)
-              : ""
-          }
+          value={getDeliveryFeeName(cartSizes.totalAmount, location)}
         />
         {/* <ItemInfoRow
           keyClassName="text-gray-500"

@@ -1,26 +1,14 @@
 import { NotFound } from "@entities/dishes/components/NotFound";
-import { postPaymentStatus } from "@shared/api/dishes";
-import Button from "@shared/button";
 import Spinner from "@shared/components/spinner/spinner";
 import { getPlurals } from "@shared/lib/functional-utils";
 import { RoutesConfig } from "@shared/lib/routes-config";
 import classNames from "classnames";
 import dayjs, { Dayjs } from "dayjs";
-import { createGate, useGate, useStore } from "effector-react";
-import { createEffect, createStore } from "effector";
-import { ReactNode, useEffect, useMemo, useState } from "react";
+import { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
-import { formatAddress } from "../Forms/address-card";
-import { FormValues } from "../Forms/address-form";
 import { Details } from "./Details";
 import { OrderDescriptionContainer } from "./OrderDescriptionContainer";
-import { toast } from "react-toastify";
-import {
-  FREE_DELIVERY_SUM,
-  LOCATION_FALSE_SUM,
-  LOCATION_TRUE_SUM,
-} from "../Forms/PaymentProccessing";
-import { formatRub } from "@entities/cart/components/Details/variation-groups";
+import { getDeliveryFeeName } from "../Forms/PaymentProccessing";
 
 dayjs.locale("ru");
 
@@ -171,16 +159,7 @@ export function OrderDescription({
             items={[
               ["Итого", total],
               ["Метод оплаты", "Картой онлайн"],
-              [
-                "Доставка",
-                (parseInt(total) ?? 0) >= FREE_DELIVERY_SUM
-                  ? "Бесплатно"
-                  : location === true
-                  ? formatRub(LOCATION_TRUE_SUM)
-                  : location === false
-                  ? formatRub(LOCATION_FALSE_SUM)
-                  : "",
-              ],
+              ["Доставка", getDeliveryFeeName(parseInt(total), location)],
             ]}
           />
         </>

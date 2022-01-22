@@ -129,7 +129,7 @@ export function OrderDescriptionContainerFetch({
                 data?.outSum,
                 invId,
                 data?.SignatureValue,
-                makeTelegrammDescription(cartItems.list),
+                makeTelegrammDescription(cartItems.list, data?.outSum),
                 data?.orderNumber
               )
             );

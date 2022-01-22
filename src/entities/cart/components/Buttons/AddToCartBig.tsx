@@ -38,7 +38,7 @@ export const AddToCartBig = ({
   ) => {
     e.stopPropagation();
     if (!active) return;
-    if (!disabled) return;
+    if (disabled) return;
 
     addProductToCart(
       createPickedDish(

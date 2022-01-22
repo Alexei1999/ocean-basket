@@ -21,10 +21,16 @@ interface Props {
 export const AddToCart = ({ data, counterClass }: Props) => {
   const { unicItemsNumber } = useStore($cartSizes);
 
+  const isOpen = useStore($isRestaurantOpen);
+
+  const isDisabled = data.status !== DishStatus.Active || isOpen === false;
+
   const handleAddClick = (
     e: React.MouseEvent<HTMLButtonElement | MouseEvent>
   ) => {
     e.stopPropagation();
+    if (isDisabled) return;
+
     onDishModalOpen(data);
   };
   const handleRemoveClick = (e: any) => {
@@ -32,7 +38,6 @@ export const AddToCart = ({ data, counterClass }: Props) => {
     deleteLastProductFromCart(data);
   };
 
-  const isOpen = useStore($isRestaurantOpen);
   const count = unicItemsNumber[data.id];
 
   return (
@@ -49,7 +54,7 @@ export const AddToCart = ({ data, counterClass }: Props) => {
       ) : (
         <AddToCartBtn
           className={cn(styles.button, "max-h-8")}
-          disabled={data.status !== DishStatus.Active || isOpen === false}
+          disabled={isDisabled}
           onClick={handleAddClick}
         />
       )}

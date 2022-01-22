@@ -27,15 +27,20 @@ import { RightSideView } from "./unverified-item-list";
 
 export const FREE_DELIVERY_SUM = 5000;
 
-export const makeTelegrammDescription = (dishes: PickedDish[]) => {
-  return dishes
-    .map(
-      ({ product: { name }, modifiers, count, totalPrice }) =>
-        `${name}, ${modifiers.map(
-          ({ name, option }) => `${name} - ${option}`
-        )}, ${count} шт., ${formatRub(totalPrice)}`
-    )
-    .join(";");
+export const makeTelegrammDescription = (
+  dishes: PickedDish[],
+  grandTotal?: string | number
+) => {
+  return (
+    dishes
+      .map(
+        ({ product: { name }, modifiers, count, totalPrice }) =>
+          `${name}, ${modifiers.map(
+            ({ name, option }) => `${name} - ${option}`
+          )}, ${count} шт., ${formatRub(totalPrice)}`
+      )
+      .join(";") + `; Итого: ${grandTotal ? `${grandTotal}` : ""}`
+  );
 };
 
 export const MerchantLogin = "Ocean_Basket";
@@ -55,13 +60,28 @@ export const $location = createStore<boolean | null>(
 
 $location.watch((value) => setToStorage("location", value));
 
-const locationInitial = $location.getState();
-const deliveryInitial =
-  locationInitial === true
+export const getDeliveryFee = (locationInitial: boolean | null): number => {
+  return locationInitial === true
     ? LOCATION_TRUE_SUM
     : locationInitial === false
     ? LOCATION_FALSE_SUM
     : 0;
+};
+export const getDeliveryFeeName = (
+  totalAmount: number | null,
+  location?: boolean | null
+): string => {
+  return (totalAmount ?? 0) >= FREE_DELIVERY_SUM
+    ? "Бесплатно"
+    : location === true
+    ? formatRub(LOCATION_TRUE_SUM)
+    : location === false
+    ? formatRub(LOCATION_FALSE_SUM)
+    : "";
+};
+
+const locationInitial = $location.getState();
+const deliveryInitial = getDeliveryFee(locationInitial);
 
 export const $grandTotal = createStore<number>(
   ($cartSizes.getState().totalAmount ?? 0) + deliveryInitial
@@ -117,7 +137,7 @@ export function PaymentProccessing() {
           `${OutSum}`,
           `${InvoiceId}`,
           SignatureValue,
-          makeTelegrammDescription(cartItems.list),
+          makeTelegrammDescription(cartItems.list, OutSum),
           order_id
         ),
         "_blank"
