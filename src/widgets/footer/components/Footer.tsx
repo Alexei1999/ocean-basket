@@ -5,6 +5,9 @@ import logoMini from "@assets/logo-mini.svg";
 import logoFooter from "@assets/logo-footer.svg";
 import classNames from "classnames";
 import { addresses, Country } from "@pages/ContactsPage/config";
+import React, { useEffect } from "react";
+
+import footer from "@assets/footer.png";
 
 function FooterContactsBlock({
   item,
@@ -23,12 +26,9 @@ function FooterContactsBlock({
       <div className="flex flex-col font-light text-sm">
         {item.regions.map(({ region_label: name, addresses }, idx) => {
           return (
-            <>
+            <React.Fragment key={idx}>
               {name && (
-                <div
-                  key={idx}
-                  className={classNames("pt-4 text-sm font-medium")}
-                >
+                <div className={classNames("pt-4 text-sm font-medium")}>
                   {name}
                 </div>
               )}
@@ -44,7 +44,7 @@ function FooterContactsBlock({
                   <span className="pt-1 sm:pt-0 sm:w-4/12">{number}</span>
                 </div>
               ))}
-            </>
+            </React.Fragment>
           );
         })}
 
@@ -62,8 +62,28 @@ function FooterContactsBlock({
 
 //TODO: Split to the components
 export function Footer() {
+  const footerRef = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const img = new Image();
+
+    img.onload = () => {
+      if (!footerRef.current) return;
+      footerRef.current.style.backgroundImage = `url(${img.src})`;
+    };
+
+    img.src = footer;
+
+    return () => {
+      img.onload = null;
+    };
+  }, []);
+
   return (
-    <footer className={cn(styles.container, "bg-local bg-gray-600")}>
+    <footer
+      ref={footerRef}
+      className={cn(styles.container, "bg-local bg-gray-600")}
+    >
       <div className="flex h-full items-center pt-14 px-4 lg:px-8 xl:px-32 flex-col text-white text-sm pb-12 lg:pb-0">
         <div className="flex flex-col items-center">
           <img width="65px" height="65px" src={logoMini} />

@@ -10,7 +10,7 @@ import { RoutesConfig } from "@shared/lib/routes-config";
 import Button from "@shared/button";
 
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { ArrowLeft } from "./ArrowLeft";
 import { ArrowRight } from "./ArrowRight";
 import { covers } from "./images";
@@ -18,9 +18,45 @@ import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react/effector-react.cjs";
 import { Autoplay } from "swiper";
 
+import footer from "@assets/footer.png";
+
 const onSlideChange = createEvent<number>();
 
 const $slide = createStore(0).on(onSlideChange, (_, slide) => slide);
+
+export const ImageWithPreview = ({
+  image,
+  thumb,
+  ...props
+}: {
+  image: string;
+  thumb: string;
+} & Omit<
+  React.DetailedHTMLProps<
+    React.ImgHTMLAttributes<HTMLImageElement>,
+    HTMLImageElement
+  >,
+  "src" | "ref"
+>) => {
+  const imageRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const img = new Image();
+
+    img.onload = () => {
+      if (!imageRef.current) return;
+      imageRef.current.src = img.src;
+    };
+
+    img.src = image;
+
+    return () => {
+      img.onload = null;
+    };
+  }, []);
+
+  return <img ref={imageRef} src={thumb} {...props} />;
+};
 
 export function MainPageCover() {
   const navigate = useNavigate();
@@ -29,9 +65,27 @@ export function MainPageCover() {
 
   const swiperRef = React.useRef(null);
 
+  const backgroundLeft = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const img = new Image();
+
+    img.onload = () => {
+      if (!backgroundLeft.current) return;
+      backgroundLeft.current.style.backgroundImage = `url(${img.src})`;
+    };
+
+    img.src = footer;
+
+    return () => {
+      img.onload = null;
+    };
+  }, []);
+
   return (
     <div className={classNames("flex relative", styles.container)}>
       <div
+        ref={backgroundLeft}
         className={classNames(
           styles.containerLeft,
           "flex-grow relative sm:max-w-[40%]"
@@ -90,9 +144,12 @@ export function MainPageCover() {
           ref={swiperRef}
           className="h-full w-full"
         >
-          {covers.map((cover) => (
-            <SwiperSlide>
-              <img className="w-full h-full object-cover" src={cover} />
+          {covers.map((cover, idx) => (
+            <SwiperSlide key={idx}>
+              <ImageWithPreview
+                className="w-full h-full object-cover"
+                {...cover}
+              />
             </SwiperSlide>
           ))}
         </Swiper>

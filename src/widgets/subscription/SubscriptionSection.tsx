@@ -2,6 +2,7 @@ import styles from "./styles.module.scss";
 import classNames from "classnames";
 
 import dishBacground2 from "./config/dish-background-2.png";
+import dishBacground2_zip from "./config/dish-background-2.zip.png";
 import emailDish from "./config/email-dish.png";
 
 import Button from "@shared/button";
@@ -17,6 +18,7 @@ import { postSubscribe } from "@shared/api/dishes";
 import { useStore } from "effector-react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { ImageWithPreview } from "@pages/DashboardPage/MainPageCover/MainPageCover";
 
 const subscribeFx = createEffect(postSubscribe);
 
@@ -27,7 +29,7 @@ function EmailSection({ isWaves = false }) {
   const isLoading = useStore(subscribeFx.pending);
 
   const [error, setError] = useState<string>("");
-
+  const [canMargin, setCanMargin] = useState<boolean>(false);
   const [email, setEmail] = useState("");
 
   useEffect(() => {
@@ -66,13 +68,23 @@ function EmailSection({ isWaves = false }) {
           styles.promotionWrapperBackground
         )}
       >
-        <img
+        <ImageWithPreview
+          image={dishBacground2}
+          thumb={dishBacground2_zip}
           className={classNames("w-full h-full object-fill", styles.promotion)}
+        />
+        <img
           src={dishBacground2}
+          onLoad={() => setCanMargin(true)}
           alt="dish-background-2"
         />
       </div>
-      <div className="flex justify-center drop-shadow-md -mt-5 lg:-mt-56">
+      <div
+        className={classNames(
+          "flex justify-center drop-shadow-md",
+          canMargin && "-mt-5 lg:-mt-56"
+        )}
+      >
         <div
           className={classNames(
             "bg-light flex justify-between rounded-3xl overflow-hidden max-w-[980px] sm:max-h-[336px]",
