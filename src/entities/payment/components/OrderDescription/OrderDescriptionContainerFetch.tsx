@@ -32,7 +32,8 @@ const postPaymentStatusFx = createEffect(postPaymentStatus);
 
 const paymentStatusData = restore(postPaymentStatusFx.doneData, null);
 
-postPaymentStatusFx.fail.watch(() => {
+postPaymentStatusFx.fail.watch((error) => {
+  console.error(error);
   toast("Ошибка при получении статуса, попробуйте еще раз", {
     type: "error",
     autoClose: false,

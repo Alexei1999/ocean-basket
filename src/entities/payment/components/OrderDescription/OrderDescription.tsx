@@ -110,7 +110,7 @@ export function OrderDescription({
                 text: orderDate?.format("DD MMMM YYYY г.") || "",
               },
               { label: "Итого", text: total },
-              { label: "Метод оплаты", text: "Картой онлайн" },
+              { label: "Метод оплаты", text: "В процессе" },
             ].map(({ label, text }, idx) => (
               <div
                 className={classNames(
@@ -158,7 +158,7 @@ export function OrderDescription({
             label="Общая сумма"
             items={[
               ["Итого", total],
-              ["Метод оплаты", "Картой онлайн"],
+              ["Метод оплаты", "В процессе"],
               ["Доставка", getDeliveryFeeName(parseInt(total), location)],
             ]}
           />

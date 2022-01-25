@@ -27,10 +27,12 @@ export function DishesContainer() {
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    const dishesSubscribe = fetchDishesFx.fail.watch(() => {
+    const dishesSubscribe = fetchDishesFx.fail.watch((error) => {
+      console.error(error);
       setIsError(true);
     });
-    const timeValidateSubscribe = fetchTimeValidateFx.fail.watch(() => {
+    const timeValidateSubscribe = fetchTimeValidateFx.fail.watch((error) => {
+      console.error(error);
       setIsError(true);
     });
 

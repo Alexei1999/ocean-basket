@@ -78,7 +78,8 @@ cartSidebarViewGate.state.on(
   }
 );
 
-verifyPromocodeFx.fail.watch(() => {
+verifyPromocodeFx.fail.watch((error) => {
+  console.error(error);
   toast.error("Ошибка при отправке промокода, попробуйте еще раз");
 });
 

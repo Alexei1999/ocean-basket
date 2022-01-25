@@ -7,6 +7,7 @@ import {
   $cartSizes,
   $isRestaurantOpen,
   fetchTimeValidateFx,
+  PickedDish,
 } from "@features/choose-dishes/models";
 import { $form } from "./address-form";
 import { $schedule } from "./schedule-grid";
@@ -38,6 +39,7 @@ import { formatRub } from "@entities/cart/components/Details/variation-groups";
 type SubmitFormParams = {
   form: Omit<OrderTypeParams, "InvoiceID" | "Signature">;
   paymentArguments: PaymentArgumentsParams;
+  newTab: Window | null;
 };
 
 const actionGate = createGate<{
@@ -55,7 +57,8 @@ const postDetailsFx = createEffect<PaymentArgumentsParams, PaymentArguments>(
 const submitFormFx = createEffect<OrderTypeParams, { order_id?: number }>(
   postOrder
 );
-const submitError = () => {
+const submitError = (error: { error: Error }) => {
+  console.error(error);
   toast.error("Ошибка при отправке заказа, попробуйте еще раз");
 };
 postDetailsFx.fail.watch(submitError);
@@ -111,21 +114,24 @@ const submitHandleFx = createEffect<
         })
       | null
     ),
+    SubmitFormParams | null,
     {
       onSuccess: (
         params: Partial<PaymentArguments> & {
           order_id?: number | undefined;
-        }
+        },
+        newTab?: Window | null
       ) => void;
     }
   ],
   void
->(([$0, { onSuccess }]) => {
-  if ($0) onSuccess($0);
+>(([$0, form, { onSuccess }]) => {
+  const { newTab } = form ?? {};
+  if ($0) onSuccess($0, newTab);
 });
 
 sample({
-  source: [$submitInfo, actionGate.state],
+  source: [$submitInfo, $submitForm, actionGate.state],
   clock: submitFormFx.done,
   target: submitHandleFx,
 });
@@ -138,12 +144,33 @@ const $pending = combine({
   timeFetchingPending: fetchTimeValidateFx.pending,
 }).map((store) => Object.values(store).some((value) => value === true));
 
+const formatDishes = ({ product, priceObj, modifiers }: PickedDish) => {
+  const parsedWeight = parseInt(priceObj.weight);
+  const parsedRoublePrice = parseInt(priceObj.rouble_price);
+  const parsedTengePrice = parseInt(priceObj.tenge_price);
+
+  return {
+    name: product.name,
+    weight: (isNaN(parsedWeight) ? EMPTY_STRING : parsedWeight) as number,
+    rouble_price: (isNaN(parsedRoublePrice)
+      ? EMPTY_STRING
+      : parsedRoublePrice) as number,
+    tenge_price: (isNaN(parsedTengePrice)
+      ? EMPTY_STRING
+      : parsedTengePrice) as number,
+    modifiers: modifiers
+      .map(({ option }) => option)
+      .filter((option) => option) as string[],
+  };
+};
+
 export const CheckAvailabilityAction: React.FC<
   Omit<ButtonProps, "onSubmit"> & {
     onSubmit: (
       params: Partial<PaymentArguments> & {
         order_id?: number | undefined;
-      }
+      },
+      newTab?: Window | null
     ) => void;
   }
 > = ({ onSubmit, ...props }) => {
@@ -204,7 +231,7 @@ export const CheckAvailabilityAction: React.FC<
     }
 
     return true;
-  }, [cart, form, schedule, phone, totalAmount, isOpen]);
+  }, [cart, form, schedule, phone, totalAmount, isOpen, location]);
 
   function handleVerifyCheckout() {
     if (!isValid) {
@@ -213,25 +240,8 @@ export const CheckAvailabilityAction: React.FC<
     }
     if (isLoading) return;
 
-    const formattedDishes = cart.map(({ product, priceObj, modifiers }) => {
-      const parsedWeight = parseInt(priceObj.weight);
-      const parsedRoublePrice = parseInt(priceObj.rouble_price);
-      const parsedTengePrice = parseInt(priceObj.tenge_price);
-
-      return {
-        name: product.name,
-        weight: (isNaN(parsedWeight) ? EMPTY_STRING : parsedWeight) as number,
-        rouble_price: (isNaN(parsedRoublePrice)
-          ? EMPTY_STRING
-          : parsedRoublePrice) as number,
-        tenge_price: (isNaN(parsedTengePrice)
-          ? EMPTY_STRING
-          : parsedTengePrice) as number,
-        modifiers: modifiers
-          .map(({ option }) => option)
-          .filter((option) => option) as string[],
-      };
-    });
+    const newTab = window.open();
+    const formattedDishes = cart.map(formatDishes);
 
     onSubmitForm({
       form: {
@@ -249,9 +259,8 @@ export const CheckAvailabilityAction: React.FC<
       paymentArguments: {
         OutSum: grandTotal,
       },
+      newTab,
     });
-
-    // onSubmit?.();
   }
 
   return (

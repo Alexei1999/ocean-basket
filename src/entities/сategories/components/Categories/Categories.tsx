@@ -28,7 +28,8 @@ export function Categories({ className }: CategoriesProps) {
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    const categories = fetchCategoriesFx.failData.watch(() => {
+    const categories = fetchCategoriesFx.fail.watch((error) => {
+      console.error(error);
       setIsError(true);
     });
     return () => {

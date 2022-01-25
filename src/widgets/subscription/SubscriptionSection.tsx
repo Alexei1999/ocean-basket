@@ -36,7 +36,8 @@ function EmailSection({ isWaves = false }) {
       setEmail("");
     });
 
-    const onFail = subscribeFx.fail.watch(() => {
+    const onFail = subscribeFx.fail.watch((error) => {
+      console.error(error);
       toast.error("Ошибка подписки");
     });
 

@@ -133,32 +133,40 @@ export function PaymentProccessing() {
   const { totalAmount } = useStore($cartSizes);
 
   const onSubmitHandler = useCallback(
-    ({
-      InvoiceId,
-      OutSum,
-      SignatureValue,
-      order_id,
-    }: Partial<PaymentArguments> & {
-      order_id?: number | undefined;
-    }) => {
-      const paymentWindow = window.open(
-        getPaymentLink(
-          `${OutSum}`,
-          `${InvoiceId}`,
-          SignatureValue,
-          makeTelegrammDescription(cartSizes.size, cartSizes.unicItemsNumber),
-          order_id
-        ),
-        "_blank"
+    (
+      {
+        InvoiceId,
+        OutSum,
+        SignatureValue,
+        order_id,
+      }: Partial<PaymentArguments> & {
+        order_id?: number | undefined;
+      },
+      newTab?: Window | null
+    ) => {
+      const url = getPaymentLink(
+        `${OutSum}`,
+        `${InvoiceId}`,
+        SignatureValue,
+        makeTelegrammDescription(cartSizes.size, cartSizes.unicItemsNumber),
+        order_id
       );
 
-      if (!paymentWindow || paymentWindow.closed) {
-        toast.error("Ошибка при совершении оплаты, попробуйте еще раз");
-        paymentWindow?.close();
+      if (newTab && !newTab.closed) {
+        newTab.location.replace(url);
+        newTab.focus();
+      } else {
+        console.log("cant open new tab");
+        newTab?.close();
+
+        try {
+          window.location.replace(url);
+        } catch (e) {
+          console.error(e);
+          toast.error("Ошибка при совершении оплаты, попробуйте еще раз");
+        }
         return;
       }
-
-      paymentWindow.focus();
 
       setOrderNumber(order_id);
       setOrderDate(dayjs());
