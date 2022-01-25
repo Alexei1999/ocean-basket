@@ -98,10 +98,6 @@ export function OrderDescriptionContainerFetch({
     });
   }, [invId]);
 
-  const { price: total } = usePrice({
-    amount: parseInt(data?.outSum as string) ?? 0,
-  });
-
   return (
     <OrderDescription
       savedPromocode={null}
@@ -113,7 +109,7 @@ export function OrderDescriptionContainerFetch({
       address={data?.deliveryPlace}
       orderDate={dayjs(data?.requestDate)}
       schedule={data?.deliveryTime}
-      total={total}
+      total={parseInt(data?.outSum as string) ?? 0}
       location={data?.location}
       retryButton={
         <Button

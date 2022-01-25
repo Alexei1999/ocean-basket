@@ -53,7 +53,7 @@ export function OrderDescriptionContainerCart({
       schedule={schedule?.description}
       orderNumber={orderNumber}
       positionsNumber={savedCartSiezes?.size}
-      total={formatRub(savedGrandTotal)}
+      total={savedGrandTotal}
       address={form ? formatAddress(form as FormValues) ?? "" : ""}
       savedPromocode={savedPromocode}
       orderDate={orderDate}

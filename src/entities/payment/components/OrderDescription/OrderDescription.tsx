@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { Details } from "./Details";
 import { OrderDescriptionContainer } from "./OrderDescriptionContainer";
 import { getDeliveryFeeName } from "../Forms/PaymentProccessing";
+import { formatRub } from "@entities/cart/components/Details/variation-groups";
 
 dayjs.locale("ru");
 
@@ -20,7 +21,7 @@ export function OrderDescription({
   isLoading,
   isNotFound,
   retryButton,
-  total = "0",
+  total,
   schedule,
   address,
   savedPromocode = null,
@@ -33,7 +34,7 @@ export function OrderDescription({
   isLoading?: boolean;
   isNotFound?: boolean;
   retryButton?: ReactNode;
-  total?: string;
+  total?: number;
   schedule?: string;
   address?: string | null;
   savedPromocode?: {
@@ -157,9 +158,14 @@ export function OrderDescription({
             className="max-w-xl mt-16"
             label="Общая сумма"
             items={[
-              ["Итого", total],
+              ["Итого", isNaN(total as number) ? "" : formatRub(total!)],
               ["Метод оплаты", "В процессе"],
-              ["Доставка", getDeliveryFeeName(parseInt(total), location)],
+              [
+                "Доставка",
+                isNaN(total as number)
+                  ? ""
+                  : getDeliveryFeeName(total!, location),
+              ],
             ]}
           />
         </>
