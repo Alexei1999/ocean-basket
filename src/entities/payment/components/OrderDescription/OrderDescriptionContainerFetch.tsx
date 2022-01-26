@@ -49,11 +49,14 @@ export function OrderDescriptionContainerFetch({
 }: {
   status: "success" | "failrue";
 }) {
-  const cartSizes = useStore($cartSizes);
-
   const invId = useMemo(() => {
     const url = new URLSearchParams(window.location.search);
     return url.get("InvId");
+  }, []);
+
+  const outSum = useMemo(() => {
+    const url = new URLSearchParams(window.location.search);
+    return url.get("OutSum");
   }, []);
 
   const [isNoInvId, setIsNoInvId] = useState(false);
@@ -100,6 +103,7 @@ export function OrderDescriptionContainerFetch({
 
   return (
     <OrderDescription
+      isResult={true}
       savedPromocode={null}
       status={status}
       isLoading={isLoading || isError}
@@ -109,7 +113,9 @@ export function OrderDescriptionContainerFetch({
       address={data?.deliveryPlace}
       orderDate={dayjs(data?.requestDate)}
       schedule={data?.deliveryTime}
-      total={parseInt(data?.outSum as string) ?? 0}
+      total={
+        parseInt(data?.outSum as string) || parseInt(outSum as string) || 0
+      }
       location={data?.location}
       retryButton={
         <Button
