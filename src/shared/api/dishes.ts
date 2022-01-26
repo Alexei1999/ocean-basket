@@ -140,6 +140,7 @@ export const postPaymentArguments = (
 
 export type PaymentStatusParams = {
   InvID: number;
+  OutSum: number;
 };
 export type PaymentStatus = {
   result: boolean;

@@ -98,6 +98,8 @@ export function OrderDescriptionContainerFetch({
 
     postPaymentStatusFx({
       InvID: parseInt(invId as string),
+      OutSum:
+        parseInt(data?.outSum as string) || parseInt(outSum as string) || 0,
     });
   }, [invId]);
 
@@ -129,7 +131,11 @@ export function OrderDescriptionContainerFetch({
 
             window.location.replace(
               getPaymentLink(
-                data?.outSum,
+                `${
+                  parseInt(data?.outSum as string) ||
+                  parseInt(outSum as string) ||
+                  0
+                }`,
                 invId,
                 data?.SignatureValue,
                 makeTelegrammDescription(),
