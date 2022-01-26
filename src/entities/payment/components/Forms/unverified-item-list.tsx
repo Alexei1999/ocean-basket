@@ -6,7 +6,7 @@ import {
   EmptyCartPanel,
 } from "@entities/cart/components/cart-sidebar-view";
 import { useStore } from "effector-react";
-import { $cartSizes, $cartItems } from "@features/choose-dishes/models";
+import { $cartSizes, $cartItems, $cart } from "@features/choose-dishes/models";
 import { DishStatus } from "@shared/api/dishes";
 import {
   $grandTotal,
@@ -16,7 +16,7 @@ import {
 
 export const RightSideView = () => {
   const cartSizes = useStore($cartSizes);
-  const { list } = useStore($cartItems);
+  const cart = useStore($cart);
   const promocode = useStore($promocode);
 
   const location = useStore($location);
@@ -39,7 +39,7 @@ export const RightSideView = () => {
             <EmptyCartPanel noGutters />
           </div>
         ) : (
-          list.map((item, idx) => (
+          cart.map((item, idx) => (
             <ItemCard
               item={item}
               key={`${item.product.id}-${idx}`}

@@ -11,6 +11,7 @@ import {
   $cartSizes,
   $cartItems,
   $isRestaurantOpen,
+  $cart,
 } from "@features/choose-dishes/models";
 import { getPlurals } from "@shared/lib/functional-utils";
 import { useState } from "react";
@@ -93,7 +94,7 @@ export const CartSidebarView = ({
   isFlat?: boolean;
 }) => {
   const cartSizes = useStore($cartSizes);
-  const { list } = useStore($cartItems);
+  const cart = useStore($cart);
 
   const [isPromocodeInput, setIsPromocodeInput] = useState(false);
   const [promocode, setPromocode] = useState<string>("");
@@ -169,9 +170,9 @@ export const CartSidebarView = ({
           layout
           className={classNames("flex-grow", !isFlat && "pt-16")}
         >
-          {list.length > 0 ? (
+          {cart.length > 0 ? (
             <Scrollbar className="w-full h-full">
-              {list.map((item, idx) => (
+              {cart.map((item, idx) => (
                 <CartItem
                   isCounter={isFlat}
                   item={item}

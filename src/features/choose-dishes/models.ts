@@ -256,12 +256,9 @@ export const $category = createStore<string>(POPULAR_CATEGORY.category)
   .on(onResetCategory, () => POPULAR_CATEGORY.category);
 
 export const $cartItems = $cart.map<{
-  list: PickedDish[];
   unicItemsList: Dish[];
 }>((state) => {
-  const values = Object.values(state);
-
-  const unicItems = values.reduce<{ [key: number]: Dish }>((obj, item) => {
+  const unicItems = state.reduce<{ [key: number]: Dish }>((obj, item) => {
     return {
       ...obj,
       [item.product.id]: item.product,
@@ -269,7 +266,6 @@ export const $cartItems = $cart.map<{
   }, {});
 
   return {
-    list: values,
     unicItemsList: Object.values(unicItems),
   };
 });

@@ -4,6 +4,7 @@ import Button, { ButtonProps } from "@shared/button";
 import { createGate, useGate, useStore } from "effector-react";
 import {
   $cart,
+  $cartItems,
   $cartSizes,
   $isRestaurantOpen,
   fetchTimeValidateFx,
@@ -144,12 +145,17 @@ const $pending = combine({
   timeFetchingPending: fetchTimeValidateFx.pending,
 }).map((store) => Object.values(store).some((value) => value === true));
 
-const formatDishes = ({ product, priceObj, modifiers }: PickedDish) => {
+const formatDish = ({
+  product,
+  priceObj,
+  modifiers,
+  count,
+}: PickedDish): OrderTypeParams["dishes"] => {
   const parsedWeight = parseInt(priceObj.weight);
   const parsedRoublePrice = parseInt(priceObj.rouble_price);
   const parsedTengePrice = parseInt(priceObj.tenge_price);
 
-  return {
+  const dish = {
     name: product.name,
     weight: (isNaN(parsedWeight) ? EMPTY_STRING : parsedWeight) as number,
     rouble_price: (isNaN(parsedRoublePrice)
@@ -162,6 +168,10 @@ const formatDishes = ({ product, priceObj, modifiers }: PickedDish) => {
       .map(({ option }) => option)
       .filter((option) => option) as string[],
   };
+
+  return Array(count)
+    .fill(dish)
+    .map((obj) => ({ ...obj }));
 };
 
 export const CheckAvailabilityAction: React.FC<
@@ -241,7 +251,8 @@ export const CheckAvailabilityAction: React.FC<
     if (isLoading) return;
 
     const newTab = window.open();
-    const formattedDishes = cart.map(formatDishes);
+
+    const formattedDishes = cart.flatMap(formatDish);
 
     onSubmitForm({
       form: {
