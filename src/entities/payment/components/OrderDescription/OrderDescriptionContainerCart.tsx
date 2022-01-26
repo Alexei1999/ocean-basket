@@ -50,6 +50,7 @@ export function OrderDescriptionContainerCart({
 
   return (
     <OrderDescription
+      isResult={false}
       schedule={schedule?.description}
       orderNumber={orderNumber}
       positionsNumber={savedCartSiezes?.size}

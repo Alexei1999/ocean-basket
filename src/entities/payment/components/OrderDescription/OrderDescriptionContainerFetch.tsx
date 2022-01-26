@@ -100,6 +100,7 @@ export function OrderDescriptionContainerFetch({
 
   return (
     <OrderDescription
+      isResult={true}
       savedPromocode={null}
       status={status}
       isLoading={isLoading || isError}

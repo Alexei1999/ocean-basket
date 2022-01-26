@@ -14,6 +14,7 @@ import { formatRub } from "@entities/cart/components/Details/variation-groups";
 dayjs.locale("ru");
 
 export function OrderDescription({
+  isResult,
   orderNumber,
   orderDate,
   status = "ordered",
@@ -27,6 +28,7 @@ export function OrderDescription({
   savedPromocode = null,
   location,
 }: {
+  isResult: boolean;
   orderNumber?: number;
   orderDate?: Dayjs | null;
   status?: "success" | "failrue" | "ordered";
@@ -108,10 +110,18 @@ export function OrderDescription({
               { label: "Номер заказа", text: orderNumber || "" },
               {
                 label: "Дата",
-                text: orderDate?.format("DD MMMM YYYY г.") || "",
+                text: dayjs(orderDate).isValid()
+                  ? dayjs(orderDate).format("DD MMMM YYYY г.")
+                  : "",
               },
-              { label: "Итого", text: total },
-              { label: "Метод оплаты", text: "В процессе" },
+              {
+                label: "Итого",
+                text: isNaN(total as number) ? "" : formatRub(total!),
+              },
+              {
+                label: "Метод оплаты",
+                text: isResult ? "Картой онлайн" : "В процессе",
+              },
             ].map(({ label, text }, idx) => (
               <div
                 className={classNames(
@@ -139,7 +149,9 @@ export function OrderDescription({
               ],
               [
                 "Время заказа",
-                orderDate?.format("HH:mm DD MMMM YYYY г.") ?? "",
+                dayjs(orderDate).isValid()
+                  ? dayjs(orderDate).format("HH:mm DD MMMM YYYY г.")
+                  : "",
               ],
               ["Срок доставки", schedule ?? ""],
               ["Место доставки", address ?? ""],
@@ -159,7 +171,7 @@ export function OrderDescription({
             label="Общая сумма"
             items={[
               ["Итого", isNaN(total as number) ? "" : formatRub(total!)],
-              ["Метод оплаты", "В процессе"],
+              ["Метод оплаты", isResult ? "Картой онлайн" : "В процессе"],
               [
                 "Доставка",
                 isNaN(total as number)
