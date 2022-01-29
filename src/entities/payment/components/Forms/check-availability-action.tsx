@@ -78,6 +78,20 @@ sample({
   target: postDetailsFx,
 });
 
+const errorHandlerFx = createEffect((newtab?: Window | null) =>
+  newtab?.close()
+);
+
+sample({
+  source: $submitForm,
+  clock: [postDetailsFx.fail, submitFormFx.fail],
+  fn: (props) => {
+    const { newTab } = props ?? {};
+    return newTab;
+  },
+  target: errorHandlerFx,
+});
+
 const $paymentArguments = restore(postDetailsFx.doneData, null);
 
 sample({
@@ -268,7 +282,7 @@ export const CheckAvailabilityAction: React.FC<
         location: (totalAmount ?? 0) >= FREE_DELIVERY_SUM ? null : location,
       },
       paymentArguments: {
-        OutSum: grandTotal,
+        OutSum: (window as any).isMock ? 1 : grandTotal,
       },
       newTab,
     });
