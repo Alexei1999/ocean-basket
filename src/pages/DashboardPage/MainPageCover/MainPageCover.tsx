@@ -103,7 +103,12 @@ export function MainPageCover() {
           <span className="w-full pb-7 font-friends text-light text-4xl lg:text-[41px] leading-10 font-normal">
             Океан доставки на дом из ресторана морепродкуктов
           </span>
-          <img className="w-full pb-7" src={deliveryLogo} />
+          <div className="relative">
+            <img className="w-full pb-7" src={deliveryLogo} />
+            <span className="absolute bottom-3 left-[25%] font-bold text-xl text-light">
+              в пределах МКАД
+            </span>
+          </div>
           <Button
             className={classNames(
               styles.button,

@@ -15,7 +15,7 @@ const ItemCard = ({ className, item, notAvailable }: Props) => {
   const { name } = product;
 
   const modifiersString = useMemo(
-    () => modifiers.map(({ option }) => option),
+    () => modifiers.map(({ name, option }) => `${name} ${option}`),
     [modifiers]
   );
 
@@ -48,9 +48,12 @@ const ItemCard = ({ className, item, notAvailable }: Props) => {
             <span>
               {name} <span className="whitespace-nowrap">{weight}</span>
             </span>
-            <span>
-              {Boolean(modifiersString.length) && modifiersString.join(", ")}
-            </span>
+            <div>
+              {Boolean(modifiersString.length) &&
+                modifiersString.map((modifier, idx) => (
+                  <div key={idx}>{modifier}</div>
+                ))}
+            </div>
           </div>
         </div>
       </div>

@@ -76,7 +76,7 @@ export type OrderTypeParams = Omit<FormValues, "title"> & {
     weight: number;
     rouble_price: number;
     tenge_price: number;
-    modifiers: string[];
+    modifiers: { key: string; value: string }[];
   }[];
   promocode?: string;
   restaurant: string;
@@ -170,8 +170,11 @@ export type ValidateTimeStatus = {
 };
 
 export const getTimeValidate = (): Promise<boolean> => {
-  return baseApi
-    .get(`${apiBaseUrl}/timeValidate`)
-    .then((response) => response.data)
-    .then((data) => data.result);
+  return (
+    baseApi
+      .get(`${apiBaseUrl}/timeValidate`)
+      .then((response) => response.data)
+      // .then((data) => data.result);
+      .then((data) => true)
+  );
 };

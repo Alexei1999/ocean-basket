@@ -11,6 +11,9 @@ export type ResponseType = {
 };
 export const baseApi = axios.create({
   baseURL: hostUrl,
+  headers: {
+    Authorization: "Basic YWRtaW46bWlpTlZCOFE=",
+  },
   transformResponse: [
     (data) => {
       const {

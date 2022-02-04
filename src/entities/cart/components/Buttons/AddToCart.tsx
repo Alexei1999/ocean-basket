@@ -47,13 +47,17 @@ export const AddToCart = ({ data, counterClass }: Props) => {
           value={count ?? 0}
           variant="argon"
           onDecrement={handleRemoveClick}
-          className={cn(styles.counter, "max-h-8", counterClass)}
+          className={cn(
+            styles.counter,
+            "max-h-8 sm:max-w-[8rem]",
+            counterClass
+          )}
           onIncrement={handleAddClick}
           disabled={false}
         />
       ) : (
         <AddToCartBtn
-          className={cn(styles.button, "max-h-8")}
+          className={cn(styles.button, "rounded-3xl max-h-8 sm:max-w-[6rem]")}
           disabled={isDisabled}
           onClick={handleAddClick}
         />

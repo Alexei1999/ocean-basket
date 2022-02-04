@@ -22,32 +22,27 @@ const schedules = [
   {
     id: 0,
     title: "Экспресс доставка",
-    description: "60 мин, ближайшая",
+    description: "90 мин, ближайшая",
   },
   {
     id: 1,
-    title: "8:00 - 11:00",
-    description: "8:00 - 11:00",
+    title: "10:00 - 13:00",
+    description: "10:00 - 13:00",
   },
   {
     id: 2,
-    title: "12:00 - 13:00",
-    description: "12:00 - 13:00",
+    title: "13:00 - 16:00",
+    description: "13:00 - 16:00",
   },
   {
     id: 3,
-    title: "13:00 - 15:00",
-    description: "13:00 - 15:00",
+    title: "16:00 - 19:00",
+    description: "16:00 - 19:00",
   },
   {
     id: 4,
-    title: "15:00 - 17:00",
-    description: "15:00 - 17:00",
-  },
-  {
-    id: 5,
-    title: "17:00 - 20:00",
-    description: "17:00 - 20:00",
+    title: "19:00 - 22:30",
+    description: "19:00 - 22:30",
   },
 ];
 
@@ -76,26 +71,28 @@ export const ScheduleGrid: React.FC<ScheduleProps> = ({
     <div className={className}>
       <AddressHeader label={label} count={count} isEdit={false} />
 
-      {schedules && schedules?.length ? (
-        <RadioGroup value={selectedSchedule} onChange={onScheduleChange}>
-          <RadioGroup.Label className="sr-only">{label}</RadioGroup.Label>
+      <div className="mt-5 md:mt-8">
+        {schedules && schedules?.length ? (
+          <RadioGroup value={selectedSchedule} onChange={onScheduleChange}>
+            <RadioGroup.Label className="sr-only">{label}</RadioGroup.Label>
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+              {schedules?.map((schedule: any, idx: number) => (
+                <RadioGroup.Option value={schedule} key={idx}>
+                  {({ checked }) => (
+                    <ScheduleCard checked={checked} schedule={schedule} />
+                  )}
+                </RadioGroup.Option>
+              ))}
+            </div>
+          </RadioGroup>
+        ) : (
           <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-            {schedules?.map((schedule: any, idx: number) => (
-              <RadioGroup.Option value={schedule} key={idx}>
-                {({ checked }) => (
-                  <ScheduleCard checked={checked} schedule={schedule} />
-                )}
-              </RadioGroup.Option>
-            ))}
+            <span className="relative px-5 py-6 text-base text-center bg-gray-100 rounded border border-border-200">
+              {"Нет доступных расписаний"}
+            </span>
           </div>
-        </RadioGroup>
-      ) : (
-        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-          <span className="relative px-5 py-6 text-base text-center bg-gray-100 rounded border border-border-200">
-            {"Нет доступных расписаний"}
-          </span>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

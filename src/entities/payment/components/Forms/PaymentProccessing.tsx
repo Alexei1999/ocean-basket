@@ -180,12 +180,13 @@ export function PaymentProccessing() {
     <>
       <div className="py-8 sm:px-4 lg:py-10 lg:px-8 xl:py-14 xl:px-16 2xl:px-20 bg-gray-100">
         <div className="flex flex-col lg:flex-row items-center lg:items-start m-auto w-full max-w-6xl">
-          <div className="lg:max-w-3xl w-full space-y-6 order-1 lg:order-0">
+          <div className="lg:max-w-2xl w-full space-y-6 order-1 lg:order-0">
             <BlocksGrid
               addLabel="Добавить адрес"
               editLabel="Изменить адрес"
               className="shadow-700 bg-light p-5 md:p-8"
               label="Адрес доставки"
+              subLabel="Мы доставляем наши блюда по всей Москве в пределах МКАД. Если ваш адрес доставки находится за пределами МКАД, ресторан оформит возврат денежных средств и отменит заказ. Заказы за МКАД оформляются по номеру телефона в индивидуальном порядке. Благодарим за понимание."
               count={1}
               form={AddressForm}
               data={form}
@@ -258,7 +259,7 @@ export function PaymentProccessing() {
               Оформить заказ
             </CheckAvailabilityAction>
           </div>
-          <div className="w-full lg:w-96 mb-10 sm:mb-12 lg:mb-0 lg:mt-10 lg:ml-16 order-0 lg:order-1 px-5 sm:px-0">
+          <div className="flex-grow mb-10 sm:mb-12 lg:mb-0 lg:mt-10 lg:ml-16 order-0 lg:order-1 px-5 sm:px-0 min-w-[450px]">
             <RightSideView />
           </div>
         </div>

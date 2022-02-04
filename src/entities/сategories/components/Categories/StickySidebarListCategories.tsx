@@ -4,7 +4,6 @@ import { Scrollbar } from "../../../../shared/components/Scrollbar";
 import { TreeMenu } from "../TreeMenu/TreeMenuItem";
 import { CategoriesLoader } from "./CategoriesLoader";
 import { Category } from "@shared/api/dishes";
-import { $isCategoriesSidebarOpen } from "@shared/components/drawer/filter-menu";
 import { useStore } from "effector-react";
 import classNames from "classnames";
 
@@ -21,16 +20,9 @@ export function StickySidebarListCategories({
   loading,
   className,
 }: StickySidebarListCategoriesProps) {
-  const isMobile = useStore($isCategoriesSidebarOpen);
-
   if (loading) {
     return (
-      <div
-        className={classNames(
-          "hidden xl:block max-h-full",
-          !isMobile ? "pl-28" : "pl-12"
-        )}
-      >
+      <div className={classNames("hidden xl:block max-h-full", "pl-28")}>
         <div className="w-64 mt-8">
           <CategoriesLoader />
         </div>
@@ -46,7 +38,7 @@ export function StickySidebarListCategories({
     >
       <div className="max-h-full overflow-hidden">
         <Scrollbar
-          className={classNames("max-h-screen", !isMobile ? "pl-28" : "pl-12")}
+          className={classNames("max-h-screen", "pl-28")}
           style={{ height: "calc(100vh - 5.35rem)" }}
         >
           {!notFound ? (

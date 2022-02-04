@@ -11,6 +11,7 @@ export type Address = {
 
 interface AddressesProps<T> {
   label: string;
+  subLabel?: ReactNode;
   className?: string;
   addLabel?: string;
   editLabel?: string;
@@ -32,6 +33,7 @@ export const $editModalState = createStore(false)
 
 export function BlocksGrid<T>({
   label,
+  subLabel,
   className,
   addLabel,
   editLabel,
@@ -54,6 +56,7 @@ export function BlocksGrid<T>({
       <Modal open={isModalOpen} onClose={onClose} showClose>
         <Form onSubmit={onClose} />
       </Modal>
+
       <AddressHeader
         count={count}
         addLabel={addLabel}
@@ -62,25 +65,32 @@ export function BlocksGrid<T>({
         isEdit={Boolean(data)}
         label={label}
       />
-
-      {data ? (
-        <RadioGroup value={selectedAddress} onChange={setAddress}>
-          <RadioGroup.Label className="sr-only">{label}</RadioGroup.Label>
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-            <RadioGroup.Option value={selectedAddress}>
-              {({ checked }) => (
-                <Card checked={checked} data={data} onEdit={onAdd} />
-              )}
-            </RadioGroup.Option>
-          </div>
-        </RadioGroup>
-      ) : (
-        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-          <span className="relative px-5 py-6 text-base text-center bg-gray-100 rounded border border-border-200">
-            {emptyMessage}
-          </span>
+      {subLabel && (
+        <div className="text-red-500 text-sm mt-3 md:mt-5 max-w-xl">
+          {subLabel}
         </div>
       )}
+      <div className="mt-5 md:mt-8">
+        {data ? (
+          <RadioGroup value={selectedAddress} onChange={setAddress}>
+            <RadioGroup.Label className="sr-only">{label}</RadioGroup.Label>
+
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+              <RadioGroup.Option value={selectedAddress}>
+                {({ checked }) => (
+                  <Card checked={checked} data={data} onEdit={onAdd} />
+                )}
+              </RadioGroup.Option>
+            </div>
+          </RadioGroup>
+        ) : (
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+            <span className="relative px-5 py-6 text-base text-center bg-gray-100 rounded border border-border-200">
+              {emptyMessage}
+            </span>
+          </div>
+        )}
+      </div>
       {after && (
         <div className="pt-5 mt-5 border-t border-border-200 border-opacity-70">
           {after}

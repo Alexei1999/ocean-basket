@@ -179,8 +179,11 @@ const formatDish = ({
       ? EMPTY_STRING
       : parsedTengePrice) as number,
     modifiers: modifiers
-      .map(({ option }) => option)
-      .filter((option) => option) as string[],
+      .filter(({ option }) => option)
+      .map(({ option, name }) => ({
+        key: name,
+        value: option,
+      })),
   };
 
   return Array(count)

@@ -8,7 +8,7 @@ export function PaymentPage() {
 
   return (
     <div>
-      <DishCover />
+      {/* <DishCover /> */}
       {/* <HeadlineSuggestion item={dishes?.[0]} /> */}
 
       <OrderOverview onSubmit={() => navigate(RoutesConfig.Checkout)} />

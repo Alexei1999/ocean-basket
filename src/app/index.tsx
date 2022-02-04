@@ -11,7 +11,6 @@ import { useLocation } from "react-router-dom";
 import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react";
 import { AddDishModal } from "@entities/cart/components/Details/add-dish-modal";
-import { FilterMenu } from "@shared/components/drawer/filter-menu";
 import MobileNavigation from "@widgets/mobile-navigation/mobile-navigation";
 import { MobileMainMenu } from "@shared/components/drawer/mobile-main-menu";
 
@@ -41,7 +40,6 @@ function App() {
       <AddDishModal />
       <CartSidebar />
       <MobileMainMenu />
-      <FilterMenu />
       <div className="flex flex-col max-h-screen">
         <Header />
         <ScrollContainer>

@@ -19,7 +19,7 @@ export const AddressHeader: React.FC<AddressHeaderProps> = ({
   label,
 }) => {
   return (
-    <div className="flex items-center justify-between mb-5 md:mb-8">
+    <div className="flex items-center justify-between">
       <div className="flex items-center space-s-3 md:space-s-4">
         {count && (
           <span className="rounded-full w-8 h-8 text-body bg-current flex items-center justify-center text-base lg:text-xl ">

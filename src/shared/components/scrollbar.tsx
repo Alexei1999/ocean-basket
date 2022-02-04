@@ -21,7 +21,7 @@ export const Scrollbar: React.FC<ScrollbarProps> = ({
         scrollbars: {
           autoHide: "scroll",
         },
-        ...(options ? options : {}),
+        ...options,
       }}
       style={style}
       {...props}

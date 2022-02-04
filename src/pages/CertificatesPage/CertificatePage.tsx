@@ -28,13 +28,11 @@ export function CertificatePage() {
               className="w-full lg:w-auto ml-auto mr-auto lg:mr-0"
             />
           </div>
-          <div
-            className={classNames(
-              styles.block,
-              "flex-grow xl:pt-9 pb-10 xl:pr-6"
-            )}
-          >
-            <div className="px-4 md:px-0 max-w-2xl">
+          <div className={classNames(styles.block, "flex-grow pb-10 xl:pr-6")}>
+            <div className="text-body font-bold text-lg">
+              Подари частичку океана своему близкому человеку!
+            </div>
+            <div className="pt-4 px-4 md:px-0 max-w-2xl">
               <p>
                 Подарочный сертификат от Ocean Basket — универсальный подарок
                 для всех любителей морепродуктов.
