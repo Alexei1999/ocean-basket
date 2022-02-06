@@ -170,11 +170,8 @@ export type ValidateTimeStatus = {
 };
 
 export const getTimeValidate = (): Promise<boolean> => {
-  return (
-    baseApi
-      .get(`${apiBaseUrl}/timeValidate`)
-      .then((response) => response.data)
-      // .then((data) => data.result);
-      .then((data) => true)
-  );
+  return baseApi
+    .get(`${apiBaseUrl}/timeValidate`)
+    .then((response) => response.data)
+    .then((data) => data.result);
 };

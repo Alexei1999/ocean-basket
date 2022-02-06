@@ -3,7 +3,7 @@ import { Navigation } from "swiper";
 import "swiper/swiper-bundle.css";
 import "./buttons.scss";
 
-import styles from "./styles.module.scss";
+import styles from "../styles.module.scss";
 
 import productSvg from "@assets/product.svg";
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
@@ -72,7 +72,7 @@ export function PromotionSlider() {
               <SwiperSlide key={id}>
                 <div
                   className={cn(
-                    "relative flex items-center rounded-xl justify-center w-full h-[250px] cursor-pointer",
+                    "flex items-center rounded-xl justify-center w-full h-[250px] cursor-pointer",
                     isError && styles.promotionWrapperBackground
                   )}
                   onClick={() => {
@@ -87,14 +87,12 @@ export function PromotionSlider() {
                 >
                   <div
                     className={classNames(
-                      styles.promotion,
-                      "w-full cursor-pointer rounded-xl overflow-hidden"
+                      "-z-1 w-full cursor-pointer rounded-xl overflow-hidden"
                     )}
                   >
                     <img
                       className={classNames(
-                        "object-contain object-left w-full h-full",
-                        styles.promotion
+                        "-z-1 object-contain object-left w-full h-full"
                       )}
                       src={
                         !isError && photo ? `${hostUrl}/${photo}` : productSvg

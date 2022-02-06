@@ -1,6 +1,6 @@
 import { filterCartObjects } from "@entities/cart/components/Details/details";
 import { fetchCategoriesFx } from "@entities/сategories/components/Categories/Categories";
-import { onCategoryClick } from "@entities/сategories/components/TreeMenu/TreeMenuItem";
+import { onCategorySelect } from "@entities/сategories/components/TreeMenu/TreeMenuItem";
 import {
   Category,
   Dish,
@@ -56,7 +56,13 @@ export type PickedModifier = Pick<ModifierType, "id" | "dish_id" | "name"> & {
   price?: number;
 };
 export const fetchDishesFx = createEffect(getDishes);
-export const fetchTimeValidateFx = createEffect(getTimeValidate);
+export const fetchTimeValidateFx = createEffect(async () => {
+  if ((window as any).isMock) {
+    console.log("time mock enabled");
+    return true;
+  }
+  return getTimeValidate();
+});
 export const fetchPopularDishesFx = createEffect(getPopular);
 export const fetchPomotionsFx = createEffect(getPromotions);
 
@@ -252,7 +258,7 @@ $cart.watch((state) => {
 
 export const onResetCategory = createEvent<void>();
 export const $category = createStore<string>(POPULAR_CATEGORY.category)
-  .on(onCategoryClick, (_, category) => category)
+  .on(onCategorySelect, (_, category) => category)
   .on(onResetCategory, () => POPULAR_CATEGORY.category);
 
 export const $cartItems = $cart.map<{

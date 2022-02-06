@@ -6,7 +6,7 @@ import { fetchCategoriesFx } from "@entities/сategories/components/Categories/C
 import ContentLoader from "react-content-loader";
 import { Scrollbar } from "@shared/components/Scrollbar";
 import classNames from "classnames";
-import { onCategoryClick } from "@entities/сategories/components/TreeMenu/TreeMenuItem";
+import { onCategorySelect } from "@entities/сategories/components/TreeMenu/TreeMenuItem";
 
 export default function FilterBar() {
   const selectedCategory = useStore($category);
@@ -52,7 +52,7 @@ export default function FilterBar() {
                     : "text-body"
                 )}
                 onClick={() => {
-                  onCategoryClick(category.category);
+                  onCategorySelect(category.category);
                 }}
               >
                 {category.category}

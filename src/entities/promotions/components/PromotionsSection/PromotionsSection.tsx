@@ -8,23 +8,69 @@ import classNames from "classnames";
 import { forward } from "effector";
 import { hostUrl } from "@shared/api/base";
 import { useObserver } from "@shared/lib/functional-utils";
+import productSvg from "@assets/product.svg";
+
+import styles from "../styles.module.scss";
 
 function PromotionImage({
+  name,
   src,
   onClick,
 }: {
+  name?: string;
   src: string;
   onClick: () => void;
 }) {
   const { containerRef, isStartLoading } = useObserver();
 
+  const [isError, setIsError] = useState(false);
+
   return (
-    <div ref={containerRef}>
+    <div
+      ref={containerRef}
+      onClick={onClick}
+      className={classNames(
+        isError && styles.promotionWrapperBackground,
+        "relative cursor-pointer"
+      )}
+    >
       <img
         className={classNames("h-full w-full cursor-pointer")}
-        onClick={onClick}
-        src={isStartLoading ? `${hostUrl}/${src}` : undefined}
+        onError={() => setIsError(true)}
+        src={
+          isError
+            ? productSvg
+            : isStartLoading
+            ? `${hostUrl}/${src}`
+            : undefined
+        }
       />
+      {isError && name && (
+        <>
+          <div
+            className={classNames(
+              isError && styles.promotionWrapperBackground,
+              "absolute w-full h-full top-0 left-0"
+            )}
+          />
+          <div
+            className={classNames(
+              "absolute left-12 top-10 opacity-100 flex flex-col justify-between max-w-[50%] max-h-[60%] h-full"
+            )}
+          >
+            <div
+              className={classNames("text-white text-2xl font-bold leading-7")}
+            >
+              {name}
+            </div>
+            {/* {discount && (
+            <div className={cn("text-white font-bold text-4xl")}>
+              {discount}%
+            </div>
+          )} */}
+          </div>
+        </>
+      )}
     </div>
   );
 }
@@ -60,6 +106,8 @@ export function PromotionsSection() {
         {promotions?.length
           ? promotions.map((promotion) => (
               <PromotionImage
+                key={promotion.id}
+                name={promotion.title}
                 onClick={() => openModal(promotion)}
                 src={promotion.photo}
               />

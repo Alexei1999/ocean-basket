@@ -8,6 +8,16 @@ import { addresses, Country } from "@pages/ContactsPage/config";
 import React, { useEffect } from "react";
 
 import footer from "@assets/footer.png";
+import { $categories } from "@features/choose-dishes/models";
+import { useStore } from "effector-react";
+import { RoutesConfig } from "@shared/lib/routes-config";
+import { useNavigate } from "react-router-dom";
+import { onCategorySelect } from "@entities/сategories/components/TreeMenu/TreeMenuItem";
+import { fetchCategoriesFx } from "@entities/сategories/components/Categories/Categories";
+import { extendedLinks, headerLinks } from "@widgets/header/config/links";
+import { restore } from "effector";
+
+const links = [...extendedLinks, ...headerLinks];
 
 function FooterContactsBlock({
   item,
@@ -60,9 +70,20 @@ function FooterContactsBlock({
   );
 }
 
+const $done = restore(fetchCategoriesFx.done, null);
+
 //TODO: Split to the components
 export function Footer() {
+  const navigate = useNavigate();
+
+  const categories = useStore($categories);
+  const isLoaded = useStore($done);
+
   const footerRef = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    fetchCategoriesFx();
+  }, []);
 
   useEffect(() => {
     const img = new Image();
@@ -78,6 +99,20 @@ export function Footer() {
       img.onload = null;
     };
   }, []);
+
+  const privacyPolicyBlock = (
+    <>
+      <a href="/privacy-polytic.docx">Политика конфиденциальности</a>
+      <div
+        onClick={() => {
+          navigate(RoutesConfig.Details);
+        }}
+        className="pt-3 cursor-pointer"
+      >
+        Доставка и оплата
+      </div>
+    </>
+  );
 
   return (
     <footer
@@ -99,56 +134,45 @@ export function Footer() {
               className="flex-grow pt-12"
               item={addresses[0]}
             />
-            <FooterContactsBlock className="flex-grow" item={addresses[1]} />
+            {/* <FooterContactsBlock className="flex-grow" item={addresses[1]} /> */}
           </div>
 
           <div className="order-0 xl:order-1 grid grid-cols-3 w-full max-w-4xl flex-grow">
-            <div className="flex flex-col font-medium sm:col-span-2 col-span-3">
-              <span className="text-base font-bold uppercase">Блюда</span>
+            {!!isLoaded && (
+              <div className="flex flex-col font-medium sm:col-span-2 col-span-3">
+                <span className="text-base font-bold uppercase">Блюда</span>
 
-              <div className="mt-10 flex">
-                <div className="flex flex-col">
-                  {[
-                    "Популярные",
-                    "Стартеры",
-                    "Супы",
-                    "Салаты",
-                    "Рыба",
-                    "Креветки",
-                    "Топ UPS",
-                  ].map((item, index) => (
-                    <span className="mb-4 cursor-pointer" key={index}>
-                      {item}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex flex-col ml-11 cursor-pointer">
-                  {["Платтеры и комбо", "Суши", "Десерты", "Напитки"].map(
-                    (item, index) => (
-                      <span className="mb-4" key={index}>
-                        {item}
+                <div className="mt-10 flex">
+                  <div className="grid grid-cols-2">
+                    {categories.map((item, index) => (
+                      <span
+                        className="mb-4 cursor-pointer col-span-1"
+                        key={index}
+                        onClick={() => {
+                          onCategorySelect(item.category);
+                          navigate(RoutesConfig.Menu);
+                        }}
+                      >
+                        {item.category}
                       </span>
-                    )
-                  )}
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             <div className="flex flex-col pt-8 sm:pt-0 sm:col-span-1 col-span-3">
               <span className="text-base font-bold uppercase">Страницы</span>
 
               <div className="mt-10 flex">
                 <div className="flex flex-col">
-                  {[
-                    "Меню",
-                    "О ресторане",
-                    "Акции",
-                    "Сертификаты",
-                    "Оплата и доставка",
-                    "Контакты",
-                  ].map((item, index) => (
-                    <span className="mb-4 cursor-pointer" key={index}>
-                      {item}
+                  {links.map((item, index) => (
+                    <span
+                      onClick={() => navigate(item.href)}
+                      className="mb-4 cursor-pointer"
+                      key={index}
+                    >
+                      {item.label}
                     </span>
                   ))}
                 </div>
@@ -156,17 +180,11 @@ export function Footer() {
             </div>
 
             <div className="hidden xl:flex pt-16 flex-col text-sm font-normal col-span-3">
-              <a href="#">Политика конфиденциальности</a>
-              <a href="#" className="pt-3">
-                Доставка и оплата
-              </a>
+              {privacyPolicyBlock}
             </div>
           </div>
           <div className="flex xl:hidden order-2 mr-auto pt-4 flex-col text-sm font-normal col-span-2">
-            <a href="#">Политика конфиденциальности</a>
-            <a href="#" className="pt-3">
-              Доставка и оплата
-            </a>
+            {privacyPolicyBlock}
           </div>
         </div>
         <hr className="border bg-light w-full" />

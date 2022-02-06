@@ -15,7 +15,7 @@ interface TreeMenuItemProps {
   onClick?: (item: string) => void;
 }
 
-export const onCategoryClick = createEvent<string>();
+export const onCategorySelect = createEvent<string>();
 
 export function TreeMenuItem({
   className,
@@ -42,7 +42,7 @@ export function TreeMenuItem({
         initial={false}
         animate={{ backgroundColor: "#ffffff" }}
         onClick={() => {
-          onCategoryClick(category);
+          onCategorySelect(category);
           // onSetCategoriesSidebarOpen(false);
         }}
         className="py-1 rounded-md"

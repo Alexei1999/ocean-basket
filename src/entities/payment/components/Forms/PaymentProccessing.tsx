@@ -259,7 +259,7 @@ export function PaymentProccessing() {
               Оформить заказ
             </CheckAvailabilityAction>
           </div>
-          <div className="flex-grow mb-10 sm:mb-12 lg:mb-0 lg:mt-10 lg:ml-16 order-0 lg:order-1 px-5 sm:px-0 min-w-[450px]">
+          <div className="mb-10 sm:mb-12 lg:mb-0 lg:mt-10 lg:ml-16 order-0 lg:order-1 px-5 sm:px-0 max-w-full min-w-full md:min-w-[450px]">
             <RightSideView />
           </div>
         </div>

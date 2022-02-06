@@ -241,11 +241,6 @@ function InstagramGalery() {
         {links.map((href, idx) => (
           <InstagramItem url={href} key={idx} />
         ))}
-        {/* {instagramImages.map(({ img, alt, href }, idx) => (
-          <a href={href} key={idx}>
-            <img width="376px" height="376px" src={img} alt={alt} />
-          </a>
-        ))} */}
       </div>
     </div>
   );
