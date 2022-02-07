@@ -7,13 +7,32 @@ import ContentLoader from "react-content-loader";
 import { Scrollbar } from "@shared/components/Scrollbar";
 import classNames from "classnames";
 import { onCategorySelect } from "@entities/сategories/components/TreeMenu/TreeMenuItem";
+import { useEffect, useMemo } from "react";
+
+export const HEADER_HEIGHT = 64;
 
 export default function FilterBar() {
   const selectedCategory = useStore($category);
   const categories = useStore($categories);
-  const loading = useStore(fetchCategoriesFx.pending);
+
+  const canSticky = useMemo(() => {
+    try {
+      return CSS.supports("position", "sticky");
+    } catch {
+      return false;
+    }
+  }, []);
+
   return (
-    <div className="overflow-hidden sticky top-0 h-14 md:h-16 z-10 flex xl:hidden items-center justify-between px-3 lg:px-5 bg-light border-t border-b border-border-200 -top-[1px]">
+    <div
+      className={classNames(
+        "overflow-hidden max-w-full h-14 md:h-16 z-10 flex xl:hidden items-center justify-between px-3 lg:px-5 bg-light border-t border-b border-border-200 -top-[1px]",
+        canSticky ? "sticky" : "fixed"
+      )}
+      style={{
+        top: canSticky ? "0px" : HEADER_HEIGHT + "px",
+      }}
+    >
       <Scrollbar
         options={{
           className: "h-full w-full os-theme-thin-dark pt-4",

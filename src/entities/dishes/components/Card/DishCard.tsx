@@ -10,11 +10,26 @@ import { useSortedPrices } from "@entities/cart/components/Details/variation-pri
 import { onDishModalOpen } from "@entities/cart/components/Details/add-dish-modal";
 import { hostUrl } from "@shared/api/base";
 import { formatRub } from "@entities/cart/components/Details/variation-groups";
+import { createEvent, createStore, restore } from "effector";
+import { useStore } from "effector-react";
 
 type DishCardProps = {
   product: Dish;
   className?: string;
 };
+
+const TEXT_MOBILE_MAX_SIZE = 56;
+
+const onSmallScreenUpdate = createEvent<boolean>();
+const $smallScreen = restore(onSmallScreenUpdate, false);
+
+window.addEventListener("resize", () => {
+  if (window.innerWidth < 640) {
+    onSmallScreenUpdate(true);
+  } else {
+    onSmallScreenUpdate(false);
+  }
+});
 
 export const useObserver = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -63,6 +78,7 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
   const { name, photo, description, status, prices } = product ?? {};
 
   const mappedPrices = useSortedPrices(prices);
+  const isSmallScreen = useStore($smallScreen);
 
   const price = useMemo(() => {
     if (mappedPrices.length === 0) return;
@@ -128,7 +144,11 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
             {name}
           </h3>
           <p className={classNames("text-muted text-xs mb-3 font-medium")}>
-            {description}
+            {isSmallScreen &&
+            typeof description === "string" &&
+            description.length > TEXT_MOBILE_MAX_SIZE
+              ? description.slice(0, TEXT_MOBILE_MAX_SIZE) + " ..."
+              : description}
           </p>
         </div>
         {/* <h3

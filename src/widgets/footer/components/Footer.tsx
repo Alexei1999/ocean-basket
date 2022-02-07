@@ -74,7 +74,9 @@ function FooterContactsBlock({
                   )}
                 >
                   <span className="max-w-xs sm:w-8/12">{address}</span>
-                  <span className="pt-1 sm:pt-0 sm:w-4/12">{number}</span>
+                  <a href={"tel:" + number} className="pt-1 sm:pt-0 sm:w-4/12">
+                    {number}
+                  </a>
                 </div>
               ))}
             </React.Fragment>
@@ -83,9 +85,12 @@ function FooterContactsBlock({
 
         {item.email && (
           <div className="flex pb-4 sm:pb-0 sm:justify-end pt-7 sm:pt-4">
-            <span className="sm:w-4/12 text-base whitespace-pre">
+            <a
+              href={"mailto:" + item.email}
+              className="sm:w-4/12 text-base whitespace-pre"
+            >
               {item.email}
-            </span>
+            </a>
           </div>
         )}
       </div>

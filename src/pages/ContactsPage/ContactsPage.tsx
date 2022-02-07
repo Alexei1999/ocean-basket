@@ -51,7 +51,9 @@ function ContactsBlock({
                   )}
                 >
                   <span className="max-w-xs w-1/2 lg:w-8/12">{address}</span>
-                  <span className="w-1/2 lg:w-4/12">{number}</span>
+                  <a href={"tel:" + number} className="w-1/2 lg:w-4/12">
+                    {number}
+                  </a>
                 </div>
               ))}
             </>
@@ -61,7 +63,9 @@ function ContactsBlock({
       {item.email && (
         <div className="flex flex-col pt-14 ">
           <span className="text-base font-medium">Email</span>
-          <span className="text-base pt-6">{item.email}</span>
+          <span className="text-base pt-6"  >
+            <a href={"mailto:" + item.email}>{item.email}</a>
+          </span>
         </div>
       )}
       {children}
@@ -107,7 +111,7 @@ export function ContactsPage() {
         >
           <Map
             className={"w-full h-full"}
-            defaultState={{
+            defaultState={{ 
               // center: [50.7617, 60.632682],
               // zoom: 4,
               center: [55.752, 37.6237],
