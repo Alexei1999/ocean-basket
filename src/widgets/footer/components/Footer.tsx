@@ -19,6 +19,29 @@ import { restore } from "effector";
 
 const links = [...extendedLinks, ...headerLinks];
 
+const mixIndexes = (length: number) => {
+  const indexes = Array(length).fill(0);
+  const median =
+    indexes.length % 2 === 0
+      ? indexes.length / 2 - 1
+      : Math.floor(indexes.length / 2);
+
+  let incAcc = median;
+  let decAcc = 0;
+
+  for (let i = 0; i < indexes.length; i++) {
+    if (i % 2 === 0) {
+      indexes[i] = i - decAcc;
+      decAcc++;
+    } else {
+      indexes[i] = i + incAcc;
+      incAcc--;
+    }
+  }
+
+  return indexes;
+};
+
 function FooterContactsBlock({
   item,
   className,
@@ -144,18 +167,22 @@ export function Footer() {
 
                 <div className="mt-10 flex">
                   <div className="grid grid-cols-2">
-                    {categories.map((item, index) => (
-                      <span
-                        className="mb-4 cursor-pointer col-span-1"
-                        key={index}
-                        onClick={() => {
-                          onCategorySelect(item.category);
-                          navigate(RoutesConfig.Menu);
-                        }}
-                      >
-                        {item.category}
-                      </span>
-                    ))}
+                    {categories.length > 0 &&
+                      mixIndexes(categories.length).map((index) => {
+                        const item = categories[index];
+                        return (
+                          <span
+                            className="mb-4 cursor-pointer col-span-1"
+                            key={index}
+                            onClick={() => {
+                              onCategorySelect(item.category);
+                              navigate(RoutesConfig.Menu);
+                            }}
+                          >
+                            {item.category}
+                          </span>
+                        );
+                      })}
                   </div>
                 </div>
               </div>
