@@ -130,7 +130,9 @@ export function Footer() {
 
   const privacyPolicyBlock = (
     <>
-      <a href="/privacy-polytic.docx">Политика конфиденциальности</a>
+      <a target="_blank" href="/privacy-polytic.pdf">
+        Политика конфиденциальности
+      </a>
       <div
         onClick={() => {
           navigate(RoutesConfig.Details);
