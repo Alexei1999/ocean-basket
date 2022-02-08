@@ -246,7 +246,12 @@ function InstagramGalery() {
   );
 }
 
-export function SubscriptionSection({ isWaves: isWaves = false }) {
+const clientToken = "71e4f3e24255c3916006ac5b5a99415e";
+const appId = "676058906894334";
+
+export const accessToken = `${appId}|${clientToken}`;
+
+export function SubscriptionSection({ isWaves = false }) {
   return (
     <div>
       <EmailSection isWaves={isWaves} />

@@ -18,18 +18,21 @@ type DishCardProps = {
   className?: string;
 };
 
-const TEXT_MOBILE_MAX_SIZE = 56;
+const TEXT_MOBILE_MAX_SIZE = 30;
 
 const onSmallScreenUpdate = createEvent<boolean>();
 const $smallScreen = restore(onSmallScreenUpdate, false);
 
-window.addEventListener("resize", () => {
+const updateSize = () => {
   if (window.innerWidth < 640) {
     onSmallScreenUpdate(true);
   } else {
     onSmallScreenUpdate(false);
   }
-});
+};
+
+window.addEventListener("resize", updateSize);
+window.addEventListener("load", updateSize);
 
 export const useObserver = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -111,7 +114,7 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
       <div
         onClick={handleProductQuickView}
         role="button"
-        className="relative flex items-center justify-center w-auto h-48 sm:h-52"
+        className="relative flex items-center justify-center w-auto h-40 sm:h-52"
       >
         <span className="sr-only">{name}</span>
         <img
@@ -139,11 +142,11 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
         <div>
           <h3
             onClick={handleProductQuickView}
-            className="text-md text-body font-bold mb-1"
+            className="text-md text-body font-bold mb-1 leading-none sm:leading-6"
           >
             {name}
           </h3>
-          <p className={classNames("text-muted text-xs mb-3 font-medium")}>
+          <p className={classNames("text-muted text-xs sm:mb-3 font-medium")}>
             {isSmallScreen &&
             typeof description === "string" &&
             description.length > TEXT_MOBILE_MAX_SIZE
@@ -159,7 +162,7 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
         </h3> */}
         {/* End of product info */}
 
-        <div className="flex flex-col sm:flex-row items-center justify-between min-h-6 mt-4 md:mt-3 relative">
+        <div className="flex flex-col sm:flex-row items-center justify-between min-h-6 mt-1 sm:mt-4 md:mt-3 relative">
           <div className="relative">
             {/* {discount && (
               <del className="text-xs text-muted text-opacity-75 absolute -top-4 md:-top-5 italic">

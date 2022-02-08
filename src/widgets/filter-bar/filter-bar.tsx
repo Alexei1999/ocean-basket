@@ -35,7 +35,7 @@ export default function FilterBar() {
     >
       <Scrollbar
         options={{
-          className: "h-full w-full os-theme-thin-dark pt-4",
+          className: "h-full w-full os-theme-thin-dark pt-4 whitespace-no-wrap",
           overflowBehavior: {
             x: "scroll",
             y: "hidden",
