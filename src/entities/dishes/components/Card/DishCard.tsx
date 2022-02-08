@@ -18,17 +18,26 @@ type DishCardProps = {
   className?: string;
 };
 
-const TEXT_MOBILE_MAX_SIZE = 30;
+const TEXT_MOBILE_SMALL_MAX_SIZE = 30;
+const TEXT_MOBILE_MEDIUM_MAX_SIZE = 120;
 
-const onSmallScreenUpdate = createEvent<boolean>();
-const $smallScreen = restore(onSmallScreenUpdate, false);
+const onScreenUpdate = createEvent<number>();
+
+export const $smScreen = createStore(false).on(
+  onScreenUpdate,
+  (_, value) => value < 640
+);
+export const $mdScreen = createStore(false).on(
+  onScreenUpdate,
+  (_, value) => value >= 640 && value < 768
+);
+export const $lgScreen = createStore(false).on(
+  onScreenUpdate,
+  (_, value) => value >= 768 && value < 1024
+);
 
 const updateSize = () => {
-  if (window.innerWidth < 640) {
-    onSmallScreenUpdate(true);
-  } else {
-    onSmallScreenUpdate(false);
-  }
+  onScreenUpdate(window.innerWidth);
 };
 
 window.addEventListener("resize", updateSize);
@@ -81,7 +90,8 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
   const { name, photo, description, status, prices } = product ?? {};
 
   const mappedPrices = useSortedPrices(prices);
-  const isSmallScreen = useStore($smallScreen);
+  const isSmallScreen = useStore($smScreen);
+  const isMediumScreen = useStore($mdScreen);
 
   const price = useMemo(() => {
     if (mappedPrices.length === 0) return;
@@ -102,6 +112,20 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
   function handleProductQuickView() {
     onDishModalOpen(product);
   }
+
+  const formattedDescription = useMemo(() => {
+    if (!description) return "";
+
+    if (isSmallScreen && description.length > TEXT_MOBILE_SMALL_MAX_SIZE) {
+      return `${description.slice(0, TEXT_MOBILE_SMALL_MAX_SIZE)}...`;
+    }
+
+    if (isMediumScreen && description.length > TEXT_MOBILE_MEDIUM_MAX_SIZE) {
+      return `${description.slice(0, TEXT_MOBILE_MEDIUM_MAX_SIZE)}...`;
+    }
+
+    return description;
+  }, [isSmallScreen, isMediumScreen, description]);
 
   return (
     <article
@@ -147,11 +171,7 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
             {name}
           </h3>
           <p className={classNames("text-muted text-xs sm:mb-3 font-medium")}>
-            {isSmallScreen &&
-            typeof description === "string" &&
-            description.length > TEXT_MOBILE_MAX_SIZE
-              ? description.slice(0, TEXT_MOBILE_MAX_SIZE) + "..."
-              : description}
+            {formattedDescription}
           </p>
         </div>
         {/* <h3
