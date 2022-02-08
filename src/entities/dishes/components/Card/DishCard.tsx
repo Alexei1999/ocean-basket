@@ -150,7 +150,7 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
             {isSmallScreen &&
             typeof description === "string" &&
             description.length > TEXT_MOBILE_MAX_SIZE
-              ? description.slice(0, TEXT_MOBILE_MAX_SIZE) + " ..."
+              ? description.slice(0, TEXT_MOBILE_MAX_SIZE) + "..."
               : description}
           </p>
         </div>

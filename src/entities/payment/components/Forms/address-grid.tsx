@@ -66,7 +66,7 @@ export function BlocksGrid<T>({
         label={label}
       />
       {subLabel && (
-        <div className="text-red-500 text-sm mt-3 md:mt-5 max-w-xl">
+        <div className="text-red-500 text-sm mt-3 md:mt-5 max-w-lg">
           {subLabel}
         </div>
       )}

@@ -35,14 +35,14 @@ export default function FilterBar() {
     >
       <Scrollbar
         options={{
-          className: "h-full w-full os-theme-thin-dark pt-4 whitespace-no-wrap",
+          className: "h-full w-full os-theme-thin-dark pt-4 whitespace-nowrap",
           overflowBehavior: {
             x: "scroll",
             y: "hidden",
           },
         }}
       >
-        <div className="w-full h-full whitespace-no-wrap">
+        <div className="w-full h-full whitespace-nowrap">
           {false ? (
             Array(10)
               .fill(null)
