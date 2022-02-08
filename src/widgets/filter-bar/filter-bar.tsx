@@ -42,45 +42,54 @@ export default function FilterBar() {
           },
         }}
       >
-        {false ? (
-          Array(10)
-            .fill(null)
-            .map(() => (
-              <span className="px-3 w-36">
-                <ContentLoader
-                  speed={2}
-                  className="px-3"
-                  width="100%"
-                  height="100%"
-                  viewBox="0 0 100% 100%"
-                  backgroundColor="#e0e0e0"
-                  foregroundColor="#cecece"
+        <div className="w-full h-full whitespace-no-wrap">
+          {false ? (
+            Array(10)
+              .fill(null)
+              .map(() => (
+                <span className="px-3 w-36">
+                  <ContentLoader
+                    speed={2}
+                    className="px-3"
+                    width="100%"
+                    height="100%"
+                    viewBox="0 0 100% 100%"
+                    backgroundColor="#e0e0e0"
+                    foregroundColor="#cecece"
+                  >
+                    <rect
+                      x="0"
+                      y="0"
+                      rx="4"
+                      ry="4"
+                      width="100%"
+                      height="100%"
+                    />
+                  </ContentLoader>
+                </span>
+              ))
+          ) : categories.length > 0 ? (
+            categories.map((category) => (
+              <span className="px-3">
+                <span
+                  className={classNames(
+                    "cursor-pointer whitespace-nowrap",
+                    selectedCategory === category.category
+                      ? "text-accent"
+                      : "text-body"
+                  )}
+                  onClick={() => {
+                    onCategorySelect(category.category);
+                  }}
                 >
-                  <rect x="0" y="0" rx="4" ry="4" width="100%" height="100%" />
-                </ContentLoader>
+                  {category.category}
+                </span>
               </span>
             ))
-        ) : categories.length > 0 ? (
-          categories.map((category) => (
-            <span className="px-3">
-              <span
-                className={classNames(
-                  "cursor-pointer whitespace-nowrap",
-                  selectedCategory === category.category
-                    ? "text-accent"
-                    : "text-body"
-                )}
-                onClick={() => {
-                  onCategorySelect(category.category);
-                }}
-              >
-                {category.category}
-              </span>
-            </span>
-          ))
-        ) : (
-          <span>Категории недоступны</span>
-        )}
+          ) : (
+            <span>Категории недоступны</span>
+          )}
+        </div>
       </Scrollbar>
     </div>
   );
