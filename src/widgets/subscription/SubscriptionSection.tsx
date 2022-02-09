@@ -13,12 +13,14 @@ import { ReactComponent as WhiteWaves } from "@shared/icons/white-waves.svg";
 import blueWaves from "@shared/icons/blue-waves.svg";
 import hook from "./hook.svg";
 import wave from "./wave.svg";
-import { createEffect } from "effector";
+import { createEffect, forward, restore } from "effector";
 import { postSubscribe } from "@shared/api/dishes";
-import { useStore } from "effector-react";
+import { createGate, useStore } from "effector-react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { ImageWithPreview } from "@pages/DashboardPage/MainPageCover/MainPageCover";
+import axios from "axios";
+import { useGate } from "effector-react/effector-react.cjs";
 
 const subscribeFx = createEffect(postSubscribe);
 
@@ -180,6 +182,19 @@ const links = [
   // "https://www.instagram.com/p/CROO8KlHL7a/embed/",
 ];
 
+function InstagramLoader({ id }: { id: string }) {
+  const [post, setPost] = useState<string | null>(null);
+  useEffect(() => {
+    getPostFx(id).then((post) => {
+      setPost(post);
+    });
+  }, [id]);
+
+  if (!post) return null;
+
+  return <InstagramItem url={post + "/embed/"} />;
+}
+
 function InstagramItem({ url }: { url: string }) {
   const [isTimeoutExpired, setIsTimeoutExpired] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -234,12 +249,52 @@ function InstagramItem({ url }: { url: string }) {
   );
 }
 
+const api_access_token =
+  "IGQVJWamFZAZAHBmUG1rTGU3WVcxVDBFNDA1bWdIWlZAPNE42SE41WlMzM0RxX0dvS3RRRFFkWVVoQnJCVEJUQjNsY3paY1hsQjhGWW9QVDJUOTFlUlVfcGNIa0RZAelRkYmlya0QtRUhWWVhydEFGVUlSTgZDZD";
+
+const getInstagramPostsFx = createEffect<void, string[]>(async () => {
+  const res = await axios.get("https://graph.instagram.com/me/", {
+    params: {
+      access_token: api_access_token,
+      fields: "media",
+    },
+  });
+  const resObject: { media: { data: [{ id: string }] } } = res.data;
+  return resObject.media.data.map(({ id }) => id);
+});
+
+const getPostFx = createEffect<string, string>(async (id) => {
+  const res = await axios.get(`https://graph.instagram.com/${id}`, {
+    params: {
+      access_token: api_access_token,
+      fields: "permalink",
+    },
+  });
+  return res.data.permalink;
+});
+
+const instGate = createGate();
+
+// forward({
+//   from: instGate.open,
+//   to: getInstagramPostsFx,
+// });
+
+const $instagramData = restore(getInstagramPostsFx.doneData, null);
+
 function InstagramGalery() {
+  useGate(instGate);
+
+  const ids = useStore($instagramData);
+
   return (
     <div className="flex justify-center md:px-4 lg:px-8 xl:px-32">
       <div className="grid lg:grid-cols-2 xl:grid-cols-3 3xl:grid-cols-4 grid-rows-2 gap-5">
-        {links.map((href, idx) => (
-          <InstagramItem url={href} key={idx} />
+        {/* {ids?.map((id) => (
+          <InstagramLoader id={id} key={id} />
+        ))} */}
+        {links.map((url) => (
+          <InstagramItem url={url} key={url} />
         ))}
       </div>
     </div>

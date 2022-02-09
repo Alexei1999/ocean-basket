@@ -40,22 +40,12 @@ const ModifierGroups = ({
   return (
     <>
       {modifiers.map((modifier, idx) => {
-        const { option1, option2, option3, option4, option5 } = modifier;
-        const {
-          option1_price,
-          option2_price,
-          option3_price,
-          option4_price,
-          option5_price,
-        } = modifier;
-
-        const optionsObject = [
-          [option1, option1_price],
-          [option2, option2_price],
-          [option3, option3_price],
-          [option4, option4_price],
-          [option5, option5_price],
-        ].filter(([option]) => option);
+        const optionsObject = Object.entries(modifier)
+          .filter(([key, value]) => value && key.match(/^option\d+$/))
+          .map(([key, value]) => [
+            value,
+            modifier[(key + "_price") as keyof ModifierType] as string | "0",
+          ]);
 
         if (!optionsObject.length) {
           return null;
@@ -80,7 +70,11 @@ const ModifierGroups = ({
                 const nextModifier =
                   option === activeModifier[modifier.id]?.option
                     ? undefined
-                    : createPickedModifier(modifier, option, nextPrice);
+                    : createPickedModifier(
+                        modifier,
+                        option as string | null,
+                        nextPrice
+                      );
 
                 return (
                   <Attribute

@@ -16,6 +16,7 @@ export default function FilterBar() {
   const categories = useStore($categories);
 
   const canSticky = useMemo(() => {
+    return false;
     try {
       return CSS.supports("position", "sticky");
     } catch {
@@ -27,11 +28,8 @@ export default function FilterBar() {
     <div
       className={classNames(
         "overflow-hidden max-w-full h-14 md:h-16 z-10 flex xl:hidden items-center justify-between px-3 lg:px-5 bg-light border-t border-b border-border-200 -top-[1px]",
-        canSticky ? "sticky" : "fixed"
+        canSticky ? "sticky" : "fixed lg:top-22 md:top-16 top-14"
       )}
-      style={{
-        top: canSticky ? "0px" : HEADER_HEIGHT + "px",
-      }}
     >
       <Scrollbar
         options={{

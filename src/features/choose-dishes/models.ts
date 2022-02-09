@@ -45,6 +45,8 @@ export type ModifierType = {
   option4_price: string | "0";
   option5: string | null;
   option5_price: string | "0";
+  option6: string | null;
+  option6_price: string | "0";
   created_at: string | null;
   updated_at: string | null;
 };
