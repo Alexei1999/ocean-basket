@@ -161,9 +161,9 @@ function InstagramHeader() {
       <a
         target="_blank"
         className="text-accent font-bold text-2xl pt-8 hover:underline"
-        href="https://www.instagram.com/ocean_basket/"
+        href="https://www.instagram.com/oceanbasket.ru/"
       >
-        @oceanbasket
+        @oceanbasket.ru
       </a>
       <img src={wave} className="pt-4" />
     </div>
