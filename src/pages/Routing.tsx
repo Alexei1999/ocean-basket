@@ -13,10 +13,12 @@ import { DetailsPage } from "./DetailsPage/DeatilsPage";
 import { OrderDescription } from "@entities/payment/components/OrderDescription/OrderDescription";
 import { OrderDescriptionContainerFetch } from "@entities/payment/components/OrderDescription/OrderDescriptionContainerFetch";
 import { CheckoutPage } from "./CheckoutPage/CheckoutPage";
+import { AddDishModal } from "@entities/cart/components/Details/add-dish-modal";
 
 export const Routing = () => {
   return (
     <Routes>
+      <Route path={`${RoutesConfig.Menu}/:id`} element={<MenuPage />} />
       <Route path={RoutesConfig.Menu} element={<MenuPage />} />
       <Route path={RoutesConfig.Payment} element={<PaymentPage />} />
       <Route path={RoutesConfig.Checkout} element={<CheckoutPage />} />

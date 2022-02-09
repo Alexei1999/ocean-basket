@@ -13,6 +13,7 @@ import { useStore } from "effector-react";
 import { AddDishModal } from "@entities/cart/components/Details/add-dish-modal";
 import MobileNavigation from "@widgets/mobile-navigation/mobile-navigation";
 import { MobileMainMenu } from "@shared/components/drawer/mobile-main-menu";
+import { RoutesConfig } from "@shared/lib/routes-config";
 
 export const onScrollPage = createEvent();
 const $updateStore = createStore<{}>({}).on(onScrollPage, () => ({}));
@@ -21,11 +22,9 @@ const ScrollContainer = ({ children }: { children: ReactNode }) => {
   const updateDependency = useStore($updateStore);
   const ref = useRef<HTMLDivElement>(null);
 
-  const { pathname } = useLocation();
-
   useEffect(() => {
     ref.current?.scrollTo(0, 0);
-  }, [pathname, updateDependency]);
+  }, [updateDependency]);
 
   return (
     <div ref={ref} className="overflow-auto">
@@ -37,7 +36,7 @@ const ScrollContainer = ({ children }: { children: ReactNode }) => {
 function App() {
   return (
     <>
-      <AddDishModal />
+     
       <CartSidebar />
       <MobileMainMenu />
       <div className="flex flex-col max-h-screen">

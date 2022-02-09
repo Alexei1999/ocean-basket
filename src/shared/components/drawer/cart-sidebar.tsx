@@ -1,3 +1,4 @@
+import { onScrollPage } from "@app/";
 import { CartSidebarView } from "@entities/cart/components/cart-sidebar-view";
 import { RoutesConfig } from "@shared/lib/routes-config";
 import { createEvent, createStore } from "effector";
@@ -25,6 +26,7 @@ export function CartSidebar() {
         onSubmit={function () {
           setCartSidebarOpen(false);
           navigate(RoutesConfig.Payment);
+          onScrollPage();
         }}
         onClose={() => setCartSidebarOpen(false)}
       />

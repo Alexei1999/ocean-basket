@@ -2,6 +2,7 @@ import cn from "classnames";
 import { Link } from "react-router-dom";
 import { RoutesConfig } from "@shared/lib/routes-config";
 import logo from "@assets/logo.svg";
+import { onScrollPage } from "@app/";
 
 const LOGO_WIDTH = 128;
 const LOGO_HEIGHT = 40;
@@ -15,6 +16,7 @@ export const Logo: React.FC<React.AnchorHTMLAttributes<{}>> = ({
   return (
     <Link
       to={RoutesConfig.Dashboard}
+      onClick={() => onScrollPage()}
       className={cn("inline-flex", className)}
       {...props}
     >

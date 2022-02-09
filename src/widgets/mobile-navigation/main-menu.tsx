@@ -1,3 +1,4 @@
+import { onScrollPage } from "@app/";
 import { DrawerWrapper } from "@shared/components/drawer/drawer-wrapper";
 import { onSetPagesSidebarOpen } from "@shared/components/drawer/mobile-main-menu";
 import { extendedLinks, headerLinks } from "@widgets/header/config/links";
@@ -23,6 +24,7 @@ export default function MainMenu() {
 
                 if (pathname === href) return;
                 navigate(href);
+                onScrollPage();
               }}
               className={classNames(
                 "flex items-center py-3 px-5 md:px-8 text-sm font-semibold transition duration-200 hover:text-accent cursor-pointer",

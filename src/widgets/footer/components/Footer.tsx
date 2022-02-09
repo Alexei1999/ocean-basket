@@ -16,6 +16,7 @@ import { onCategorySelect } from "@entities/сategories/components/TreeMenu/Tree
 import { fetchCategoriesFx } from "@entities/сategories/components/Categories/Categories";
 import { extendedLinks, headerLinks } from "@widgets/header/config/links";
 import { restore } from "effector";
+import { onScrollPage } from "@app/";
 
 const links = [...extendedLinks, ...headerLinks];
 
@@ -136,6 +137,7 @@ export function Footer() {
       <div
         onClick={() => {
           navigate(RoutesConfig.Details);
+          onScrollPage();
         }}
         className="pt-3 cursor-pointer"
       >
@@ -184,6 +186,7 @@ export function Footer() {
                             onClick={() => {
                               onCategorySelect(item.category);
                               navigate(RoutesConfig.Menu);
+                              onScrollPage();
                             }}
                           >
                             {item.category}
@@ -202,7 +205,10 @@ export function Footer() {
                 <div className="flex flex-col">
                   {links.map((item, index) => (
                     <span
-                      onClick={() => navigate(item.href)}
+                      onClick={() => {
+                        navigate(item.href);
+                        onScrollPage();
+                      }}
                       className="mb-4 cursor-pointer"
                       key={index}
                     >

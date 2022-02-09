@@ -16,6 +16,7 @@ import { AddressSelection } from "./AddressSelection";
 import classNames from "classnames";
 
 import styles from "./styles.module.scss";
+import { onScrollPage } from "@app/";
 
 export function Header() {
   const isOpen = useStore($isCartSidebarOpen);
@@ -23,10 +24,10 @@ export function Header() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const onLogoClickHandler = useCallback(
-    () => navigate(RoutesConfig.Dashboard),
-    [navigate]
-  );
+  const onLogoClickHandler = useCallback(() => {
+    navigate(RoutesConfig.Dashboard);
+    onScrollPage();
+  }, [navigate]);
 
   return (
     <header
@@ -59,6 +60,7 @@ export function Header() {
                 <li key={`${href}-${label}`}>
                   <Link
                     to={href}
+                    onClick={() => onScrollPage()}
                     className={cn(
                       "font-normal text-heading flex items-center transition duration-200 no-underline hover:text-accent",
                       isCurrent && "text-accent"

@@ -175,3 +175,15 @@ export const getTimeValidate = (): Promise<boolean> => {
     .then((response) => response.data)
     .then((data) => data.result);
 };
+
+export const getDish = (id: string): Promise<Dish> => {
+  return baseApi
+    .post(`${apiBaseUrl}/getDish`, { dish_id: id })
+    .then((response) => response.data);
+};
+
+export const getPosts = (): Promise<string[]> => {
+  return baseApi
+    .get(`${apiBaseUrl}/getPermalinks`)
+    .then((response) => response.data);
+};

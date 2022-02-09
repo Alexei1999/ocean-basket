@@ -19,6 +19,7 @@ import { useStore } from "effector-react/effector-react.cjs";
 import { Autoplay } from "swiper";
 
 import footer from "@assets/footer.png";
+import { onScrollPage } from "@app/";
 
 const onSlideChange = createEvent<number>();
 
@@ -114,7 +115,10 @@ export function MainPageCover() {
               styles.button,
               "w-full text-accent hover:text-accent-hover lg:max-w-[200px]"
             )}
-            onClick={() => navigate(RoutesConfig.Menu)}
+            onClick={() => {
+              navigate(RoutesConfig.Menu);
+              onScrollPage();
+            }}
           >
             Меню
           </Button>

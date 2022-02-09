@@ -7,11 +7,13 @@ import { Dish, DishStatus } from "@shared/api/dishes";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
 import { useSortedPrices } from "@entities/cart/components/Details/variation-price";
-import { onDishModalOpen } from "@entities/cart/components/Details/add-dish-modal";
+import { saveChoosenDish } from "@entities/cart/components/Details/add-dish-modal";
 import { hostUrl } from "@shared/api/base";
 import { formatRub } from "@entities/cart/components/Details/variation-groups";
 import { createEvent, createStore, restore } from "effector";
 import { useStore } from "effector-react";
+import { useNavigate } from "react-router-dom";
+import { RoutesConfig } from "@shared/lib/routes-config";
 
 type DishCardProps = {
   product: Dish;
@@ -93,6 +95,8 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
   const isSmallScreen = useStore($smScreen);
   const isMediumScreen = useStore($mdScreen);
 
+  const navigate = useNavigate();
+
   const price = useMemo(() => {
     if (mappedPrices.length === 0) return;
 
@@ -110,7 +114,8 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
   }, []);
 
   function handleProductQuickView() {
-    onDishModalOpen(product);
+    saveChoosenDish(product);
+    navigate(RoutesConfig.Menu + "/" + product.id);
   }
 
   const formattedDescription = useMemo(() => {

@@ -16,6 +16,7 @@ import { useStore } from "effector-react";
 import classNames from "classnames";
 import { SushiIcon } from "./sushi-icon";
 import { useEffect, useRef, useState } from "react";
+import { onScrollPage } from "@app/";
 
 const MobileNavigation: React.FC = () => {
   const navigate = useNavigate();
@@ -48,6 +49,8 @@ const MobileNavigation: React.FC = () => {
             pathname === RoutesConfig.Dashboard
               ? navigate(RoutesConfig.Menu)
               : navigate(RoutesConfig.Dashboard);
+
+            onScrollPage();
           }}
           className={classNames(
             "flex p-2 h-full items-center justify-center focus:outline-none",

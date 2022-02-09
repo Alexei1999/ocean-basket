@@ -1,3 +1,4 @@
+import { AddDishModal } from "@entities/cart/components/Details/add-dish-modal";
 import { PromotionSlider } from "@entities/promotions/components/PromotionSlider/PromotionSlider";
 import FilterBar from "@widgets/filter-bar/filter-bar";
 import { ShopClosedModal } from "@widgets/ShopClosedModal";
@@ -18,9 +19,9 @@ export function MenuPage() {
 
   return (
     <>
+      <AddDishModal />;
       <div className="metriks" dangerouslySetInnerHTML={{ __html: ym() }} />
-
-      <div className={classNames(!canSticky && "pt-16")}>
+      <div className={classNames(!canSticky && "pt-14 md:pt-16 xl:pt-0")}>
         <ShopClosedModal />
         <PromotionSlider />
         <div className="relative">

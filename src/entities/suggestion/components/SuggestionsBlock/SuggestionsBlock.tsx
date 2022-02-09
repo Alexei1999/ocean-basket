@@ -1,9 +1,11 @@
-import { onDishModalOpen } from "@entities/cart/components/Details/add-dish-modal";
+import { saveChoosenDish } from "@entities/cart/components/Details/add-dish-modal";
 import { isDishValid } from "@entities/cart/components/Details/details";
 import { $cartItems } from "@features/choose-dishes/models";
 import { Dish } from "@shared/api/dishes";
+import { RoutesConfig } from "@shared/lib/routes-config";
 import { useStore } from "effector-react";
 import React, { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { SuggestionsAction } from "./SuggestionsAction";
 import { SuggestionsCategory } from "./SuggestionsCategory";
 
@@ -19,6 +21,8 @@ export function SuggestionsBlock({
   const [categorizedDishes, setCategorizedDishes] = useState<{
     [key: string]: Omit<Dish, "recommended_dishes">[];
   }>({});
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const reccomendedDishes = unicItemsList
@@ -67,7 +71,8 @@ export function SuggestionsBlock({
                 key={idx}
                 item={item}
                 onClick={() => {
-                  onDishModalOpen(item);
+                  saveChoosenDish(item);
+                  navigate(RoutesConfig.Menu + "/" + item.id);
                 }}
               />
             ))}

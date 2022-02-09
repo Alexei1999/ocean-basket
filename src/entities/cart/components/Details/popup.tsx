@@ -4,6 +4,7 @@ import Spinner from "@shared/components/spinner/spinner";
 import { createEffect, createStore } from "effector";
 import { useStore } from "effector-react";
 import { useEffect, useState } from "react";
+import { getDishFx } from "./add-dish-modal";
 import Details from "./details";
 
 const getModifiersFx = createEffect(getModifiers);
@@ -19,7 +20,11 @@ const Popup: React.FC<ProductPopupProps> = ({ product }) => {
   const [showStickyShortDetails, setShowStickyShortDetails] = useState(false);
   const [isDelayed, setIsDelayed] = useState(false);
 
-  const isLoading = useStore(getModifiersFx.pending);
+  const isModifiersLoading = useStore(getModifiersFx.pending);
+  const isDishLoading = useStore(getDishFx.pending);
+
+  const isLoading = isModifiersLoading || isDishLoading;
+
   const modifiers = useStore($modifiers);
 
   useEffect(() => {

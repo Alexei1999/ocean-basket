@@ -4,12 +4,14 @@ import {
   deleteLastProductFromCart,
 } from "@features/choose-dishes/models";
 import { Dish, DishStatus } from "@shared/api/dishes";
+import { RoutesConfig } from "@shared/lib/routes-config";
 
 import cn from "classnames";
 import { useStore } from "effector-react";
+import { useNavigate } from "react-router-dom";
 import { AddToCartBtn } from "../../../dishes/components/Card/AddToCartBtn";
 import { Counter } from "../../../dishes/components/Counter/Counter";
-import { onDishModalOpen } from "../Details/add-dish-modal";
+import { saveChoosenDish } from "../Details/add-dish-modal";
 import styles from "./styles.module.scss";
 
 interface Props {
@@ -20,6 +22,7 @@ interface Props {
 
 export const AddToCart = ({ data, counterClass }: Props) => {
   const { unicItemsNumber } = useStore($cartSizes);
+  const navigate = useNavigate();
 
   const isOpen = useStore($isRestaurantOpen);
 
@@ -31,7 +34,8 @@ export const AddToCart = ({ data, counterClass }: Props) => {
     e.stopPropagation();
     if (isDisabled) return;
 
-    onDishModalOpen(data);
+    saveChoosenDish(data);
+    navigate(RoutesConfig.Menu + "/" + data.id);
   };
   const handleRemoveClick = (e: any) => {
     e.stopPropagation();

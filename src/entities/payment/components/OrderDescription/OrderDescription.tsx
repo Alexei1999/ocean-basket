@@ -10,6 +10,7 @@ import { Details } from "./Details";
 import { OrderDescriptionContainer } from "./OrderDescriptionContainer";
 import { getDeliveryFeeName } from "../Forms/PaymentProccessing";
 import { formatRub } from "@entities/cart/components/Details/variation-groups";
+import { onScrollPage } from "@app/";
 
 dayjs.locale("ru");
 
@@ -75,7 +76,10 @@ export function OrderDescription({
                 Попробуйте ещё раз, или обратесь в{" "}
                 <span
                   className="underline cursor-pointer hover:text-accent"
-                  onClick={() => navigate(RoutesConfig.Contacts)}
+                  onClick={() => {
+                    navigate(RoutesConfig.Contacts);
+                    onScrollPage();
+                  }}
                 >
                   поддержку
                 </span>
@@ -91,7 +95,10 @@ export function OrderDescription({
         </div>
         <div className="w-full sm:w-auto ml-auto order-0 sm:order-1 sm:-mt-8 md:-mr-9">
           <button
-            onClick={() => navigate(RoutesConfig.Dashboard)}
+            onClick={() => {
+              navigate(RoutesConfig.Dashboard);
+              onScrollPage();
+            }}
             className="w-full sm:w-auto text-body text-sm py-3 px-8 border border-current rounded-xl hover:bg-accent hover:text-light"
           >
             Вернуться на главную

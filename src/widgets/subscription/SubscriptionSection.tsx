@@ -14,7 +14,7 @@ import blueWaves from "@shared/icons/blue-waves.svg";
 import hook from "./hook.svg";
 import wave from "./wave.svg";
 import { createEffect, forward, restore } from "effector";
-import { postSubscribe } from "@shared/api/dishes";
+import { getPosts, postSubscribe } from "@shared/api/dishes";
 import { createGate, useStore } from "effector-react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -282,10 +282,15 @@ const instGate = createGate();
 
 const $instagramData = restore(getInstagramPostsFx.doneData, null);
 
-function InstagramGalery() {
-  useGate(instGate);
+const getPostsFx = createEffect(getPosts);
+const $posts = restore(getPostsFx.doneData, []);
 
-  const ids = useStore($instagramData);
+function InstagramGalery() {
+  useEffect(() => {
+    getPostsFx();
+  }, []);
+
+  const posts = useStore($posts);
 
   return (
     <div className="flex justify-center md:px-4 lg:px-8 xl:px-32">
@@ -293,8 +298,8 @@ function InstagramGalery() {
         {/* {ids?.map((id) => (
           <InstagramLoader id={id} key={id} />
         ))} */}
-        {links.map((url) => (
-          <InstagramItem url={url} key={url} />
+        {posts.map((url) => (
+          <InstagramItem url={url + "embed/"} key={url} />
         ))}
       </div>
     </div>
