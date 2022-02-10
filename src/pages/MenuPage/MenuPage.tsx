@@ -19,7 +19,7 @@ export function MenuPage() {
 
   return (
     <>
-      <AddDishModal />;
+      <AddDishModal />
       <div className="metriks" dangerouslySetInnerHTML={{ __html: ym() }} />
       <div className={classNames(!canSticky && "pt-14 md:pt-16 xl:pt-0")}>
         <ShopClosedModal />

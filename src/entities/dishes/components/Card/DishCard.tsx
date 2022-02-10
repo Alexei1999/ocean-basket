@@ -22,8 +22,9 @@ type DishCardProps = {
 
 const TEXT_MOBILE_SMALL_MAX_SIZE = 30;
 const TEXT_MOBILE_MEDIUM_MAX_SIZE = 120;
+const TEXT_MOBILE_LARGE_MAX_SIZE = 130;
 
-const onScreenUpdate = createEvent<number>();
+export const onScreenUpdate = createEvent<number>();
 
 export const $smScreen = createStore(false).on(
   onScreenUpdate,
@@ -94,6 +95,7 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
   const mappedPrices = useSortedPrices(prices);
   const isSmallScreen = useStore($smScreen);
   const isMediumScreen = useStore($mdScreen);
+  const isLargeScreen = useStore($lgScreen);
 
   const navigate = useNavigate();
 
@@ -129,8 +131,12 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
       return `${description.slice(0, TEXT_MOBILE_MEDIUM_MAX_SIZE)}...`;
     }
 
+    if (isLargeScreen && description.length > TEXT_MOBILE_LARGE_MAX_SIZE) {
+      return `${description.slice(0, TEXT_MOBILE_LARGE_MAX_SIZE)}...`;
+    }
+
     return description;
-  }, [isSmallScreen, isMediumScreen, description]);
+  }, [isSmallScreen, isMediumScreen, isLargeScreen, description]);
 
   return (
     <article

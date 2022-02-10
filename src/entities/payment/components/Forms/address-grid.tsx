@@ -53,9 +53,11 @@ export function BlocksGrid<T>({
 
   return (
     <div className={className}>
-      <Modal open={isModalOpen} onClose={onClose} showClose>
-        <Form onSubmit={onClose} />
-      </Modal>
+      {isModalOpen && (
+        <Modal open={isModalOpen} onClose={onClose} showClose>
+          <Form onSubmit={onClose} />
+        </Modal>
+      )}
 
       <AddressHeader
         count={count}

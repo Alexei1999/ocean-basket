@@ -1,5 +1,5 @@
 import { CloseIcon } from "@entities/cart/components/icons/close-icon";
-import { setToStorage } from "@features/choose-dishes/api";
+import { getFromStorage, setToStorage } from "@features/choose-dishes/api";
 import Button from "@shared/button";
 import classNames from "classnames";
 import { createEvent, createStore } from "effector";
@@ -11,11 +11,12 @@ const RUS_PHONE_REGEXP = /\d{11}$/;
 const isNumberValid = (value?: string | null) =>
   RUS_PHONE_REGEXP.test(value as string);
 
+const storageNumber = getFromStorage<string | null>("phone", false);
+
 export const onPhoneSubmit = createEvent<string | null>();
-export const $phone = createStore<string | null>(null).on(
-  onPhoneSubmit,
-  (_, phone) => phone
-);
+export const $phone = createStore<string | null>(
+  isNumberValid(storageNumber) ? storageNumber : null
+).on(onPhoneSubmit, (_, phone) => phone);
 
 $phone.watch((phone) => {
   setToStorage("phone", phone);

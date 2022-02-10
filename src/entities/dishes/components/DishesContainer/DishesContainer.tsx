@@ -11,7 +11,7 @@ import {
 import cn from "classnames";
 import { useStore } from "effector-react";
 import { useEffect, useMemo, useState } from "react";
-import { DishCard } from "../Card/DishCard";
+import { DishCard, onScreenUpdate } from "../Card/DishCard";
 import { NotFound } from "../NotFound";
 import { ProductLoader } from "./ProductLoader";
 
@@ -23,6 +23,10 @@ export function DishesContainer() {
 
   const isDishesLoading = useStore(fetchDishesFx.pending);
   const isPopularDishesLoading = useStore(fetchPopularDishesFx.pending);
+
+  useEffect(() => {
+    onScreenUpdate(window.innerWidth);
+  }, []);
 
   const [isError, setIsError] = useState(false);
 
