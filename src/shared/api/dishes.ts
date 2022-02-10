@@ -76,7 +76,7 @@ export type OrderTypeParams = Omit<FormValues, "title"> & {
     weight: number;
     rouble_price: number;
     tenge_price: number;
-    modifiers: { key: string; value: string }[];
+    modifiers: { key: string; value: string; amount: number }[];
   }[];
   promocode?: string;
   restaurant: string;

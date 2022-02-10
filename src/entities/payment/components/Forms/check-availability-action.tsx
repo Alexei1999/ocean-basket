@@ -180,9 +180,10 @@ const formatDish = ({
       : parsedTengePrice) as number,
     modifiers: modifiers
       .filter(({ option }) => option)
-      .map(({ option, name }) => ({
+      .map(({ option, name, price }) => ({
         key: name,
         value: option,
+        amount: price as number,
       })),
   };
 
