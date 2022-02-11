@@ -4,6 +4,7 @@ import { ReactNode, useState } from "react";
 import { onSubmitForm } from "./address-form";
 import { AddressHeader } from "./address-header";
 import Modal from "./modal";
+import ModalSimple from "./modal-simple";
 
 export type Address = {
   [key: string]: any;
@@ -15,6 +16,7 @@ interface AddressesProps<T> {
   className?: string;
   addLabel?: string;
   editLabel?: string;
+  isSimple?: boolean;
   data?: T;
   form: React.FC<{ onSubmit: () => void }>;
   card: React.FC<{ checked: boolean; data: T; onEdit: () => void }>;
@@ -38,6 +40,7 @@ export function BlocksGrid<T>({
   addLabel,
   editLabel,
   data,
+  isSimple = false,
   form: Form,
   card: Card,
   onEdit: onAdd,
@@ -53,7 +56,11 @@ export function BlocksGrid<T>({
 
   return (
     <div className={className}>
-      {isModalOpen && (
+      {isSimple ? (
+        <ModalSimple open={isModalOpen} onClose={onClose} showClose>
+          <Form onSubmit={onClose} />
+        </ModalSimple>
+      ) : (
         <Modal open={isModalOpen} onClose={onClose} showClose>
           <Form onSubmit={onClose} />
         </Modal>
