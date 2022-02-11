@@ -9,8 +9,6 @@ import classNames from "classnames";
 import { onCategorySelect } from "@entities/сategories/components/TreeMenu/TreeMenuItem";
 import { useEffect, useMemo } from "react";
 
-export const HEADER_HEIGHT = 64;
-
 export default function FilterBar() {
   const selectedCategory = useStore($category);
   const categories = useStore($categories);

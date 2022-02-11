@@ -182,7 +182,6 @@ export function PaymentProccessing() {
         <div className="flex flex-col lg:flex-row items-center lg:items-start m-auto w-full max-w-6xl">
           <div className="lg:max-w-2xl w-full space-y-6 order-1 lg:order-0">
             <BlocksGrid
-              isSimple
               addLabel="Добавить адрес"
               editLabel="Изменить адрес"
               className="shadow-700 bg-light p-5 md:p-8"
