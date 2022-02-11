@@ -1,5 +1,3 @@
-import { FilterIcon } from "./filter-icon";
-import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
 import { $categories, $category } from "@features/choose-dishes/models";
 import { useStore } from "effector-react";
 import { fetchCategoriesFx } from "@entities/сategories/components/Categories/Categories";
@@ -7,11 +5,17 @@ import ContentLoader from "react-content-loader";
 import { Scrollbar } from "@shared/components/Scrollbar";
 import classNames from "classnames";
 import { onCategorySelect } from "@entities/сategories/components/TreeMenu/TreeMenuItem";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
+import { createStore } from "effector";
+
+const $isSuccess = createStore(false)
+  .on(fetchCategoriesFx.done, () => true)
+  .on(fetchCategoriesFx.fail, () => false);
 
 export default function FilterBar() {
   const selectedCategory = useStore($category);
   const categories = useStore($categories);
+  const isCategories = useStore($isSuccess);
 
   const canSticky = useMemo(() => {
     return false;
@@ -25,7 +29,7 @@ export default function FilterBar() {
   return (
     <div
       className={classNames(
-        "overflow-hidden max-w-full h-14 md:h-16 z-10 flex xl:hidden items-center justify-between px-3 lg:px-5 bg-light border-t border-b border-border-200 -top-[1px]",
+        "overflow-hidden max-w-full h-14 md:h-16 z-10 flex xl:hidden items-center justify-between bg-light border-t border-b border-border-200 -top-[1px]",
         canSticky ? "sticky" : "fixed lg:top-22 md:top-16 top-14"
       )}
     >
@@ -38,9 +42,9 @@ export default function FilterBar() {
           },
         }}
       >
-        <div className="w-full h-full whitespace-nowrap">
-          {false ? (
-            Array(10)
+        {false ? (
+          <div className="w-full h-full whitespace-nowrap px-3 lg:px-5">
+            {Array(10)
               .fill(null)
               .map(() => (
                 <span className="px-3 w-36">
@@ -63,9 +67,11 @@ export default function FilterBar() {
                     />
                   </ContentLoader>
                 </span>
-              ))
-          ) : categories.length > 0 ? (
-            categories.map((category) => (
+              ))}
+          </div>
+        ) : isCategories && categories.length > 1 ? (
+          <div className="w-full h-full whitespace-nowrap px-3 lg:px-5">
+            {categories.map((category) => (
               <span className="px-3">
                 <span
                   className={classNames(
@@ -81,11 +87,11 @@ export default function FilterBar() {
                   {category.category}
                 </span>
               </span>
-            ))
-          ) : (
-            <span>Категории недоступны</span>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <></>
+        )}
       </Scrollbar>
     </div>
   );

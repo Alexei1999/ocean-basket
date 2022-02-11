@@ -3,9 +3,15 @@ import classNames from "classnames";
 interface ScheduleProps {
   schedule: any;
   checked: boolean;
+  onClick: () => void;
 }
-const ScheduleCard: React.FC<ScheduleProps> = ({ checked, schedule }) => (
+const ScheduleCard: React.FC<ScheduleProps> = ({
+  checked,
+  schedule,
+  onClick,
+}) => (
   <div
+    onClick={onClick}
     className={classNames(
       "min-h-[110px] relative py-5 px-4 rounded-xl border cursor-pointer group text-body hover:border-current",
       {

@@ -25,29 +25,25 @@ export type FormValues = {
   persons_number: number;
 };
 
+const transformNumber = (value: unknown) => {
+  const newValue = parseInt(value as string);
+  return isNaN(newValue) ? null : newValue;
+};
+
 const addressSchema = yup.object().shape({
   title: yup.string(),
   city: yup.string().required("Город обязателен к заполнению"),
   street: yup.string().required("Улица обязательна к заполнению"),
   building: yup.string().required("Дом обязателен к заполнению"),
   part: yup.string(),
-  flat: yup
-    .number()
-    .transform((value) => (isNaN(value) ? null : parseInt(value)))
-    .nullable(),
-  entrance: yup
-    .number()
-    .transform((value) => (isNaN(value) ? null : parseInt(value)))
-    .nullable(),
-  floor: yup
-    .number()
-    .transform((value) => (isNaN(value) ? null : parseInt(value)))
-    .nullable(),
+  flat: yup.number().transform(transformNumber).nullable(),
+  entrance: yup.number().transform(transformNumber).nullable(),
+  floor: yup.number().transform(transformNumber).nullable(),
   intercom: yup.string().nullable().notRequired(),
   comment: yup.string(),
   persons_number: yup
     .number()
-    .transform((value) => (isNaN(value) ? null : parseInt(value)))
+    .transform(transformNumber)
     .nullable()
     .required("Количество персон обязательно к заполнению")
     .min(1, "Количество персон не может быть пустым"),

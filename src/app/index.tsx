@@ -36,7 +36,6 @@ const ScrollContainer = ({ children }: { children: ReactNode }) => {
 function App() {
   return (
     <>
-     
       <CartSidebar />
       <MobileMainMenu />
       <div className="flex flex-col max-h-screen">

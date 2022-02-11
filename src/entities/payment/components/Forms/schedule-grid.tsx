@@ -72,26 +72,22 @@ export const ScheduleGrid: React.FC<ScheduleProps> = ({
       <AddressHeader label={label} count={count} isEdit={false} />
 
       <div className="mt-5 md:mt-8">
-        {schedules && schedules?.length ? (
-          <RadioGroup value={selectedSchedule} onChange={onScheduleChange}>
-            <RadioGroup.Label className="sr-only">{label}</RadioGroup.Label>
-            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-              {schedules?.map((schedule: any, idx: number) => (
-                <RadioGroup.Option value={schedule} key={idx}>
-                  {({ checked }) => (
-                    <ScheduleCard checked={checked} schedule={schedule} />
-                  )}
-                </RadioGroup.Option>
-              ))}
-            </div>
-          </RadioGroup>
-        ) : (
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+          {schedules && schedules?.length ? (
+            schedules?.map((schedule) => (
+              <ScheduleCard
+                key={schedule.id}
+                checked={schedule.id === selectedSchedule?.id}
+                schedule={schedule}
+                onClick={() => onScheduleChange(schedule)}
+              />
+            ))
+          ) : (
             <span className="relative px-5 py-6 text-base text-center bg-gray-100 rounded border border-border-200">
               {"Нет доступных расписаний"}
             </span>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
