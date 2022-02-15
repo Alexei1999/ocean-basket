@@ -21,6 +21,7 @@ type CounterProps = {
   onIncrement: ButtonEvent;
   className?: string;
   disabled?: boolean;
+  onClick?: () => void;
 };
 
 const variantClasses = {
@@ -47,6 +48,7 @@ export const Counter: React.FC<CounterProps> = ({
   onIncrement,
   className,
   disabled,
+  onClick,
 }) => {
   return (
     <div
@@ -72,6 +74,7 @@ export const Counter: React.FC<CounterProps> = ({
           "flex-1 flex items-center justify-center font-semibold",
           variant === "pillVertical" ? "text-body text-sm" : "text-xs"
         )}
+        onClick={onClick}
       >
         {value}
       </div>

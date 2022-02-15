@@ -5,6 +5,14 @@ import "dayjs/locale/ru";
 import App from "./app";
 import reportWebVitals from "./app/reportWebVitals";
 
+import TagManager from "react-gtm-module";
+
+const tagManagerArgs = {
+  gtmId: "GTM-5XKDH4C",
+};
+
+TagManager.initialize(tagManagerArgs);
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

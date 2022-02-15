@@ -6,9 +6,9 @@ import { useStore } from "effector-react";
 import { useNavigate } from "react-router-dom";
 import { Drawer } from "./drawer";
 
-export const setCartSidebarOpen = createEvent<boolean>();
+export const onSetCartSidebarOpen = createEvent<boolean>();
 export const $isCartSidebarOpen = createStore<boolean>(false).on(
-  setCartSidebarOpen,
+  onSetCartSidebarOpen,
   (_, isOpen) => isOpen
 );
 
@@ -19,16 +19,16 @@ export function CartSidebar() {
   return (
     <Drawer
       open={isOpen}
-      onClose={() => setCartSidebarOpen(false)}
+      onClose={() => onSetCartSidebarOpen(false)}
       variant="right"
     >
       <CartSidebarView
         onSubmit={function () {
-          setCartSidebarOpen(false);
+          onSetCartSidebarOpen(false);
           navigate(RoutesConfig.Payment);
           onScrollPage();
         }}
-        onClose={() => setCartSidebarOpen(false)}
+        onClose={() => onSetCartSidebarOpen(false)}
       />
       {/* TODO: Add another menu to drawer */}
       {/* {view === "FILTER_VIEW" && <MobileCategoryMenu />} */}

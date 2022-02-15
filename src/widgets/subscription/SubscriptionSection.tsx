@@ -203,7 +203,7 @@ function InstagramItem({ url }: { url: string }) {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setIsTimeoutExpired(true);
-    }, 5000);
+    }, 15000);
 
     return () => {
       clearTimeout(timeout);

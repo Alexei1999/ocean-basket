@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, useCallback, useEffect, useRef } from "react";
 import Portal from "@reach/portal";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -11,6 +11,7 @@ import { fadeInOut } from "@entities/cart/lib/fade-in-out";
 import { fadeInLeft } from "@entities/cart/lib/fade-in-left";
 import { fadeInRight } from "@entities/cart/lib/fade-in-right";
 import { Scrollbar } from "../Scrollbar";
+import { useSwipeable } from "react-swipeable";
 
 interface DrawerProps {
   children: any;
@@ -28,6 +29,16 @@ export const Drawer: FC<DrawerProps> = ({
   useBlurBackdrop,
   onClose,
 }) => {
+  const { ref: swiperRef, onMouseDown } = useSwipeable(
+    variant === "right"
+      ? {
+          onSwipedRight: onClose,
+        }
+      : {
+          onSwipedLeft: onClose,
+        }
+  );
+
   const ref = useRef() as DivElementRef;
   useEffect(() => {
     if (ref.current) {
@@ -42,18 +53,27 @@ export const Drawer: FC<DrawerProps> = ({
     };
   }, [open]);
 
+  const updateRefs = useCallback(
+    (motRef: HTMLDivElement) => {
+      ref.current = motRef;
+      swiperRef(motRef);
+    },
+    [swiperRef]
+  );
+
   return (
     <Portal>
       <AnimatePresence>
         {open && (
           <motion.aside
-            ref={ref}
+            ref={updateRefs}
             key="drawer"
             initial="from"
             animate="to"
             exit="from"
             variants={variant === "right" ? fadeInRight() : fadeInLeft()}
             className="fixed inset-0 overflow-hidden h-full z-50"
+            onMouseDown={onMouseDown}
           >
             <div className="absolute inset-0 overflow-hidden">
               <motion.div

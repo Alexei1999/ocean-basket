@@ -5,7 +5,7 @@ import { HomeIcon } from "./home-icon";
 import { NavbarIcon } from "./navbar-icon";
 import {
   $isCartSidebarOpen,
-  setCartSidebarOpen,
+  onSetCartSidebarOpen,
 } from "@shared/components/drawer/cart-sidebar";
 import { CartHeaderIcon } from "@entities/cart/components/icons/CartHeaderIcon";
 import { onSetPagesSidebarOpen } from "@shared/components/drawer/mobile-main-menu";
@@ -17,10 +17,20 @@ import classNames from "classnames";
 import { SushiIcon } from "./sushi-icon";
 import { useEffect, useRef, useState } from "react";
 import { onScrollPage } from "@app/";
+import { useSwipeable } from "react-swipeable";
 
 const MobileNavigation: React.FC = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
+  const handlers = useSwipeable({
+    onSwipedRight: () => {
+      onSetPagesSidebarOpen(true);
+    },
+    onSwipedLeft: () => {
+      onSetCartSidebarOpen(true);
+    },
+  });
 
   const containerRef = useRef<HTMLButtonElement>(null);
 
@@ -33,7 +43,10 @@ const MobileNavigation: React.FC = () => {
 
   return (
     <div className="visible lg:hidden h-12 md:h-14">
-      <nav className="h-14 w-full py-1.5 px-2 flex justify-between fixed start-0 bottom-0 z-10 bg-light shadow-400">
+      <nav
+        {...handlers}
+        className="h-14 w-full py-1.5 px-2 flex justify-between fixed start-0 bottom-0 z-10 bg-light shadow-400"
+      >
         <motion.button
           whileTap={{ scale: 0.88 }}
           onClick={() => onSetPagesSidebarOpen(true)}
@@ -75,7 +88,7 @@ const MobileNavigation: React.FC = () => {
         <motion.button
           whileTap={{ scale: 0.88 }}
           onClick={() => {
-            setCartSidebarOpen(true);
+            onSetCartSidebarOpen(true);
           }}
           className="flex product-cart h-full relative items-center justify-center focus:outline-none focus:text-accent"
         >

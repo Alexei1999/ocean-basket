@@ -4,8 +4,8 @@ import FilterBar from "@widgets/filter-bar/filter-bar";
 import { ShopClosedModal } from "@widgets/ShopClosedModal";
 import classNames from "classnames";
 import { useMemo } from "react";
+import { YMInitializer } from "react-yandex-metrika";
 import { ChooseDishes } from "../../features/choose-dishes/ui";
-import { ym } from "./yandex-metrix";
 
 export function MenuPage() {
   const canSticky = useMemo(() => {
@@ -19,8 +19,17 @@ export function MenuPage() {
 
   return (
     <>
+      <YMInitializer
+        accounts={[87286996]}
+        options={{
+          clickmap: true,
+          trackLinks: true,
+          accurateTrackBounce: true,
+          webvisor: true,
+          ecommerce: "dataLayer",
+        }}
+      />
       <AddDishModal />
-      <div className="metriks" dangerouslySetInnerHTML={{ __html: ym() }} />
       <div className={classNames(!canSticky && "pt-14 md:pt-16 xl:pt-0")}>
         <ShopClosedModal />
         <PromotionSlider />
