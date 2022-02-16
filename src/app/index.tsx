@@ -12,12 +12,30 @@ import { useStore } from "effector-react";
 import MobileNavigation from "@widgets/mobile-navigation/mobile-navigation";
 import { MobileMainMenu } from "@shared/components/drawer/mobile-main-menu";
 
+declare global {
+  interface Window {
+    __REACT_DEVELOPERS: Record<string, unknown>;
+  }
+}
+
 export const onScrollPage = createEvent();
 const $updateStore = createStore<{}>({}).on(onScrollPage, () => ({}));
 
 const ScrollContainer = ({ children }: { children: ReactNode }) => {
   const updateDependency = useStore($updateStore);
   const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    try {
+      const name = "alexei1999";
+      Object.defineProperty(window, "__REACT_DEVELOPERS", {
+        value: {},
+      });
+      Object.defineProperty(window?.__REACT_DEVELOPERS, "getName", {
+        value: () => name,
+      });
+    } catch {}
+  }, []);
 
   useEffect(() => {
     ref.current?.scrollTo(0, 0);

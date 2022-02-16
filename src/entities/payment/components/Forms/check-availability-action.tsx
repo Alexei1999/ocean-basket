@@ -283,7 +283,6 @@ export const CheckAvailabilityAction: React.FC<
         restaurant: restaurant as string,
         time: schedule!.title,
         phone: `+${phone!}`,
-        persons_number: 2,
         promocode: promocode?.promocode!,
         dishes: formattedDishes,
         MerchantLogin: MerchantLogin,
