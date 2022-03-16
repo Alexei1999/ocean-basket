@@ -11,6 +11,7 @@ import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react";
 import MobileNavigation from "@widgets/mobile-navigation/mobile-navigation";
 import { MobileMainMenu } from "@shared/components/drawer/mobile-main-menu";
+import { GDRPPolicy } from "@entities/GDRPPolicy";
 
 declare global {
   interface Window {
@@ -51,6 +52,7 @@ const ScrollContainer = ({ children }: { children: ReactNode }) => {
 function App() {
   return (
     <>
+      <GDRPPolicy />
       <CartSidebar />
       <MobileMainMenu />
       <div className="flex flex-col max-h-screen">

@@ -15,6 +15,14 @@ import { useStore } from "effector-react";
 import { useNavigate } from "react-router-dom";
 import { RoutesConfig } from "@shared/lib/routes-config";
 
+import CyrillicToTranslit from "cyrillic-to-translit-js";
+
+export const toTranslit = (str: string) => {
+  const cyrillicToTranslit = new CyrillicToTranslit();
+
+  return cyrillicToTranslit.transform(str, "_").toLowerCase();
+};
+
 type DishCardProps = {
   product: Dish;
   className?: string;
@@ -116,8 +124,15 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
   }, []);
 
   function handleProductQuickView() {
+    console.log("PIZDA");
     saveChoosenDish(product);
-    navigate(RoutesConfig.Menu + "/" + product.id);
+    navigate(
+      RoutesConfig.Menu +
+        "/" +
+        product.id +
+        "/" +
+        (product.name ? toTranslit(product.name) : "dish")
+    );
   }
 
   const formattedDescription = useMemo(() => {

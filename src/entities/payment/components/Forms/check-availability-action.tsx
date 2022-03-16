@@ -219,6 +219,7 @@ export const CheckAvailabilityAction: React.FC<
 
   const [errorMessage, setError] = useState<string>();
   const [isShownError, setIsShownError] = useState<boolean>();
+  const [isPrivacyPolicy, setIsPrivacyPolicy] = useState<boolean>(false);
 
   const isValid = useMemo(() => {
     setIsShownError(false);
@@ -296,12 +297,37 @@ export const CheckAvailabilityAction: React.FC<
   }
 
   return (
-    <>
+    <div>
+      <div>
+        <span
+          className="pr-2 cursor-pointer"
+          onClick={() => setIsPrivacyPolicy(!isPrivacyPolicy)}
+        >
+          <input
+            className="pointer-events-none"
+            type="checkbox"
+            checked={isPrivacyPolicy}
+          />
+        </span>
+        <span
+          className="cursor-pointer"
+          onClick={() => setIsPrivacyPolicy(!isPrivacyPolicy)}
+        >
+          Я принимаю{" "}
+        </span>
+        <a
+          className="underline hover:text-accent"
+          target="_blank"
+          href="/privacy-polytic.pdf"
+        >
+          пользовательское соглашение
+        </a>
+      </div>
       <Button
         loading={isLoading}
         className="text-body hover:bg-accent w-full mt-5"
         onClick={handleVerifyCheckout}
-        disabled={!size}
+        disabled={!isPrivacyPolicy || !size}
         {...props}
       />
       {isShownError && !isValid && (
@@ -309,6 +335,6 @@ export const CheckAvailabilityAction: React.FC<
           <ValidationError message={errorMessage} />
         </div>
       )}
-    </>
+    </div>
   );
 };

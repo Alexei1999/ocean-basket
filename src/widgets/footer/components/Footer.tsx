@@ -157,7 +157,7 @@ export function Footer() {
           <img className="pt-4 w-48" src={logoFooter} />
         </div>
         <div className="flex-col gap-x-36 items-center xl:items-start  max-w-4xl xl:max-w-none xl:flex-row flex xl:justify-between flex-grow w-full pt-16 pb-10">
-          <div className="pt-10 xl:pt-0 order-1 xl:order-0 gap-x-36 flex flex-col w-full">
+          <div className="pt-10 xl:pt-0 order-1 xl:order-0 gap-x-36 flex flex-col w-full max-w-[1000px]">
             <span className="text-base font-bold uppercase">
               Наши рестораны
             </span>
@@ -175,7 +175,7 @@ export function Footer() {
                 <span className="text-base font-bold uppercase">Блюда</span>
 
                 <div className="mt-10 flex">
-                  <div className="grid grid-cols-2">
+                  <div className="grid grid-cols-2 w-full">
                     {categories.length > 0 &&
                       mixIndexes(categories.length).map((index) => {
                         const item = categories[index];

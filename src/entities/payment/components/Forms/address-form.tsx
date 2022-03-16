@@ -88,7 +88,6 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
         options={{
           shouldUnregister: true,
           defaultValues: address ?? {
-            intercom: "1",
             persons_number: 1,
           },
         }}
@@ -149,28 +148,13 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
               type="number"
             />
 
-            <div className="col-span-2 sm:col-span-1">
-              <Label>Наличие домофона</Label>
-              <div className="space-s-4 pt-3 flex items-center">
-                <Radio
-                  id="Exist"
-                  {...register("intercom")}
-                  type="radio"
-                  value="1"
-                  label="Есть"
-                  checked={watch("intercom") === "1"}
-                />
-                <Radio
-                  id="Missing"
-                  {...register("intercom")}
-                  type="radio"
-                  value="0"
-                  label="Нет"
-                  checked={watch("intercom") === "0"}
-                />
-              </div>
-              <ValidationError message={errors.intercom?.message} />
-            </div>
+            <Input
+              label={"Домофон"}
+              {...register("intercom")}
+              error={errors.intercom?.message}
+              className="col-span-2 sm:col-span-1 no-arrows"
+              variant="outline"
+            />
 
             <TextArea
               label={"Комментарий"}

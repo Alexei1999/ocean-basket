@@ -38,7 +38,8 @@ const Truncate: React.FC<TruncateProps> = ({
       <span className="mt-1 inline-block">
         <button
           onClick={handleClick}
-          style={{ color: "#009e7f", fontWeight: 700 }}
+          className="font-bold"
+          style={{ color: "#009e7f" }}
         >
           {!expanded ? compressText : expandedText}
         </button>

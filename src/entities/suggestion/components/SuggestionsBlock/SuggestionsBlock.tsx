@@ -1,5 +1,6 @@
 import { saveChoosenDish } from "@entities/cart/components/Details/add-dish-modal";
 import { isDishValid } from "@entities/cart/components/Details/details";
+import { toTranslit } from "@entities/dishes/components/Card/DishCard";
 import { $cartItems } from "@features/choose-dishes/models";
 import { Dish } from "@shared/api/dishes";
 import { RoutesConfig } from "@shared/lib/routes-config";
@@ -72,7 +73,13 @@ export function SuggestionsBlock({
                 item={item}
                 onClick={() => {
                   saveChoosenDish(item);
-                  navigate(RoutesConfig.Menu + "/" + item.id);
+                  navigate(
+                    RoutesConfig.Menu +
+                      "/" +
+                      item.id +
+                      "/" +
+                      toTranslit(item.name)
+                  );
                 }}
               />
             ))}

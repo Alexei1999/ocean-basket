@@ -1,3 +1,4 @@
+import { toTranslit } from "@entities/dishes/components/Card/DishCard";
 import {
   $cartSizes,
   $isRestaurantOpen,
@@ -35,7 +36,7 @@ export const AddToCart = ({ data, counterClass }: Props) => {
     if (isDisabled) return;
 
     saveChoosenDish(data);
-    navigate(RoutesConfig.Menu + "/" + data.id);
+    navigate(RoutesConfig.Menu + "/" + data.id + "/" + toTranslit(data.name));
   };
   const handleRemoveClick = (e: any) => {
     e.stopPropagation();
