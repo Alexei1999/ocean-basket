@@ -4,7 +4,7 @@ import { RoutesConfig } from "@shared/lib/routes-config";
 import { createEffect, createEvent, createStore } from "effector";
 import { useStore } from "effector-react";
 import { useEffect } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Popup from "./popup";
 
 export const saveChoosenDish = createEvent<Dish>();
@@ -47,7 +47,15 @@ export const AddDishModal = () => {
       open={Boolean(currentDish || id)}
       onClose={() => {
         clearChoosenDish();
-        navigate(RoutesConfig.Menu);
+        if (window.location.pathname.startsWith(RoutesConfig.Payment)) {
+          navigate(RoutesConfig.Payment);
+          return;
+        }
+        if (window.location.pathname.startsWith(RoutesConfig.Menu)) {
+          navigate(RoutesConfig.Menu);
+          return;
+        }
+        navigate(-1);
       }}
     >
       <Popup product={currentDish} />

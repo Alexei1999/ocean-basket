@@ -18,6 +18,7 @@ import { hostUrl } from "@shared/api/base";
 
 import styles from "./styles.module.scss";
 import { useStore } from "effector-react";
+import { capitalize, isNumber } from "lodash";
 
 export const filterCartObjects = (
   items: Partial<PickedDish[]>
@@ -79,7 +80,22 @@ const Details: React.FC<Props> = ({
 
   const isOpen = useStore($isRestaurantOpen);
 
-  const { name, description, prices, photo } = product ?? {};
+  const {
+    name,
+    description,
+    prices,
+    photo,
+    calories,
+    proteins,
+    fats,
+    carbohydrates,
+  } = product ?? {};
+
+  const isNutritional =
+    isNumber(calories) ||
+    isNumber(proteins) ||
+    isNumber(fats) ||
+    isNumber(carbohydrates);
 
   const [activePrice, setActivePrice] = useState<
     null | (Dish["prices"][number] & { idx: number })
@@ -125,16 +141,34 @@ const Details: React.FC<Props> = ({
             >
               {name}
             </h1>
-            {description && (
-              <div className="mt-3 md:mt-4 text-body text-base leading-7">
+
+            {(description || isNutritional) && (
+              <div
+                className="mt-3 md:mt-4 text-body text-base leading-7"
+                style={{ whiteSpace: "pre-line" }}
+              >
                 <Truncate
                   character={150}
                   {...(!isModal && {
-                    onClick: () => scrollDetails(),
-                    compressText: "common:text-see-more",
+                    onClick: scrollDetails,
                   })}
                 >
-                  {description}
+                  {`${description}${
+                    !isNutritional
+                      ? ""
+                      : "\n" +
+                        capitalize(
+                          [
+                            isNumber(calories) && `калории: ${calories} г`,
+                            isNumber(proteins) && `белки: ${proteins} г`,
+                            isNumber(fats) && `жиры: ${fats} г`,
+                            isNumber(carbohydrates) &&
+                              `углеводы: ${carbohydrates} г`,
+                          ]
+                            .filter((str) => str)
+                            .join(", ")
+                        )
+                  }`}
                 </Truncate>
               </div>
             )}

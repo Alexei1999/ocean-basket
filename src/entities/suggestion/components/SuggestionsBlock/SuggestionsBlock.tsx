@@ -74,7 +74,7 @@ export function SuggestionsBlock({
                 onClick={() => {
                   saveChoosenDish(item);
                   navigate(
-                    RoutesConfig.Menu +
+                    RoutesConfig.Payment +
                       "/" +
                       item.id +
                       "/" +

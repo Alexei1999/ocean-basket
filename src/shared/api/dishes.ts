@@ -26,6 +26,10 @@ export type Dish = {
   recommended_dishes?: Omit<Dish, "recommended_dishes">[];
   status: DishStatus;
   category: string;
+  calories?: number;
+  proteins?: number;
+  fats?: number;
+  carbohydrates?: number;
   created_at: string;
   updated_at: string;
 };

@@ -21,6 +21,11 @@ export const Routing = () => {
       <Route path={`${RoutesConfig.Menu}/:id/:name`} element={<MenuPage />} />
       <Route path={`${RoutesConfig.Menu}/:id`} element={<MenuPage />} />
       <Route path={RoutesConfig.Menu} element={<MenuPage />} />
+      <Route
+        path={`${RoutesConfig.Payment}/:id/:name`}
+        element={<PaymentPage />}
+      />
+      <Route path={`${RoutesConfig.Payment}/:id`} element={<PaymentPage />} />
       <Route path={RoutesConfig.Payment} element={<PaymentPage />} />
       <Route path={RoutesConfig.Checkout} element={<CheckoutPage />} />
       <Route

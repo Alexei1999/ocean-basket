@@ -124,7 +124,6 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
   }, []);
 
   function handleProductQuickView() {
-    console.log("PIZDA");
     saveChoosenDish(product);
     navigate(
       RoutesConfig.Menu +

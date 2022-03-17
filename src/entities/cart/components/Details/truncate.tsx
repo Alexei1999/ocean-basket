@@ -6,6 +6,8 @@ type TruncateProps = {
   character: number;
   children: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  textClassName?: string;
+  textStyle?: React.CSSProperties;
 };
 
 const Truncate: React.FC<TruncateProps> = ({
@@ -13,6 +15,8 @@ const Truncate: React.FC<TruncateProps> = ({
   expandedText = "Скрыть",
   compressText = "Читать далее",
   character = 150,
+  textClassName,
+  textStyle,
   onClick,
 }) => {
   const [expanded, setExpanded] = useState(false);
@@ -33,7 +37,9 @@ const Truncate: React.FC<TruncateProps> = ({
   }
   return (
     <>
-      {!expanded ? children.substring(0, character) + "..." : children}
+      <span className={textClassName} style={textStyle}>
+        {!expanded ? children.substring(0, character) + "..." : children}
+      </span>
       <br />
       <span className="mt-1 inline-block">
         <button
