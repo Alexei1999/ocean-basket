@@ -37,22 +37,22 @@ export const AddDishModal = () => {
     if (!currentDish && id) {
       getDishFx(id);
     }
-  }, [currentDish]);
+  }, [id, currentDish]);
 
   if (!currentDish) return null;
 
   return (
     <Modal
       showClose
-      open={Boolean(currentDish || id)}
+      open={Boolean(currentDish && id)}
       onClose={() => {
         clearChoosenDish();
         if (window.location.pathname.startsWith(RoutesConfig.Payment)) {
-          navigate(RoutesConfig.Payment);
+          navigate(RoutesConfig.Payment, { replace: true });
           return;
         }
         if (window.location.pathname.startsWith(RoutesConfig.Menu)) {
-          navigate(RoutesConfig.Menu);
+          navigate(RoutesConfig.Menu, { replace: true });
           return;
         }
         navigate(-1);

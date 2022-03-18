@@ -19,6 +19,8 @@ import { hostUrl } from "@shared/api/base";
 import styles from "./styles.module.scss";
 import { useStore } from "effector-react";
 import { capitalize, isNumber } from "lodash";
+import { Navigation } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
 
 export const filterCartObjects = (
   items: Partial<PickedDish[]>
@@ -85,11 +87,16 @@ const Details: React.FC<Props> = ({
     description,
     prices,
     photo,
+    photo2,
+    photo3,
+    photo4,
     calories,
     proteins,
     fats,
     carbohydrates,
   } = product ?? {};
+
+  const photos = [photo, photo2, photo3, photo4].filter(Boolean) as string[];
 
   const isNutritional =
     isNumber(calories) ||
@@ -175,14 +182,39 @@ const Details: React.FC<Props> = ({
           </div>
 
           <div className="w-full h-full flex items-center justify-center overflow-hidden">
-            <img
-              className={classNames(
-                "rounded-lg max-h-full w-full object-cover"
-              )}
-              src={!isError && photo ? `${hostUrl}/${photo}` : productSvg}
-              onError={() => setIsError(true)}
-              alt={name}
-            />
+            {photos.length > 1 ? (
+              <Swiper
+                style={{ position: "relative" }}
+                className="h-full"
+                modules={[Navigation]}
+                id="details"
+                spaceBetween={25}
+                slidesPerView={1}
+                navigation={{}}
+                loop
+              >
+                {photos.map((photo, idx) => (
+                  <SwiperSlide key={idx}>
+                    <img
+                      className={classNames(
+                        "rounded-lg max-h-full w-full object-cover"
+                      )}
+                      src={`${hostUrl}/${photo}`}
+                      alt={name}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            ) : (
+              <img
+                className={classNames(
+                  "rounded-lg max-h-full w-full object-cover"
+                )}
+                src={!isError && photo ? `${hostUrl}/${photo}` : productSvg}
+                onError={() => setIsError(true)}
+                alt={name}
+              />
+            )}
           </div>
         </div>
 

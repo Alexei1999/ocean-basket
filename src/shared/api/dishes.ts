@@ -22,6 +22,9 @@ export type Dish = {
     rouble_price: string | typeof EMPTY_STRING;
   }[];
   photo: string | null;
+  photo2: string | null;
+  photo3: string | null;
+  photo4: string | null;
   recommended: string | null;
   recommended_dishes?: Omit<Dish, "recommended_dishes">[];
   status: DishStatus;

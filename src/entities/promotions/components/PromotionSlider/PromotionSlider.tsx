@@ -56,9 +56,10 @@ export function PromotionSlider() {
       />
       <div className="relative">
         <Swiper
+          className="swiper-promotions"
           style={{ position: "static" }}
           modules={[Navigation]}
-          id="offer"
+          id="promotions"
           spaceBetween={25}
           slidesPerView={3}
           navigation={{}}
