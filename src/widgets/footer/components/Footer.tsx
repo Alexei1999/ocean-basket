@@ -16,7 +16,7 @@ import { onCategorySelect } from "@entities/сategories/components/TreeMenu/Tree
 import { fetchCategoriesFx } from "@entities/сategories/components/Categories/Categories";
 import { extendedLinks, headerLinks } from "@widgets/header/config/links";
 import { restore } from "effector";
-import { onScrollPage } from "@app/";
+import { onScrollPage } from "@shared/components/ScrollContainer";
 
 const links = [...extendedLinks, ...headerLinks];
 

@@ -64,11 +64,11 @@ export const $promocode = createStore<{
   .on(onSetPromocode, (_, data) => data)
   .reset(onResetPomocode);
 
-const cartSidebarViewGate = createGate<{
+const gateCartSidebarView = createGate<{
   onSuccess: (promocodeText: string | null) => void;
   onFail: () => void;
 }>();
-cartSidebarViewGate.state.on(
+gateCartSidebarView.state.on(
   verifyPromocodeFx.doneData,
   ({ onSuccess, onFail }, { result, promocode_text } = {} as any) => {
     if (result === true) {
@@ -106,7 +106,7 @@ export const CartSidebarView = ({
   const isLessMinSum = (cartSizes.totalAmount ?? 0) < MIN_SUM;
   const isDisabled = !cartSizes.size || isLessMinSum || isOpen === false;
 
-  useGate(cartSidebarViewGate, {
+  useGate(gateCartSidebarView, {
     onSuccess: (promocodeText) => {
       onSetPromocode({ promocode, promocodeText });
       setIsSuccessful(true);

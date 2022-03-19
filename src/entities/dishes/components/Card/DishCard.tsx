@@ -32,6 +32,7 @@ const TEXT_MOBILE_SMALL_MAX_SIZE = 30;
 const TEXT_MOBILE_MEDIUM_MAX_SIZE = 120;
 const TEXT_MOBILE_LARGE_MAX_SIZE = 130;
 
+export const onUpdateScreen = createEvent();
 export const onScreenUpdate = createEvent<number>();
 
 export const $smScreen = createStore(false).on(
@@ -51,8 +52,16 @@ const updateSize = () => {
   onScreenUpdate(window.innerWidth);
 };
 
+onUpdateScreen.watch(updateSize);
+
 window.addEventListener("resize", updateSize);
 window.addEventListener("load", updateSize);
+window.addEventListener("loadstart", updateSize);
+window.addEventListener("orientationchange", updateSize);
+
+document.addEventListener("load", updateSize);
+document.addEventListener("loadstart", updateSize);
+document.addEventListener("orientationchange", updateSize);
 
 export const useObserver = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);

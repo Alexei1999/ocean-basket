@@ -18,9 +18,9 @@ import { getPosts, postSubscribe } from "@shared/api/dishes";
 import { createGate, useStore } from "effector-react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { ImageWithPreview } from "@pages/DashboardPage/MainPageCover/MainPageCover";
 import axios from "axios";
 import { useGate } from "effector-react/effector-react.cjs";
+import { ImageWithPreview } from "@shared/components/ImageWithPreview";
 
 const subscribeFx = createEffect(postSubscribe);
 
@@ -71,14 +71,12 @@ function EmailSection({ isWaves = false }) {
         )}
       >
         <ImageWithPreview
-          image={dishBacground2}
-          thumb={dishBacground2_zip}
+          loading="lazy"
+          hugeSrc={dishBacground2}
+          src={dishBacground2_zip}
           className={classNames("w-full h-full object-fill", styles.promotion)}
-        />
-        <img
-          src={dishBacground2}
-          onLoad={() => setCanMargin(true)}
           alt="dish-background-2"
+          onLoad={() => setCanMargin(true)}
         />
       </div>
       <div
@@ -142,6 +140,7 @@ function EmailSection({ isWaves = false }) {
             )}
           >
             <img
+              loading="lazy"
               className={classNames("w-full h-full object-cover")}
               src={emailDish}
               alt="email dish image"
@@ -273,7 +272,7 @@ const getPostFx = createEffect<string, string>(async (id) => {
   return res.data.permalink;
 });
 
-const instGate = createGate();
+// const instGate = createGate();
 
 // forward({
 //   from: instGate.open,

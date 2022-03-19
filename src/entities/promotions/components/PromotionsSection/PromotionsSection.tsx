@@ -75,15 +75,15 @@ function PromotionImage({
   );
 }
 
-const promotionsSectionGate = createGate();
+const gatePromotionsSection = createGate();
 
 forward({
-  from: promotionsSectionGate.open,
+  from: gatePromotionsSection.open,
   to: [fetchPomotionsFx],
 });
 
 export function PromotionsSection() {
-  useGate(promotionsSectionGate);
+  useGate(gatePromotionsSection);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [promotion, setPromotion] = useState<Promotion | null>(null);
   const openModal = useCallback((promotion: Promotion) => {

@@ -2,7 +2,7 @@
   "name": "ocean-basker",
   "version": "1.0.0",
   "private": true,
-  "proxy": "https://oceanbasket.ru/oceanBasket/public",
+  "proxy": "http://2.56.213.189:81/oceanBasket/public",
   "dependencies": {
     "@craco/craco": "^6.4.2",
     "@headlessui/react": "^1.4.2",

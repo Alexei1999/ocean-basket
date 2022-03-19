@@ -51,7 +51,7 @@ export type ModifierType = {
   updated_at: string | null;
 };
 
-export const ChooseDishesGate = createGate();
+export const gateChooseDishes = createGate();
 
 export type PickedModifier = Pick<ModifierType, "id" | "dish_id" | "name"> & {
   option?: string;
@@ -68,10 +68,11 @@ export const fetchTimeValidateFx = createEffect(async () => {
 export const fetchPopularDishesFx = createEffect(getPopular);
 export const fetchPomotionsFx = createEffect(getPromotions);
 
-export const $isRestaurantOpen = restore(fetchTimeValidateFx.doneData, null);
+// export const $isRestaurantOpen = restore(fetchTimeValidateFx.doneData, null);
+export const $isRestaurantOpen = createStore(true);
 
 forward({
-  from: ChooseDishesGate.open,
+  from: gateChooseDishes.open,
   to: [fetchDishesFx, fetchPopularDishesFx, fetchPomotionsFx],
 });
 
@@ -279,6 +280,6 @@ export const $cartItems = $cart.map<{
 });
 
 forward({
-  from: ChooseDishesGate.close,
+  from: gateChooseDishes.close,
   to: onResetCategory,
 });

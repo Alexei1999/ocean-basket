@@ -2,7 +2,6 @@ import styles from "./styles.module.scss";
 import classNames from "classnames";
 
 import { ReactComponent as LogoMini } from "@assets/logo-mini.svg";
-import logoMWriting from "@assets/logo-writing.svg";
 import deliveryLogo from "@assets/delivery-logo.svg";
 
 import { useNavigate } from "react-router";
@@ -10,83 +9,98 @@ import { RoutesConfig } from "@shared/lib/routes-config";
 import Button from "@shared/button";
 
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
-import React, { useEffect, useRef } from "react";
+import React, { forwardRef, useEffect, useRef } from "react";
 import { ArrowLeft } from "./ArrowLeft";
 import { ArrowRight } from "./ArrowRight";
 import { covers } from "./images";
-import { createEvent, createStore } from "effector";
+import { createEffect, createEvent, createStore, restore } from "effector";
 import { useStore } from "effector-react/effector-react.cjs";
 import { Autoplay } from "swiper";
 
 import footer from "@assets/footer.png";
-import { onScrollPage } from "@app/";
+import footerZip from "@assets/footer.zip.png";
+
+import { onScrollPage } from "@shared/components/ScrollContainer";
+import {
+  onChangeAnimationConfig,
+  onRemoveAnimationConfig,
+} from "@shared/components/LoadingContainer/FishAnimationContainer";
+import { ImageWithPreview } from "@shared/components/ImageWithPreview";
 
 const onSlideChange = createEvent<number>();
-
 const $slide = createStore(0).on(onSlideChange, (_, slide) => slide);
 
-export const ImageWithPreview = ({
-  image,
-  thumb,
-  ...props
-}: {
-  image: string;
-  thumb: string;
-} & Omit<
-  React.DetailedHTMLProps<
-    React.ImgHTMLAttributes<HTMLImageElement>,
-    HTMLImageElement
-  >,
-  "src" | "ref"
->) => {
-  const imageRef = useRef<HTMLImageElement>(null);
+const loadImageFx = createEffect<() => Promise<string>>(
+  () =>
+    new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img.src);
+      img.onerror = reject;
+      img.src = footer;
+    })
+);
 
-  useEffect(() => {
-    const img = new Image();
+const $image = createStore<null | string>(null).on(
+  loadImageFx.doneData,
+  (_, image) => image
+);
+const $failed = restore(loadImageFx.fail, null).map<boolean>((_, data) =>
+  Boolean(data)
+);
 
-    img.onload = () => {
-      if (!imageRef.current) return;
-      imageRef.current.src = img.src;
-    };
+const onBackgroundLoaded = createEvent<void>();
 
-    img.src = image;
+const backgroundZipImage = new Image();
+backgroundZipImage.src = footerZip;
+backgroundZipImage.onload = () => onBackgroundLoaded();
+backgroundZipImage.onerror = () => onBackgroundLoaded();
 
-    return () => {
-      img.onload = null;
-    };
-  }, []);
-
-  return <img ref={imageRef} src={thumb} {...props} />;
-};
+const $backgroundZipLoaded = createStore(false).on(
+  onBackgroundLoaded,
+  () => true
+);
 
 export function MainPageCover() {
   const navigate = useNavigate();
 
-  const initialSlide = useStore($slide);
-
   const swiperRef = React.useRef(null);
+  const backgroundLeftRef = useRef<HTMLDivElement | null>(null);
 
-  const backgroundLeft = useRef<HTMLDivElement | null>(null);
+  const initialSlide = useStore($slide);
+  const image = useStore($image);
+  const isFailed = useStore($failed);
+  const isPending = useStore(loadImageFx.pending);
+  const isBackgroundZipLoaded = useStore($backgroundZipLoaded);
 
   useEffect(() => {
-    const img = new Image();
+    if (!isBackgroundZipLoaded) return;
 
-    img.onload = () => {
-      if (!backgroundLeft.current) return;
-      backgroundLeft.current.style.backgroundImage = `url(${img.src})`;
-    };
+    onRemoveAnimationConfig(RoutesConfig.Dashboard);
+  }, [isBackgroundZipLoaded]);
 
-    img.src = footer;
+  useEffect(() => {
+    if (!backgroundLeftRef.current) return;
 
-    return () => {
-      img.onload = null;
-    };
+    backgroundLeftRef.current.style.backgroundImage = `url(${backgroundZipImage.src})`;
   }, []);
+
+  useEffect(() => {
+    if (!image && !isFailed && !isPending) {
+      loadImageFx();
+    }
+  }, [image, isFailed, isPending]);
+
+  useEffect(() => {
+    if (!backgroundLeftRef.current) return;
+    if (!image) return;
+
+    backgroundLeftRef.current.style.backgroundImage = `url(${image})`;
+  }, [image]);
 
   return (
     <div className={classNames("flex relative", styles.container)}>
       <div
-        ref={backgroundLeft}
+        ref={backgroundLeftRef}
         className={classNames(
           styles.containerLeft,
           "flex-grow relative sm:max-w-[40%]"

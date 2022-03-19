@@ -43,7 +43,7 @@ type SubmitFormParams = {
   newTab: Window | null;
 };
 
-const actionGate = createGate<{
+const gateAction = createGate<{
   onSuccess: (
     params: Partial<PaymentArguments> & {
       order_id?: number | undefined;
@@ -146,12 +146,12 @@ const submitHandleFx = createEffect<
 });
 
 sample({
-  source: [$submitInfo, $submitForm, actionGate.state],
+  source: [$submitInfo, $submitForm, gateAction.state],
   clock: submitFormFx.done,
   target: submitHandleFx,
 });
 
-actionGate.state.on(submitFormFx.fail, ({ onFail }) => onFail());
+gateAction.state.on(submitFormFx.fail, ({ onFail }) => onFail());
 
 const $pending = combine({
   submitFormPending: submitFormFx.pending,
@@ -202,7 +202,7 @@ export const CheckAvailabilityAction: React.FC<
     ) => void;
   }
 > = ({ onSubmit, ...props }) => {
-  useGate(actionGate, { onSuccess: onSubmit, onFail: () => {} });
+  useGate(gateAction, { onSuccess: onSubmit, onFail: () => {} });
 
   const { size, totalAmount } = useStore($cartSizes);
   const cart = useStore($cart);

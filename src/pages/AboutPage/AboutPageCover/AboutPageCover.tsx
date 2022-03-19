@@ -22,7 +22,7 @@ import hands from "./hands.png";
 
 import mediumWaves from "./medium-waves.svg";
 
-import fullFishes from "./full-fishes.svg";
+import fullFishes from "@assets/full-fishes.svg";
 
 const header = " font-friends text-[66px] leading-none";
 

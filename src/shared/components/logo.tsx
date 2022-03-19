@@ -2,7 +2,7 @@ import cn from "classnames";
 import { Link } from "react-router-dom";
 import { RoutesConfig } from "@shared/lib/routes-config";
 import logo from "@assets/logo.svg";
-import { onScrollPage } from "@app/";
+import { onScrollPage } from "@shared/components/ScrollContainer";
 
 const LOGO_WIDTH = 128;
 const LOGO_HEIGHT = 40;

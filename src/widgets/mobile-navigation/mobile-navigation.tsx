@@ -16,8 +16,8 @@ import { useStore } from "effector-react";
 import classNames from "classnames";
 import { SushiIcon } from "./sushi-icon";
 import { useEffect, useRef, useState } from "react";
-import { onScrollPage } from "@app/";
 import { useSwipeable } from "react-swipeable";
+import { onScrollPage } from "@shared/components/ScrollContainer";
 
 const MobileNavigation: React.FC = () => {
   const navigate = useNavigate();

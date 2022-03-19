@@ -16,7 +16,7 @@ import { AddressSelection } from "./AddressSelection";
 import classNames from "classnames";
 
 import styles from "./styles.module.scss";
-import { onScrollPage } from "@app/";
+import { onScrollPage } from "@shared/components/ScrollContainer";
 
 export function Header() {
   const isOpen = useStore($isCartSidebarOpen);

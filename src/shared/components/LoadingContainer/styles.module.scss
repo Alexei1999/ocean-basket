@@ -1,0 +1,51 @@
+@keyframes bounce {
+  0%,
+  50%,
+  100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-100%);
+  }
+  75% {
+    transform: translateY(-50%);
+  }
+}
+
+.bounce {
+  animation: bounce 5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes swim-right {
+  0% {
+    margin-left: 0;
+  }
+  100% {
+    margin-left: 75%;
+  }
+}
+
+@keyframes swim-left {
+  0% {
+    margin-right: 0;
+  }
+  100% {
+    margin-right: 75%;
+  }
+}
+
+.swim {
+  animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-duration: 5s;
+
+  &Left {
+    animation-name: swim-left;
+  }
+  &Right {
+    animation-name: swim-right;
+  }
+}

@@ -1,4 +1,4 @@
-import { onScrollPage } from "@app/";
+import { onScrollPage } from "@shared/components/ScrollContainer";
 import { DrawerWrapper } from "@shared/components/drawer/drawer-wrapper";
 import { onSetPagesSidebarOpen } from "@shared/components/drawer/mobile-main-menu";
 import { extendedLinks, headerLinks } from "@widgets/header/config/links";

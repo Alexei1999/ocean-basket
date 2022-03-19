@@ -1,4 +1,4 @@
-import { onScrollPage } from "@app/";
+import { onScrollPage } from "@shared/components/ScrollContainer";
 import { CartSidebarView } from "@entities/cart/components/cart-sidebar-view";
 import { RoutesConfig } from "@shared/lib/routes-config";
 import { createEvent, createStore } from "effector";

@@ -10,7 +10,7 @@ import { Details } from "./Details";
 import { OrderDescriptionContainer } from "./OrderDescriptionContainer";
 import { getDeliveryFeeName } from "../Forms/PaymentProccessing";
 import { formatRub } from "@entities/cart/components/Details/variation-groups";
-import { onScrollPage } from "@app/";
+import { onScrollPage } from "@shared/components/ScrollContainer";
 
 dayjs.locale("ru");
 

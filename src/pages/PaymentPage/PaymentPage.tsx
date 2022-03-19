@@ -2,7 +2,7 @@ import { DishCover } from "@entities/payment/components/DishCover/DishCover";
 import { OrderOverview } from "@entities/payment/components/OrderOverview";
 import { useNavigate } from "react-router";
 import { RoutesConfig } from "@shared/lib/routes-config";
-import { onScrollPage } from "@app/";
+import { onScrollPage } from "@shared/components/ScrollContainer";
 import { AddDishModal } from "@entities/cart/components/Details/add-dish-modal";
 
 export function PaymentPage() {

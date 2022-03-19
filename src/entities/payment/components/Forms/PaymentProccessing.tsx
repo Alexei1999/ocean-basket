@@ -1,4 +1,4 @@
-import { onScrollPage } from "@app/";
+import { onScrollPage } from "@shared/components/ScrollContainer";
 import { formatRub } from "@entities/cart/components/Details/variation-groups";
 import { getFromStorage, setToStorage } from "@features/choose-dishes/api";
 import {
