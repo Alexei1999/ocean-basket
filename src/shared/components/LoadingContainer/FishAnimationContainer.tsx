@@ -52,7 +52,7 @@ const $animationConfig = createStore<{
 }>({
   [RoutesConfig.Dashboard]: {
     isEndlessMode: true,
-    maxLoadingTime: 15000,
+    maxLoadingTime: 20000,
   },
   [RoutesConfig.Menu]: {
     isEndlessMode: false,
@@ -102,6 +102,7 @@ export const FishAnimationContainer: React.FC = ({ children }) => {
 
   useEffect(() => {
     if (!maxLoadingTime) return;
+    if (!isFishLoaded) return;
 
     const timeout = setTimeout(() => {
       setIsTimedOut(true);
@@ -111,7 +112,7 @@ export const FishAnimationContainer: React.FC = ({ children }) => {
     return () => {
       clearTimeout(timeout);
     };
-  }, [maxLoadingTime]);
+  }, [isFishLoaded, maxLoadingTime]);
 
   const onResetState = () => {
     setIsLoading(true);

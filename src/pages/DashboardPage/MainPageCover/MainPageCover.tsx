@@ -24,8 +24,11 @@ import { onScrollPage } from "@shared/components/ScrollContainer";
 import {
   onChangeAnimationConfig,
   onRemoveAnimationConfig,
+  usePropRef,
 } from "@shared/components/LoadingContainer/FishAnimationContainer";
 import { ImageWithPreview } from "@shared/components/ImageWithPreview";
+import { getSlider } from "@shared/api/dishes";
+import { toTranslit } from "@entities/dishes/components/Card/DishCard";
 
 const onSlideChange = createEvent<number>();
 const $slide = createStore(0).on(onSlideChange, (_, slide) => slide);
@@ -60,6 +63,13 @@ const $backgroundZipLoaded = createStore(false).on(
   () => true
 );
 
+const getSlidersFx = createEffect(getSlider);
+
+const onRemoveDish = createEvent<number>();
+const $dishes = restore(getSlidersFx, null).on(onRemoveDish, (state, id) =>
+  !state ? null : state.filter((dish) => dish.id !== id)
+);
+
 export function MainPageCover() {
   const navigate = useNavigate();
 
@@ -71,6 +81,16 @@ export function MainPageCover() {
   const isFailed = useStore($failed);
   const isPending = useStore(loadImageFx.pending);
   const isBackgroundZipLoaded = useStore($backgroundZipLoaded);
+
+  const dishes = useStore($dishes);
+
+  const dishesRef = usePropRef(dishes);
+
+  useEffect(() => {
+    if (dishesRef.current) return;
+
+    getSlidersFx();
+  }, []);
 
   useEffect(() => {
     if (!isBackgroundZipLoaded) return;
@@ -167,18 +187,34 @@ export function MainPageCover() {
           ref={swiperRef}
           className="h-full w-full"
         >
-          {covers.map((cover, idx) => (
-            <SwiperSlide key={idx}>
-              <ImageWithPreview
-                className="w-full h-full object-cover"
-                {...cover}
-              />
-            </SwiperSlide>
-          ))}
+          {dishes
+            ? dishes
+                .filter((dish) => dish.photo)
+                .map((dish) => (
+                  <SwiperSlide key={dish.id}>
+                    <img
+                      className="w-full h-full object-cover cursor-pointer"
+                      onError={() => onRemoveDish(dish.id)}
+                      src={dish.photo!}
+                      onClick={() => {
+                        navigate(
+                          RoutesConfig.Menu +
+                            "/" +
+                            dish.id +
+                            "/" +
+                            toTranslit(dish.name)
+                        );
+                      }}
+                    />
+                  </SwiperSlide>
+                ))
+            : covers.map(({ src }, idx) => (
+                <SwiperSlide key={idx}>
+                  <img className="w-full h-full object-cover" src={src} />
+                </SwiperSlide>
+              ))}
         </Swiper>
       </div>
     </div>
   );
 }
-
-// right-12 bottom-14

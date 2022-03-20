@@ -194,3 +194,7 @@ export const getPosts = (): Promise<string[]> => {
     .get(`${apiBaseUrl}/getPermalinks`)
     .then((response) => response.data);
 };
+
+export const getSlider = (): Promise<Dish[]> => {
+  return baseApi.get(`${apiBaseUrl}/slider`).then((response) => response.data);
+};

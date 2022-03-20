@@ -39,13 +39,14 @@
 .swim {
   animation-timing-function: cubic-bezier(0.39, 0.575, 0.565, 1);
   animation-iteration-count: 1;
-  animation-fill-mode: forwards;
   animation-duration: 5s;
 
   &Left {
+    animation-fill-mode: forwards;
     animation-name: swim-left;
   }
   &Right {
+    animation-fill-mode: backwards;
     animation-name: swim-right;
   }
 }
