@@ -1,12 +1,16 @@
 import { CloseIcon } from "@entities/cart/components/icons/close-icon";
 import { Dialog, Transition } from "@headlessui/react";
+import { $isLoadingAnimation } from "@shared/components/LoadingContainer/FishAnimationContainer";
+import { useStore } from "effector-react";
 import { Fragment, useRef } from "react";
 
 export default function Modal({ open, onClose, children, showClose }: any) {
+  const isLoadingAnnimation = useStore($isLoadingAnimation);
+
   const cancelButtonRef = useRef(null);
 
   return (
-    <Transition show={open} as={Fragment}>
+    <Transition show={!isLoadingAnnimation && open} as={Fragment}>
       <Dialog
         as="div"
         className="fixed inset-0 z-50 overflow-y-auto"

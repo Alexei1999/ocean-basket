@@ -75,17 +75,24 @@ export function usePropRef<T>(prop: T) {
   return ref;
 }
 
+export const setIsLoading = createEvent<boolean>();
+export const $isLoadingAnimation = createStore(true).on(
+  setIsLoading,
+  (_, payload) => payload
+);
+
 export const FishAnimationContainer: React.FC = ({ children }) => {
   const { pathname } = useLocation();
 
   const [isTimedOut, setIsTimedOut] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [isFishLoaded, setIsFishLoaded] = useState(false);
   const [isBoolState, setBoolState] = useState(false);
 
   const isSmallScreen = useStore($smScreen);
   const isMediumScreen = useStore($mdScreen);
   const isLargeScreen = useStore($lgScreen);
+
+  const isLoading = useStore($isLoadingAnimation);
 
   const isMobile = isSmallScreen || isMediumScreen || isLargeScreen;
 
