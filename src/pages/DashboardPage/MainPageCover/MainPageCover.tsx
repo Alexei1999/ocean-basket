@@ -24,11 +24,11 @@ import { onScrollPage } from "@shared/components/ScrollContainer";
 import {
   onChangeAnimationConfig,
   onRemoveAnimationConfig,
-  usePropRef,
 } from "@shared/components/LoadingContainer/FishAnimationContainer";
 import { ImageWithPreview } from "@shared/components/ImageWithPreview";
 import { getSlider } from "@shared/api/dishes";
 import { toTranslit } from "@entities/dishes/components/Card/DishCard";
+import { usePropRef } from "@shared/lib/usePropRef";
 
 const onSlideChange = createEvent<number>();
 const $slide = createStore(0).on(onSlideChange, (_, slide) => slide);

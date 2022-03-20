@@ -1,7 +1,7 @@
 import { onUpdateScreen } from "@entities/dishes/components/Card/DishCard";
+import { usePropRef } from "@shared/lib/usePropRef";
 import classNames from "classnames";
 import { useRef, useState, useEffect, useCallback, useMemo } from "react";
-import { usePropRef } from "./FishAnimationContainer";
 
 import styles from "./styles.module.scss";
 

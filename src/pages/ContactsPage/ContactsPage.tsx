@@ -8,6 +8,7 @@ import hook from "@widgets/subscription/hook.svg";
 import styles from "./styles.module.scss";
 import { addresses, Country } from "./config";
 import { useMemo } from "react";
+import { MOSCOW_COORDS } from "@shared/components/AddressSuggestionsMap";
 
 function ContactsBlock({
   item,
@@ -63,7 +64,7 @@ function ContactsBlock({
       {item.email && (
         <div className="flex flex-col pt-14 ">
           <span className="text-base font-medium">Email</span>
-          <span className="text-base pt-6"  >
+          <span className="text-base pt-6">
             <a href={"mailto:" + item.email}>{item.email}</a>
           </span>
         </div>
@@ -111,10 +112,10 @@ export function ContactsPage() {
         >
           <Map
             className={"w-full h-full"}
-            defaultState={{ 
+            defaultState={{
               // center: [50.7617, 60.632682],
               // zoom: 4,
-              center: [55.752, 37.6237],
+              center: MOSCOW_COORDS,
               zoom: 12,
               controls: ["zoomControl", "fullscreenControl"],
             }}

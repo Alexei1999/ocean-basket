@@ -1,6 +1,4 @@
 import { PageWaveHeader } from "@entities/promotions/components/PageWaveHeader";
-import certificates from "./certificates-text.svg";
-import important from "./important.svg";
 
 import certificateDishImg from "./certificate-dish.png";
 import classNames from "classnames";
@@ -10,8 +8,14 @@ import { SubscriptionSection } from "@widgets/subscription/SubscriptionSection";
 
 import hook from "@widgets/subscription/hook.svg";
 import twoWaves from "@pages/AboutPage/AboutPageCover/2-waves.svg";
+import { useEffect } from "react";
+import { setLoadingAnimation } from "@shared/components/LoadingContainer/FishAnimationContainer";
 
 export function CertificatePage() {
+  useEffect(() => {
+    setLoadingAnimation(false);
+  }, []);
+
   return (
     <>
       <PageWaveHeader

@@ -13,6 +13,7 @@ import { createGate, useGate } from "effector-react/effector-react.cjs";
 import { BouncingFishes } from "./BouncingFishes";
 import { RoutesConfig } from "@shared/lib/routes-config";
 import { useLocation } from "react-router-dom";
+import { usePropRef } from "@shared/lib/usePropRef";
 
 const LOADING_DEFAULT_TIME = 3000;
 
@@ -66,14 +67,6 @@ const $animationConfig = createStore<{
     ...state,
     [name]: undefined,
   }));
-
-export function usePropRef<T>(prop: T) {
-  const ref = useRef<T>(prop);
-  useEffect(() => {
-    ref.current = prop;
-  }, [prop]);
-  return ref;
-}
 
 export const setLoadingAnimation = createEvent<boolean>();
 export const $isLoadingAnimation = createStore(true).on(

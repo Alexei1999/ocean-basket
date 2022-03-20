@@ -1,12 +1,16 @@
 import { getFromStorage, setToStorage } from "@features/choose-dishes/api";
 import Button from "@shared/button";
+import { AddressSuggestionsMap } from "@shared/components/AddressSuggestionsMap";
+import classNames from "classnames";
 import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react";
+import { useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { Form } from "./forms/form";
 import Input from "./forms/input";
 import TextArea from "./forms/text-area";
+import { SwitchIcon } from "./SwitchIcon";
 
 export type FormValues = {
   title: string;
@@ -20,6 +24,7 @@ export type FormValues = {
   intercom: string | null;
   comment: string;
   persons_number: number;
+  coords: number[];
 };
 
 const transformNumber = (value: unknown) => {
@@ -61,8 +66,13 @@ $form.watch((form) => {
   setToStorage("form", form);
 });
 
+const onHandleMode = createEvent();
+const $isMapMode = createStore(true).on(onHandleMode, () => false);
+
 const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
-  const address = useStore($form);
+  const isMapMode = useStore($isMapMode);
+
+  const form = useStore($form);
 
   const onSubmitHandler: SubmitHandler<FormValues> = (props) => {
     onSubmitForm(props);
@@ -71,11 +81,20 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
 
   return (
     <div className="p-5 sm:p-8 bg-light md:rounded-xl min-h-screen md:min-h-0">
-      <div className="w-full mb-4 sm:mb-6 flex justify-center">
-        {/* <AddressSelection className="mr-auto w-[150px]" /> */}
+      <div className="w-full mb-4 sm:mb-6 flex justify-center relative">
+        {isMapMode && (
+          <SwitchIcon
+            width={35}
+            height={35}
+            className={classNames(
+              "hover:text-accent cursor-pointer -mt-1 absolute left-0 top-0",
+              isMapMode ? "text-body" : "text-accent"
+            )}
+            onClick={() => onHandleMode()}
+          />
+        )}
         <h1 className="text-body font-semibold text-lg text-center">
-          {/* mr-auto pr-[150px]*/}
-          {address ? "Редактирование" : "Добавление"} адреса
+          {form ? "Редактирование" : "Добавление"} адреса
         </h1>
       </div>
       <Form<FormValues>
@@ -84,42 +103,76 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
         validationSchema={addressSchema}
         options={{
           shouldUnregister: true,
-          defaultValues: address ?? {
+          defaultValues: form ?? {
             persons_number: 1,
           },
         }}
       >
-        {({ register, watch, formState: { errors } }) => (
+        {({ register, setValue, formState: { errors }, clearErrors }) => (
           <>
-            <Input
-              {...register("city")}
-              label={"Город"}
-              error={errors.city?.message!}
-              name="city"
-              variant="outline"
-              className="col-span-4 sm:col-span-2"
-            />
-            <Input
-              label={"Улица"}
-              {...register("street")}
-              error={errors.street?.message!}
-              variant="outline"
-              className="col-span-4 sm:col-span-2"
-            />
-            <Input
-              label={"Дом"}
-              {...register("building")}
-              error={errors.building?.message}
-              className="col-span-4 sm:col-span-2"
-              variant="outline"
-            />
-            <Input
-              label={"Корпус / строение"}
-              {...register("part")}
-              error={errors.part?.message}
-              className="col-span-2 sm:col-span-1"
-              variant="outline"
-            />
+            {isMapMode ? (
+              <AddressSuggestionsMap
+                cordsInitial={form?.coords}
+                className="col-span-4"
+                onChange={(data) => {
+                  setValue(
+                    "entrance",
+                    parseInt(data.entrance?.replace(/\D/g, "") as string)
+                  );
+                  setValue("building", data.house ?? "");
+                  setValue("city", data.locality ?? "");
+                  setValue("street", data.street ?? "");
+
+                  setValue("coords", data.coords as number[]);
+
+                  clearErrors();
+                }}
+                onError={() => {
+                  onHandleMode();
+                }}
+                errors={
+                  [
+                    errors.city?.message,
+                    errors.street?.message,
+                    errors.building?.message,
+                    errors.part?.message,
+                  ].filter(Boolean) as string[]
+                }
+              />
+            ) : (
+              <>
+                <Input
+                  {...register("city")}
+                  label={"Город"}
+                  error={errors.city?.message!}
+                  name="city"
+                  variant="outline"
+                  className="col-span-4 sm:col-span-2"
+                />
+                <Input
+                  label={"Улица"}
+                  {...register("street")}
+                  error={errors.street?.message!}
+                  variant="outline"
+                  className="col-span-4 sm:col-span-2"
+                />
+                <Input
+                  label={"Дом"}
+                  {...register("building")}
+                  error={errors.building?.message}
+                  className="col-span-4 sm:col-span-2"
+                  variant="outline"
+                />
+                <Input
+                  label={"Корпус / строение"}
+                  {...register("part")}
+                  error={errors.part?.message}
+                  className="col-span-2 sm:col-span-1"
+                  variant="outline"
+                />
+              </>
+            )}
+
             <Input
               label={"Квартира"}
               {...register("flat")}
@@ -181,7 +234,7 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
             />
 
             <Button className="w-full col-span-4 text-body hover:text-accent">
-              {address ? "Обновить" : "Сохранить"} {"адрес"}
+              {form ? "Обновить" : "Сохранить"} {"адрес"}
             </Button>
           </>
         )}
