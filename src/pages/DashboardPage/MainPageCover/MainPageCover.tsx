@@ -187,7 +187,7 @@ export function MainPageCover() {
           ref={swiperRef}
           className="h-full w-full"
         >
-          {dishes
+          {dishes && dishes.length > 0
             ? dishes
                 .filter((dish) => dish.photo)
                 .map((dish) => (

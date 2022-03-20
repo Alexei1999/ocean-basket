@@ -1,6 +1,6 @@
 import Modal from "@entities/payment/components/Forms/modal";
 import { Dish, getDish } from "@shared/api/dishes";
-import { setIsLoading } from "@shared/components/LoadingContainer/FishAnimationContainer";
+import { setLoadingAnimation } from "@shared/components/LoadingContainer/FishAnimationContainer";
 import { RoutesConfig } from "@shared/lib/routes-config";
 import { createEffect, createEvent, createStore } from "effector";
 import { useStore } from "effector-react";
@@ -43,7 +43,7 @@ export const AddDishModal = () => {
       saveChoosenDish(data);
     });
     const dishFailWatcher = getDishFx.fail.watch(() => {
-      setIsLoading(false);
+      setLoadingAnimation(false);
       toast.error("Ошибка при получении блюда");
       onClose();
     });

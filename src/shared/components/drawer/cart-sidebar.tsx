@@ -5,6 +5,7 @@ import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react";
 import { useNavigate } from "react-router-dom";
 import { Drawer } from "./drawer";
+import { $isLoadingAnimation } from "../LoadingContainer/FishAnimationContainer";
 
 export const onSetCartSidebarOpen = createEvent<boolean>();
 export const $isCartSidebarOpen = createStore<boolean>(false).on(
@@ -14,11 +15,13 @@ export const $isCartSidebarOpen = createStore<boolean>(false).on(
 
 export function CartSidebar() {
   const isOpen = useStore($isCartSidebarOpen);
+  const isLoading = useStore($isLoadingAnimation);
+
   const navigate = useNavigate();
 
   return (
     <Drawer
-      open={isOpen}
+      open={!isLoading && isOpen}
       onClose={() => onSetCartSidebarOpen(false)}
       variant="right"
     >

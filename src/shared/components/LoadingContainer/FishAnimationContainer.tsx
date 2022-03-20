@@ -75,9 +75,9 @@ export function usePropRef<T>(prop: T) {
   return ref;
 }
 
-export const setIsLoading = createEvent<boolean>();
+export const setLoadingAnimation = createEvent<boolean>();
 export const $isLoadingAnimation = createStore(true).on(
-  setIsLoading,
+  setLoadingAnimation,
   (_, payload) => payload
 );
 
@@ -104,6 +104,12 @@ export const FishAnimationContainer: React.FC = ({ children }) => {
     return animationConfig[pathname as RoutesConfig] ?? DEFAULT_CONFIG;
   }, [animationConfig, pathname]);
 
+  useEffect(() => {
+    if (animationConfig[pathname as RoutesConfig]) {
+      onResetState();
+    }
+  }, [pathname, animationConfig]);
+
   const time = duration ?? LOADING_DEFAULT_TIME;
   const timeRef = usePropRef(time);
 
@@ -113,7 +119,7 @@ export const FishAnimationContainer: React.FC = ({ children }) => {
 
     const timeout = setTimeout(() => {
       setIsTimedOut(true);
-      setIsLoading(false);
+      setLoadingAnimation(false);
     }, maxLoadingTime);
 
     return () => {
@@ -122,27 +128,21 @@ export const FishAnimationContainer: React.FC = ({ children }) => {
   }, [isFishLoaded, maxLoadingTime]);
 
   const onResetState = () => {
-    setIsLoading(true);
+    setLoadingAnimation(true);
     setIsTimedOut(false);
     setBoolState((state) => !state);
   };
 
   useEffect(() => {
     if (!isEndlessMode && isTimedOut) {
-      setIsLoading(false);
+      setLoadingAnimation(false);
     }
   }, [isEndlessMode, isTimedOut]);
-
-  useEffect(() => {
-    if (animationConfig[pathname as RoutesConfig]) {
-      onResetState();
-    }
-  }, [pathname, animationConfig]);
 
   useGate(gateLoadingContainer, {
     onResetState,
     stopLoading: () => {
-      setIsLoading(false);
+      setLoadingAnimation(false);
     },
     updateTime: (time: number) => {
       onChangeAnimationConfig({
