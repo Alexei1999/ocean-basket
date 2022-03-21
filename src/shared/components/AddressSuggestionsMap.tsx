@@ -5,7 +5,7 @@ import classNames from "classnames";
 import { useState, useCallback, useEffect } from "react";
 import { YMapsApi, YMaps, Placemark, Map } from "react-yandex-maps";
 
-const YANDEX_MAP_API_KEY = "58b49e3a-c619-4fe7-8aac-2d76031bb4c6";
+const YANDEX_MAP_API_KEY = "9ed3cdf8-1911-49ac-b6d0-70711b8f3edd";
 
 export const MOSCOW_COORDS = [55.752, 37.6237];
 
@@ -182,7 +182,7 @@ export const AddressSuggestionsMap = ({
       <YMaps
         query={{
           lang: "ru_RU",
-          mode: "debug",
+          mode: "release",
           apikey: YANDEX_MAP_API_KEY,
         }}
       >
