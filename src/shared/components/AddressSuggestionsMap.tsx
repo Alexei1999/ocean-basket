@@ -1,6 +1,7 @@
 import { FormValues } from "@entities/payment/components/Forms/address-form";
 import Input from "@entities/payment/components/Forms/forms/input";
 import { usePropRef } from "@shared/lib/usePropRef";
+import classNames from "classnames";
 import { useState, useCallback, useEffect } from "react";
 import { YMapsApi, YMaps, Placemark, Map } from "react-yandex-maps";
 
@@ -185,17 +186,17 @@ export const AddressSuggestionsMap = ({
           apikey: YANDEX_MAP_API_KEY,
         }}
       >
-        <div className="flex flex-col">
+        <div className={classNames("flex flex-col")}>
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            variant="outline"
+            variant={!isReady ? "solid" : "outline"}
             name="address"
             type="text"
-            className="form-control"
+            className={classNames("form-control")}
             id="suggest"
             error=""
-          />
+          ></Input>
 
           <div className="w-full pt-5">
             <Map
