@@ -16,6 +16,7 @@ import { $promotions, fetchPomotionsFx } from "@features/choose-dishes/models";
 import { hostUrl } from "@shared/api/base";
 import classNames from "classnames";
 import ContentLoader from "react-content-loader";
+import { restore } from "effector";
 
 const offerSliderBreakpoints = {
   320: {
@@ -36,6 +37,8 @@ const offerSliderBreakpoints = {
   },
 };
 
+const $isError = restore(fetchPomotionsFx.fail, null).map(Boolean);
+
 export function PromotionSlider() {
   const [errorObj, setErrorObj] = useState<{ [id: string]: boolean }>({});
 
@@ -44,8 +47,9 @@ export function PromotionSlider() {
 
   const promotions = useStore($promotions);
   const isLoading = useStore(fetchPomotionsFx.pending);
+  const isError = useStore($isError);
 
-  const onPromotion = ({ id, photo, title: name, ...props }: Promotion) => {
+  const getPromotion = ({ id, photo, title: name, ...props }: Promotion) => {
     const isError = errorObj[id];
 
     return (
@@ -101,6 +105,10 @@ export function PromotionSlider() {
     );
   };
 
+  if (isError) {
+    return null;
+  }
+
   return (
     <div className="px-6 py-5 xl:py-14 xl:px-32 border-t border-border-200 bg-light">
       <PromotionModal
@@ -145,7 +153,7 @@ export function PromotionSlider() {
                     </ContentLoader>
                   </SwiperSlide>
                 ))
-            : promotions?.map(onPromotion)}
+            : promotions?.map(getPromotion)}
         </Swiper>
       </div>
     </div>

@@ -6,6 +6,7 @@ import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react";
 import { useState } from "react";
 import { SubmitHandler } from "react-hook-form";
+import { toast } from "react-toastify";
 import * as yup from "yup";
 import { Form } from "./forms/form";
 import Input from "./forms/input";
@@ -24,7 +25,6 @@ export type FormValues = {
   intercom: string | null;
   comment: string;
   persons_number: number;
-  coords: number[];
 };
 
 const transformNumber = (value: unknown) => {
@@ -67,10 +67,14 @@ $form.watch((form) => {
 });
 
 const onHandleMode = createEvent();
-const $isMapMode = createStore(true).on(onHandleMode, () => false);
+const onToggleMode = createEvent();
+const $isMapMode = createStore(true)
+  .on(onHandleMode, () => false)
+  .on(onToggleMode, (state) => !state);
 
 const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
   const isMapMode = useStore($isMapMode);
+  const [isSwitchShown, setIsSwitchShown] = useState(true);
 
   const form = useStore($form);
 
@@ -82,15 +86,14 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
   return (
     <div className="p-5 sm:p-8 bg-light md:rounded-xl min-h-screen md:min-h-0">
       <div className="w-full mb-4 sm:mb-6 flex justify-center relative">
-        {isMapMode && (
+        {isSwitchShown && (
           <SwitchIcon
             width={35}
             height={35}
             className={classNames(
-              "hover:text-accent cursor-pointer -mt-1 absolute left-0 top-0",
-              isMapMode ? "text-body" : "text-accent"
+              "text-body hover:text-accent cursor-pointer -mt-1 absolute left-0 top-0"
             )}
-            onClick={() => onHandleMode()}
+            onClick={() => onToggleMode()}
           />
         )}
         <h1 className="text-body font-semibold text-lg text-center">
@@ -110,68 +113,76 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
       >
         {({ register, setValue, formState: { errors }, clearErrors }) => (
           <>
-            {isMapMode ? (
-              <AddressSuggestionsMap
-                cordsInitial={form?.coords}
-                className="col-span-4"
-                onChange={(data) => {
-                  setValue(
-                    "entrance",
-                    parseInt(data.entrance?.replace(/\D/g, "") as string)
-                  );
-                  setValue("building", data.house ?? "");
-                  setValue("city", data.locality ?? "");
-                  setValue("street", data.street ?? "");
+            <AddressSuggestionsMap
+              formInitial={form ?? undefined}
+              className={classNames("col-span-4", !isMapMode && "hidden")}
+              onChange={(data) => {
+                setValue(
+                  "entrance",
+                  parseInt(data.entrance?.replace(/\D/g, "") as string)
+                );
+                setValue("building", data.house ?? "");
+                setValue("city", data.locality ?? "");
+                setValue("street", data.street ?? "");
 
-                  setValue("coords", data.coords as number[]);
+                clearErrors();
+              }}
+              onError={() => {
+                toast.error("Проблема с загрузкой карт");
+                setIsSwitchShown(false);
+                onHandleMode();
+              }}
+              errors={
+                [
+                  errors.city?.message,
+                  errors.street?.message,
+                  errors.building?.message,
+                  errors.part?.message,
+                ].filter(Boolean) as string[]
+              }
+            />
 
-                  clearErrors();
-                }}
-                onError={() => {
-                  onHandleMode();
-                }}
-                errors={
-                  [
-                    errors.city?.message,
-                    errors.street?.message,
-                    errors.building?.message,
-                    errors.part?.message,
-                  ].filter(Boolean) as string[]
-                }
-              />
-            ) : (
-              <>
-                <Input
-                  {...register("city")}
-                  label={"Город"}
-                  error={errors.city?.message!}
-                  name="city"
-                  variant="outline"
-                  className="col-span-4 sm:col-span-2"
-                />
-                <Input
-                  label={"Улица"}
-                  {...register("street")}
-                  error={errors.street?.message!}
-                  variant="outline"
-                  className="col-span-4 sm:col-span-2"
-                />
-                <Input
-                  label={"Дом"}
-                  {...register("building")}
-                  error={errors.building?.message}
-                  className="col-span-4 sm:col-span-2"
-                  variant="outline"
-                />
-                <Input
-                  label={"Корпус / строение"}
-                  {...register("part")}
-                  error={errors.part?.message}
-                  className="col-span-2 sm:col-span-1"
-                  variant="outline"
-                />
-              </>
-            )}
+            <Input
+              {...register("city")}
+              label={"Город"}
+              error={errors.city?.message!}
+              name="city"
+              variant="outline"
+              className={classNames(
+                "col-span-4 sm:col-span-2",
+                isMapMode && "hidden"
+              )}
+            />
+            <Input
+              label={"Улица"}
+              {...register("street")}
+              error={errors.street?.message!}
+              variant="outline"
+              className={classNames(
+                "col-span-4 sm:col-span-2",
+                isMapMode && "hidden"
+              )}
+            />
+            <Input
+              label={"Дом"}
+              {...register("building")}
+              error={errors.building?.message}
+              className={classNames(
+                "col-span-4 sm:col-span-2",
+                isMapMode && "hidden"
+              )}
+              variant="outline"
+            />
+            <Input
+              label={"Корпус / строение"}
+              {...register("part")}
+              error={errors.part?.message}
+              className={classNames(
+                "col-span-2 sm:col-span-1",
+                isMapMode && "hidden"
+              )}
+              variant="outline"
+            />
 
             <Input
               label={"Квартира"}

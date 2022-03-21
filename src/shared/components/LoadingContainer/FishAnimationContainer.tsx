@@ -58,6 +58,10 @@ const $animationConfig = createStore<{
   [RoutesConfig.Menu]: {
     isEndlessMode: false,
   },
+  [RoutesConfig.About]: {
+    isEndlessMode: true,
+    maxLoadingTime: 20000,
+  },
 })
   .on(onChangeAnimationConfig, (state, { name, config }) => ({
     ...state,
@@ -80,6 +84,7 @@ export const FishAnimationContainer: React.FC = ({ children }) => {
   const [isTimedOut, setIsTimedOut] = useState(false);
   const [isFishLoaded, setIsFishLoaded] = useState(false);
   const [isBoolState, setBoolState] = useState(false);
+  const [isReversed, setIsReversed] = useState(false);
 
   const isSmallScreen = useStore($smScreen);
   const isMediumScreen = useStore($mdScreen);
@@ -161,7 +166,7 @@ export const FishAnimationContainer: React.FC = ({ children }) => {
         <div className="absolute lg:top-22 md:top-16 top-14 left-0 h-screen w-screen z-[1000] bg-light flex flex-col justify-around pt-5 pb-16">
           {isMobile && (
             <BouncingFishes
-              isRtl
+              isRtl={!isReversed}
               canMoving={isFishLoaded}
               onAnyLoad={() => {
                 setIsFishLoaded(true);
@@ -171,17 +176,26 @@ export const FishAnimationContainer: React.FC = ({ children }) => {
             />
           )}
           <BouncingFishes
+            isRtl={isReversed}
             className={styles.swim}
             canMoving={isFishLoaded}
             onAnyLoad={() => {
               setIsFishLoaded(true);
+            }}
+            onFinish={(direction) => {
+              if (direction === "left" && isReversed) {
+                setIsReversed((reversed) => !reversed);
+              }
+              if (direction === "right" && !isReversed) {
+                setIsReversed((reversed) => !reversed);
+              }
             }}
             duration={time}
             isRepeatable={isEndlessMode}
           />
           {isMobile && (
             <BouncingFishes
-              isRtl
+              isRtl={!isReversed}
               canMoving={isFishLoaded}
               onAnyLoad={() => {
                 setIsFishLoaded(true);

@@ -8,14 +8,8 @@ import { SubscriptionSection } from "@widgets/subscription/SubscriptionSection";
 
 import hook from "@widgets/subscription/hook.svg";
 import twoWaves from "@pages/AboutPage/AboutPageCover/2-waves.svg";
-import { useEffect } from "react";
-import { setLoadingAnimation } from "@shared/components/LoadingContainer/FishAnimationContainer";
 
 export function CertificatePage() {
-  useEffect(() => {
-    setLoadingAnimation(false);
-  }, []);
-
   return (
     <>
       <PageWaveHeader

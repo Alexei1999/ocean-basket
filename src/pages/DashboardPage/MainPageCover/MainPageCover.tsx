@@ -21,10 +21,7 @@ import footer from "@assets/footer.png";
 import footerZip from "@assets/footer.zip.png";
 
 import { onScrollPage } from "@shared/components/ScrollContainer";
-import {
-  onChangeAnimationConfig,
-  onRemoveAnimationConfig,
-} from "@shared/components/LoadingContainer/FishAnimationContainer";
+import { onRemoveAnimationConfig } from "@shared/components/LoadingContainer/FishAnimationContainer";
 import { ImageWithPreview } from "@shared/components/ImageWithPreview";
 import { getSlider } from "@shared/api/dishes";
 import { toTranslit } from "@entities/dishes/components/Card/DishCard";

@@ -20,6 +20,7 @@ export const BouncingFishes: React.FC<{
   isRtl?: boolean;
   onAnyLoad?: () => void;
   onLoad?: () => void;
+  onFinish?: (direction: Directions) => void;
   duration: number;
   isRepeatable?: boolean;
 }> = ({
@@ -27,6 +28,7 @@ export const BouncingFishes: React.FC<{
   className,
   style,
   isRtl = false,
+  onFinish,
   onAnyLoad,
   onLoad,
   duration,
@@ -51,6 +53,14 @@ export const BouncingFishes: React.FC<{
   }, [isRepeatable]);
 
   const useChangeDirectionRef = usePropRef(changeDirection);
+
+  const directionRef = usePropRef(direction);
+  const onFinishRef = usePropRef(onFinish);
+  useEffect(() => {
+    return () => {
+      onFinishRef.current?.(directionRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {

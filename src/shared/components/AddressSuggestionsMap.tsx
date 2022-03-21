@@ -1,6 +1,6 @@
+import { FormValues } from "@entities/payment/components/Forms/address-form";
 import Input from "@entities/payment/components/Forms/forms/input";
 import { usePropRef } from "@shared/lib/usePropRef";
-import { throttle } from "lodash";
 import { useState, useCallback, useEffect } from "react";
 import { YMapsApi, YMaps, Placemark, Map } from "react-yandex-maps";
 
@@ -17,17 +17,23 @@ type Keys =
   | "house"
   | "entrance";
 
+const getAddressString = (form: FormValues) => {
+  return (
+    [form?.city, form?.street, form?.building, form?.part]
+      .filter(Boolean)
+      .join(" ") + (form?.entrance ? " подъезд " + form?.entrance : "")
+  );
+};
+
 export const AddressSuggestionsMap = ({
-  cordsInitial = MOSCOW_COORDS,
+  formInitial,
   onChange,
   onError,
   className,
   errors,
 }: {
-  cordsInitial?: number[];
-  onChange: (
-    data: { [K in Keys]?: string } & { coords: (null | number)[] }
-  ) => void;
+  formInitial?: FormValues;
+  onChange: (data: { [K in Keys]?: string }) => void;
   onError?: () => void;
   className?: string;
   errors?: string[];
@@ -60,7 +66,6 @@ export const AddressSuggestionsMap = ({
             (obj, { kind, name }) => ({ ...obj, [kind]: name }),
             {}
           ),
-          coords,
         });
       });
     },
@@ -71,8 +76,8 @@ export const AddressSuggestionsMap = ({
     if (!ymaps) return;
     if (!isReady) return;
 
-    decodePosition(cordsInitial);
-    setCoords(cordsInitial);
+    decodePosition(MOSCOW_COORDS);
+    setCoords(MOSCOW_COORDS);
   }, [decodePosition, ymaps, isReady]);
 
   const decodePositionRef = usePropRef(decodePosition);
@@ -126,6 +131,17 @@ export const AddressSuggestionsMap = ({
 
   useEffect(() => {
     if (!ymaps) return;
+    if (!isReady) return;
+    if (!formInitial) return;
+
+    const address = getAddressString(formInitial);
+
+    setInput(address);
+    searchCoords(address);
+  }, [ymaps, isReady, formInitial, searchCoords]);
+
+  useEffect(() => {
+    if (!ymaps) return;
 
     ymaps
       .ready()
@@ -157,7 +173,7 @@ export const AddressSuggestionsMap = ({
   }, [isReady, ymaps]);
 
   const _viewCoords = (
-    viewCoords.some((c) => c === null) ? cordsInitial : viewCoords
+    viewCoords.some((c) => c === null) ? MOSCOW_COORDS : viewCoords
   ) as number[];
 
   return (
@@ -186,7 +202,7 @@ export const AddressSuggestionsMap = ({
               width="100%"
               instanceRef={updateInstance as any}
               onLoad={setYmaps}
-              onError={() => console.log("map error")}
+              onError={onError}
               defaultState={{
                 center: _viewCoords,
                 zoom: 9,

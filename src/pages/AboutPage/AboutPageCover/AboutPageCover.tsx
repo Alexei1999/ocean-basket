@@ -21,8 +21,14 @@ import worker1 from "./worker-1.png";
 import hands from "./hands.png";
 
 import mediumWaves from "./medium-waves.svg";
+import footer from "@assets/footer.png";
 
 import fullFishes from "@assets/full-fishes.svg";
+import { createEvent, createStore } from "effector";
+import { useEffect, useRef } from "react";
+import { useStore } from "effector-react";
+import { onRemoveAnimationConfig } from "@shared/components/LoadingContainer/FishAnimationContainer";
+import { RoutesConfig } from "@shared/lib/routes-config";
 
 const header = " font-friends text-[66px] leading-none";
 
@@ -66,12 +72,37 @@ const Description = ({ className }: { className?: string }) => {
   );
 };
 
+const onBackgroundLoaded = createEvent<void>();
+
+const backgroundImage = new Image();
+backgroundImage.src = footer;
+backgroundImage.onload = () => onBackgroundLoaded();
+backgroundImage.onerror = () => onBackgroundLoaded();
+
+const $backgroundLoaded = createStore(false).on(onBackgroundLoaded, () => true);
+
 export function AboutPageCover() {
+  const backgroundLeftRef = useRef<HTMLDivElement | null>(null);
+  const isBackgroundLoaded = useStore($backgroundLoaded);
+
+  useEffect(() => {
+    if (!isBackgroundLoaded) return;
+
+    onRemoveAnimationConfig(RoutesConfig.About);
+  }, [isBackgroundLoaded]);
+
+  useEffect(() => {
+    if (!backgroundLeftRef.current) return;
+
+    backgroundLeftRef.current.style.backgroundImage = `url(${backgroundImage.src})`;
+  }, []);
+
   return (
     <div className="flex flex-col">
       <div className="order-1 sm:order-0">
         <div className={classNames("flex relative", styles.container)}>
           <div
+            ref={backgroundLeftRef}
             className={classNames(
               styles.containerLeft,
               "flex-grow max-w-full sm:max-w-[60%] lg:max-w-[50%]"
