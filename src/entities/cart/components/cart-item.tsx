@@ -91,7 +91,7 @@ const CartItem = ({
             {Boolean(modifiersString.length) && modifiersString.join(", ")}
           </span>
           {Boolean(comment) && (
-            <div>
+            <div className="cursor-pointer">
               <span
                 data-tip
                 data-for={comment}

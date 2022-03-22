@@ -5,7 +5,7 @@ import { Waypoint } from "react-waypoint";
 import productSvg from "@assets/product.svg";
 import Truncate from "./truncate";
 import VariationPrice, { filterPrices } from "./variation-price";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ModifierGroups from "./variation-groups";
 import {
   $isRestaurantOpen,
@@ -21,7 +21,7 @@ import { useStore } from "effector-react";
 import { capitalize, isNumber } from "lodash";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
-import TextArea from "@entities/payment/components/Forms/forms/text-area";
+import TextArea from "@shared/components/text-area";
 
 export const filterCartObjects = (
   items: Partial<PickedDish[]>
@@ -79,6 +79,8 @@ const Details: React.FC<Props> = ({
   modifiers,
   setShowStickyShortDetails,
 }) => {
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+
   const [isError, setIsError] = useState(false);
   const [comment, setComment] = useState<string | undefined>(undefined);
 
@@ -240,6 +242,7 @@ const Details: React.FC<Props> = ({
                 modifiers={modifiers}
               />
               <TextArea
+                ref={textAreaRef}
                 value={comment ?? ""}
                 onChange={(e) => setComment(e.target.value ?? undefined)}
                 className="pt-3 mt-auto"
@@ -268,7 +271,10 @@ const Details: React.FC<Props> = ({
             )}
             <div className="mb-3 lg:mb-0 w-full">
               <AddToCartBig
-                onAdd={() => setComment(undefined)}
+                onAdd={() => {
+                  setComment(undefined);
+                  textAreaRef.current?.focus();
+                }}
                 active={activePrice}
                 product={{ ...product, comment }}
                 activeModifiers={activeModifier}

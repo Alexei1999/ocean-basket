@@ -1,6 +1,7 @@
 import { getFromStorage, setToStorage } from "@features/choose-dishes/api";
 import Button from "@shared/button";
 import { AddressSuggestionsMap } from "@shared/components/AddressSuggestionsMap";
+import TextArea from "@shared/components/text-area";
 import classNames from "classnames";
 import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react";
@@ -10,7 +11,6 @@ import { toast } from "react-toastify";
 import * as yup from "yup";
 import { Form } from "./forms/form";
 import Input from "./forms/input";
-import TextArea from "./forms/text-area";
 import { SwitchIcon } from "./SwitchIcon";
 
 export type FormValues = {
