@@ -11,7 +11,9 @@ import {
   dropProductFromCart,
   PickedDish,
 } from "@features/choose-dishes/models";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import ReactTooltip from "react-tooltip";
+import { BsQuestionCircleFill } from "react-icons/bs";
 
 interface CartItemProps {
   item: PickedDish;
@@ -24,9 +26,10 @@ const CartItem = ({
   isCounter = false,
   isResult = false,
 }: CartItemProps) => {
+  const [isTooltipShown, setIsTooltipShown] = useState(false);
   const { priceObj, count, product, modifiers, totalPrice: price } = item;
   const { weight } = priceObj;
-  const { name } = product;
+  const { name, comment } = product;
 
   const modifiersString = useMemo(
     () => modifiers.map(({ option }) => option),
@@ -87,6 +90,39 @@ const CartItem = ({
           <span>
             {Boolean(modifiersString.length) && modifiersString.join(", ")}
           </span>
+          {Boolean(comment) && (
+            <div>
+              <span
+                data-tip
+                data-for={comment}
+                className="text-xs text-gray-400"
+              >
+                С комментарием{" "}
+                <BsQuestionCircleFill
+                  className={classNames(
+                    "inline-block",
+                    isTooltipShown ? "text-accent" : "text-gray-400"
+                  )}
+                />
+              </span>
+              <ReactTooltip
+                scrollHide
+                resizeHide
+                afterShow={() => setIsTooltipShown(true)}
+                afterHide={() => setIsTooltipShown(false)}
+                id={comment}
+              >
+                <span
+                  className="max-w-[100vw]"
+                  style={{
+                    wordBreak: "break-word",
+                  }}
+                >
+                  {comment}
+                </span>
+              </ReactTooltip>
+            </div>
+          )}
         </div>
       </h3>
       <div className="pl-2 ms-auto font-bold text-body">{formatedPrice}</div>

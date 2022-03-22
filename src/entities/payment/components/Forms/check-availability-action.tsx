@@ -4,7 +4,6 @@ import Button, { ButtonProps } from "@shared/button";
 import { createGate, useGate, useStore } from "effector-react";
 import {
   $cart,
-  $cartItems,
   $cartSizes,
   $isRestaurantOpen,
   fetchTimeValidateFx,
@@ -169,7 +168,7 @@ const formatDish = ({
   const parsedRoublePrice = parseInt(priceObj.rouble_price);
   const parsedTengePrice = parseInt(priceObj.tenge_price);
 
-  const dish = {
+  const dish: OrderTypeParams["dishes"][number] = {
     name: product.name,
     weight: (isNaN(parsedWeight) ? EMPTY_STRING : parsedWeight) as number,
     rouble_price: (isNaN(parsedRoublePrice)
@@ -182,9 +181,10 @@ const formatDish = ({
       .filter(({ option }) => option)
       .map(({ option, name, price }) => ({
         key: name,
-        value: option,
+        value: option as string,
         amount: price as number,
       })),
+    comment: product.comment,
   };
 
   return Array(count)

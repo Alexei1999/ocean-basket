@@ -22,6 +22,7 @@ interface Props {
   activeModifiers: {
     [id: string]: PickedModifier;
   };
+  onAdd?: () => void;
 }
 
 export const AddToCartBig = ({
@@ -30,6 +31,7 @@ export const AddToCartBig = ({
   active,
   disabled,
   activeModifiers,
+  onAdd,
 }: Props) => {
   const { unicItemsNumber } = useStore($cartSizes);
 
@@ -51,6 +53,8 @@ export const AddToCartBig = ({
         Object.values(activeModifiers).filter((modifier) => modifier)
       )
     );
+
+    onAdd?.();
   };
   const handleRemoveClick = (e: any) => {
     e.stopPropagation();

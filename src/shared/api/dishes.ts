@@ -35,6 +35,7 @@ export type Dish = {
   carbohydrates?: number;
   created_at: string;
   updated_at: string;
+  comment?: string;
 };
 
 export const getDishes = (): Promise<{ [category: string]: Dish[] }> => {
@@ -83,7 +84,12 @@ export type OrderTypeParams = Omit<FormValues, "title"> & {
     weight: number;
     rouble_price: number;
     tenge_price: number;
-    modifiers: { key: string; value: string; amount: number }[];
+    modifiers: {
+      key: string;
+      value: string;
+      amount: number;
+    }[];
+    comment?: string;
   }[];
   promocode?: string;
   restaurant: string;

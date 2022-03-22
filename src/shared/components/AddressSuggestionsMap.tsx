@@ -39,7 +39,7 @@ export const AddressSuggestionsMap = ({
   className?: string;
   errors?: string[];
 }) => {
-  const [ymaps, setYmaps] = useState<YMapsApi | null>(null);
+  const [ymapsInstance, setYmapsInstance] = useState<YMapsApi | null>(null);
   const [isReady, setIsReady] = useState(false);
   const [coords, setCoords] = useState<Array<number | null>>([null, null]);
   const [viewCoords, setViewCoords] = useState<Array<number | null>>([
@@ -49,10 +49,10 @@ export const AddressSuggestionsMap = ({
 
   const decodePosition = useCallback(
     (coords: (number | null)[]) => {
-      if (!ymaps) return;
+      if (!ymapsInstance) return;
       if (!isReady) return;
 
-      const reverseGeocoder = ymaps.geocode(coords);
+      const reverseGeocoder = ymapsInstance.geocode(coords);
       reverseGeocoder.then((data: any) => {
         const components: {
           kind: Keys;
@@ -70,20 +70,20 @@ export const AddressSuggestionsMap = ({
         });
       });
     },
-    [isReady, ymaps]
+    [isReady, ymapsInstance]
   );
 
   useEffect(() => {
-    if (!ymaps) return;
+    if (!ymapsInstance) return;
     if (!isReady) return;
 
     decodePosition(MOSCOW_COORDS);
     setCoords(MOSCOW_COORDS);
-  }, [decodePosition, ymaps, isReady]);
+  }, [decodePosition, ymapsInstance, isReady]);
 
   const decodePositionRef = usePropRef(decodePosition);
 
-  const updateInstance = useCallback((instance: ymaps.Map) => {
+  const updateInstance = useCallback((instance: any) => {
     if (!instance?.events) return;
 
     // const onActionHandler = () => {
@@ -95,7 +95,7 @@ export const AddressSuggestionsMap = ({
     // instance.events.add("load", onActionHandler);
     // instance.events.add("actionend", onActionHandler);
 
-    const onclickhanlder = (e: ymaps.IEvent<MouseEvent, {}>) => {
+    const onclickhanlder = (e: any) => {
       const coords = e.get("coords");
 
       setCoords(coords);
@@ -110,11 +110,11 @@ export const AddressSuggestionsMap = ({
 
   const searchCoords = useCallback(
     (address: string) => {
-      if (!ymaps) return;
+      if (!ymapsInstance) return;
       if (!isReady) return;
       if (!address) return;
 
-      const searchControl = new ymaps.control.SearchControl({
+      const searchControl = new ymapsInstance.control.SearchControl({
         options: {
           provider: "yandex#map",
         },
@@ -127,11 +127,11 @@ export const AddressSuggestionsMap = ({
         decodePosition(cords);
       });
     },
-    [isReady, ymaps, decodePosition]
+    [isReady, ymapsInstance, decodePosition]
   );
 
   useEffect(() => {
-    if (!ymaps) return;
+    if (!ymapsInstance) return;
     if (!isReady) return;
     if (!formInitial) return;
 
@@ -139,24 +139,24 @@ export const AddressSuggestionsMap = ({
 
     setInput(address);
     searchCoords(address);
-  }, [ymaps, isReady, formInitial, searchCoords]);
+  }, [ymapsInstance, isReady, formInitial, searchCoords]);
 
   useEffect(() => {
-    if (!ymaps) return;
+    if (!ymapsInstance) return;
 
-    ymaps
+    ymapsInstance
       .ready()
       .then(() => {
         setIsReady(true);
       })
       .catch(onError);
-  }, [ymaps]);
+  }, [ymapsInstance]);
 
   useEffect(() => {
-    if (!ymaps) return;
+    if (!ymapsInstance) return;
     if (!isReady) return;
 
-    const suggestView = new ymaps.SuggestView("suggest");
+    const suggestView = new ymapsInstance.SuggestView("suggest");
 
     if (!suggestView?.events) return;
 
@@ -171,7 +171,7 @@ export const AddressSuggestionsMap = ({
     return () => {
       suggestView.destroy();
     };
-  }, [isReady, ymaps]);
+  }, [isReady, ymapsInstance]);
 
   const _viewCoords = (
     viewCoords.some((c) => c === null) ? MOSCOW_COORDS : viewCoords
@@ -202,7 +202,7 @@ export const AddressSuggestionsMap = ({
             <Map
               width="100%"
               instanceRef={updateInstance as any}
-              onLoad={setYmaps}
+              onLoad={setYmapsInstance}
               onError={onError}
               defaultState={{
                 center: _viewCoords,

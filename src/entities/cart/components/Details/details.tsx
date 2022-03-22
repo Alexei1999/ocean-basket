@@ -21,6 +21,7 @@ import { useStore } from "effector-react";
 import { capitalize, isNumber } from "lodash";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
+import TextArea from "@entities/payment/components/Forms/forms/text-area";
 
 export const filterCartObjects = (
   items: Partial<PickedDish[]>
@@ -79,6 +80,7 @@ const Details: React.FC<Props> = ({
   setShowStickyShortDetails,
 }) => {
   const [isError, setIsError] = useState(false);
+  const [comment, setComment] = useState<string | undefined>(undefined);
 
   const isOpen = useStore($isRestaurantOpen);
 
@@ -224,7 +226,7 @@ const Details: React.FC<Props> = ({
             onEnter={() => setShowStickyShortDetails(false)}
             onPositionChange={onWaypointPositionChange}
           >
-            <div className="w-full">
+            <div className="w-full h-full flex flex-col">
               <div className="mb-5 md:mb-10 flex items-center">
                 <VariationPrice
                   active={activePrice}
@@ -237,28 +239,52 @@ const Details: React.FC<Props> = ({
                 activeModifier={activeModifier}
                 modifiers={modifiers}
               />
+              <TextArea
+                value={comment ?? ""}
+                onChange={(e) => setComment(e.target.value ?? undefined)}
+                className="pt-3 mt-auto"
+                inputClassName="max-h-[70px]"
+                maxLength={70}
+                placeholder="Комментарий, не длиннее 70 символов"
+                label="Комментарий к блюду"
+                name="comment"
+              />
             </div>
           </Waypoint>
-          {
-            <div className="mt-4 w-full md:mt-6 flex flex-col lg:flex-row items-center justify-between">
-              <div className="mb-3 lg:mb-0 w-full">
-                <AddToCartBig
-                  active={activePrice}
-                  product={product}
-                  activeModifiers={activeModifier}
-                  disabled={
-                    product.status !== DishStatus.Active ||
-                    !prices.length ||
-                    isOpen === false
-                  }
-                />
+          <div className="mt-4 w-full md:mt-6 flex flex-col items-center justify-between">
+            {isNutritional && (
+              <div className="w-full">
+                <span className="text-gray-400 text-xs">
+                  {[
+                    isNumber(calories) && `К: ${calories}`,
+                    isNumber(proteins) && `Б: ${proteins}`,
+                    isNumber(fats) && `Ж: ${fats}`,
+                    isNumber(carbohydrates) && `У: ${carbohydrates}`,
+                  ]
+                    .filter((str) => str)
+                    .join(", ")}
+                </span>
               </div>
+            )}
+            <div className="mb-3 lg:mb-0 w-full">
+              <AddToCartBig
+                onAdd={() => setComment(undefined)}
+                active={activePrice}
+                product={{ ...product, comment }}
+                activeModifiers={activeModifier}
+                disabled={
+                  product.status !== DishStatus.Active ||
+                  !prices.length ||
+                  isOpen === false
+                }
+              />
+            </div>
 
-              {/* <div className="flex">
+            {/* <div className="flex">
                 <span className="text-sm font-semibold text-heading capitalize me-6 py-1">
                   Категория
                 </span> */}
-              {/* <button
+            {/* <button
                 onClick={
                   () => {}
                   // handleClick(`${basePath}?category=${category.slug}`)
@@ -267,9 +293,8 @@ const Details: React.FC<Props> = ({
               >
                 {product.category}
               </button> */}
-              {/* </div> */}
-            </div>
-          }
+            {/* </div> */}
+          </div>
         </div>
       </div>
     </article>

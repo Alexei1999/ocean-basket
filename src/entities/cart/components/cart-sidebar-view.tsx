@@ -9,7 +9,6 @@ import classNames from "classnames";
 import { Scrollbar } from "@shared/components/Scrollbar";
 import {
   $cartSizes,
-  $cartItems,
   $isRestaurantOpen,
   $cart,
 } from "@features/choose-dishes/models";

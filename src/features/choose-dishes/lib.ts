@@ -10,6 +10,10 @@ export const isTwoPickedDishesEqual = (
   dish1: Partial<PickedDish>,
   dish2: Partial<PickedDish>
 ) => {
+  if (dish1.product?.comment !== dish2.product?.comment) {
+    return false;
+  }
+
   if (dish1.product?.id !== dish2.product?.id) {
     return false;
   }

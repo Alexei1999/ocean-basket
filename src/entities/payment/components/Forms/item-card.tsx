@@ -12,7 +12,7 @@ const ItemCard = ({ className, item, notAvailable }: Props) => {
   const { product, count, priceObj, modifiers, totalPrice } = item;
   const { weight } = priceObj;
 
-  const { name } = product;
+  const { name, comment } = product;
 
   const modifiersString = useMemo(
     () => modifiers.map(({ name, option }) => `${name} ${option}`),
@@ -54,6 +54,18 @@ const ItemCard = ({ className, item, notAvailable }: Props) => {
                   <div key={idx}>{modifier}</div>
                 ))}
             </div>
+            {comment && (
+              <div>
+                <span
+                  className="text-xs text-gray-400"
+                  style={{
+                    wordBreak: "break-word",
+                  }}
+                >
+                  {comment}
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>
