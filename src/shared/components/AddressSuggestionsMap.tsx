@@ -73,14 +73,6 @@ export const AddressSuggestionsMap = ({
     [isReady, ymapsInstance]
   );
 
-  useEffect(() => {
-    if (!ymapsInstance) return;
-    if (!isReady) return;
-
-    decodePosition(MOSCOW_COORDS);
-    setCoords(MOSCOW_COORDS);
-  }, [decodePosition, ymapsInstance, isReady]);
-
   const decodePositionRef = usePropRef(decodePosition);
 
   const updateInstance = useCallback((instance: any) => {
@@ -137,7 +129,6 @@ export const AddressSuggestionsMap = ({
 
     const address = getAddressString(formInitial);
 
-    setInput(address);
     searchCoords(address);
   }, [ymapsInstance, isReady, formInitial, searchCoords]);
 
