@@ -108,6 +108,7 @@ const CartItem = ({
               <ReactTooltip
                 scrollHide
                 resizeHide
+                clickable
                 afterShow={() => setIsTooltipShown(true)}
                 afterHide={() => setIsTooltipShown(false)}
                 id={comment}
