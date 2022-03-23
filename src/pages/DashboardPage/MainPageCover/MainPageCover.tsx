@@ -170,47 +170,49 @@ export function MainPageCover() {
       <div
         className={classNames("sm:flex-grow sm:max-w-[60%] hidden sm:block")}
       >
-        <Swiper
-          loop
-          initialSlide={initialSlide}
-          modules={[Autoplay]}
-          autoplay={{
-            delay: 2500,
-          }}
-          onSlideChange={(swiper) => {
-            onSlideChange(swiper.realIndex);
-          }}
-          // @ts-ignore
-          ref={swiperRef}
-          className="h-full w-full"
-        >
-          {dishes && dishes.length > 0
-            ? dishes
-                .filter((dish) => dish.photo)
-                .map((dish) => (
-                  <SwiperSlide key={dish.id}>
-                    <img
-                      className="w-full h-full object-cover cursor-pointer"
-                      onError={() => onRemoveDish(dish.id)}
-                      src={dish.photo!}
-                      onClick={() => {
-                        navigate(
-                          RoutesConfig.Menu +
-                            "/" +
-                            dish.id +
-                            "/" +
-                            toTranslit(dish.name)
-                        );
-                      }}
-                    />
-                  </SwiperSlide>
-                ))
-            : covers.map(({ src }, idx) => (
-                <SwiperSlide key={idx}>
-                  <img className="w-full h-full object-cover" src={src} />
+        {dishes && dishes.length > 0 ? (
+          <Swiper
+            loop
+            initialSlide={initialSlide}
+            modules={[Autoplay]}
+            autoplay={{
+              delay: 2500,
+            }}
+            onSlideChange={(swiper) => {
+              onSlideChange(swiper.realIndex);
+            }}
+            // @ts-ignore
+            ref={swiperRef}
+            className="h-full w-full"
+          >
+            {dishes
+              .filter((dish) => dish.photo)
+              .map((dish) => (
+                <SwiperSlide key={dish.id}>
+                  <img
+                    className="w-full h-full object-cover cursor-pointer"
+                    onError={() => onRemoveDish(dish.id)}
+                    src={dish.photo!}
+                    onClick={() => {
+                      navigate(
+                        RoutesConfig.Menu +
+                          "/" +
+                          dish.id +
+                          "/" +
+                          toTranslit(dish.name)
+                      );
+                    }}
+                  />
                 </SwiperSlide>
               ))}
-        </Swiper>
+          </Swiper>
+        ) : (
+          covers.map(({ src }, idx) => (
+            <SwiperSlide key={idx}>
+              <img className="w-full h-full object-cover" src={src} />
+            </SwiperSlide>
+          ))
+        )}
       </div>
     </div>
   );
