@@ -3,7 +3,13 @@ import Input from "@entities/payment/components/Forms/forms/input";
 import { usePropRef } from "@shared/lib/usePropRef";
 import classNames from "classnames";
 import { useState, useCallback, useEffect } from "react";
-import { YMapsApi, YMaps, Placemark, Map } from "react-yandex-maps";
+import {
+  YMapsApi,
+  YMaps,
+  Placemark,
+  Map,
+  ZoomControl,
+} from "react-yandex-maps";
 
 const YANDEX_MAP_API_KEY = "9ed3cdf8-1911-49ac-b6d0-70711b8f3edd";
 
@@ -35,7 +41,7 @@ export const AddressSuggestionsMap = ({
 }: {
   formInitial?: FormValues;
   onChange: (data: { [K in Keys]?: string }) => void;
-  onError?: () => void;
+  onError?: (e: any) => void;
   className?: string;
   errors?: string[];
 }) => {
@@ -43,7 +49,8 @@ export const AddressSuggestionsMap = ({
   const [isReady, setIsReady] = useState(false);
   const [coords, setCoords] = useState<Array<number | null>>([null, null]);
   const [viewCoords, setViewCoords] = useState<Array<number | null>>([
-    55.752, 37.6237,
+    null,
+    null,
   ]);
   const [input, setInput] = useState<string>("");
 
@@ -164,9 +171,10 @@ export const AddressSuggestionsMap = ({
     };
   }, [isReady, ymapsInstance]);
 
-  const _viewCoords = (
-    viewCoords.some((c) => c === null) ? MOSCOW_COORDS : viewCoords
-  ) as number[];
+  const noCoords = viewCoords.some((c) => c === null);
+  const _viewCoords = (noCoords ? MOSCOW_COORDS : viewCoords) as number[];
+
+  console.log("noCoords", noCoords);
 
   return (
     <div className={className}>
@@ -197,14 +205,20 @@ export const AddressSuggestionsMap = ({
               onError={onError}
               defaultState={{
                 center: _viewCoords,
-                zoom: 9,
+                zoom: noCoords ? 12 : 18,
               }}
               state={{
                 center: _viewCoords,
-                zoom: 9,
+                zoom: noCoords ? 12 : 18,
               }}
-              modules={["SuggestView", "control.SearchControl", "geocode"]}
+              modules={[
+                "SuggestView",
+                "control.SearchControl",
+                "control.ZoomControl",
+                "geocode",
+              ]}
             >
+              <ZoomControl options={{ float: "right" }} />
               {coords.some((c) => c === null) ? null : (
                 <Placemark geometry={coords as number[]} />
               )}
