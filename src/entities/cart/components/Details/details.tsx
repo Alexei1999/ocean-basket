@@ -273,7 +273,7 @@ const Details: React.FC<Props> = ({
               <AddToCartBig
                 onAdd={() => {
                   setComment(undefined);
-                  textAreaRef.current?.focus();
+                  comment && textAreaRef.current?.focus();
                 }}
                 active={activePrice}
                 product={{ ...product, comment }}
