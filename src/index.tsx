@@ -13,6 +13,20 @@ const tagManagerArgs = {
 
 TagManager.initialize(tagManagerArgs);
 
+declare global {
+  interface Window {
+    app: {
+      name?: string;
+      version?: string;
+    };
+  }
+}
+
+window.app = {
+  name: process.env.REACT_APP_NAME,
+  version: process.env.REACT_APP_VERSION,
+};
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
