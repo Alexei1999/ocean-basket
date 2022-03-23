@@ -26,6 +26,7 @@ import { ImageWithPreview } from "@shared/components/ImageWithPreview";
 import { getSlider } from "@shared/api/dishes";
 import { toTranslit } from "@entities/dishes/components/Card/DishCard";
 import { usePropRef } from "@shared/lib/usePropRef";
+import { hostUrl } from "@shared/api/base";
 
 const onSlideChange = createEvent<number>();
 const $slide = createStore(0).on(onSlideChange, (_, slide) => slide);
@@ -80,8 +81,6 @@ export function MainPageCover() {
   const isBackgroundZipLoaded = useStore($backgroundZipLoaded);
 
   const dishes = useStore($dishes);
-
-  console.log("dishes", dishes, dishes && dishes.length > 0);
 
   const dishesRef = usePropRef(dishes);
 
@@ -156,7 +155,12 @@ export function MainPageCover() {
             Меню
           </Button>
         </div>
-        <div className="hidden lg:flex absolute right-12 bottom-14">
+        <div
+          className={classNames(
+            "hidden absolute right-12 bottom-14",
+            dishes && dishes.length > 0 && "lg:flex"
+          )}
+        >
           <ArrowLeft
             className="translate-y-[40%]"
             //@ts-ignore
@@ -195,10 +199,10 @@ export function MainPageCover() {
                     className="w-full h-full object-cover cursor-pointer"
                     onError={(e) => {
                       console.error(e);
-                      console.log("dish " + dish.id + " removed");
+
                       onRemoveDish(dish.id);
                     }}
-                    src={dish.photo!}
+                    src={`${hostUrl}/${dish.photo!}`}
                     onClick={() => {
                       navigate(
                         RoutesConfig.Menu +

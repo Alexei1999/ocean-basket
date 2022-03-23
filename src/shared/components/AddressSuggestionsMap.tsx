@@ -174,8 +174,6 @@ export const AddressSuggestionsMap = ({
   const noCoords = viewCoords.some((c) => c === null);
   const _viewCoords = (noCoords ? MOSCOW_COORDS : viewCoords) as number[];
 
-  console.log("noCoords", noCoords);
-
   return (
     <div className={className}>
       <YMaps
