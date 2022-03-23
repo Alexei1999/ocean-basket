@@ -81,6 +81,8 @@ export function MainPageCover() {
 
   const dishes = useStore($dishes);
 
+  console.log("dishes", dishes, dishes && dishes.length > 0);
+
   const dishesRef = usePropRef(dishes);
 
   useEffect(() => {
@@ -191,7 +193,11 @@ export function MainPageCover() {
                 <SwiperSlide key={dish.id}>
                   <img
                     className="w-full h-full object-cover cursor-pointer"
-                    onError={() => onRemoveDish(dish.id)}
+                    onError={(e) => {
+                      console.error(e);
+                      console.log("dish " + dish.id + " removed");
+                      onRemoveDish(dish.id);
+                    }}
                     src={dish.photo!}
                     onClick={() => {
                       navigate(

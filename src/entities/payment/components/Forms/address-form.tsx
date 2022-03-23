@@ -127,7 +127,8 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
 
                 clearErrors();
               }}
-              onError={() => {
+              onError={(e) => {
+                console.error(e);
                 toast.error("Проблема с загрузкой карты");
                 setIsSwitchShown(false);
                 onHandleMode();

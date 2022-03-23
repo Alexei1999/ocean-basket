@@ -298,9 +298,9 @@ export const CheckAvailabilityAction: React.FC<
 
   return (
     <div>
-      <div>
+      <div className="ml-5 lg:ml-0">
         <span
-          className="pr-2 cursor-pointer ml-5 lg:ml-0"
+          className="pr-2 cursor-pointer"
           onClick={() => setIsPrivacyPolicy(!isPrivacyPolicy)}
         >
           <input
