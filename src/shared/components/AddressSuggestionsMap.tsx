@@ -185,6 +185,9 @@ export const AddressSuggestionsMap = ({
       >
         <div className={classNames("flex flex-col")}>
           <Input
+            label="Адрес"
+            disabled={!isReady}
+            placeholder={!isReady ? "Подождите" : "Введите адрес"}
             value={input}
             onChange={(e) => setInput(e.target.value)}
             variant={!isReady ? "solid" : "outline"}

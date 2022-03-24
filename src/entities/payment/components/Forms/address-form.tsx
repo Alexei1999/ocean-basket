@@ -227,7 +227,7 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
             />
 
             <Input
-              label={"Колличество персон"}
+              label={"Количество персон"}
               {...register("persons_number")}
               error={errors.persons_number?.message}
               variant="outline"

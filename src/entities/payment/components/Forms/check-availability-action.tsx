@@ -298,7 +298,7 @@ export const CheckAvailabilityAction: React.FC<
 
   return (
     <div>
-      <div className="ml-5 lg:ml-0">
+      <div className="px-5 lg:px-0 text-center">
         <span
           className="pr-2 cursor-pointer"
           onClick={() => setIsPrivacyPolicy(!isPrivacyPolicy)}
@@ -313,14 +313,28 @@ export const CheckAvailabilityAction: React.FC<
           className="cursor-pointer"
           onClick={() => setIsPrivacyPolicy(!isPrivacyPolicy)}
         >
-          Я принимаю{" "}
+          Я принимаю условия{" "}
         </span>
         <a
           className="underline hover:text-accent"
           target="_blank"
           href="/privacy-polytic.pdf"
         >
-          пользовательское соглашение
+          пользовательского соглашения
+        </a>
+        <span
+          className="cursor-pointer"
+          onClick={() => setIsPrivacyPolicy(!isPrivacyPolicy)}
+        >
+          {" "}
+          и даю согласие на{" "}
+        </span>
+        <a
+          className="underline hover:text-accent"
+          target="_blank"
+          href="/privacy-polytic.pdf"
+        >
+          обработку персональных данных
         </a>
       </div>
       <Button

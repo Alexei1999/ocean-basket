@@ -248,7 +248,7 @@ const Details: React.FC<Props> = ({
                 className="pt-3 mt-auto"
                 inputClassName="max-h-[70px]"
                 maxLength={70}
-                placeholder="Комментарий, не длиннее 70 символов"
+                placeholder="Не длиннее 70 символов"
                 label="Комментарий к блюду"
                 name="comment"
               />
