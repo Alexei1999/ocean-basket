@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { NotFoundPage } from "./404/404";
 import { AboutPage } from "./AboutPage/AboutPage";
 import { PaymentPage } from "./PaymentPage/PaymentPage";
@@ -7,13 +7,16 @@ import { DashboardPage } from "./DashboardPage/DashboardPage";
 import { MenuPage } from "./MenuPage/MenuPage";
 import { PromotionsPage } from "./PromotionsPage/PromotionsPage";
 import { RoutesConfig } from "../shared/lib/routes-config";
-import { PaymentProccessing } from "@entities/payment/components/Forms/PaymentProccessing";
 import { CertificatePage } from "./CertificatesPage/CertificatePage";
 import { DetailsPage } from "./DetailsPage/DeatilsPage";
-import { OrderDescription } from "@entities/payment/components/OrderDescription/OrderDescription";
 import { OrderDescriptionContainerFetch } from "@entities/payment/components/OrderDescription/OrderDescriptionContainerFetch";
 import { CheckoutPage } from "./CheckoutPage/CheckoutPage";
-import { AddDishModal } from "@entities/cart/components/Details/add-dish-modal";
+
+const OpenUrl = ({ url }: { url: string }) => {
+  window.location.replace(url);
+
+  return <NotFoundPage />;
+};
 
 export const Routing = () => {
   return (
@@ -46,6 +49,7 @@ export const Routing = () => {
       <Route path={RoutesConfig.Contacts} element={<ContactsPage />} />
       <Route path={RoutesConfig.Details} element={<DetailsPage />} />
       <Route path="/" element={<DashboardPage />} />
+      <Route path="/privacy" element={<OpenUrl url="/privacy-polytic.pdf" />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

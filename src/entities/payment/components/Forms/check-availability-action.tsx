@@ -332,7 +332,7 @@ export const CheckAvailabilityAction: React.FC<
         <a
           className="underline hover:text-accent"
           target="_blank"
-          href="/privacy-polytic.pdf"
+          href="/privacy-polytic.pdf#page=5"
         >
           обработку персональных данных
         </a>
