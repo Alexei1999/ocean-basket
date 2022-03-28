@@ -96,7 +96,7 @@ export function Header() {
               <CartHeaderIcon
                 iconClassName={cn(
                   "fill-current",
-                  "hover:text-accent focus:text-accent cursor-pointer",
+                  "show_cart hover:text-accent focus:text-accent cursor-pointer",
                   isOpen && "text-accent"
                 )}
                 counter={size}

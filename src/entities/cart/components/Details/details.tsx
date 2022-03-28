@@ -160,26 +160,25 @@ const Details: React.FC<Props> = ({
               >
                 <Truncate
                   character={150}
+                  subBlock={
+                    isNutritional ? (
+                      <span className="text-gray-400 text-xs">
+                        {[
+                          isNumber(calories) && `К: ${calories}`,
+                          isNumber(proteins) && `Б: ${proteins}`,
+                          isNumber(fats) && `Ж: ${fats}`,
+                          isNumber(carbohydrates) && `У: ${carbohydrates}`,
+                        ]
+                          .filter((str) => str)
+                          .join("; ")}
+                      </span>
+                    ) : undefined
+                  }
                   {...(!isModal && {
                     onClick: scrollDetails,
                   })}
                 >
-                  {`${description}${
-                    !isNutritional
-                      ? ""
-                      : "\n" +
-                        capitalize(
-                          [
-                            isNumber(calories) && `калории: ${calories} г`,
-                            isNumber(proteins) && `белки: ${proteins} г`,
-                            isNumber(fats) && `жиры: ${fats} г`,
-                            isNumber(carbohydrates) &&
-                              `углеводы: ${carbohydrates} г`,
-                          ]
-                            .filter((str) => str)
-                            .join(", ")
-                        )
-                  }`}
+                  {description}
                 </Truncate>
               </div>
             )}
@@ -198,7 +197,7 @@ const Details: React.FC<Props> = ({
                 loop
               >
                 {photos.map((photo, idx) => (
-                  <SwiperSlide key={idx}>
+                  <SwiperSlide className="my-auto" key={idx}>
                     <img
                       className={classNames(
                         "rounded-lg max-h-full w-full object-cover"

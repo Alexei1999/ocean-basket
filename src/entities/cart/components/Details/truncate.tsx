@@ -8,10 +8,12 @@ type TruncateProps = {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   textClassName?: string;
   textStyle?: React.CSSProperties;
+  subBlock?: JSX.Element | undefined;
 };
 
 const Truncate: React.FC<TruncateProps> = ({
   children,
+  subBlock,
   expandedText = "Скрыть",
   compressText = "Читать далее",
   character = 150,
@@ -33,12 +35,18 @@ const Truncate: React.FC<TruncateProps> = ({
   if (!children) return null;
   const isCharacterLimitExceeded = children.length > character;
   if (!isCharacterLimitExceeded) {
-    return <>{children}</>;
+    return (
+      <>
+        <div>{children}</div>
+        <div className="pt-5">{subBlock}</div>
+      </>
+    );
   }
   return (
     <>
       <span className={textClassName} style={textStyle}>
         {!expanded ? children.substring(0, character) + "..." : children}
+        {expanded && <div className="pt-5">{subBlock}</div>}
       </span>
       <br />
       <span className="mt-1 inline-block">

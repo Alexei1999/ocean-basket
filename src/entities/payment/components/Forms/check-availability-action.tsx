@@ -277,6 +277,13 @@ export const CheckAvailabilityAction: React.FC<
       console.log("price mock enabled");
     }
 
+    //@ts-ignore
+    dataLayer?.push?.({
+      event: "event-to-ga",
+      eventCategory: "click",
+      eventAction: "success_zakaz",
+    });
+
     onSubmitForm({
       form: {
         ...form!,
