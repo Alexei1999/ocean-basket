@@ -170,7 +170,7 @@ const Details: React.FC<Props> = ({
                           isNumber(carbohydrates) && `У: ${carbohydrates}`,
                         ]
                           .filter((str) => str)
-                          .join("; ")}
+                          .join(" ")}
                       </span>
                     ) : undefined
                   }
@@ -264,7 +264,7 @@ const Details: React.FC<Props> = ({
                     isNumber(carbohydrates) && `У: ${carbohydrates}`,
                   ]
                     .filter((str) => str)
-                    .join(", ")}
+                    .join(" ")}
                 </span>
               </div>
             )}
