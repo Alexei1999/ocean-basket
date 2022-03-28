@@ -162,7 +162,7 @@ const Details: React.FC<Props> = ({
                   character={150}
                   subBlock={
                     isNutritional ? (
-                      <span className="text-gray-400 text-xs">
+                      <span className="text-gray-400">
                         {[
                           isNumber(calories) && `К: ${calories}`,
                           isNumber(proteins) && `Б: ${proteins}`,
