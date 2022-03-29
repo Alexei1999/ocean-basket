@@ -162,16 +162,22 @@ const Details: React.FC<Props> = ({
                   character={150}
                   subBlock={
                     isNutritional ? (
-                      <span className="text-gray-400">
-                        {[
-                          isNumber(calories) && `К: ${calories}`,
-                          isNumber(proteins) && `Б: ${proteins}`,
-                          isNumber(fats) && `Ж: ${fats}`,
-                          isNumber(carbohydrates) && `У: ${carbohydrates}`,
-                        ]
-                          .filter((str) => str)
-                          .join(" ")}
-                      </span>
+                      <div className="flex flex-col">
+                        <span className="text-gray-400">
+                          {[
+                            isNumber(calories) && `К: ${calories}`,
+                            isNumber(proteins) && `Б: ${proteins}`,
+                            isNumber(fats) && `Ж: ${fats}`,
+                            isNumber(carbohydrates) && `У: ${carbohydrates}`,
+                          ]
+                            .filter((str) => str)
+                            .join(" ")}
+                        </span>
+                        <span className="text-gray-400 text-xs">
+                          *КБЖУ рассчитано исходя из стандартного набора
+                          модификаторов
+                        </span>
+                      </div>
                     ) : undefined
                   }
                   {...(!isModal && {
@@ -197,10 +203,10 @@ const Details: React.FC<Props> = ({
                 loop
               >
                 {photos.map((photo, idx) => (
-                  <SwiperSlide className="my-auto" key={idx}>
+                  <SwiperSlide className="my-auto flex" key={idx}>
                     <img
                       className={classNames(
-                        "rounded-lg max-h-full w-full object-cover"
+                        "rounded-lg max-h-full w-full object-cover my-auto"
                       )}
                       src={`${hostUrl}/${photo}`}
                       alt={name}
