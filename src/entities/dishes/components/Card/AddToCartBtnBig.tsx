@@ -6,11 +6,7 @@ type Props = {
   disabled?: boolean;
 };
 
-export const AddToCartBtnBig: React.FC<Props> = ({
-  className,
-  onClick,
-  disabled,
-}) => {
+export const AddToCartBtnBig: React.FC<Props> = ({ onClick, disabled }) => {
   return (
     <button
       onClick={onClick}
@@ -23,7 +19,7 @@ export const AddToCartBtnBig: React.FC<Props> = ({
         }
       )}
     >
-      <span>В корзину</span>
+      <span className="add_to_cart">В корзину</span>
     </button>
   );
 };

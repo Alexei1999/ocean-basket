@@ -53,7 +53,7 @@ export const CartHeaderIcon: FC<CartProps> = ({
   );
 
   return (
-    <div className={cn(containerClassName, "relative")}>
+    <div className={cn(containerClassName, "show_cart relative")}>
       <svg
         width={WIDTH + additionalSize}
         height={HEIGHT}

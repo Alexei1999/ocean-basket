@@ -95,10 +95,11 @@ const MobileNavigation: React.FC = () => {
           <span className="sr-only">Корзина</span>
           <CartHeaderIcon
             iconClassName={cn(
-              "fill-current",
-              "show_cart hover:text-accent focus:text-accent cursor-pointer",
+              "show_cart fill-current",
+              "hover:text-accent focus:text-accent cursor-pointer",
               isOpen && "text-accent"
             )}
+            className="show_cart"
             counter={size}
           />
         </motion.button>

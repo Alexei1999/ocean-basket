@@ -62,10 +62,7 @@ export const AddToCart = ({ data, counterClass }: Props) => {
         />
       ) : (
         <AddToCartBtn
-          className={cn(
-            styles.button,
-            "view_card rounded-3xl max-h-8 sm:max-w-[6rem]"
-          )}
+          className={cn(styles.button, "rounded-3xl max-h-8 sm:max-w-[6rem]")}
           disabled={isDisabled}
           onClick={handleAddClick}
         />

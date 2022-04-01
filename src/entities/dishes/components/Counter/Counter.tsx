@@ -58,7 +58,7 @@ export const Counter: React.FC<CounterProps> = ({
         onClick={onDecrement}
         disabled={disabled}
         className={cn(
-          "cursor-pointer p-2 transition-colors duration-200 focus:outline-none hover:bg-accent-hover",
+          "cursor-pointer p-2 transition-colors duration-200 focus:outline-none hover:bg-accent-hover remove_from_cart",
           {
             "px-3 py-3 sm:px-2": variant === "single",
             "px-5": variant === "big",
@@ -67,7 +67,7 @@ export const Counter: React.FC<CounterProps> = ({
         )}
       >
         <span className="sr-only">Отнять</span>
-        <MinusIcon className="h-3 w-3 stroke-2.5" />
+        <MinusIcon className="remove_from_cart h-3 w-3 stroke-2.5" />
       </button>
       <div
         className={cn(
@@ -82,7 +82,7 @@ export const Counter: React.FC<CounterProps> = ({
         onClick={onIncrement}
         disabled={disabled}
         className={cn(
-          "cursor-pointer p-2 transition-colors duration-200 focus:outline-none hover:bg-accent-hover",
+          "add_to_cart cursor-pointer p-2 transition-colors duration-200 focus:outline-none hover:bg-accent-hover",
           {
             "px-3 py-3 sm:px-2": variant === "single",
             "px-5": variant === "big",
@@ -92,7 +92,7 @@ export const Counter: React.FC<CounterProps> = ({
         title={disabled ? "Нет в наличии" : ""}
       >
         <span className="sr-only">Добавить</span>
-        <PlusIcon className="h-3.5 w-3.5 md:h-4.5 md:w-4.5 stroke-2.5" />
+        <PlusIcon className="add_to_cart h-3.5 w-3.5 md:h-4.5 md:w-4.5 stroke-2.5" />
       </button>
     </div>
   );

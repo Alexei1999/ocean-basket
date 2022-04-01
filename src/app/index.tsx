@@ -11,6 +11,7 @@ import { MobileMainMenu } from "@shared/components/drawer/mobile-main-menu";
 import { GDRPPolicy } from "@entities/GDRPPolicy";
 import { ScrollContainer } from "@shared/components/ScrollContainer";
 import { FishAnimationContainer } from "@shared/components/LoadingContainer/FishAnimationContainer";
+import { YMInitializer } from "react-yandex-metrika";
 
 declare global {
   interface Window {
@@ -21,6 +22,16 @@ declare global {
 function App() {
   return (
     <FishAnimationContainer>
+      <YMInitializer
+        accounts={[87286996]}
+        options={{
+          clickmap: true,
+          trackLinks: true,
+          accurateTrackBounce: true,
+          webvisor: true,
+          ecommerce: "dataLayer",
+        }}
+      />
       <GDRPPolicy />
       <CartSidebar />
       <MobileMainMenu />

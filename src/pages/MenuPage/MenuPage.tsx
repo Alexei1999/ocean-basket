@@ -6,7 +6,6 @@ import FilterBar from "@widgets/filter-bar/filter-bar";
 import { ShopClosedModal } from "@widgets/ShopClosedModal";
 import classNames from "classnames";
 import { useEffect, useMemo } from "react";
-import { YMInitializer } from "react-yandex-metrika";
 import { ChooseDishes } from "../../features/choose-dishes/ui";
 
 export function MenuPage() {
@@ -24,16 +23,6 @@ export function MenuPage() {
 
   return (
     <>
-      <YMInitializer
-        accounts={[87286996]}
-        options={{
-          clickmap: true,
-          trackLinks: true,
-          accurateTrackBounce: true,
-          webvisor: true,
-          ecommerce: "dataLayer",
-        }}
-      />
       <AddDishModal />
       <div className={classNames(!canSticky && "pt-14 md:pt-16 xl:pt-0")}>
         <ShopClosedModal />
