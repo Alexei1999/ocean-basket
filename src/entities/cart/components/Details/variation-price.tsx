@@ -1,4 +1,3 @@
-import { formatPrice } from "@entities/cart/lib/use-price";
 import { Dish, EMPTY_STRING } from "@shared/api/dishes";
 import { useEffect, useMemo } from "react";
 import Attribute from "./attribute";

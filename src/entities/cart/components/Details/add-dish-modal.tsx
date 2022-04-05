@@ -52,6 +52,7 @@ export const AddDishModal = () => {
       dishDoneWatcher();
       dishFailWatcher();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

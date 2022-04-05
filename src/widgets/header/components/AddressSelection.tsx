@@ -35,6 +35,7 @@ export const AddressSelection = ({ className }: { className?: string }) => {
   return (
     <div className={classNames(className, styles.select, "flex")}>
       <img
+        alt="gps"
         src={gpsIcon}
         className="mx-2 order-1 lg:order-0"
         width={15}

@@ -19,11 +19,11 @@ export default function FilterBar() {
 
   const canSticky = useMemo(() => {
     return false;
-    try {
-      return CSS.supports("position", "sticky");
-    } catch {
-      return false;
-    }
+    // try {
+    //   return CSS.supports("position", "sticky");
+    // } catch {
+    //   return false;
+    // }
   }, []);
 
   return (
@@ -46,8 +46,8 @@ export default function FilterBar() {
           <div className="w-full h-full whitespace-nowrap px-3 lg:px-5">
             {Array(10)
               .fill(null)
-              .map(() => (
-                <span className="px-3 w-36">
+              .map((i) => (
+                <span className="px-3 w-36" key={i}>
                   <ContentLoader
                     speed={2}
                     className="px-3"
@@ -71,8 +71,8 @@ export default function FilterBar() {
           </div>
         ) : isCategories && categories.length > 1 ? (
           <div className="w-full h-full whitespace-nowrap px-3 lg:px-5">
-            {categories.map((category) => (
-              <span className="px-3">
+            {categories.map((category, idx) => (
+              <span className="px-3" key={`${category}-${idx}`}>
                 <span
                   className={classNames(
                     "cursor-pointer whitespace-nowrap",

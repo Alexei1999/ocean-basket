@@ -1,5 +1,3 @@
-import usePrice from "@entities/cart/lib/use-price";
-import { $cartItems, $cartSizes } from "@features/choose-dishes/models";
 import { postPaymentStatus } from "@shared/api/dishes";
 import Button from "@shared/button";
 import { RoutesConfig } from "@shared/lib/routes-config";
@@ -88,6 +86,7 @@ export function OrderDescriptionContainerFetch({
     if (!data.result && status === "success") {
       navigate(`${RoutesConfig.Checkout}/false${window.location.search}`);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data?.result, status]);
 
   useEffect(() => {
@@ -101,6 +100,7 @@ export function OrderDescriptionContainerFetch({
       OutSum:
         parseInt(data?.outSum as string) || parseInt(outSum as string) || 0,
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [invId]);
 
   return (

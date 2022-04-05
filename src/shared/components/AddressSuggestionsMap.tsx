@@ -77,6 +77,7 @@ export const AddressSuggestionsMap = ({
         });
       });
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [isReady, ymapsInstance]
   );
 
@@ -105,6 +106,7 @@ export const AddressSuggestionsMap = ({
     return () => {
       instance.destroy();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const searchCoords = useCallback(
@@ -148,6 +150,7 @@ export const AddressSuggestionsMap = ({
         setIsReady(true);
       })
       .catch(onError);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ymapsInstance]);
 
   useEffect(() => {
@@ -169,6 +172,7 @@ export const AddressSuggestionsMap = ({
     return () => {
       suggestView.destroy();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, ymapsInstance]);
 
   const noCoords = viewCoords.some((c) => c === null);

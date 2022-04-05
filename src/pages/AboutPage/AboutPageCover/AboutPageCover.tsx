@@ -126,6 +126,7 @@ export function AboutPageCover() {
                 чтобы отведать нашу еду.
               </p>
               <img
+                alt="big vawe"
                 src={bigWave}
                 className="!ml-0 w-full sm:w-auto sm:!-mr-7 !max-w-none order-1 sm:order-2"
               />
@@ -142,12 +143,12 @@ export function AboutPageCover() {
               "flex-grow justify-end items-center hidden sm:flex"
             )}
           >
-            <img src={fishesLeft} />
+            <img alt="fishesLeft" src={fishesLeft} />
           </div>
         </div>
         <div className={styles.staff} />
       </div>
-      <img className="w-ful order-0 sm:order-1" src={staff} />
+      <img className="w-ful order-0 sm:order-1" src={staff} alt="staff" />
       <div className="flex px-4 lg:px-8 xl:px-32 pt-20 text-body font-normal justify-center order-2">
         <div className="flex w-full flex-col flex-grow max-w-[1300px]">
           <div className="flex flex-col lg:flex-row">
@@ -166,7 +167,11 @@ export function AboutPageCover() {
               </p>
             </div>
             <div className="lg:w-1/2 flex justify-center items-center pt-14 lg:pt-0 overflow-hidden">
-              <img className="max-w-full w-[380px]" src={twoFish} />
+              <img
+                className="max-w-full w-[380px]"
+                src={twoFish}
+                alt="two fish"
+              />
             </div>
           </div>
 
@@ -179,11 +184,13 @@ export function AboutPageCover() {
                     <img
                       src={twoWaves}
                       className="absolute w-60 -top-3 sm:-right-16"
+                      alt="two waves"
                     />
-                    <img src={founders} />
+                    <img src={founders} alt="founders" />
                     <img
                       src={photo}
                       className="absolute -bottom-40 -right-16 hidden lg:block"
+                      alt="founders 2"
                     />
                   </div>
                   <div className="flex flex-col text-base pl-2 pt-9 lg:max-w-[50%]">
@@ -202,6 +209,7 @@ export function AboutPageCover() {
                 <img
                   src={mediumWaves}
                   className="absolute right-0 lg:-mr-8 xl:-mr-32"
+                  alt="medium waves"
                 />
               </div>
               <p className="lg:max-w-lg">
@@ -222,7 +230,7 @@ export function AboutPageCover() {
           </div>
 
           <div className="pt-12 lg:pt-36 flex justify-center">
-            <img src={twoWaves} />
+            <img src={twoWaves} alt="two waves" />
           </div>
 
           <div className="flex flex-col lg:flex-row pt-12 relative gap-x-20">
@@ -247,7 +255,7 @@ export function AboutPageCover() {
               </p>
             </div>
             <div className="flex-grow pt-14 lg:pt-6 flex justify-center items-center overflow-hidden">
-              <img src={worker1} />
+              <img src={worker1} alt="worker 1" />
             </div>
           </div>
 
@@ -255,21 +263,23 @@ export function AboutPageCover() {
             <img
               src={fishesRight}
               className="absolute md:-ml-4 lg:-ml-8 xl:-ml-32 w-64 left-0 top-0 lg:mt-8 -mt-24"
+              alt="fishes right"
             />
             <span className={header}>НАШИ ОТЛИЧИТЕЛЬНЫЕ ОСОБЕННОСТИ:</span>
           </div>
 
           <div className="flex flex-col lg:flex-row pt-20 items-center lg:items-stretch gap-x-20">
             <div className="flex-grow flex justify-center relative lg:max-w-[50%]">
-              <img src={hands} />
+              <img src={hands} alt="hands" />
               <img
                 src={mediumWaves}
                 className="absolute lg:-ml-8 xl:-ml-32 left-0 -bottom-7 hidden lg:block"
+                alt="medium waves"
               />
             </div>
             <div className="flex-grow pt-14 lg:pt-6 w-full lg:max-w-[50%]">
               <div className="w-full flex justify-end ">
-                <img src={twoWaves} className="w-60 -mt-20" />
+                <img src={twoWaves} className="w-60 -mt-20" alt="two waves" />
               </div>
               <ul className="lg:max-w-xl">
                 <li>- доступные цены на морепродукты;</li>
@@ -303,7 +313,7 @@ export function AboutPageCover() {
                 </li>
               </ul>
               <div className="flex flex-col items-center pt-14 lg:pt-20 max-w-full overflow-hidden">
-                <img src={twoFish} className="w-40" />
+                <img src={twoFish} className="w-40" alt="two fish" />
                 <div className="pt-7 text-center max-w-sm">
                   Это не просто сеть – это философия, которая выросла из первых
                   6 столиков в городе Претория, ЮАР.
@@ -329,7 +339,7 @@ export function AboutPageCover() {
             </div>
           </div>
           <div className="flex justify-center">
-            <img className="-mb-8" src={fullFishes} />
+            <img className="-mb-8" src={fullFishes} alt="full fishes" />
           </div>
         </div>
       </div>

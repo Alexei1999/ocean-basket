@@ -12,7 +12,7 @@ import {
 import { $form } from "./address-form";
 import { $schedule } from "./schedule-grid";
 import { $phone } from "./add-or-update";
-import { combine, createEffect, forward, restore, sample } from "effector";
+import { combine, createEffect, restore, sample } from "effector";
 import {
   EMPTY_STRING,
   OrderTypeParams,

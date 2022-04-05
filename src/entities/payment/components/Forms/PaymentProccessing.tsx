@@ -1,12 +1,7 @@
 import { onScrollPage } from "@shared/components/ScrollContainer";
 import { formatRub } from "@entities/cart/components/Details/variation-groups";
 import { getFromStorage, setToStorage } from "@features/choose-dishes/api";
-import {
-  $cart,
-  $cartItems,
-  $cartSizes,
-  PickedDish,
-} from "@features/choose-dishes/models";
+import { $cartSizes } from "@features/choose-dishes/models";
 import { PaymentArguments } from "@shared/api/dishes";
 import dayjs, { Dayjs } from "dayjs";
 import { createEvent, createStore, sample } from "effector";
@@ -173,6 +168,7 @@ export function PaymentProccessing() {
       setIsOrdered(true);
       onScrollPage();
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 

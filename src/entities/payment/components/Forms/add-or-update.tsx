@@ -1,4 +1,3 @@
-import { CloseIcon } from "@entities/cart/components/icons/close-icon";
 import { getFromStorage, setToStorage } from "@features/choose-dishes/api";
 import Button from "@shared/button";
 import classNames from "classnames";

@@ -1,6 +1,6 @@
 import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react";
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 import styles from "./styles.module.scss";
 import {
@@ -158,6 +158,7 @@ export const FishAnimationContainer: React.FC = ({ children }) => {
     return () => {
       clearTimeout(timer);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isBoolState, isFishLoaded]);
 
   return (

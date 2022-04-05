@@ -9,7 +9,7 @@ import { RoutesConfig } from "@shared/lib/routes-config";
 import Button from "@shared/button";
 
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
-import React, { forwardRef, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { ArrowLeft } from "./ArrowLeft";
 import { ArrowRight } from "./ArrowRight";
 import { covers } from "./images";
@@ -22,7 +22,6 @@ import footerZip from "@assets/footer.zip.png";
 
 import { onScrollPage } from "@shared/components/ScrollContainer";
 import { onRemoveAnimationConfig } from "@shared/components/LoadingContainer/FishAnimationContainer";
-import { ImageWithPreview } from "@shared/components/ImageWithPreview";
 import { getSlider } from "@shared/api/dishes";
 import { toTranslit } from "@entities/dishes/components/Card/DishCard";
 import { usePropRef } from "@shared/lib/usePropRef";
@@ -88,6 +87,7 @@ export function MainPageCover() {
     if (dishesRef.current) return;
 
     getSlidersFx();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -137,7 +137,11 @@ export function MainPageCover() {
             Океан доставки на дом из ресторана морепродкуктов
           </span>
           <div className="relative">
-            <img className="w-full pb-7" src={deliveryLogo} />
+            <img
+              alt="delivery logo"
+              className="w-full pb-7"
+              src={deliveryLogo}
+            />
             <span className="absolute bottom-3 left-[25%] font-bold text-lg lg:text-xl text-light">
               в пределах МКАД
             </span>
@@ -196,6 +200,7 @@ export function MainPageCover() {
               .map((dish) => (
                 <SwiperSlide key={dish.id}>
                   <img
+                    alt="dish"
                     className="w-full h-full object-cover cursor-pointer"
                     onError={(e) => {
                       console.error(e);
@@ -219,7 +224,11 @@ export function MainPageCover() {
         ) : (
           covers.map(({ src }, idx) => (
             <SwiperSlide key={idx}>
-              <img className="w-full h-full object-cover" src={src} />
+              <img
+                alt="dish"
+                className="w-full h-full object-cover"
+                src={src}
+              />
             </SwiperSlide>
           ))
         )}

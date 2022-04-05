@@ -31,10 +31,12 @@ export const ImageWithPreview = forwardRef<
     return () => {
       img.onload = null;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hugeSrc]);
 
   return (
     <img
+      alt="preview"
       ref={(ref) => {
         imageRef.current = ref;
         if (forwardedRef) {

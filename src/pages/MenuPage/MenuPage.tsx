@@ -14,11 +14,11 @@ export function MenuPage() {
   }, []);
   const canSticky = useMemo(() => {
     return false;
-    try {
-      return CSS.supports("position", "sticky");
-    } catch {
-      return false;
-    }
+    // try {
+    //   return CSS.supports("position", "sticky");
+    // } catch {
+    //   return false;
+    // }
   }, []);
 
   return (

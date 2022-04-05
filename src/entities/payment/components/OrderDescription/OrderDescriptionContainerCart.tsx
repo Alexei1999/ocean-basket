@@ -2,8 +2,6 @@ import {
   $promocode,
   onResetPomocode,
 } from "@entities/cart/components/cart-sidebar-view";
-import { formatRub } from "@entities/cart/components/Details/variation-groups";
-import usePrice from "@entities/cart/lib/use-price";
 import { $cartSizes, dropCart } from "@features/choose-dishes/models";
 import { Dayjs } from "dayjs";
 import { useStore } from "effector-react";
@@ -46,6 +44,7 @@ export function OrderDescriptionContainerCart({
     setSavedLocation(location);
     dropCart();
     onResetPomocode();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

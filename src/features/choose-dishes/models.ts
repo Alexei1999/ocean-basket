@@ -6,20 +6,13 @@ import {
   Dish,
   DishStatus,
   EMPTY_STRING,
-  getCategories,
   getDishes,
   getPopular,
   getPromotions,
   getTimeValidate,
   Promotion,
 } from "@shared/api/dishes";
-import {
-  createEffect,
-  createEvent,
-  createStore,
-  forward,
-  restore,
-} from "effector";
+import { createEffect, createEvent, createStore, forward } from "effector";
 import { createGate } from "effector-react";
 import { getFromStorage } from "./api";
 import { isTwoPickedDishesEqual } from "./lib";

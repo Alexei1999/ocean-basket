@@ -1,4 +1,3 @@
-import { DishCover } from "@entities/payment/components/DishCover/DishCover";
 import { OrderOverview } from "@entities/payment/components/OrderOverview";
 import { useNavigate } from "react-router";
 import { RoutesConfig } from "@shared/lib/routes-config";

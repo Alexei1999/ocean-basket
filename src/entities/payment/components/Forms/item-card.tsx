@@ -1,4 +1,4 @@
-import usePrice, { formatPrice } from "@entities/cart/lib/use-price";
+import usePrice from "@entities/cart/lib/use-price";
 import { PickedDish } from "@features/choose-dishes/models";
 import cn from "classnames";
 import { useMemo } from "react";

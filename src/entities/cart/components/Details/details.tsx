@@ -18,10 +18,11 @@ import { hostUrl } from "@shared/api/base";
 
 import styles from "./styles.module.scss";
 import { useStore } from "effector-react";
-import { capitalize, isNumber } from "lodash";
+import { isNumber } from "lodash";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
 import TextArea from "@shared/components/text-area";
+import { stringifyValueSafely } from "@shared/lib/functional-utils";
 
 export const filterCartObjects = (
   items: Partial<PickedDish[]>
@@ -58,12 +59,32 @@ export const filterCartObjects = (
 
 export const isDishValid = (dish?: Partial<Dish>): dish is Dish => {
   if (!dish || !dish.prices || !dish.id) {
+    console.warn("isDishValid: ", dish?.name, " is not valid");
+    console.warn(
+      `isDishValid: in dish ${stringifyValueSafely(dish)} prices: ${
+        dish?.prices
+      } or id: ${dish?.id} is not valid`
+    );
     return false;
   }
 
   const filteredPrices = filterPrices(dish.prices);
 
-  return filteredPrices.length > 0 && dish.status === DishStatus.Active;
+  const isValid =
+    filteredPrices.length > 0 && dish.status === DishStatus.Active;
+
+  if (!isValid) {
+    console.warn("isDishValid: ", dish?.name, " is not valid");
+    console.warn(
+      `isDishValid: in dish ${stringifyValueSafely(
+        dish
+      )} valid prices length is zero: ${filteredPrices.length} or dish status ${
+        dish.status
+      } is not valid`
+    );
+  }
+
+  return isValid;
 };
 
 type Props = {

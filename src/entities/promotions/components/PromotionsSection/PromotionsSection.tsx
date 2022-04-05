@@ -35,6 +35,7 @@ function PromotionImage({
       )}
     >
       <img
+        alt={name}
         className={classNames("h-full w-full cursor-pointer")}
         onError={() => setIsError(true)}
         src={

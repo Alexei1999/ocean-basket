@@ -2,7 +2,6 @@ import cn from "classnames";
 import { AddToCart } from "../../../cart/components/Buttons/AddToCart";
 import productIcon from "@assets/product.svg";
 
-import { formatPrice } from "@entities/cart/lib/use-price";
 import { Dish, DishStatus } from "@shared/api/dishes";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
@@ -10,7 +9,7 @@ import { useSortedPrices } from "@entities/cart/components/Details/variation-pri
 import { saveChoosenDish } from "@entities/cart/components/Details/add-dish-modal";
 import { hostUrl } from "@shared/api/base";
 import { formatRub } from "@entities/cart/components/Details/variation-groups";
-import { createEvent, createStore, restore } from "effector";
+import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react";
 import { useNavigate } from "react-router-dom";
 import { RoutesConfig } from "@shared/lib/routes-config";
@@ -122,6 +121,7 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
     const price = formatRub(mappedPrices[0].rouble_price);
 
     return mappedPrices.length > 1 ? `от ${price}` : price;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const [isDisplaying, setIsDisplaying] = useState<boolean>(true);

@@ -4,7 +4,6 @@ import { Scrollbar } from "../../../../shared/components/Scrollbar";
 import { TreeMenu } from "../TreeMenu/TreeMenuItem";
 import { CategoriesLoader } from "./CategoriesLoader";
 import { Category } from "@shared/api/dishes";
-import { useStore } from "effector-react";
 import classNames from "classnames";
 
 interface StickySidebarListCategoriesProps {

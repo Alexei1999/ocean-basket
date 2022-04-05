@@ -1,6 +1,6 @@
 import { CloseIcon } from "@entities/cart/components/icons/close-icon";
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useRef } from "react";
+import { Dialog } from "@headlessui/react";
+import { useRef } from "react";
 
 export default function ModalSimple({
   open,

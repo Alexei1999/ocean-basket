@@ -1,4 +1,3 @@
-import { createEffect } from "effector";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 export const capitalize = (str: string) => {
@@ -22,8 +21,6 @@ export function getPlurals<T>(num: number, options: T[]): T {
 
   return options[2];
 }
-
-const fetchImageXFx = createEffect()
 
 export const useObserver = () => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -66,4 +63,27 @@ export const useObserver = () => {
     }),
     [containerRef, isVisible, isStartLoading]
   );
+};
+
+export const stringifyValueSafely = (value: unknown): string => {
+  if (typeof value === "object" && value !== null) {
+    try {
+      return JSON.stringify(value);
+    } catch (error) {
+      console.error(error);
+      console.error(value);
+      return "";
+    }
+  }
+
+  const stringValue = (value as Record<string, unknown>)?.toString?.();
+  if (typeof stringValue === "string") {
+    return stringValue;
+  }
+
+  if (value === null) return "null";
+  if (value === undefined) return "undefined";
+
+  console.error(value);
+  return "";
 };

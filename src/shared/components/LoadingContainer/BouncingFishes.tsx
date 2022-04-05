@@ -58,8 +58,10 @@ export const BouncingFishes: React.FC<{
   const onFinishRef = usePropRef(onFinish);
   useEffect(() => {
     return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       onFinishRef.current?.(directionRef.current);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -70,13 +72,14 @@ export const BouncingFishes: React.FC<{
     return () => {
       clearTimeout(timer);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [direction]);
 
   useEffect(() => {
     if (loadCounter === 3) {
       onLoad?.();
     }
-  }, [loadCounter]);
+  }, [onLoad, loadCounter]);
 
   useEffect(() => {
     onUpdateScreen();
@@ -120,6 +123,7 @@ export const BouncingFishes: React.FC<{
     } as {
       [K: string]: { padding: 0 | 1 | 2; order: 0 | 1 | 2; delay: 0 | 1 | 2 };
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [direction]);
 
   const getPadding = (padding: 0 | 1 | 2) =>
@@ -164,6 +168,7 @@ export const BouncingFishes: React.FC<{
       }}
     >
       <img
+        alt="fishes"
         className={classNames(
           "w-[40%]",
           getPadding(fish1Config.padding),
@@ -175,6 +180,7 @@ export const BouncingFishes: React.FC<{
         onLoad={onLoadSafely}
       />
       <img
+        alt="fishes"
         className={classNames(
           "w-[40%]",
           getPadding(fish2Config.padding),
@@ -186,6 +192,7 @@ export const BouncingFishes: React.FC<{
         onLoad={onLoadSafely}
       />
       <img
+        alt="fishes"
         className={classNames(
           "w-[40%]",
           getPadding(fish3Config.padding),

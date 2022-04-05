@@ -38,6 +38,7 @@ export const EmptyCartPanel = ({
       className="w-full flex items-center justify-center"
     >
       <img
+        alt="cart"
         className={classNames(
           "justify-self-start mr-auto",
           !noGutters ? "pl-8" : "pl-4"

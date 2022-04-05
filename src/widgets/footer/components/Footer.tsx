@@ -153,8 +153,8 @@ export function Footer() {
     >
       <div className="flex h-full items-center pt-14 px-4 lg:px-8 xl:px-32 flex-col text-white text-sm pb-12 lg:pb-0">
         <div className="flex flex-col items-center">
-          <img width="65px" height="65px" src={logoMini} />
-          <img className="pt-4 w-48" src={logoFooter} />
+          <img alt="logo mini" width="65px" height="65px" src={logoMini} />
+          <img alt="logo footer" className="pt-4 w-48" src={logoFooter} />
         </div>
         <div className="flex-col gap-x-36 items-center xl:items-start  max-w-4xl xl:max-w-none xl:flex-row flex xl:justify-between flex-grow w-full pt-16 pb-10">
           <div className="pt-10 xl:pt-0 order-1 xl:order-0 gap-x-36 flex flex-col w-full max-w-[1000px]">

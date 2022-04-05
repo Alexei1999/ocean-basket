@@ -40,6 +40,7 @@ export function DetailsPage() {
           className="absolute xl:top-12 left-0"
         />
         <img
+          alt="fishes"
           src={fishesFull}
           className="absolute hidden lg:block right-0 top-20"
         />

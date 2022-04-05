@@ -17,7 +17,7 @@ interface ProductPopupProps {
   product: Dish | null;
 }
 const Popup: React.FC<ProductPopupProps> = ({ product }) => {
-  const [showStickyShortDetails, setShowStickyShortDetails] = useState(false);
+  const [, setShowStickyShortDetails] = useState(false);
   const [isDelayed, setIsDelayed] = useState(false);
 
   const isModifiersLoading = useStore(getModifiersFx.pending);

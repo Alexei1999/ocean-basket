@@ -14,8 +14,7 @@ import { RoutesConfig } from "@shared/lib/routes-config";
 import { $cartSizes } from "@features/choose-dishes/models";
 import { useStore } from "effector-react";
 import classNames from "classnames";
-import { SushiIcon } from "./sushi-icon";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useSwipeable } from "react-swipeable";
 import { onScrollPage } from "@shared/components/ScrollContainer";
 

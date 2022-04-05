@@ -13,18 +13,17 @@ import { ReactComponent as WhiteWaves } from "@shared/icons/white-waves.svg";
 import blueWaves from "@shared/icons/blue-waves.svg";
 import hook from "./hook.svg";
 import wave from "./wave.svg";
-import { createEffect, forward, restore } from "effector";
+import { createEffect, restore } from "effector";
 import { getPosts, postSubscribe } from "@shared/api/dishes";
-import { createGate, useStore } from "effector-react";
+import { useStore } from "effector-react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import axios from "axios";
-import { useGate } from "effector-react/effector-react.cjs";
 import { ImageWithPreview } from "@shared/components/ImageWithPreview";
 
 const subscribeFx = createEffect(postSubscribe);
 
 const EMAIL_MASK =
+  // eslint-disable-next-line no-useless-escape
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 function EmailSection({ isWaves = false }) {
@@ -91,7 +90,11 @@ function EmailSection({ isWaves = false }) {
             styles.card
           )}
         >
-          <img src={hook} className="absolute -bottom-32 hidden md:block" />
+          <img
+            alt="suggestion"
+            src={hook}
+            className="absolute -bottom-32 hidden md:block"
+          />
           <div
             className={classNames(
               "flex flex-col text-3xl font-bold px-12 py-12 justify-between relative flex-grow",
@@ -143,7 +146,7 @@ function EmailSection({ isWaves = false }) {
               loading="lazy"
               className={classNames("w-full h-full object-cover")}
               src={emailDish}
-              alt="email dish image"
+              alt="email dish"
             />
           </div>
         </div>
@@ -161,38 +164,39 @@ function InstagramHeader() {
         target="_blank"
         className="text-accent font-bold text-2xl pt-8 hover:underline"
         href="https://www.instagram.com/oceanbasket.ru/"
+        rel="noreferrer"
       >
         @oceanbasket.ru
       </a>
-      <img src={wave} className="pt-4" />
+      <img src={wave} alt="wave" className="pt-4" />
     </div>
   );
 }
 
-const links = [
-  "https://www.instagram.com/p/CV2c5DUM0ZK/embed/",
-  "https://www.instagram.com/p/CVmrtbwstS0/embed/",
-  "https://www.instagram.com/p/CVe9Q2FsP9E/embed/",
-  "https://www.instagram.com/p/CU7PIw0s1ZI/embed/",
-  "https://www.instagram.com/p/CSg1LwXCWHk/embed/",
-  "https://www.instagram.com/p/CSMB3uqCfVW/embed/",
-  // "https://www.instagram.com/p/CR1Rjs9FQkD/embed/",
-  // "https://www.instagram.com/p/CRlt9IMiti9/embed/",
-  // "https://www.instagram.com/p/CROO8KlHL7a/embed/",
-];
+// const links = [
+//   "https://www.instagram.com/p/CV2c5DUM0ZK/embed/",
+//   "https://www.instagram.com/p/CVmrtbwstS0/embed/",
+//   "https://www.instagram.com/p/CVe9Q2FsP9E/embed/",
+//   "https://www.instagram.com/p/CU7PIw0s1ZI/embed/",
+//   "https://www.instagram.com/p/CSg1LwXCWHk/embed/",
+//   "https://www.instagram.com/p/CSMB3uqCfVW/embed/",
+//   // "https://www.instagram.com/p/CR1Rjs9FQkD/embed/",
+//   // "https://www.instagram.com/p/CRlt9IMiti9/embed/",
+//   // "https://www.instagram.com/p/CROO8KlHL7a/embed/",
+// ];
 
-function InstagramLoader({ id }: { id: string }) {
-  const [post, setPost] = useState<string | null>(null);
-  useEffect(() => {
-    getPostFx(id).then((post) => {
-      setPost(post);
-    });
-  }, [id]);
+// function InstagramLoader({ id }: { id: string }) {
+//   const [post, setPost] = useState<string | null>(null);
+//   useEffect(() => {
+//     getPostFx(id).then((post) => {
+//       setPost(post);
+//     });
+//   }, [id]);
 
-  if (!post) return null;
+//   if (!post) return null;
 
-  return <InstagramItem url={post + "/embed/"} />;
-}
+//   return <InstagramItem url={post + "/embed/"} />;
+// }
 
 function InstagramItem({ url }: { url: string }) {
   const [isTimeoutExpired, setIsTimeoutExpired] = useState(false);
@@ -226,12 +230,14 @@ function InstagramItem({ url }: { url: string }) {
       {isError ? (
         <a href={url}>
           <img
+            alt="productIcon"
             src={productIcon}
             className="w-full h-full border border-border-base"
           />
         </a>
       ) : (
         <iframe
+          title={url}
           src={url}
           onLoad={() => {
             setIsLoaded(true);
@@ -248,29 +254,29 @@ function InstagramItem({ url }: { url: string }) {
   );
 }
 
-const api_access_token =
-  "IGQVJWamFZAZAHBmUG1rTGU3WVcxVDBFNDA1bWdIWlZAPNE42SE41WlMzM0RxX0dvS3RRRFFkWVVoQnJCVEJUQjNsY3paY1hsQjhGWW9QVDJUOTFlUlVfcGNIa0RZAelRkYmlya0QtRUhWWVhydEFGVUlSTgZDZD";
+// const api_access_token =
+//   "IGQVJWamFZAZAHBmUG1rTGU3WVcxVDBFNDA1bWdIWlZAPNE42SE41WlMzM0RxX0dvS3RRRFFkWVVoQnJCVEJUQjNsY3paY1hsQjhGWW9QVDJUOTFlUlVfcGNIa0RZAelRkYmlya0QtRUhWWVhydEFGVUlSTgZDZD";
 
-const getInstagramPostsFx = createEffect<void, string[]>(async () => {
-  const res = await axios.get("https://graph.instagram.com/me/", {
-    params: {
-      access_token: api_access_token,
-      fields: "media",
-    },
-  });
-  const resObject: { media: { data: [{ id: string }] } } = res.data;
-  return resObject.media.data.map(({ id }) => id);
-});
+// const getInstagramPostsFx = createEffect<void, string[]>(async () => {
+//   const res = await axios.get("https://graph.instagram.com/me/", {
+//     params: {
+//       access_token: api_access_token,
+//       fields: "media",
+//     },
+//   });
+//   const resObject: { media: { data: [{ id: string }] } } = res.data;
+//   return resObject.media.data.map(({ id }) => id);
+// });
 
-const getPostFx = createEffect<string, string>(async (id) => {
-  const res = await axios.get(`https://graph.instagram.com/${id}`, {
-    params: {
-      access_token: api_access_token,
-      fields: "permalink",
-    },
-  });
-  return res.data.permalink;
-});
+// const getPostFx = createEffect<string, string>(async (id) => {
+//   const res = await axios.get(`https://graph.instagram.com/${id}`, {
+//     params: {
+//       access_token: api_access_token,
+//       fields: "permalink",
+//     },
+//   });
+//   return res.data.permalink;
+// });
 
 // const instGate = createGate();
 
@@ -278,8 +284,6 @@ const getPostFx = createEffect<string, string>(async (id) => {
 //   from: instGate.open,
 //   to: getInstagramPostsFx,
 // });
-
-const $instagramData = restore(getInstagramPostsFx.doneData, null);
 
 const getPostsFx = createEffect(getPosts);
 const $posts = restore(getPostsFx.doneData, []);
@@ -316,6 +320,7 @@ export function SubscriptionSection({ isWaves = false }) {
       <EmailSection isWaves={isWaves} />
       <div className="flex justify-center pt-24 lg:pt-36 relative">
         <img
+          alt="blue waves"
           src={blueWaves}
           className="absolute right-0 top-28 hidden lg:block"
         />

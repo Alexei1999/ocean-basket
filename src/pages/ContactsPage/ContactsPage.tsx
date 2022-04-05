@@ -95,7 +95,7 @@ export function ContactsPage() {
               item={addresses[0]}
             >
               <div className="flex justify-center items-center pt-7 pb-7 lg:pt-20 lg:pb-0">
-                <img src={hook} className="bottom-16 right-11" />
+                <img alt="dish" src={hook} className="bottom-16 right-11" />
               </div>
             </ContactsBlock>
             <ContactsBlock

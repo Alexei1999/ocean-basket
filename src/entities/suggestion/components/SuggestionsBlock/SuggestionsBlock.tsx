@@ -30,7 +30,7 @@ export function SuggestionsBlock({
       .filter((item) => item.recommended_dishes?.length)
       .map((item) => item.recommended_dishes)
       .flat(1)
-      .filter((item) => isDishValid(item))
+      .filter(isDishValid)
       .reduce<{ [K in string]: Omit<Dish, "recommended_dishes"> }>(
         (acc, dish) => {
           if (!dish?.id) return acc;
@@ -44,12 +44,16 @@ export function SuggestionsBlock({
     const categorizedDishes = Object.values(reccomendedDishes).reduce<{
       [key: string]: Omit<Dish, "recommended_dishes">[];
     }>((acc, dish) => {
-      if (dish.category) {
-        if (!acc[dish.category]) {
-          acc[dish.category] = [];
-        }
-        acc[dish.category].push(dish);
+      if (!dish.category) {
+        dish.category = "Без категории";
       }
+
+      if (!acc[dish.category]) {
+        acc[dish.category] = [];
+      }
+
+      acc[dish.category].push(dish);
+
       return acc;
     }, {});
 

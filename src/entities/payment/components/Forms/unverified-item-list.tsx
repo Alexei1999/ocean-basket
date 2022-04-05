@@ -6,7 +6,7 @@ import {
   EmptyCartPanel,
 } from "@entities/cart/components/cart-sidebar-view";
 import { useStore } from "effector-react";
-import { $cartSizes, $cartItems, $cart } from "@features/choose-dishes/models";
+import { $cartSizes, $cart } from "@features/choose-dishes/models";
 import { DishStatus } from "@shared/api/dishes";
 import {
   $grandTotal,
