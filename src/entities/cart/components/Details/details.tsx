@@ -104,6 +104,7 @@ const Details: React.FC<Props> = ({
 
   const [isError, setIsError] = useState(false);
   const [comment, setComment] = useState<string | undefined>(undefined);
+  const [failedPhotos, setFailedPhotos] = useState<string[]>([]);
 
   const isOpen = useStore($isRestaurantOpen);
 
@@ -121,7 +122,9 @@ const Details: React.FC<Props> = ({
     carbohydrates,
   } = product ?? {};
 
-  const photos = [photo, photo2, photo3, photo4].filter(Boolean) as string[];
+  const photos = [photo, photo2, photo3, photo4].filter(
+    (photo) => Boolean(photo) && !failedPhotos.includes(photo!)
+  ) as string[];
 
   const isNutritional =
     isNumber(calories) ||
@@ -223,9 +226,10 @@ const Details: React.FC<Props> = ({
                 navigation={{}}
                 loop
               >
-                {photos.map((photo, idx) => (
-                  <SwiperSlide className="my-auto flex" key={idx}>
+                {photos.map((photo) => (
+                  <SwiperSlide className="my-auto flex" key={photo}>
                     <img
+                      onError={() => setFailedPhotos([...failedPhotos, photo])}
                       className={classNames(
                         "rounded-lg max-h-full w-full object-cover my-auto"
                       )}
