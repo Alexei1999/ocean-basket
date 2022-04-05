@@ -74,7 +74,9 @@ export function SuggestionsBlock({
                 onClick={() => {
                   saveChoosenDish(item);
                   navigate(
-                    RoutesConfig.Payment +
+                    (window.location.pathname.startsWith(RoutesConfig.Payment)
+                      ? RoutesConfig.Payment
+                      : RoutesConfig.Menu) +
                       "/" +
                       item.id +
                       "/" +
