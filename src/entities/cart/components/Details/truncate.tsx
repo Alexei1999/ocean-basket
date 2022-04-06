@@ -38,7 +38,7 @@ const Truncate: React.FC<TruncateProps> = ({
     return (
       <>
         <div>{children}</div>
-        <div className="pt-5">{subBlock}</div>
+        {subBlock && <div className="pt-5">{subBlock}</div>}
       </>
     );
   }
@@ -46,7 +46,7 @@ const Truncate: React.FC<TruncateProps> = ({
     <>
       <span className={textClassName} style={textStyle}>
         {!expanded ? children.substring(0, character) + "..." : children}
-        {expanded && <div className="pt-5">{subBlock}</div>}
+        {expanded && subBlock && <div className="pt-5">{subBlock}</div>}
       </span>
       <br />
       <span className="mt-1 inline-block">

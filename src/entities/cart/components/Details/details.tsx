@@ -18,7 +18,6 @@ import { hostUrl } from "@shared/api/base";
 
 import styles from "./styles.module.scss";
 import { useStore } from "effector-react";
-import { isNumber } from "lodash";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
 import TextArea from "@shared/components/text-area";
@@ -126,11 +125,7 @@ const Details: React.FC<Props> = ({
     (photo) => Boolean(photo) && !failedPhotos.includes(photo!)
   ) as string[];
 
-  const isNutritional =
-    isNumber(calories) ||
-    isNumber(proteins) ||
-    isNumber(fats) ||
-    isNumber(carbohydrates);
+  const isNutritional = calories || proteins || fats || carbohydrates;
 
   const [activePrice, setActivePrice] = useState<
     null | (Dish["prices"][number] & { idx: number })
@@ -189,10 +184,10 @@ const Details: React.FC<Props> = ({
                       <div className="flex flex-col">
                         <span className="text-gray-400">
                           {[
-                            isNumber(calories) && `К: ${calories}`,
-                            isNumber(proteins) && `Б: ${proteins}`,
-                            isNumber(fats) && `Ж: ${fats}`,
-                            isNumber(carbohydrates) && `У: ${carbohydrates}`,
+                            calories && `К: ${calories}`,
+                            proteins && `Б: ${proteins}`,
+                            fats && `Ж: ${fats}`,
+                            carbohydrates && `У: ${carbohydrates}`,
                           ]
                             .filter((str) => str)
                             .join(" ")}
@@ -289,10 +284,10 @@ const Details: React.FC<Props> = ({
               <div className="w-full">
                 <span className="text-gray-400 text-xs">
                   {[
-                    isNumber(calories) && `К: ${calories}`,
-                    isNumber(proteins) && `Б: ${proteins}`,
-                    isNumber(fats) && `Ж: ${fats}`,
-                    isNumber(carbohydrates) && `У: ${carbohydrates}`,
+                    calories && `К: ${calories}`,
+                    proteins && `Б: ${proteins}`,
+                    fats && `Ж: ${fats}`,
+                    carbohydrates && `У: ${carbohydrates}`,
                   ]
                     .filter((str) => str)
                     .join(" ")}
