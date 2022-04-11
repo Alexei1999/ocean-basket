@@ -12,7 +12,13 @@ import {
   getTimeValidate,
   Promotion,
 } from "@shared/api/dishes";
-import { createEffect, createEvent, createStore, forward } from "effector";
+import {
+  createEffect,
+  createEvent,
+  createStore,
+  forward,
+  restore,
+} from "effector";
 import { createGate } from "effector-react";
 import { getFromStorage } from "./api";
 import { isTwoPickedDishesEqual } from "./lib";
@@ -61,8 +67,7 @@ export const fetchTimeValidateFx = createEffect(async () => {
 export const fetchPopularDishesFx = createEffect(getPopular);
 export const fetchPomotionsFx = createEffect(getPromotions);
 
-// export const $isRestaurantOpen = restore(fetchTimeValidateFx.doneData, null);
-export const $isRestaurantOpen = createStore(true);
+export const $isRestaurantOpen = restore(fetchTimeValidateFx.doneData, null);
 
 forward({
   from: gateChooseDishes.open,
