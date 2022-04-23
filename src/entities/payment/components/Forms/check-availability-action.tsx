@@ -34,7 +34,8 @@ import {
   MerchantLogin,
 } from "./PaymentProccessing";
 import { createEvent, createStore } from "effector";
-import { formatRub } from "@entities/cart/components/Details/variation-groups";
+import { formatPrice } from "@entities/cart/components/Details/variation-groups";
+import { $rus } from "@features/choose-dishes/models";
 
 type SubmitFormParams = {
   form: Omit<OrderTypeParams, "InvoiceID" | "Signature">;
@@ -204,6 +205,7 @@ export const CheckAvailabilityAction: React.FC<
 > = ({ onSubmit, ...props }) => {
   useGate(gateAction, { onSuccess: onSubmit, onFail: () => {} });
 
+  const isRub = useStore($rus);
   const { size, totalAmount } = useStore($cartSizes);
   const cart = useStore($cart);
   const form = useStore($form);
@@ -235,7 +237,7 @@ export const CheckAvailabilityAction: React.FC<
     }
 
     if ((totalAmount ?? 0) < MIN_SUM) {
-      setError(`Заказ должен быть на сумму от ${formatRub(MIN_SUM)}`);
+      setError(`Заказ должен быть на сумму от ${formatPrice(MIN_SUM, isRub)}`);
       return false;
     }
 
@@ -260,7 +262,7 @@ export const CheckAvailabilityAction: React.FC<
     }
 
     return true;
-  }, [cart, form, schedule, phone, totalAmount, isOpen, location]);
+  }, [cart, form, schedule, phone, totalAmount, isOpen, location, isRub]);
 
   function handleVerifyCheckout() {
     if (!isValid) {

@@ -1,8 +1,9 @@
+import { $rus } from "@features/choose-dishes/models";
 import { addresses } from "@pages/ContactsPage/config";
 import classNames from "classnames";
 import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 import gpsIcon from "./gps.svg";
 
@@ -16,15 +17,22 @@ export const $restaurant = createStore<string | null>(null).on(
 );
 
 export const AddressSelection = ({ className }: { className?: string }) => {
+  const isRus = useStore($rus);
   const restaurant = useStore($restaurant);
 
-  const addressesList = addresses
-    .filter(({ onlyDisplay }) => !onlyDisplay)
-    .flatMap(({ regions }) => regions)
-    .flatMap(({ region, addresses }) => ({
-      region,
-      addresses: addresses.flatMap(({ address }) => address),
-    }));
+  const addressesList = useMemo(
+    () =>
+      addresses
+        .filter(({ country_label }) =>
+          isRus ? country_label === "Москва" : country_label === "Казахстан"
+        )
+        .flatMap(({ regions }) => regions)
+        .flatMap(({ region, addresses }) => ({
+          region,
+          addresses: addresses.flatMap(({ address }) => address),
+        })),
+    [isRus]
+  );
 
   useEffect(() => {
     if (!restaurant) {

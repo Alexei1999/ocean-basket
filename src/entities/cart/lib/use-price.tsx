@@ -1,3 +1,5 @@
+import { $rus } from "@features/choose-dishes/models";
+import { useStore } from "effector-react";
 import { useMemo } from "react";
 
 export function formatPrice({
@@ -49,7 +51,8 @@ export default function usePrice(
     currencyCode?: string;
   } | null
 ) {
-  const { currency } = { currency: "RUB" };
+  const isRus = useStore($rus);
+  const { currency } = { currency: isRus ? "RUB" : "KZT" };
   const { amount, baseAmount, currencyCode = currency } = data ?? {};
   const { locale } = { locale: "ru" };
   const value = useMemo(() => {

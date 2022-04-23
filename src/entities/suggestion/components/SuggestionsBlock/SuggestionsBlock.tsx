@@ -2,6 +2,7 @@ import { saveChoosenDish } from "@entities/cart/components/Details/add-dish-moda
 import { isDishValid } from "@entities/cart/components/Details/details";
 import { toTranslit } from "@entities/dishes/components/Card/DishCard";
 import { $cartItems } from "@features/choose-dishes/models";
+import { $rus } from "@features/choose-dishes/models";
 import { Dish } from "@shared/api/dishes";
 import { RoutesConfig } from "@shared/lib/routes-config";
 import { useStore } from "effector-react";
@@ -17,6 +18,7 @@ export function SuggestionsBlock({
   className?: string;
   hideOnEmpty?: boolean;
 }) {
+  const isRub = useStore($rus);
   const { unicItemsList } = useStore($cartItems);
 
   const [categorizedDishes, setCategorizedDishes] = useState<{
@@ -30,7 +32,7 @@ export function SuggestionsBlock({
       .filter((item) => item.recommended_dishes?.length)
       .map((item) => item.recommended_dishes)
       .flat(1)
-      .filter(isDishValid)
+      .filter((dish) => isDishValid(isRub, dish))
       .reduce<{ [K in string]: Omit<Dish, "recommended_dishes"> }>(
         (acc, dish) => {
           if (!dish?.id) return acc;
@@ -58,7 +60,7 @@ export function SuggestionsBlock({
     }, {});
 
     setCategorizedDishes(categorizedDishes);
-  }, [unicItemsList]);
+  }, [isRub, unicItemsList]);
 
   const entries = useMemo(
     () => Object.entries(categorizedDishes),

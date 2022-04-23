@@ -1,7 +1,9 @@
 import { FormValues } from "@entities/payment/components/Forms/address-form";
 import Input from "@entities/payment/components/Forms/forms/input";
+import { $rus } from "@features/choose-dishes/models";
 import { usePropRef } from "@shared/lib/usePropRef";
 import classNames from "classnames";
+import { useStore } from "effector-react";
 import { useState, useCallback, useEffect } from "react";
 import {
   YMapsApi,
@@ -13,7 +15,8 @@ import {
 
 const YANDEX_MAP_API_KEY = "9ed3cdf8-1911-49ac-b6d0-70711b8f3edd";
 
-export const MOSCOW_COORDS = [55.752, 37.6237];
+export const MOSCOW_COORDS = [55.761677, 37.632745];
+export const KAZAHSTAN_COORDS = [43.256069, 76.945169];
 
 type Keys =
   | "country"
@@ -45,6 +48,7 @@ export const AddressSuggestionsMap = ({
   className?: string;
   errors?: string[];
 }) => {
+  const isRus = useStore($rus);
   const [ymapsInstance, setYmapsInstance] = useState<YMapsApi | null>(null);
   const [isReady, setIsReady] = useState(false);
   const [coords, setCoords] = useState<Array<number | null>>([null, null]);
@@ -175,8 +179,10 @@ export const AddressSuggestionsMap = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady, ymapsInstance]);
 
+  const defaultCoords = isRus ? MOSCOW_COORDS : KAZAHSTAN_COORDS;
+
   const noCoords = viewCoords.some((c) => c === null);
-  const _viewCoords = (noCoords ? MOSCOW_COORDS : viewCoords) as number[];
+  const _viewCoords = (noCoords ? defaultCoords : viewCoords) as number[];
 
   return (
     <div className={className}>

@@ -6,13 +6,17 @@ import {
   addProductToCart,
   PickedDish,
 } from "@features/choose-dishes/models";
+import { $rus } from "@features/choose-dishes/models";
 import { Dish, Promotion } from "@shared/api/dishes";
 import Button from "@shared/button";
 import { useStore } from "effector-react";
 import { useMemo } from "react";
 
-export const pickDishForce = (dish: Dish): Omit<PickedDish, "count"> => {
-  const filteredPrice = filterPrices(dish.prices);
+export const pickDishForce = (
+  dish: Dish,
+  isRus: boolean
+): Omit<PickedDish, "count"> => {
+  const filteredPrice = filterPrices(dish.prices, isRus);
 
   return {
     priceObj: {
@@ -22,7 +26,9 @@ export const pickDishForce = (dish: Dish): Omit<PickedDish, "count"> => {
     },
     product: dish,
     modifiers: [],
-    totalPrice: filteredPrice[0].rouble_price,
+    totalPrice: isRus
+      ? filteredPrice[0].rouble_price
+      : filteredPrice[0].tenge_price,
   };
 };
 
@@ -37,11 +43,12 @@ export function PromotionModal({
   onProductAdd?: () => void;
   promotion: Promotion | null;
 }) {
+  const isRus = useStore($rus);
   const isRestaurantOpen = useStore($isRestaurantOpen);
 
   const filteredBasket = useMemo(
-    () => (promotion?.basket ?? []).filter((dish) => isDishValid(dish)),
-    [promotion]
+    () => (promotion?.basket ?? []).filter((dish) => isDishValid(isRus, dish)),
+    [isRus, promotion]
   );
 
   const isDisabled = filteredBasket.length === 0 || isRestaurantOpen === false;
@@ -65,7 +72,7 @@ export function PromotionModal({
               if (isDisabled) return;
               filteredBasket.forEach((basket: Dish) => {
                 setIsOpen(false);
-                addProductToCart(pickDishForce(basket));
+                addProductToCart(pickDishForce(basket, isRus));
               });
               setIsOpen(false);
               onProductAdd?.();

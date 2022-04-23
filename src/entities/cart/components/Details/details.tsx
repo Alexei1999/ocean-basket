@@ -24,6 +24,7 @@ import TextArea from "@shared/components/text-area";
 import { stringifyValueSafely } from "@shared/lib/functional-utils";
 
 export const filterCartObjects = (
+  isRub: boolean,
   items: Partial<PickedDish[]>
 ): PickedDish[] => {
   if (!Array.isArray(items)) return [];
@@ -38,8 +39,16 @@ export const filterCartObjects = (
     if (!item.count || item.count <= 0) return false;
 
     if (
-      !item.priceObj?.rouble_price ||
-      item.priceObj.rouble_price === EMPTY_STRING
+      isRub &&
+      (!item.priceObj?.rouble_price ||
+        item.priceObj.rouble_price === EMPTY_STRING)
+    ) {
+      return false;
+    }
+    if (
+      !isRub &&
+      (!item.priceObj?.tenge_price ||
+        item.priceObj.tenge_price === EMPTY_STRING)
     ) {
       return false;
     }
@@ -56,7 +65,10 @@ export const filterCartObjects = (
   }) as PickedDish[];
 };
 
-export const isDishValid = (dish?: Partial<Dish>): dish is Dish => {
+export const isDishValid = (
+  isRub: boolean,
+  dish?: Partial<Dish>
+): dish is Dish => {
   if (!dish || !dish.prices || !dish.id) {
     console.warn("isDishValid: ", dish?.name, " is not valid");
     console.warn(
@@ -67,7 +79,7 @@ export const isDishValid = (dish?: Partial<Dish>): dish is Dish => {
     return false;
   }
 
-  const filteredPrices = filterPrices(dish.prices);
+  const filteredPrices = filterPrices(dish.prices, isRub);
 
   const isValid =
     filteredPrices.length > 0 && dish.status === DishStatus.Active;

@@ -1,9 +1,18 @@
 import usePrice from "@entities/cart/lib/use-price";
+import { $rus } from "@features/choose-dishes/models";
 import { Dish } from "@shared/api/dishes";
+import { useStore } from "effector-react";
 
 export function HeadlineSuggestion({ item }: { item?: Dish | null }) {
+  const isRur = useStore($rus);
+
   const { price: totalPrice } = usePrice({
-    amount: parseInt(item?.prices[0].rouble_price as string) ?? 0,
+    amount:
+      parseInt(
+        isRur
+          ? (item?.prices[0].rouble_price as string)
+          : (item?.prices[0].tenge_price as string)
+      ) ?? 0,
   });
 
   // const { price: deliveryFee } = usePrice({

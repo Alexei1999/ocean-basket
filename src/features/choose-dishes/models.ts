@@ -118,37 +118,66 @@ export type PickedDish = {
   totalPrice: number;
 };
 
-export const $cart = createStore<PickedDish[]>(
-  filterCartObjects(getFromStorage("cart"))
-)
-  .on(flattedDishes, (state, dishes) => {
+const setIsRus = createEvent<boolean>();
+export const $rus = createStore(true).on(setIsRus, (_, payload) => payload);
+
+window.onload = () => {
+  if (window.location.hostname.includes(".kz")) {
+    setIsRus(false);
+  }
+};
+
+export const $cart = $rus
+  .map<[boolean, PickedDish[]]>((isRus) => [
+    isRus,
+    filterCartObjects(isRus, getFromStorage("cart")),
+  ])
+  .on(flattedDishes, ([isRus, state], dishes) => {
     const ids = dishes.map((dish) => dish.id);
-    return state.filter(({ product: { id } }) => {
+    const filteredDishes = state.filter(({ product: { id } }) => {
       return ids.includes(id);
     });
+
+    return [isRus, filteredDishes];
   })
-  .on(addProductToCart, (state, pickedDish) => {
-    if (pickedDish.product.status !== DishStatus.Active) return;
-    if (
-      !pickedDish.priceObj?.rouble_price ||
-      pickedDish.priceObj.rouble_price === EMPTY_STRING
-    )
+  .on(addProductToCart, ([isRub, state], pickedDish) => {
+    if (pickedDish.product.status !== DishStatus.Active) {
       return;
+    }
+
+    if (
+      isRub &&
+      (!pickedDish.priceObj?.rouble_price ||
+        pickedDish.priceObj.rouble_price === EMPTY_STRING)
+    ) {
+      return;
+    }
+
+    if (
+      !isRub &&
+      (!pickedDish.priceObj?.tenge_price ||
+        pickedDish.priceObj.tenge_price === EMPTY_STRING)
+    ) {
+      return;
+    }
+
     if (
       !pickedDish.priceObj?.weight ||
       pickedDish.priceObj.weight === EMPTY_STRING
-    )
+    ) {
       return;
+    }
 
     const indexOfItem = state.findIndex((item: PickedDish) =>
       isTwoPickedDishesEqual(item, pickedDish)
     );
 
     if (indexOfItem === -1) {
-      return [...state, { ...pickedDish, count: 1 }];
+      const countedDishes = [...state, { ...pickedDish, count: 1 }];
+      return [isRub, countedDishes];
     }
 
-    return [
+    const insertedDishes = [
       ...state.slice(0, indexOfItem),
       {
         ...state[indexOfItem],
@@ -156,21 +185,27 @@ export const $cart = createStore<PickedDish[]>(
       },
       ...state.slice(indexOfItem + 1),
     ];
+    return [isRub, insertedDishes];
   })
-  .on(removeProductFromCart, (state, product) => {
+  .on(removeProductFromCart, ([isRub, state], product) => {
     const indexOfItem = state.findIndex((item: PickedDish) =>
       isTwoPickedDishesEqual(item, product)
     );
 
     if (indexOfItem === -1) {
-      return state;
+      return [isRub, state];
     }
 
     if (state[indexOfItem].count === 1) {
-      return [...state.slice(0, indexOfItem), ...state.slice(indexOfItem + 1)];
+      const cuttedArray = [
+        ...state.slice(0, indexOfItem),
+        ...state.slice(indexOfItem + 1),
+      ];
+
+      return [isRub, cuttedArray];
     }
 
-    return [
+    const modifiedArray = [
       ...state.slice(0, indexOfItem),
       {
         ...state[indexOfItem],
@@ -178,37 +213,45 @@ export const $cart = createStore<PickedDish[]>(
       },
       ...state.slice(indexOfItem + 1),
     ];
+
+    return [isRub, modifiedArray];
   })
-  .on(dropProductFromCart, (state, product) => {
+  .on(dropProductFromCart, ([isRub, state], product) => {
     const indexOfItem = state.findIndex((item: PickedDish) =>
       isTwoPickedDishesEqual(item, product)
     );
 
     if (indexOfItem === -1) {
-      return state;
+      return [isRub, state];
     }
 
-    return [...state.slice(0, indexOfItem), ...state.slice(indexOfItem + 1)];
+    const cuttedArray = [
+      ...state.slice(0, indexOfItem),
+      ...state.slice(indexOfItem + 1),
+    ];
+    return [isRub, cuttedArray];
   })
-  .on(deleteLastProductFromCart, (state, product) => {
+  .on(deleteLastProductFromCart, ([isRub, state], product) => {
     const indexRight = [...state]
       .reverse()
       .findIndex((item: PickedDish) => item.product.id === product.id);
 
     if (indexRight === -1) {
-      return state;
+      return [isRub, state];
     }
 
     const reversedIndex = state.length - indexRight - 1;
 
     if (state[reversedIndex].count === 1) {
-      return [
+      const cuttedArray = [
         ...state.slice(0, reversedIndex),
         ...state.slice(reversedIndex + 1),
       ];
+
+      return [isRub, cuttedArray];
     }
 
-    return [
+    const insertedArray = [
       ...state.slice(0, reversedIndex),
       {
         ...state[reversedIndex],
@@ -216,7 +259,10 @@ export const $cart = createStore<PickedDish[]>(
       },
       ...state.slice(reversedIndex + 1),
     ];
+
+    return [isRub, insertedArray];
   })
+  .map(([, state]) => state)
   .on(dropCart, () => []);
 
 export const $cartSizes = $cart.map((state) => {

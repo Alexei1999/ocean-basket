@@ -13,8 +13,10 @@ import {
   $location,
   getDeliveryFeeName,
 } from "./PaymentProccessing";
+import { $rus } from "@features/choose-dishes/models";
 
 export const RightSideView = () => {
+  const isRub = useStore($rus);
   const cartSizes = useStore($cartSizes);
   const cart = useStore($cart);
   const promocode = useStore($promocode);
@@ -66,7 +68,7 @@ export const RightSideView = () => {
         <ItemInfoRow
           keyClassName="text-gray-500"
           title={"Доставка"}
-          value={getDeliveryFeeName(cartSizes.totalAmount, location)}
+          value={getDeliveryFeeName(cartSizes.totalAmount, isRub, location)}
         />
         {/* <ItemInfoRow
           keyClassName="text-gray-500"

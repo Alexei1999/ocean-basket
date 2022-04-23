@@ -2,6 +2,7 @@ import { AddToCartBtnBig } from "@entities/dishes/components/Card/AddToCartBtnBi
 import { createPickedDish } from "@features/choose-dishes/lib";
 import {
   $cartSizes,
+  $rus,
   addProductToCart,
   deleteLastProductFromCart,
   PickedModifier,
@@ -33,6 +34,7 @@ export const AddToCartBig = ({
   activeModifiers,
   onAdd,
 }: Props) => {
+  const isRub = useStore($rus);
   const { unicItemsNumber } = useStore($cartSizes);
 
   const handleAddClick = (
@@ -50,7 +52,8 @@ export const AddToCartBig = ({
           tenge_price: active.tenge_price,
           weight: active.weight,
         },
-        Object.values(activeModifiers).filter((modifier) => modifier)
+        Object.values(activeModifiers).filter((modifier) => modifier),
+        isRub
       )
     );
 

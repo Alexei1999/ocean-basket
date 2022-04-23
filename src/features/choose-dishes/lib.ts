@@ -50,14 +50,15 @@ export const createModifier = (
 export const createPickedDish = (
   dish: Dish,
   priceObj: PickedPrice,
-  modifiers: PickedModifier[] = []
+  modifiers: PickedModifier[] = [],
+  isRub: boolean
 ): Omit<PickedDish, "count"> => {
   return {
     product: dish,
     priceObj,
     modifiers,
     totalPrice:
-      (parseInt(priceObj.rouble_price) ?? 0) +
+      (parseInt(isRub ? priceObj.rouble_price : priceObj.tenge_price) ?? 0) +
       modifiers.reduce((acc, { price }) => acc + (price ?? 0), 0),
   };
 };

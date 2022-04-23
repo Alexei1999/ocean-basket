@@ -1,5 +1,7 @@
 import usePrice from "@entities/cart/lib/use-price";
+import { $rus } from "@features/choose-dishes/models";
 import { Dish } from "@shared/api/dishes";
+import { useStore } from "effector-react";
 import { AddToCartSuggstionBtn } from "./AddToCartSuggstionBtn";
 
 //@ts-ignore
@@ -10,8 +12,13 @@ export function SuggestionsAction({
   item: Omit<Dish, "recommended_dishes">;
   onClick: (item: Omit<Dish, "recommended_dishes">) => void;
 }) {
+  const isRus = useStore($rus);
+
   const { price } = usePrice({
-    amount: parseInt(item.prices?.[0].rouble_price) ?? 0,
+    amount:
+      parseInt(
+        isRus ? item.prices?.[0].rouble_price : item.prices?.[0].tenge_price
+      ) ?? 0,
   });
 
   return (

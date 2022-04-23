@@ -11,6 +11,7 @@ import {
   $cartSizes,
   $isRestaurantOpen,
   $cart,
+  $rus,
 } from "@features/choose-dishes/models";
 import { getPlurals } from "@shared/lib/functional-utils";
 import { useState } from "react";
@@ -19,7 +20,7 @@ import { createEffect, createEvent, createStore } from "effector";
 import { verifyPromocode } from "@shared/api/dishes";
 import Button from "@shared/button";
 import { toast } from "react-toastify";
-import { formatRub } from "./Details/variation-groups";
+import { formatPrice } from "./Details/variation-groups";
 
 export const MIN_SUM = 2000;
 
@@ -93,6 +94,7 @@ export const CartSidebarView = ({
   onClose?: () => void;
   isFlat?: boolean;
 }) => {
+  const isRub = useStore($rus);
   const cartSizes = useStore($cartSizes);
   const cart = useStore($cart);
 
@@ -264,7 +266,7 @@ export const CartSidebarView = ({
         ) : (
           isLessMinSum && (
             <p className="pt-[6px] text-sm text-center justify-self-end text-body">
-              Заказ должен быть на сумму от {formatRub(MIN_SUM)}
+              Заказ должен быть на сумму от {formatPrice(MIN_SUM, isRub)}
             </p>
           )
         )}

@@ -18,7 +18,7 @@ const ShortDetails: React.FC<ShortDetailsProps> = ({
   isSticky,
   closeModal,
 }) => {
-  const { name, description, prices, photo, status } = product ?? {};
+  const { name, photo } = product ?? {};
 
   const navigate = (path: string) => {
     // router.push(path);
@@ -28,10 +28,6 @@ const ShortDetails: React.FC<ShortDetailsProps> = ({
   const { price } = usePrice({
     amount: 0,
   });
-
-  const isSelected = true;
-
-  let selectedVariation: any = {};
 
   const hasVariations = true;
   return (

@@ -1,12 +1,14 @@
 import Modal from "@entities/payment/components/Forms/modal";
 import {
   $isRestaurantOpen,
+  $rus,
   fetchTimeValidateFx,
 } from "@features/choose-dishes/models";
 import { useStore } from "effector-react";
 import { useState, useEffect } from "react";
 
 export function ShopClosedModal() {
+  const isRus = useStore($rus);
   const isOpen = useStore($isRestaurantOpen);
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
 
@@ -33,9 +35,18 @@ export function ShopClosedModal() {
           </div>
           <p>Заказ можно оформить только во время работы ресторана</p>
           <div className="pt-4 font-semibold text-body">Время работы:</div>
-          <div>Пн-Вт-Ср-Чт: 10:00 - 22:30</div>
-          <div>Пт-Сб: 10:00 - 23:30</div>
-          <div>Вс: 10:00 - 22:30</div>
+          {isRus ? (
+            <>
+              <div>Пн-Вт-Ср-Чт: 10:00 - 22:30</div>
+              <div>Пт-Сб: 10:00 - 23:30</div>
+              <div>Вс: 10:00 - 22:30</div>
+            </>
+          ) : (
+            <>
+              <div>Пн-Чт: 10:00 - 23:00</div>
+              <div>Пт-Вс: 10:00 - 00:00</div>
+            </>
+          )}
         </div>
       </article>
     </Modal>

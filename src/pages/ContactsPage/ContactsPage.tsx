@@ -8,7 +8,12 @@ import hook from "@widgets/subscription/hook.svg";
 import styles from "./styles.module.scss";
 import { addresses, Country } from "./config";
 import { useMemo } from "react";
-import { MOSCOW_COORDS } from "@shared/components/AddressSuggestionsMap";
+import {
+  KAZAHSTAN_COORDS,
+  MOSCOW_COORDS,
+} from "@shared/components/AddressSuggestionsMap";
+import { $rus } from "@features/choose-dishes/models";
+import { useStore } from "effector-react";
 
 function ContactsBlock({
   item,
@@ -75,14 +80,20 @@ function ContactsBlock({
 }
 
 export function ContactsPage() {
+  const isRus = useStore($rus);
+
   const gps = useMemo(
     () =>
       addresses
-        .filter(({ onlyDisplay }) => !onlyDisplay)
+        .filter(({ country_label }) =>
+          isRus ? country_label === "Москва" : country_label === "Казахстан"
+        )
         .flatMap(({ regions }) => regions)
         .flatMap(({ addresses }) => addresses.map(({ gps }) => gps)),
-    []
+    [isRus]
   );
+
+  const defaultCoords = isRus ? MOSCOW_COORDS : KAZAHSTAN_COORDS;
 
   return (
     <YMaps>
@@ -115,7 +126,7 @@ export function ContactsPage() {
             defaultState={{
               // center: [50.7617, 60.632682],
               // zoom: 4,
-              center: MOSCOW_COORDS,
+              center: defaultCoords,
               zoom: 12,
               controls: ["zoomControl", "fullscreenControl"],
             }}

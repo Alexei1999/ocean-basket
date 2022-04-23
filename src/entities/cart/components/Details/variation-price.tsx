@@ -1,29 +1,37 @@
+import { $rus } from "@features/choose-dishes/models";
 import { Dish, EMPTY_STRING } from "@shared/api/dishes";
+import { useStore } from "effector-react";
 import { useEffect, useMemo } from "react";
 import Attribute from "./attribute";
-import { formatRub } from "./variation-groups";
+import { formatPrice } from "./variation-groups";
 
-export const filterPrices = (prices: Dish["prices"]) =>
-  (prices || [])
+export const filterPrices = (prices: Dish["prices"], isRub: boolean) => {
+  return (prices || [])
     .map((price, idx) => {
       const { weight, rouble_price, tenge_price } = price;
       return {
         weight: weight === EMPTY_STRING ? null : weight,
         rouble_price: parseInt(rouble_price),
-        tenge_price,
+        tenge_price: parseInt(tenge_price),
         price: {
           ...price,
           idx,
         },
       };
     })
-    .filter(
-      ({ weight, rouble_price }) => weight?.length && !isNaN(rouble_price)
-    )
-    .sort((a, b) => a.rouble_price - b.rouble_price);
+    .filter(({ weight, rouble_price, tenge_price }) => {
+      if (!weight?.length) return false;
+      if (isRub) return !isNaN(rouble_price);
+      return !isNaN(tenge_price);
+    })
+    .sort((a, b) => {
+      if (isRub) return a.rouble_price - b.rouble_price;
+      return a.tenge_price - b.tenge_price;
+    });
+};
 
-export const useSortedPrices = (prices: Dish["prices"]) => {
-  return useMemo(() => filterPrices(prices), [prices]);
+export const useSortedPrices = (prices: Dish["prices"], isRub: boolean) => {
+  return useMemo(() => filterPrices(prices, isRub), [isRub, prices]);
 };
 
 export default function VariationPrice({
@@ -35,7 +43,8 @@ export default function VariationPrice({
   active: null | (Dish["prices"][number] & { idx: number });
   onChange: (price: Dish["prices"][number] & { idx: number }) => void;
 }) {
-  const mappedPrices = useSortedPrices(prices);
+  const isRub = useStore($rus);
+  const mappedPrices = useSortedPrices(prices, isRub);
 
   useEffect(() => {
     if (!active && mappedPrices.length > 0) {
@@ -65,7 +74,7 @@ export default function VariationPrice({
                 <span className="whitespace-nowrap">{weight}</span>
                 <span className="pl-4">—</span>
                 <span className="whitespace-nowrap pl-4">
-                  {formatRub(rouble_price)}
+                  {formatPrice(rouble_price, isRub)}
                 </span>
               </div>
             }

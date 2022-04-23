@@ -9,8 +9,10 @@ import { useNavigate } from "react-router-dom";
 import { Details } from "./Details";
 import { OrderDescriptionContainer } from "./OrderDescriptionContainer";
 import { getDeliveryFeeName } from "../Forms/PaymentProccessing";
-import { formatRub } from "@entities/cart/components/Details/variation-groups";
+import { formatPrice } from "@entities/cart/components/Details/variation-groups";
 import { onScrollPage } from "@shared/components/ScrollContainer";
+import { $rus } from "@features/choose-dishes/models";
+import { useStore } from "effector-react";
 
 dayjs.locale("ru");
 
@@ -46,6 +48,7 @@ export function OrderDescription({
   } | null;
   location?: boolean | null;
 }) {
+  const isRub = useStore($rus);
   const navigate = useNavigate();
 
   if (isNotFound) {
@@ -123,7 +126,7 @@ export function OrderDescription({
               },
               {
                 label: "Итого",
-                text: isNaN(total as number) ? "" : formatRub(total!),
+                text: isNaN(total as number) ? "" : formatPrice(total!, isRub),
               },
               {
                 label: "Метод оплаты",
@@ -177,13 +180,16 @@ export function OrderDescription({
             className="max-w-xl mt-16"
             label="Общая сумма"
             items={[
-              ["Итого", isNaN(total as number) ? "" : formatRub(total!)],
+              [
+                "Итого",
+                isNaN(total as number) ? "" : formatPrice(total!, isRub),
+              ],
               ["Метод оплаты", isResult ? "Картой онлайн" : "В процессе"],
               [
                 "Доставка",
                 isNaN(total as number)
                   ? ""
-                  : getDeliveryFeeName(total!, location),
+                  : getDeliveryFeeName(total!, isRub, location),
               ],
             ]}
           />

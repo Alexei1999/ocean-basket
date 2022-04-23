@@ -8,13 +8,14 @@ import classNames from "classnames";
 import { useSortedPrices } from "@entities/cart/components/Details/variation-price";
 import { saveChoosenDish } from "@entities/cart/components/Details/add-dish-modal";
 import { hostUrl } from "@shared/api/base";
-import { formatRub } from "@entities/cart/components/Details/variation-groups";
+import { formatPrice } from "@entities/cart/components/Details/variation-groups";
 import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react";
 import { useNavigate } from "react-router-dom";
 import { RoutesConfig } from "@shared/lib/routes-config";
 
 import CyrillicToTranslit from "cyrillic-to-translit-js";
+import { $rus } from "@features/choose-dishes/models";
 
 export const toTranslit = (str: string) => {
   const cyrillicToTranslit = new CyrillicToTranslit();
@@ -106,9 +107,10 @@ export const useObserver = () => {
 };
 
 export const DishCard = React.memo(({ product, className }: DishCardProps) => {
+  const isRub = useStore($rus);
   const { name, photo, description, status, prices } = product ?? {};
 
-  const mappedPrices = useSortedPrices(prices);
+  const mappedPrices = useSortedPrices(prices, isRub);
   const isSmallScreen = useStore($smScreen);
   const isMediumScreen = useStore($mdScreen);
   const isLargeScreen = useStore($lgScreen);
@@ -118,11 +120,14 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
   const price = useMemo(() => {
     if (mappedPrices.length === 0) return;
 
-    const price = formatRub(mappedPrices[0].rouble_price);
+    const price = formatPrice(
+      isRub ? mappedPrices[0].rouble_price : mappedPrices[0].tenge_price,
+      isRub
+    );
 
     return mappedPrices.length > 1 ? `от ${price}` : price;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isRub]);
 
   const [isDisplaying, setIsDisplaying] = useState<boolean>(true);
 
@@ -132,7 +137,12 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
     setIsDisplaying(false);
   }, []);
 
+  const isDishActive =
+    status === DishStatus.Active && Boolean(mappedPrices.length);
+
   function handleProductQuickView() {
+    if (!isDishActive) return;
+
     saveChoosenDish(product);
     navigate(
       RoutesConfig.Menu +
@@ -172,7 +182,9 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
       <div
         onClick={handleProductQuickView}
         role="button"
-        className="relative flex items-center justify-center w-auto h-40 sm:h-52"
+        className={classNames(
+          "relative flex items-center justify-center w-auto h-40 sm:h-52"
+        )}
       >
         <span className="sr-only">{name}</span>
         <img
@@ -227,7 +239,7 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
               {price}
             </span>
           </div>
-          {status === DishStatus.Active && Boolean(mappedPrices.length) ? (
+          {isDishActive ? (
             <AddToCart data={product} />
           ) : (
             <div className="text-muted bg-gray-100 rounded-full text-xs py-2 px-4">

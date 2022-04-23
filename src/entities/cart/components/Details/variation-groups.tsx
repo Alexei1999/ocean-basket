@@ -1,12 +1,14 @@
-import { formatPrice } from "@entities/cart/lib/use-price";
+import { formatPrice as _formatPrice } from "@entities/cart/lib/use-price";
 import { ModifierType, PickedModifier } from "@features/choose-dishes/models";
+import { $rus } from "@features/choose-dishes/models";
+import { useStore } from "effector-react";
 import Attribute from "./attribute";
 
-export const formatRub = (price: number) => {
-  return formatPrice({
+export const formatPrice = (price: number, isRub: boolean) => {
+  return _formatPrice({
     amount: price,
-    currencyCode: "RUB",
-    locale: "ru",
+    currencyCode: isRub ? "RUB" : "KZT",
+    locale: isRub ? "ru" : "kz",
   });
 };
 
@@ -33,6 +35,8 @@ const ModifierGroups = ({
   setActiveModifier: (modifiers: { [id: string]: PickedModifier }) => void;
   activeModifier: { [id: string]: PickedModifier };
 }) => {
+  const isRub = useStore($rus);
+
   if (!modifiers) {
     return null;
   }
@@ -82,7 +86,7 @@ const ModifierGroups = ({
                     active={activeModifier[modifier.id]?.option === option}
                     value={`${option}${
                       nextPrice && nextPrice > 0
-                        ? " - " + formatRub(nextPrice)
+                        ? " - " + formatPrice(nextPrice, isRub)
                         : ""
                     }`}
                     key={`${option}-${idx}`}
