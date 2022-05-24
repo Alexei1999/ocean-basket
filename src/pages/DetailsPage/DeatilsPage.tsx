@@ -8,6 +8,9 @@ import { $rus } from "@features/choose-dishes/models";
 import {
   FREE_DELIVERY_KZ_SUM,
   FREE_DELIVERY_RUS_SUM,
+  LOCATION_FALSE_RUS_SUM,
+  LOCATION_KZ_SUM,
+  LOCATION_TRUE_RUS_SUM,
 } from "@entities/payment/components/Forms/PaymentProccessing";
 
 function Card({
@@ -88,14 +91,26 @@ export function DetailsPage() {
               className="md:max-w-2xl"
               text="Стоимость доставки"
               description={
-                <ul>
-                  <li>
-                    Доставка по городу в пределах МКАД при заказе от 5000 р. —
-                    бесплатная.
-                  </li>
-                  <li> В пределах Третьего транспортного кольца — 250 р. </li>
-                  <li> В пределах МКАД — 500 р.</li>
-                </ul>
+                isRus ? (
+                  <ul>
+                    <li>
+                      Доставка по городу в пределах МКАД при заказе от {FREE_DELIVERY_RUS_SUM} р. —
+                      бесплатная.
+                    </li>
+                    <li> В пределах Третьего транспортного кольца — {LOCATION_TRUE_RUS_SUM} р. </li>
+                    <li> В пределах МКАД — {LOCATION_FALSE_RUS_SUM} р.</li>
+                  </ul>
+                ) : (
+                  <ul>
+                    <li>
+                      Доставка по городу в пределах зоны при заказе от {FREE_DELIVERY_KZ_SUM}
+                      тенге — бесплатная.
+                    </li>
+                    <li>
+                      В пределах зоны доставки — {LOCATION_KZ_SUM} тенге.
+                    </li>
+                  </ul>
+                )
               }
             />
           </div>
