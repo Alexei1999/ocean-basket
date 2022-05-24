@@ -8,7 +8,7 @@ import { addresses, Country } from "@pages/ContactsPage/config";
 import React, { useEffect } from "react";
 
 import footer from "@assets/footer.png";
-import { $categories } from "@features/choose-dishes/models";
+import { $categories, $rus } from "@features/choose-dishes/models";
 import { useStore } from "effector-react";
 import { RoutesConfig } from "@shared/lib/routes-config";
 import { useNavigate } from "react-router-dom";
@@ -103,6 +103,8 @@ const $done = restore(fetchCategoriesFx.done, null);
 
 //TODO: Split to the components
 export function Footer() {
+  const isRus = useStore($rus);
+
   const navigate = useNavigate();
 
   const categories = useStore($categories);
@@ -131,7 +133,10 @@ export function Footer() {
 
   const privacyPolicyBlock = (
     <>
-      <a target="_blank" href="/privacy-polytic.pdf">
+      <a
+        target="_blank"
+        href={isRus ? "/privacy-polytic-rus.pdf" : "/privacy-polytic-kz.docx"}
+      >
         Политика конфиденциальности
       </a>
       <div
@@ -162,11 +167,17 @@ export function Footer() {
               Наши рестораны
             </span>
 
-            <FooterContactsBlock
-              className="flex-grow pt-12"
-              item={addresses[0]}
-            />
-            {/* <FooterContactsBlock className="flex-grow" item={addresses[1]} /> */}
+            {isRus ? (
+              <FooterContactsBlock
+                className="flex-grow pt-12"
+                item={addresses[0]}
+              />
+            ) : (
+              <FooterContactsBlock
+                className="flex-grow pt-12"
+                item={addresses[1]}
+              />
+            )}
           </div>
 
           <div className="order-0 xl:order-1 grid grid-cols-3 w-full max-w-4xl flex-grow">

@@ -23,19 +23,23 @@ import {
 } from "@shared/api/dishes";
 import {
   $promocode,
-  MIN_SUM,
+  MIN_SUM_KZ,
+  MIN_SUM_RUS,
 } from "@entities/cart/components/cart-sidebar-view";
 import { toast } from "react-toastify";
 import { $restaurant } from "@widgets/header/components/AddressSelection";
 import {
   $grandTotal,
   $location,
-  FREE_DELIVERY_SUM,
+  FREE_DELIVERY_KZ_SUM,
+  FREE_DELIVERY_RUS_SUM,
   MerchantLogin,
 } from "./PaymentProccessing";
 import { createEvent, createStore } from "effector";
 import { formatPrice } from "@entities/cart/components/Details/variation-groups";
 import { $rus } from "@features/choose-dishes/models";
+import { useNavigate } from "react-router-dom";
+import { RoutesConfig } from "@shared/lib/routes-config";
 
 type SubmitFormParams = {
   form: Omit<OrderTypeParams, "InvoiceID" | "Signature">;
@@ -205,6 +209,8 @@ export const CheckAvailabilityAction: React.FC<
 > = ({ onSubmit, ...props }) => {
   useGate(gateAction, { onSuccess: onSubmit, onFail: () => {} });
 
+  const navigate = useNavigate();
+
   const isRub = useStore($rus);
   const { size, totalAmount } = useStore($cartSizes);
   const cart = useStore($cart);
@@ -222,6 +228,7 @@ export const CheckAvailabilityAction: React.FC<
   const [errorMessage, setError] = useState<string>();
   const [isShownError, setIsShownError] = useState<boolean>();
   const [isPrivacyPolicy, setIsPrivacyPolicy] = useState<boolean>(false);
+  const [isInDeliveryKzZone, setIsInDeliveryKzZone] = useState<boolean>(false);
 
   const isValid = useMemo(() => {
     setIsShownError(false);
@@ -236,8 +243,13 @@ export const CheckAvailabilityAction: React.FC<
       return false;
     }
 
-    if ((totalAmount ?? 0) < MIN_SUM) {
-      setError(`Заказ должен быть на сумму от ${formatPrice(MIN_SUM, isRub)}`);
+    if ((totalAmount ?? 0) < (isRub ? MIN_SUM_RUS : MIN_SUM_KZ)) {
+      setError(
+        `Заказ должен быть на сумму от ${formatPrice(
+          isRub ? MIN_SUM_RUS : MIN_SUM_KZ,
+          isRub
+        )}`
+      );
       return false;
     }
 
@@ -246,7 +258,11 @@ export const CheckAvailabilityAction: React.FC<
       return false;
     }
 
-    if ((totalAmount ?? 0) < FREE_DELIVERY_SUM && location === null) {
+    if (
+      (totalAmount ?? 0) <
+        (isRub ? FREE_DELIVERY_RUS_SUM : FREE_DELIVERY_KZ_SUM) &&
+      location === null
+    ) {
       setError("Необходимо выбрать зону доставки");
       return false;
     }
@@ -296,7 +312,7 @@ export const CheckAvailabilityAction: React.FC<
         promocode: promocode?.promocode!,
         dishes: formattedDishes,
         MerchantLogin: MerchantLogin,
-        location: (totalAmount ?? 0) >= FREE_DELIVERY_SUM ? null : location,
+        location: (totalAmount ?? 0) >= FREE_DELIVERY_RUS_SUM ? null : location,
       },
       paymentArguments: {
         OutSum: (window as any).isMock ? 1 : grandTotal,
@@ -307,7 +323,40 @@ export const CheckAvailabilityAction: React.FC<
 
   return (
     <div>
-      <div className="px-5 lg:px-0 text-center">
+      <div className="px-5 lg:px-0">
+        <span
+          className="pr-2 cursor-pointer"
+          onClick={() => setIsPrivacyPolicy(!isPrivacyPolicy)}
+        >
+          <input
+            className="pointer-events-none"
+            type="checkbox"
+            checked={isInDeliveryKzZone}
+          />
+        </span>
+        <span
+          className="cursor-pointer"
+          onClick={() => setIsInDeliveryKzZone(!isInDeliveryKzZone)}
+        >
+          Я нахожусь в{" "}
+        </span>
+        <a
+          className="cursor-pointer underline hover:text-accent"
+          onClick={() => {
+            window.scrollTo(0, 0);
+            navigate(RoutesConfig.Details);
+          }}
+        >
+          зоне доставки
+        </a>{" "}
+        <span
+          className="cursor-pointer"
+          onClick={() => setIsInDeliveryKzZone(!isInDeliveryKzZone)}
+        >
+          ресторана
+        </span>
+      </div>
+      <div className="px-5 pt-2 lg:px-0">
         <span
           className="pr-2 cursor-pointer"
           onClick={() => setIsPrivacyPolicy(!isPrivacyPolicy)}
@@ -327,21 +376,24 @@ export const CheckAvailabilityAction: React.FC<
         <a
           className="underline hover:text-accent"
           target="_blank"
-          href="/privacy-polytic.pdf"
+          href={isRub ? "/privacy-polytic-rus.pdf" : "/privacy-polytic-kz.docx"}
         >
           пользовательского соглашения
-        </a>
+        </a>{" "}
         <span
           className="cursor-pointer"
           onClick={() => setIsPrivacyPolicy(!isPrivacyPolicy)}
         >
-          {" "}
           и даю согласие на{" "}
         </span>
         <a
-          className="underline hover:text-accent"
+          className="underline hover:text-accent cursor-pointer"
           target="_blank"
-          href="/privacy-polytic.pdf#page=5"
+          href={
+            isRub
+              ? "/privacy-polytic-rus.pdf#page=5"
+              : "/privacy-polytic-kz.docx#page=5"
+          }
         >
           обработку персональных данных
         </a>
@@ -350,7 +402,7 @@ export const CheckAvailabilityAction: React.FC<
         loading={isLoading}
         className="text-body hover:bg-accent w-full mt-5"
         onClick={handleVerifyCheckout}
-        disabled={!isPrivacyPolicy || !size}
+        disabled={!isInDeliveryKzZone || !isPrivacyPolicy || !size}
         {...props}
       />
       {isShownError && !isValid && (

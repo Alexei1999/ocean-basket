@@ -21,7 +21,8 @@ import ScheduleGrid from "./schedule-grid";
 import { RightSideView } from "./unverified-item-list";
 import { $rus } from "@features/choose-dishes/models";
 
-export const FREE_DELIVERY_SUM = 5000;
+export const FREE_DELIVERY_RUS_SUM = 5000;
+export const FREE_DELIVERY_KZ_SUM = 15000;
 
 export const makeTelegrammDescription = (
   size?: number,
@@ -55,8 +56,9 @@ export enum AddressType {
   Shipping = "shipping",
 }
 
-export const LOCATION_FALSE_SUM = 500;
-export const LOCATION_TRUE_SUM = 250;
+export const LOCATION_FALSE_RUS_SUM = 500;
+export const LOCATION_TRUE_RUS_SUM = 250;
+export const LOCATION_KZ_SUM = 2000;
 
 const onLocation = createEvent<boolean>();
 export const $location = createStore<boolean | null>(
@@ -67,9 +69,9 @@ $location.watch((value) => setToStorage("location", value));
 
 export const getDeliveryFee = (locationInitial: boolean | null): number => {
   return locationInitial === true
-    ? LOCATION_TRUE_SUM
+    ? LOCATION_TRUE_RUS_SUM
     : locationInitial === false
-    ? LOCATION_FALSE_SUM
+    ? LOCATION_FALSE_RUS_SUM
     : 0;
 };
 export const getDeliveryFeeName = (
@@ -77,12 +79,15 @@ export const getDeliveryFeeName = (
   isRub: boolean,
   location?: boolean | null
 ): string => {
-  return (totalAmount ?? 0) >= FREE_DELIVERY_SUM
+  return (totalAmount ?? 0) >=
+    (isRub ? FREE_DELIVERY_RUS_SUM : FREE_DELIVERY_KZ_SUM)
     ? "Бесплатно"
+    : !isRub
+    ? formatPrice(LOCATION_KZ_SUM, isRub)
     : location === true
-    ? formatPrice(LOCATION_TRUE_SUM, isRub)
+    ? formatPrice(LOCATION_TRUE_RUS_SUM, isRub)
     : location === false
-    ? formatPrice(LOCATION_FALSE_SUM, isRub)
+    ? formatPrice(LOCATION_FALSE_RUS_SUM, isRub)
     : "";
 };
 
@@ -94,21 +99,22 @@ export const $grandTotal = createStore<number>(
 );
 
 sample({
-  source: [$cartSizes, $location],
-  clock: [$cartSizes, $location],
-  fn: ([cartSizes, location]) => {
+  source: [$cartSizes, $location, $rus],
+  clock: [$cartSizes, $location, $rus],
+  fn: ([cartSizes, location, isRus]) => {
     const totalAmount = cartSizes.totalAmount ?? 0;
 
-    if (totalAmount >= FREE_DELIVERY_SUM) {
+    if (totalAmount >= (isRus ? FREE_DELIVERY_RUS_SUM : FREE_DELIVERY_KZ_SUM)) {
       return totalAmount;
     }
 
-    const locationFee =
-      location === true
-        ? LOCATION_TRUE_SUM
-        : location === false
-        ? LOCATION_FALSE_SUM
-        : 0;
+    const locationFee = !isRus
+      ? LOCATION_KZ_SUM
+      : location === true
+      ? LOCATION_TRUE_RUS_SUM
+      : location === false
+      ? LOCATION_FALSE_RUS_SUM
+      : 0;
 
     return totalAmount + locationFee;
   },
@@ -185,7 +191,11 @@ export function PaymentProccessing() {
               editLabel="Изменить адрес"
               className="shadow-700 bg-light p-5 md:p-8"
               label="Адрес доставки"
-              subLabel="Мы доставляем наши блюда по всей Москве в пределах МКАД. Если ваш адрес доставки находится за пределами МКАД, ресторан оформит возврат денежных средств и отменит заказ. Заказы за МКАД оформляются по номеру телефона в индивидуальном порядке. Благодарим за понимание."
+              subLabel={
+                isRub
+                  ? "Мы доставляем наши блюда по всей Москве в пределах МКАД. Если ваш адрес доставки находится за пределами МКАД, ресторан оформит возврат денежных средств и отменит заказ. Заказы за МКАД оформляются по номеру телефона в индивидуальном порядке. Благодарим за понимание."
+                  : "Мы доставляем наши блюда в пределах зоны: пр. Райымбека - ул. Калдаякова - ул. Сатпаева - ул. Ауезова. Если ваш адрес доставки находится вне зоны, ресторан оформит возврат денежных средств и отменит заказ. Заказы вне зоны оформляются по номеру телефона в индивидуальном порядке. Благодарим за понимание."
+              }
               count={1}
               form={AddressForm}
               data={form}
@@ -195,7 +205,8 @@ export function PaymentProccessing() {
               onClose={() => setIsAddressModalOpen(false)}
               emptyMessage="Адрес не заполнен"
               after={
-                (totalAmount ?? 0) >= FREE_DELIVERY_SUM ? undefined : (
+                !isRub ? undefined : (totalAmount ?? 0) >=
+                  FREE_DELIVERY_RUS_SUM ? undefined : (
                   <div className="flex gap-3 flex-wrap">
                     <div className="w-[16rem] text-xs flex justify-between">
                       <Radio
@@ -211,7 +222,7 @@ export function PaymentProccessing() {
                         onClick={() => onLocation(true)}
                       >
                         Указанный адрес входит в зону доставки ВНУТРИ ТТК +{" "}
-                        {formatPrice(LOCATION_TRUE_SUM, isRub)}.
+                        {formatPrice(LOCATION_TRUE_RUS_SUM, isRub)}.
                       </div>
                     </div>
                     <div className="w-[16rem] text-xs flex justify-between">
@@ -228,7 +239,7 @@ export function PaymentProccessing() {
                         onClick={() => onLocation(false)}
                       >
                         Указанный адрес входит в зону доставки от МКАД до ТТК +{" "}
-                        {formatPrice(LOCATION_FALSE_SUM, isRub)}.
+                        {formatPrice(LOCATION_FALSE_RUS_SUM, isRub)}.
                       </div>
                     </div>
                   </div>

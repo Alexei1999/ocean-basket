@@ -121,11 +121,12 @@ export type PickedDish = {
 const setIsRus = createEvent<boolean>();
 export const $rus = createStore(true).on(setIsRus, (_, payload) => payload);
 
-window.onload = () => {
-  if (window.location.hostname.includes(".kz")) {
-    setIsRus(false);
-  }
-};
+if (
+  window.location.hostname.includes(".kz") ||
+  window.location.hostname.includes("91.201.214.167")
+) {
+  setIsRus(false);
+}
 
 export const $cart = $rus
   .map<[boolean, PickedDish[]]>((isRus) => [

@@ -43,8 +43,7 @@ export function ShopClosedModal() {
             </>
           ) : (
             <>
-              <div>Пн-Чт: 10:00 - 23:00</div>
-              <div>Пт-Вс: 10:00 - 00:00</div>
+              <div>10:00 - 22:00</div>
             </>
           )}
         </div>

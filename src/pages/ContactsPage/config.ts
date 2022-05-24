@@ -42,10 +42,15 @@ export const addresses: Country[] = [
         region: "Алматы",
         addresses: [
           {
-            address: "ул. Панфилова, 100",
-            number: "+8 (775) 240 0033",
+            address: "ул. Казыбек би, 50",
+            number: "+7 (775) 240 0033",
             gps: [43.256069, 76.945169],
           },
+          // {
+          //   address: "ул. Панфилова, 100",
+          //   number: "+8 (775) 240 0033",
+          //   gps: [43.256069, 76.945169],
+          // },
           // {
           //   address: "мкр. Самал-2, 111, ТРЦ Dostyk Plaza, 3-й этаж",
           //   number: "+8 (777) 246 6878",
@@ -76,6 +81,6 @@ export const addresses: Country[] = [
       //   ],
       // },
     ],
-    email: "marketing@oceanbasket.kz",
+    email: "info@oceanbasket.kz",
   },
 ];

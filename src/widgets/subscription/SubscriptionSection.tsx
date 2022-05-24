@@ -19,6 +19,7 @@ import { useStore } from "effector-react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { ImageWithPreview } from "@shared/components/ImageWithPreview";
+import { $rus } from "@features/choose-dishes/models";
 
 const subscribeFx = createEffect(postSubscribe);
 
@@ -156,6 +157,8 @@ function EmailSection({ isWaves = false }) {
 }
 
 function InstagramHeader() {
+  const isRus = useStore($rus);
+
   return (
     <div className="flex flex-col justify-center items-center">
       <span className="font-friends text-body text-6xl">Наш инстаграм</span>
@@ -166,7 +169,7 @@ function InstagramHeader() {
         href="https://www.instagram.com/oceanbasket.ru/"
         rel="noreferrer"
       >
-        @oceanbasket.ru
+        {isRus ? "@oceanbasket.ru" : "@oceanbasket.kz"}
       </a>
       <img src={wave} alt="wave" className="pt-4" />
     </div>

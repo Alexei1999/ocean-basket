@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { NotFoundPage } from "./404/404";
+import { NotFoundPage } from "./AboutPage/404/404";
 import { AboutPage } from "./AboutPage/AboutPage";
 import { PaymentPage } from "./PaymentPage/PaymentPage";
 import { ContactsPage } from "./ContactsPage/ContactsPage";
@@ -11,6 +11,8 @@ import { CertificatePage } from "./CertificatesPage/CertificatePage";
 import { DetailsPage } from "./DetailsPage/DeatilsPage";
 import { OrderDescriptionContainerFetch } from "@entities/payment/components/OrderDescription/OrderDescriptionContainerFetch";
 import { CheckoutPage } from "./CheckoutPage/CheckoutPage";
+import { $rus } from "@features/choose-dishes/models";
+import { useStore } from "effector-react";
 
 const OpenUrl = ({ url }: { url: string }) => {
   window.location.replace(url);
@@ -19,6 +21,7 @@ const OpenUrl = ({ url }: { url: string }) => {
 };
 
 export const Routing = () => {
+  const isRus = useStore($rus);
   return (
     <Routes>
       <Route path={`${RoutesConfig.Menu}/:id/:name`} element={<MenuPage />} />
@@ -49,7 +52,16 @@ export const Routing = () => {
       <Route path={RoutesConfig.Contacts} element={<ContactsPage />} />
       <Route path={RoutesConfig.Details} element={<DetailsPage />} />
       <Route path="/" element={<DashboardPage />} />
-      <Route path="/privacy" element={<OpenUrl url="/privacy-polytic.pdf" />} />
+      <Route
+        path="/privacy"
+        element={
+          <OpenUrl
+            url={
+              isRus ? "/privacy-polytic-rus.pdf" : "/privacy-polytic-kz.docx"
+            }
+          />
+        }
+      />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

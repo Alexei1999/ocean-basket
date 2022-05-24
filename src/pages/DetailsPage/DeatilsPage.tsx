@@ -3,6 +3,12 @@ import { ReactNode } from "react";
 import { PageWaveHeader } from "@entities/promotions/components/PageWaveHeader";
 import { SubscriptionSection } from "@widgets/subscription/SubscriptionSection";
 import fishesFull from "./fishes-full.svg";
+import { useStore } from "effector-react";
+import { $rus } from "@features/choose-dishes/models";
+import {
+  FREE_DELIVERY_KZ_SUM,
+  FREE_DELIVERY_RUS_SUM,
+} from "@entities/payment/components/Forms/PaymentProccessing";
 
 function Card({
   text,
@@ -32,6 +38,8 @@ function Card({
 }
 
 export function DetailsPage() {
+  const isRus = useStore($rus);
+
   return (
     <>
       <div className="relative">
@@ -53,14 +61,26 @@ export function DetailsPage() {
             />
             <Card
               text="Территория доставки"
-              description="Мы доставляем по всей Москве."
-              className=""
+              className="flex-grow md:basis-80 md:max-w-2xl"
+              description={
+                isRus ? (
+                  "Мы доставляем по всей Москве."
+                ) : (
+                  <ul>
+                    <li>Доставка производится в квадрате улиц:</li>
+                    <li>
+                      пр. Райымбека - ул. Калдаякова - ул. Сатпаева - ул.
+                      Ауезова
+                    </li>
+                  </ul>
+                )
+              }
             />
           </div>
           <div className="flex flex-wrap md:items-start flex-col md:flex-row gap-y-7 gap-x-14 3xl:gap-x-20">
             <Card
               text="Минимальная сумма заказа"
-              label="2000 РУБ*"
+              label={isRus ? "2000 РУБ*" : "2000 тенге*"}
               description="*С учетом всех специальных предложений."
               className="md:max-w-[34rem]"
             />
@@ -81,9 +101,18 @@ export function DetailsPage() {
           </div>
           <div className="flex flex-wrap md:items-start flex-col md:flex-row gap-y-7 md:max-w-[70%] gap-x-14 3xl:gap-x-20">
             <Card
+              text="Бесплатная доставка"
+              description={
+                !isRus
+                  ? `При заказе выше ${FREE_DELIVERY_KZ_SUM} тенге.`
+                  : `При заказе выше ${FREE_DELIVERY_RUS_SUM} руб.`
+              }
+              className="md:max-w-[34rem]"
+            />
+            <Card
               text="Способ оплаты"
               description="Сейчас мы работаем по системе предоплаты на сайте."
-              className="flex-grow md:basis-80  max-w-lg"
+              className="flex-grow md:basis-80 md:max-w-lg"
             />
             <Card
               text="Как получить заказ"
@@ -94,20 +123,28 @@ export function DetailsPage() {
           <div className="flex flex-wrap lg:items-start flex-col lg:flex-row gap-y-7 gap-x-14 3xl:gap-x-20">
             <Card
               text="Условия возврата"
-              description="Eсли вас не устроила доставка, качество блюд, вы можете напрямую позвонить в ресторан по номеру +7 (977) 456 2221 (цифра 1), а также написать письмо на почту info@oceanbasket.ru. Мы оперативно ответим и решим проблему."
+              description={
+                isRus
+                  ? "Eсли вас не устроила доставка, качество блюд, вы можете напрямую позвонить в ресторан по номеру +7 (977) 456 2221 (цифра 1), а также написать письмо на почту info@oceanbasket.ru. Мы оперативно ответим и решим проблему."
+                  : "Условия возврата рассматриваются в индивидуальном порядке. Свяжитесь с нами по электронной почте  info@oceanbasket.kz, если у Вас есть какие-либо жалобы и предложения по поводу качества Продукта."
+              }
               className="flex-grow lg:basis-80 max-w-xl"
             />
             <Card
               text="Юридический адрес"
               description={
-                <ul>
-                  <li>ООО ОБ Мясницкая</li>
-                  <li>
-                    101000, г. Москва, ул. Мясницкая, д.11, этаж 1, помещение V,
-                    комната 6
-                  </li>
-                  <li>ИНН 7708376250 ОГРН 1207700108219</li>
-                </ul>
+                isRus ? (
+                  <ul>
+                    <li>ООО ОБ Мясницкая</li>
+                    <li>
+                      101000, г. Москва, ул. Мясницкая, д.11, этаж 1, помещение
+                      V, комната 6
+                    </li>
+                    <li>ИНН 7708376250 ОГРН 1207700108219</li>
+                  </ul>
+                ) : (
+                  "Казахстан, город Алматы, Алмалинский район, улица КАЗЫБЕК БИ, дом 50, почтовый индекс 050000"
+                )
               }
               className="flex-grow lg:basis-80 max-w-xl"
             />

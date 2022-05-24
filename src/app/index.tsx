@@ -13,12 +13,6 @@ import { ScrollContainer } from "@shared/components/ScrollContainer";
 import { FishAnimationContainer } from "@shared/components/LoadingContainer/FishAnimationContainer";
 import { YMInitializer } from "react-yandex-metrika";
 
-declare global {
-  interface Window {
-    __REACT_DEVELOPERS: Record<string, unknown>;
-  }
-}
-
 function App() {
   return (
     <FishAnimationContainer>

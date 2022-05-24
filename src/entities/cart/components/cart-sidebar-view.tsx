@@ -22,7 +22,8 @@ import Button from "@shared/button";
 import { toast } from "react-toastify";
 import { formatPrice } from "./Details/variation-groups";
 
-export const MIN_SUM = 2000;
+export const MIN_SUM_RUS = 2000;
+export const MIN_SUM_KZ = 2000;
 
 export const EmptyCartPanel = ({
   noGutters = false,
@@ -105,7 +106,8 @@ export const CartSidebarView = ({
   const isLoading = useStore(verifyPromocodeFx.pending);
   const isOpen = useStore($isRestaurantOpen);
 
-  const isLessMinSum = (cartSizes.totalAmount ?? 0) < MIN_SUM;
+  const isLessMinSum =
+    (cartSizes.totalAmount ?? 0) < (isRub ? MIN_SUM_RUS : MIN_SUM_KZ);
   const isDisabled = !cartSizes.size || isLessMinSum || isOpen === false;
 
   useGate(gateCartSidebarView, {
@@ -266,7 +268,8 @@ export const CartSidebarView = ({
         ) : (
           isLessMinSum && (
             <p className="pt-[6px] text-sm text-center justify-self-end text-body">
-              Заказ должен быть на сумму от {formatPrice(MIN_SUM, isRub)}
+              Заказ должен быть на сумму от{" "}
+              {formatPrice(isRub ? MIN_SUM_RUS : MIN_SUM_KZ, isRub)}
             </p>
           )
         )}
