@@ -166,7 +166,7 @@ function InstagramHeader() {
       <a
         target="_blank"
         className="text-accent font-bold text-2xl pt-8 hover:underline"
-        href="https://www.instagram.com/oceanbasket.ru/"
+        href={isRus ? "https://www.instagram.com/oceanbasket.ru/": "https://www.instagram.com/oceanbasket.kz/"} 
         rel="noreferrer"
       >
         {isRus ? "@oceanbasket.ru" : "@oceanbasket.kz"}

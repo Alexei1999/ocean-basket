@@ -1,3 +1,4 @@
+import { $rus } from "@features/choose-dishes/models";
 import { Transition } from "@headlessui/react";
 import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react/effector-react.cjs";
@@ -16,6 +17,7 @@ onGDRPSet.watch(() => {
 export const GDRPPolicy = () => {
   const [isOpen, setIsOpen] = useState(true);
   const isGDRP = useStore($isGDRPSetted);
+  const isRus = useStore($rus);
 
   return (
     <div className="fixed bottom-0 z-50">
@@ -33,7 +35,8 @@ export const GDRPPolicy = () => {
             <div className="inline-block w-full text-start align-middle transition-all relative shadow-700">
               <div className="flex justify-center content-center justify-items-center items-center p-5 bg-light md:rounded-2xl">
                 <p className="text-sm text-body pr-8 whitespace-pre-line">
-                  Продолжая пользоваться сайтом oceanbasket.ru, вы даете
+                  Продолжая пользоваться сайтом{" "}
+                  {isRus ? "oceanbasket.ru" : "oceanbasket.kz"}, вы даете
                   согласие на использование файлов cookies (куки).
                 </p>
 
