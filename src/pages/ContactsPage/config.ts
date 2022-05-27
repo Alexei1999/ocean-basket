@@ -42,7 +42,7 @@ export const addresses: Country[] = [
         region: "Алматы",
         addresses: [
           {
-            address: "ул. Казыбек би, 50",
+            address: "Алмалинский район, ул. Казыбек би, 50",
             number: "+7 (775) 240 0033",
             gps: [43.256069, 76.945169],
           },

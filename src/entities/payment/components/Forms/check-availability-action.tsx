@@ -259,8 +259,8 @@ export const CheckAvailabilityAction: React.FC<
     }
 
     if (
-      (totalAmount ?? 0) <
-        (isRub ? FREE_DELIVERY_RUS_SUM : FREE_DELIVERY_KZ_SUM) &&
+      isRub &&
+      (totalAmount ?? 0) < FREE_DELIVERY_RUS_SUM &&
       location === null
     ) {
       setError("Необходимо выбрать зону доставки");
@@ -326,7 +326,7 @@ export const CheckAvailabilityAction: React.FC<
       <div className="px-5 lg:px-0">
         <span
           className="pr-2 cursor-pointer"
-          onClick={() => setIsPrivacyPolicy(!isPrivacyPolicy)}
+          onClick={() => setIsInDeliveryKzZone(!isInDeliveryKzZone)}
         >
           <input
             className="pointer-events-none"

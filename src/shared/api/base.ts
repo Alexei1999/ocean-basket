@@ -1,8 +1,9 @@
+import { getIsKz } from "@features/choose-dishes/models";
 import axios from "axios";
 
-import { proxy } from "../../../package.json";
-
-export const hostUrl = proxy;
+export const hostUrl = getIsKz()
+  ? "https://oceanbasket.ru/oceanBasket/public"
+  : "https://oceanbasket.kz/oceanBasket/public";
 
 export type ResponseType = {
   status: number;

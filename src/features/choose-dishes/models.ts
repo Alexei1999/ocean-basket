@@ -118,15 +118,15 @@ export type PickedDish = {
   totalPrice: number;
 };
 
-const setIsRus = createEvent<boolean>();
-export const $rus = createStore(true).on(setIsRus, (_, payload) => payload);
-
-if (
+export const getIsKz = () =>
   window.location.hostname.includes(".kz") ||
-  window.location.hostname.includes("91.201.214.167")
-) {
-  setIsRus(false);
-}
+  window.location.hostname.includes("91.201.214.167");
+
+const setIsRus = createEvent<boolean>();
+export const $rus = createStore(!getIsKz()).on(
+  setIsRus,
+  (_, payload) => payload
+);
 
 export const $cart = $rus
   .map<[boolean, PickedDish[]]>((isRus) => [
