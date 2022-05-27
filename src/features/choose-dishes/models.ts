@@ -12,6 +12,7 @@ import {
   getTimeValidate,
   Promotion,
 } from "@shared/api/dishes";
+import { getIsKz } from "@shared/lib/functional-utils";
 import {
   createEffect,
   createEvent,
@@ -117,10 +118,6 @@ export type PickedDish = {
   modifiers: PickedModifier[];
   totalPrice: number;
 };
-
-export const getIsKz = () =>
-  window.location.hostname.includes(".kz") ||
-  window.location.hostname.includes("91.201.214.167");
 
 const setIsRus = createEvent<boolean>();
 export const $rus = createStore(!getIsKz()).on(

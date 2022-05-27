@@ -1,4 +1,4 @@
-import { getIsKz } from "@features/choose-dishes/models";
+import { getIsKz } from "@shared/lib/functional-utils";
 import axios from "axios";
 
 export const hostUrl = getIsKz()

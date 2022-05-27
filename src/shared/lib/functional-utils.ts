@@ -87,3 +87,7 @@ export const stringifyValueSafely = (value: unknown): string => {
   console.error(value);
   return "";
 };
+
+export const getIsKz = () =>
+  window.location.hostname.includes(".kz") ||
+  window.location.hostname.includes("91.201.214.167");
