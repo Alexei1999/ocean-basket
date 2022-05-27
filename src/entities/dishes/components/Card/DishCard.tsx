@@ -141,7 +141,7 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
     status === DishStatus.Active && Boolean(mappedPrices.length);
 
   function handleProductQuickView() {
-    // if (!isDishActive) return;
+    if (!isDishActive) return;
 
     saveChoosenDish(product);
     navigate(
@@ -239,7 +239,7 @@ export const DishCard = React.memo(({ product, className }: DishCardProps) => {
               {price}
             </span>
           </div>
-          {true ? (
+          {isDishActive ? (
             <AddToCart data={product} />
           ) : (
             <div className="text-muted bg-gray-100 rounded-full text-xs py-2 px-4">

@@ -41,15 +41,8 @@ export const AddToCartBig = ({
     e: React.MouseEvent<HTMLButtonElement | MouseEvent>
   ) => {
     e.stopPropagation();
-    // if (!active) return;
-    // if (disabled) return;
-
-    active = {
-      idx: 20,
-      rouble_price: "1500",
-      tenge_price: "1500",
-      weight: "1",
-    };
+    if (!active) return;
+    if (disabled) return;
 
     addProductToCart(
       createPickedDish(
