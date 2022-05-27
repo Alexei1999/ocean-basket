@@ -8,8 +8,11 @@ import { SubscriptionSection } from "@widgets/subscription/SubscriptionSection";
 
 import hook from "@widgets/subscription/hook.svg";
 import twoWaves from "@pages/AboutPage/AboutPageCover/2-waves.svg";
+import { $rus } from "@features/choose-dishes/models";
+import { useStore } from "effector-react";
 
 export function CertificatePage() {
+  const isRus = useStore($rus);
   return (
     <>
       <PageWaveHeader
@@ -36,24 +39,31 @@ export function CertificatePage() {
                 для всех любителей морепродуктов.
               </p>
               <p className="pt-5">
-                Приобрести подарочный сертификат можно в любом ресторане Ocean
-                Basket в г. Москва. Мы предлагаем подарочные сертификаты разного
-                номинала:
+                {isRus
+                  ? "Приобрести подарочный сертификат можно в любом ресторане Ocean Basket в г. Москва. Мы предлагаем подарочные сертификаты разного номинала:"
+                  : "Приобрести подарочный сертификат можно в любом ресторане Ocean Basket Казахстан. Мы предлагаем подарочные сертификаты разного номинала:"}
               </p>
               <ul className="pt-5 pb-6">
                 <li className="text-base font-bold">
-                  — на 1000р. (одна тысяча рублей)
+                  {isRus
+                    ? " — на 1000р. (одна тысяча рублей)"
+                    : " — на 10000 тг (десять тысяч тенге)"}
                 </li>
                 <li className="text-base font-bold">
-                  — на 3000р. (три тысячи рублей)
+                  {isRus
+                    ? " — на 3000р. (три тысячи рублей)"
+                    : " — на 20000 тг (двадцать тысяч тенге)"}
                 </li>
                 <li className="text-base font-bold">
-                  — на 5000р. (пять тысяч рублей)
+                  {isRus
+                    ? " — на 5000р. (пять тысяч рублей)"
+                    : " — на 30000 тг (тридцать тысяч тенге)"}
                 </li>
               </ul>
               <p>
-                Обналичить сертификат можно только в московских ресторанах Ocean
-                Basket, а действие сертификата — 1 год с момента приобретения.
+                {isRus
+                  ? "Обналичить сертификат можно только в московских ресторанах Ocean Basket, а действие сертификата — 1 год с момента приобретения."
+                  : "Использовать сертификат можно только в ресторанах Ocean Basket Казахстан, а действие сертификата — 3 месяца с момента приобретения."}
               </p>
               <p className="pt-5">
                 Каждый ваучер может быть использован только единожды при первом
