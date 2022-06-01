@@ -14,6 +14,7 @@ import {
 import { OrderDescription } from "./OrderDescription";
 
 export const getPaymentLink = (
+  MerchantLogin?: string,
   sum?: string | null,
   invId?: string | null,
   signature?: string | null,
@@ -86,7 +87,7 @@ export function OrderDescriptionContainerFetch({
     if (!data.result && status === "success") {
       navigate(`${RoutesConfig.Checkout}/false${window.location.search}`);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data?.result, status]);
 
   useEffect(() => {
@@ -100,7 +101,7 @@ export function OrderDescriptionContainerFetch({
       OutSum:
         parseInt(data?.outSum as string) || parseInt(outSum as string) || 0,
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [invId]);
 
   return (
@@ -131,6 +132,7 @@ export function OrderDescriptionContainerFetch({
 
             window.location.replace(
               getPaymentLink(
+                MerchantLogin,
                 `${
                   parseInt(data?.outSum as string) ||
                   parseInt(outSum as string) ||

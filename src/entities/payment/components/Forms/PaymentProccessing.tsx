@@ -20,6 +20,7 @@ import Radio from "./forms/radio/radio";
 import ScheduleGrid from "./schedule-grid";
 import { RightSideView } from "./unverified-item-list";
 import { $rus } from "@features/choose-dishes/models";
+import { getIsKz } from "@shared/lib/functional-utils";
 
 export const FREE_DELIVERY_RUS_SUM = 5000;
 export const FREE_DELIVERY_KZ_SUM = 15000;
@@ -49,7 +50,7 @@ export const makeTelegrammDescription = (
   // );
 };
 
-export const MerchantLogin = "Ocean_Basket";
+export const MerchantLogin = !getIsKz() ? "Ocean_Basket" : "OceanBasketKZ";
 
 export enum AddressType {
   Billing = "billing",
@@ -149,6 +150,7 @@ export function PaymentProccessing() {
       newTab?: Window | null
     ) => {
       const url = getPaymentLink(
+        MerchantLogin,
         `${OutSum}`,
         `${InvoiceId}`,
         SignatureValue,
