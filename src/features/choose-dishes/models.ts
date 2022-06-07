@@ -125,6 +125,15 @@ export const $rus = createStore(!getIsKz()).on(
   (_, payload) => payload
 );
 
+try {
+  (window as any).setKz = () => {
+    setIsRus(false);
+  };
+  (window as any).setRus = () => {
+    setIsRus(true);
+  };
+} catch {}
+
 export const $cart = $rus
   .map<[boolean, PickedDish[]]>((isRus) => [
     isRus,
