@@ -61,7 +61,7 @@ export default function VariationPrice({
       </span>
 
       <div className="pt-3 w-full flex flex-wrap">
-        {mappedPrices?.map?.(({ weight, rouble_price, price }) => (
+        {mappedPrices?.map?.(({ weight, rouble_price, tenge_price, price }) => (
           <Attribute
             className="mt-3 mr-3"
             key={`${weight}`}
@@ -74,7 +74,7 @@ export default function VariationPrice({
                 <span className="whitespace-nowrap">{weight}</span>
                 <span className="pl-4">—</span>
                 <span className="whitespace-nowrap pl-4">
-                  {formatPrice(rouble_price, isRub)}
+                  {formatPrice(isRub ? rouble_price : tenge_price, isRub)}
                 </span>
               </div>
             }
