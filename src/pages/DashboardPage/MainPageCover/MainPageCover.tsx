@@ -142,9 +142,6 @@ export function MainPageCover() {
               className="w-full pb-7"
               src={deliveryLogo}
             />
-            <span className="absolute bottom-3 left-[25%] font-bold text-lg lg:text-xl text-light">
-              в пределах МКАД
-            </span>
           </div>
           <Button
             className={classNames(

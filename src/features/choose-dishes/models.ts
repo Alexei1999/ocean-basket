@@ -22,7 +22,7 @@ import {
 } from "effector";
 import { createGate } from "effector-react";
 import { getFromStorage } from "./api";
-import { isTwoPickedDishesEqual } from "./lib";
+import { createPickedDish, isTwoPickedDishesEqual } from "./lib";
 
 export const POPULAR_CATEGORY = {
   id: -1,
@@ -334,3 +334,41 @@ forward({
   from: gateChooseDishes.close,
   to: onResetCategory,
 });
+
+try {
+  (window as any).addToCart = (isRub: boolean) => {
+    //@ts-ignore
+    addProductToCart(
+      createPickedDish(
+        {
+          id: 123,
+          name: "Салат из курицы",
+          description: "Салат из курицы",
+          prices: [
+            {
+              weight: "123",
+              tenge_price: "212",
+              rouble_price: "321",
+            },
+          ],
+          photo: "",
+          photo2: "",
+          photo3: "",
+          photo4: "",
+          recommended: "",
+          status: DishStatus.Active,
+          category: "Салаты",
+          created_at: "123123",
+          updated_at: "123123",
+        },
+        {
+          rouble_price: "1000",
+          tenge_price: "1000",
+          weight: "100",
+        },
+        [],
+        isRub
+      )
+    );
+  };
+} catch {}
