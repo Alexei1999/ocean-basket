@@ -18,6 +18,7 @@ export type FormValues = {
   city: string;
   street: string;
   building: string;
+  district: string;
   part: string;
   flat: number;
   entrance: number;
@@ -35,7 +36,24 @@ const transformNumber = (value: unknown) => {
 const addressSchema = yup.object().shape({
   title: yup.string(),
   city: yup.string().required("Город обязателен к заполнению"),
-  street: yup.string().required("Улица обязательна к заполнению"),
+  district: yup
+    .string()
+    .test(
+      "district or street",
+      "Микрорайон или улица обязателен к заполнению",
+      (value, form) => {
+        return form.parent.street || value;
+      }
+    ),
+  street: yup
+    .string()
+    .test(
+      "district or street",
+      "Микрорайон или улица обязателен к заполнению",
+      (value, form) => {
+        return form.parent.district || value;
+      }
+    ),
   building: yup.string().required("Дом обязателен к заполнению"),
   part: yup.string(),
   flat: yup.number().transform(transformNumber).nullable(),
@@ -124,6 +142,7 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
                 setValue("building", data.house ?? "");
                 setValue("city", data.locality ?? "");
                 setValue("street", data.street ?? "");
+                setValue("district", data.district ?? "");
 
                 clearErrors();
               }}
@@ -148,6 +167,16 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
               label={"Город"}
               error={errors.city?.message!}
               name="city"
+              variant="outline"
+              className={classNames(
+                "col-span-4 sm:col-span-2",
+                isMapMode && "hidden"
+              )}
+            />
+            <Input
+              label={"Микрорайон"}
+              {...register("district")}
+              error={errors.district?.message!}
               variant="outline"
               className={classNames(
                 "col-span-4 sm:col-span-2",

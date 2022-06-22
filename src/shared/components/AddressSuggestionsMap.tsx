@@ -23,13 +23,14 @@ type Keys =
   | "province"
   | "area"
   | "locality"
+  | "district"
   | "street"
   | "house"
   | "entrance";
 
 const getAddressString = (form: FormValues) => {
   return (
-    [form?.city, form?.street, form?.building, form?.part]
+    [form?.city, form?.district, form?.street, form?.building, form?.part]
       .filter(Boolean)
       .join(" ") + (form?.entrance ? " подъезд " + form?.entrance : "")
   );
