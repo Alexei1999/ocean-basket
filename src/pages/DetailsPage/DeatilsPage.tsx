@@ -59,7 +59,11 @@ export function DetailsPage() {
           <div className="gap-x-14 3xl:gap-x-20 gap-y-7 flex flex-wrap flex-col md:flex-row relative md:max-w-[70%] justify-start">
             <Card
               text="Прием заказов"
-              description="Прием заказов осуществляется во время работы ресторанов."
+              description={
+                isRus
+                  ? "Прием заказов осуществляется во время работы ресторанов."
+                  : "Прием заказов осуществляется с 10:00 до 22:00"
+              }
               className="flex-grow md:basis-80 md:max-w-xl"
             />
             <Card
@@ -73,7 +77,7 @@ export function DetailsPage() {
                     <li>Доставка производится в квадрате улиц:</li>
                     <li>
                       пр. Райымбека - ул. Калдаякова - ул. Сатпаева - ул.
-                      Ауезова
+                      Ауэзова
                     </li>
                   </ul>
                 )
