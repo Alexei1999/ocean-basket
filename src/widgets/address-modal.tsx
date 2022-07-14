@@ -1,7 +1,6 @@
 import AddressForm from "@entities/payment/components/Forms/address-form";
 import Modal from "@entities/payment/components/Forms/modal";
 import { getRestaurant } from "@shared/api/common";
-import { $rus } from "@features/choose-dishes/models";
 import { createEffect, createEvent, createStore, forward } from "effector";
 import { useStore } from "effector-react";
 import { toast } from "react-toastify";
@@ -9,7 +8,7 @@ import { getIsKz } from "@shared/lib/functional-utils";
 
 const onConfirm = createEvent();
 
-export const $isConfirmed = createStore(!getIsKz());
+export const $isConfirmed = createStore(getIsKz());
 
 export const getRestaurantFx = createEffect(getRestaurant);
 
