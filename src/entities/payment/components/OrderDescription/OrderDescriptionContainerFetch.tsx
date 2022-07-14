@@ -1,4 +1,4 @@
-import { postPaymentStatus } from "@shared/api/dishes";
+import { postPaymentStatus } from "@shared/api/common";
 import Button from "@shared/button";
 import { RoutesConfig } from "@shared/lib/routes-config";
 import dayjs from "dayjs";

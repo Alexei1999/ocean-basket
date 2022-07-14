@@ -2,7 +2,7 @@ import { onScrollPage } from "@shared/components/ScrollContainer";
 import { formatPrice } from "@entities/cart/components/Details/variation-groups";
 import { getFromStorage, setToStorage } from "@features/choose-dishes/api";
 import { $cartSizes } from "@features/choose-dishes/models";
-import { PaymentArguments } from "@shared/api/dishes";
+import { PaymentArguments } from "@shared/api/common";
 import dayjs, { Dayjs } from "dayjs";
 import { createEvent, createStore, sample } from "effector";
 import { useStore } from "effector-react";
@@ -19,8 +19,8 @@ import ContactCard from "./contact-card";
 import Radio from "./forms/radio/radio";
 import ScheduleGrid from "./schedule-grid";
 import { RightSideView } from "./unverified-item-list";
-import { $rus } from "@features/choose-dishes/models";
 import { getIsKz } from "@shared/lib/functional-utils";
+import { $rus } from "@features/choose-dishes/models";
 
 export const FREE_DELIVERY_RUS_SUM = 5000;
 export const FREE_DELIVERY_KZ_SUM = 15000;

@@ -10,13 +10,13 @@ import { Swiper, SwiperSlide } from "swiper/react/swiper-react";
 import cn from "classnames";
 import { useState } from "react";
 import { PromotionModal } from "../PromotionsSection/PromotionModal";
-import { Promotion } from "@shared/api/dishes";
 import { useStore } from "effector-react";
 import { $promotions, fetchPomotionsFx } from "@features/choose-dishes/models";
 import { hostUrl } from "@shared/api/base";
 import classNames from "classnames";
 import ContentLoader from "react-content-loader";
 import { restore } from "effector";
+import { Promotion } from "@shared/api/switchable";
 
 const offerSliderBreakpoints = {
   320: {

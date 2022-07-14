@@ -1,7 +1,7 @@
 import { FormValues } from "@entities/payment/components/Forms/address-form";
 import Input from "@entities/payment/components/Forms/forms/input";
-import { $rus } from "@features/choose-dishes/models";
 import { usePropRef } from "@shared/lib/usePropRef";
+import { $rus } from "@features/choose-dishes/models";
 import classNames from "classnames";
 import { useStore } from "effector-react";
 import { useState, useCallback, useEffect } from "react";
@@ -42,12 +42,14 @@ export const AddressSuggestionsMap = ({
   onError,
   className,
   errors,
+  onCoordsChange,
 }: {
   formInitial?: FormValues;
   onChange: (data: { [K in Keys]?: string }) => void;
   onError?: (e: any) => void;
   className?: string;
   errors?: string[];
+  onCoordsChange?: (cords: Array<number | null>) => void;
 }) => {
   const isRus = useStore($rus);
   const [ymapsInstance, setYmapsInstance] = useState<YMapsApi | null>(null);
@@ -103,6 +105,7 @@ export const AddressSuggestionsMap = ({
     const onclickhanlder = (e: any) => {
       const coords = e.get("coords");
 
+      onCoordsChange?.(coords);
       setCoords(coords);
       decodePositionRef.current(coords);
     };
@@ -128,6 +131,7 @@ export const AddressSuggestionsMap = ({
 
       searchControl.search(address).then((data: any) => {
         const cords = data.geoObjects.get(0).geometry.getCoordinates();
+        onCoordsChange?.(cords);
         setCoords(cords);
         setViewCoords(cords);
         decodePosition(cords);

@@ -1,4 +1,4 @@
-import { Dish } from "@shared/api/dishes";
+import { Dish } from "@shared/api/common";
 import {
   ModifierType,
   PickedDish,

@@ -11,16 +11,16 @@ import {
   $cartSizes,
   $isRestaurantOpen,
   $cart,
-  $rus,
 } from "@features/choose-dishes/models";
 import { getPlurals } from "@shared/lib/functional-utils";
 import { useState } from "react";
 import Input from "@entities/payment/components/Forms/forms/input";
 import { createEffect, createEvent, createStore } from "effector";
-import { verifyPromocode } from "@shared/api/dishes";
+import { verifyPromocode } from "@shared/api/common";
 import Button from "@shared/button";
 import { toast } from "react-toastify";
 import { formatPrice } from "./Details/variation-groups";
+import { $rus } from "@features/choose-dishes/models";
 
 export const MIN_SUM_RUS = 2000;
 export const MIN_SUM_KZ = 2000;

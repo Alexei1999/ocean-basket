@@ -6,7 +6,7 @@ import { getIcon } from "../../lib/get-icon";
 import { createEvent } from "effector";
 import { useStore } from "effector-react";
 import { $category } from "@features/choose-dishes/models";
-import { Category } from "@shared/api/dishes";
+import { Category } from "@shared/api/common";
 
 interface TreeMenuItemProps {
   item: Category;

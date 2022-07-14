@@ -12,8 +12,8 @@ import {
   KAZAHSTAN_COORDS,
   MOSCOW_COORDS,
 } from "@shared/components/AddressSuggestionsMap";
-import { $rus } from "@features/choose-dishes/models";
 import { useStore } from "effector-react";
+import { $rus } from "@features/choose-dishes/models";
 
 function ContactsBlock({
   item,

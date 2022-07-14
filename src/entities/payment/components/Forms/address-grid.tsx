@@ -18,7 +18,7 @@ interface AddressesProps<T> {
   editLabel?: string;
   isSimple?: boolean;
   data?: T;
-  form: React.FC<{ onSubmit: () => void }>;
+  form: React.FC<{ onSubmit: (...args: any[]) => void }>;
   card: React.FC<{ checked: boolean; data: T; onEdit: () => void }>;
   isModalOpen: boolean;
   onEdit: () => void;

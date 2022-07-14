@@ -11,8 +11,8 @@ import { CertificatePage } from "./CertificatesPage/CertificatePage";
 import { DetailsPage } from "./DetailsPage/DeatilsPage";
 import { OrderDescriptionContainerFetch } from "@entities/payment/components/OrderDescription/OrderDescriptionContainerFetch";
 import { CheckoutPage } from "./CheckoutPage/CheckoutPage";
-import { $rus } from "@features/choose-dishes/models";
 import { useStore } from "effector-react";
+import { $rus } from "@features/choose-dishes/models";
 
 const OpenUrl = ({ url }: { url: string }) => {
   window.location.replace(url);

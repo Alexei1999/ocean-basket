@@ -4,7 +4,6 @@ import { PageWaveHeader } from "@entities/promotions/components/PageWaveHeader";
 import { SubscriptionSection } from "@widgets/subscription/SubscriptionSection";
 import fishesFull from "./fishes-full.svg";
 import { useStore } from "effector-react";
-import { $rus } from "@features/choose-dishes/models";
 import {
   FREE_DELIVERY_KZ_SUM,
   FREE_DELIVERY_RUS_SUM,
@@ -12,6 +11,7 @@ import {
   LOCATION_KZ_SUM,
   LOCATION_TRUE_RUS_SUM,
 } from "@entities/payment/components/Forms/PaymentProccessing";
+import { $rus } from "@features/choose-dishes/models";
 
 function Card({
   text,

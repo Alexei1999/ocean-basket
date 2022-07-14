@@ -1,5 +1,5 @@
 import usePrice from "@entities/cart/lib/use-price";
-import { Dish } from "@shared/api/dishes";
+import { Dish } from "@shared/api/common";
 import productSvg from "@assets/product.svg";
 
 import cn from "classnames";

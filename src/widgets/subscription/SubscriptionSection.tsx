@@ -14,7 +14,7 @@ import blueWaves from "@shared/icons/blue-waves.svg";
 import hook from "./hook.svg";
 import wave from "./wave.svg";
 import { createEffect, restore } from "effector";
-import { getPosts, postSubscribe } from "@shared/api/dishes";
+import { getPosts, postSubscribe } from "@shared/api/common";
 import { useStore } from "effector-react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -166,7 +166,11 @@ function InstagramHeader() {
       <a
         target="_blank"
         className="text-accent font-bold text-2xl pt-8 hover:underline"
-        href={isRus ? "https://www.instagram.com/oceanbasket.ru/": "https://www.instagram.com/oceanbasket.kz/"} 
+        href={
+          isRus
+            ? "https://www.instagram.com/oceanbasket.ru/"
+            : "https://www.instagram.com/oceanbasket.kz/"
+        }
         rel="noreferrer"
       >
         {isRus ? "@oceanbasket.ru" : "@oceanbasket.kz"}

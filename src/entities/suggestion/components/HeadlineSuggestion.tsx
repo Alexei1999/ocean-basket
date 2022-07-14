@@ -1,6 +1,6 @@
 import usePrice from "@entities/cart/lib/use-price";
+import { Dish } from "@shared/api/common";
 import { $rus } from "@features/choose-dishes/models";
-import { Dish } from "@shared/api/dishes";
 import { useStore } from "effector-react";
 
 export function HeadlineSuggestion({ item }: { item?: Dish | null }) {

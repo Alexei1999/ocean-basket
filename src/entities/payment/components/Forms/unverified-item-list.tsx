@@ -7,7 +7,7 @@ import {
 } from "@entities/cart/components/cart-sidebar-view";
 import { useStore } from "effector-react";
 import { $cartSizes, $cart } from "@features/choose-dishes/models";
-import { DishStatus } from "@shared/api/dishes";
+import { DishStatus } from "@shared/api/common";
 import {
   $grandTotal,
   $location,

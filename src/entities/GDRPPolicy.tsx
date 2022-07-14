@@ -1,5 +1,5 @@
-import { $rus } from "@features/choose-dishes/models";
 import { Transition } from "@headlessui/react";
+import { $rus } from "@features/choose-dishes/models";
 import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react/effector-react.cjs";
 import { Fragment, useState } from "react";

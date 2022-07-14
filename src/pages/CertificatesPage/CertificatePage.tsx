@@ -8,8 +8,8 @@ import { SubscriptionSection } from "@widgets/subscription/SubscriptionSection";
 
 import hook from "@widgets/subscription/hook.svg";
 import twoWaves from "@pages/AboutPage/AboutPageCover/2-waves.svg";
-import { $rus } from "@features/choose-dishes/models";
 import { useStore } from "effector-react";
+import { $rus } from "@features/choose-dishes/models";
 
 export function CertificatePage() {
   const isRus = useStore($rus);

@@ -1,7 +1,8 @@
 import Modal from "@entities/payment/components/Forms/modal";
-import { Dish, getDish } from "@shared/api/dishes";
+import { Dish, getDish } from "@shared/api/common";
 import { setLoadingAnimation } from "@shared/components/LoadingContainer/FishAnimationContainer";
 import { RoutesConfig } from "@shared/lib/routes-config";
+import { $isAdressModalOpen } from "@widgets/address-modal";
 import { createEffect, createEvent, createStore } from "effector";
 import { useStore } from "effector-react";
 import { useEffect } from "react";
@@ -19,6 +20,8 @@ const $currentDish = createStore<Dish | null>(null)
 export const getDishFx = createEffect(getDish);
 
 export const AddDishModal = () => {
+  const isAdressOpen = useStore($isAdressModalOpen);
+
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -64,7 +67,11 @@ export const AddDishModal = () => {
   if (!currentDish) return null;
 
   return (
-    <Modal showClose open={Boolean(currentDish && id)} onClose={onClose}>
+    <Modal
+      showClose
+      open={Boolean(!isAdressOpen && currentDish && id)}
+      onClose={onClose}
+    >
       <Popup product={currentDish} />
     </Modal>
   );

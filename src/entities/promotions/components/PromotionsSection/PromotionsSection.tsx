@@ -2,7 +2,6 @@ import { useCallback, useState } from "react";
 import { PromotionModal } from "./PromotionModal";
 import { PageWaveHeader } from "../PageWaveHeader";
 import { createGate, useGate, useStore } from "effector-react";
-import { Promotion } from "@shared/api/dishes";
 import { $promotions, fetchPomotionsFx } from "@features/choose-dishes/models";
 import classNames from "classnames";
 import { forward } from "effector";
@@ -11,6 +10,7 @@ import { useObserver } from "@shared/lib/functional-utils";
 import productSvg from "@assets/product.svg";
 
 import styles from "../styles.module.scss";
+import { Promotion } from "@shared/api/switchable";
 
 function PromotionImage({
   name,

@@ -6,9 +6,10 @@ import {
   addProductToCart,
   PickedDish,
 } from "@features/choose-dishes/models";
-import { $rus } from "@features/choose-dishes/models";
-import { Dish, Promotion } from "@shared/api/dishes";
+import { Dish } from "@shared/api/common";
+import { Promotion } from "@shared/api/switchable";
 import Button from "@shared/button";
+import { $rus } from "@features/choose-dishes/models";
 import { useStore } from "effector-react";
 import { useMemo } from "react";
 

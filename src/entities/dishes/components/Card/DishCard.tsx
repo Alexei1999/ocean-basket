@@ -2,7 +2,7 @@ import cn from "classnames";
 import { AddToCart } from "../../../cart/components/Buttons/AddToCart";
 import productIcon from "@assets/product.svg";
 
-import { Dish, DishStatus } from "@shared/api/dishes";
+import { Dish, DishStatus } from "@shared/api/common";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import classNames from "classnames";
 import { useSortedPrices } from "@entities/cart/components/Details/variation-price";

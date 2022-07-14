@@ -1,8 +1,9 @@
 import { FormValues } from "@entities/payment/components/Forms/address-form";
 import { ModifierType } from "@features/choose-dishes/models";
-import { baseApi } from "./base";
+import axios from "axios";
+import { baseApi, hostUrl } from "./base";
 
-const apiBaseUrl = "/api";
+export const apiBaseUrl = "/api";
 
 export const EMPTY_STRING = "-";
 
@@ -38,42 +39,11 @@ export type Dish = {
   comment?: string;
 };
 
-export const getDishes = (): Promise<{ [category: string]: Dish[] }> => {
-  return baseApi.get(`${apiBaseUrl}/dishes`).then((response) => response.data);
-};
-
-export const getPopular = (): Promise<Dish[]> => {
-  return baseApi
-    .get(`${apiBaseUrl}/dishes/popular`)
-    .then((response) => response.data);
-};
-
 export type Category = {
   id: number;
   category: string;
   created_at: string;
   updated_at: string;
-};
-
-export const getCategories = (): Promise<Category[]> => {
-  return baseApi
-    .get(`${apiBaseUrl}/categories`)
-    .then((response) => response.data);
-};
-
-export type Promotion = {
-  id: string;
-  title: string;
-  description: string;
-  status: DishStatus;
-  photo: string;
-  created_at: string;
-  updated_at: string;
-  basket: Dish[];
-};
-
-export const getPromotions = (): Promise<Promotion[]> => {
-  return baseApi.get(`${apiBaseUrl}/actions`).then((response) => response.data);
 };
 
 export type OrderTypeParams = Omit<FormValues, "title"> & {
@@ -203,4 +173,17 @@ export const getPosts = (): Promise<string[]> => {
 
 export const getSlider = (): Promise<Dish[]> => {
   return baseApi.get(`${apiBaseUrl}/slider`).then((response) => response.data);
+};
+
+export const getRestaurant = (params: {
+  latitude: string;
+  longtitude: string;
+}): Promise<{
+  prefix: string | null;
+}> => {
+  return axios
+    .post(`${apiBaseUrl}/getRestaurant`, params, {
+      baseURL: hostUrl,
+    })
+    .then((response) => response.data);
 };

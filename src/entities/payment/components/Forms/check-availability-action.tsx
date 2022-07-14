@@ -20,7 +20,7 @@ import {
   postOrder,
   postPaymentArguments,
   PaymentArgumentsParams,
-} from "@shared/api/dishes";
+} from "@shared/api/common";
 import {
   $promocode,
   MIN_SUM_KZ,
@@ -31,15 +31,14 @@ import { $restaurant } from "@widgets/header/components/AddressSelection";
 import {
   $grandTotal,
   $location,
-  FREE_DELIVERY_KZ_SUM,
   FREE_DELIVERY_RUS_SUM,
   MerchantLogin,
 } from "./PaymentProccessing";
 import { createEvent, createStore } from "effector";
 import { formatPrice } from "@entities/cart/components/Details/variation-groups";
-import { $rus } from "@features/choose-dishes/models";
 import { useNavigate } from "react-router-dom";
 import { RoutesConfig } from "@shared/lib/routes-config";
+import { $rus } from "@features/choose-dishes/models";
 
 type SubmitFormParams = {
   form: Omit<OrderTypeParams, "InvoiceID" | "Signature">;

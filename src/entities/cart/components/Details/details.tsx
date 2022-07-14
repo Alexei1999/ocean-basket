@@ -1,4 +1,4 @@
-import { Dish, DishStatus, EMPTY_STRING } from "@shared/api/dishes";
+import { Dish, DishStatus, EMPTY_STRING } from "@shared/api/common";
 import classNames from "classnames";
 import { scroller } from "react-scroll";
 import { Waypoint } from "react-waypoint";

@@ -2,12 +2,12 @@ import { AddToCartBtnBig } from "@entities/dishes/components/Card/AddToCartBtnBi
 import { createPickedDish } from "@features/choose-dishes/lib";
 import {
   $cartSizes,
-  $rus,
   addProductToCart,
   deleteLastProductFromCart,
   PickedModifier,
 } from "@features/choose-dishes/models";
-import { Dish } from "@shared/api/dishes";
+import { Dish } from "@shared/api/common";
+import { $rus } from "@features/choose-dishes/models";
 
 import cn from "classnames";
 import { useStore } from "effector-react";

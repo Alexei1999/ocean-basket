@@ -3,7 +3,7 @@ import { NotFound } from "../../../dishes/components/NotFound";
 import { Scrollbar } from "../../../../shared/components/Scrollbar";
 import { TreeMenu } from "../TreeMenu/TreeMenuItem";
 import { CategoriesLoader } from "./CategoriesLoader";
-import { Category } from "@shared/api/dishes";
+import { Category } from "@shared/api/common";
 import classNames from "classnames";
 
 interface StickySidebarListCategoriesProps {

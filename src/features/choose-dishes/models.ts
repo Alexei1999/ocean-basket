@@ -6,12 +6,15 @@ import {
   Dish,
   DishStatus,
   EMPTY_STRING,
+  getTimeValidate,
+} from "@shared/api/common";
+import {
+  $hostUrl,
   getDishes,
   getPopular,
   getPromotions,
-  getTimeValidate,
   Promotion,
-} from "@shared/api/dishes";
+} from "@shared/api/switchable";
 import { getIsKz } from "@shared/lib/functional-utils";
 import {
   createEffect,
@@ -75,6 +78,11 @@ forward({
   to: [fetchDishesFx, fetchPopularDishesFx, fetchPomotionsFx],
 });
 
+forward({
+  from: $hostUrl,
+  to: [fetchDishesFx, fetchPopularDishesFx, fetchPomotionsFx],
+});
+
 const flattedDishes = fetchDishesFx.doneData.map((data) =>
   Object.entries(data)
     .map(([key, value]) => value.map((dish) => ({ ...dish, category: key })))
@@ -119,7 +127,7 @@ export type PickedDish = {
   totalPrice: number;
 };
 
-const setIsRus = createEvent<boolean>();
+export const setIsRus = createEvent<boolean>();
 export const $rus = createStore(!getIsKz()).on(
   setIsRus,
   (_, payload) => payload

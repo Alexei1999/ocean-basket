@@ -1,5 +1,5 @@
-import { $rus } from "@features/choose-dishes/models";
 import { addresses } from "@pages/ContactsPage/config";
+import { $rus } from "@features/choose-dishes/models";
 import classNames from "classnames";
 import { createEvent, createStore } from "effector";
 import { useStore } from "effector-react";

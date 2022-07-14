@@ -1,5 +1,5 @@
 import { $categories } from "@features/choose-dishes/models";
-import { getCategories } from "@shared/api/dishes";
+import { getCategories } from "@shared/api/switchable";
 import { createEffect, forward } from "effector";
 import { createGate, useStore } from "effector-react";
 import { useGate } from "effector-react/effector-react.cjs";

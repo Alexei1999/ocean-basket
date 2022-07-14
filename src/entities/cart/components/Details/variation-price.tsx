@@ -1,5 +1,5 @@
+import { Dish, EMPTY_STRING } from "@shared/api/common";
 import { $rus } from "@features/choose-dishes/models";
-import { Dish, EMPTY_STRING } from "@shared/api/dishes";
 import { useStore } from "effector-react";
 import { useEffect, useMemo } from "react";
 import Attribute from "./attribute";

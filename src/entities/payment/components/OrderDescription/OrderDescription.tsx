@@ -11,8 +11,8 @@ import { OrderDescriptionContainer } from "./OrderDescriptionContainer";
 import { getDeliveryFeeName } from "../Forms/PaymentProccessing";
 import { formatPrice } from "@entities/cart/components/Details/variation-groups";
 import { onScrollPage } from "@shared/components/ScrollContainer";
-import { $rus } from "@features/choose-dishes/models";
 import { useStore } from "effector-react";
+import { $rus } from "@features/choose-dishes/models";
 
 dayjs.locale("ru");
 

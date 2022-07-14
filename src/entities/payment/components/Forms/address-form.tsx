@@ -90,21 +90,27 @@ const $isMapMode = createStore(true)
   .on(onHandleMode, () => false)
   .on(onToggleMode, (state) => !state);
 
-const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
+const AddressForm: React.FC<{
+  isLoading?: boolean;
+  onSubmit: (coords: Array<number | null>, country?: string) => void;
+  switchIconEnabled?: boolean;
+}> = ({ onSubmit, switchIconEnabled = true, isLoading = false }) => {
   const isMapMode = useStore($isMapMode);
   const [isSwitchShown, setIsSwitchShown] = useState(true);
+  const [coords, setCoords] = useState<Array<number | null>>([null, null]);
+  const [country, setCountry] = useState<string>();
 
   const form = useStore($form);
 
   const onSubmitHandler: SubmitHandler<FormValues> = (props) => {
     onSubmitForm(props);
-    onSubmit();
+    onSubmit(coords, country);
   };
 
   return (
     <div className="p-5 sm:p-8 bg-light md:rounded-xl min-h-screen md:min-h-0">
       <div className="w-full mb-4 sm:mb-6 flex justify-center relative">
-        {isSwitchShown && (
+        {switchIconEnabled && isSwitchShown && (
           <SwitchIcon
             width={35}
             height={35}
@@ -115,7 +121,9 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
           />
         )}
         <h1 className="text-body font-semibold text-lg text-center">
-          {form ? "Редактирование" : "Добавление"} адреса
+          {form
+            ? "Подтвердите адрес доставки"
+            : "Введите адрес, для определения ближайшего ресторана"}
         </h1>
       </div>
       <Form<FormValues>
@@ -132,9 +140,11 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
         {({ register, setValue, formState: { errors }, clearErrors }) => (
           <>
             <AddressSuggestionsMap
+              onCoordsChange={setCoords}
               formInitial={form ?? undefined}
               className={classNames("col-span-4", !isMapMode && "hidden")}
               onChange={(data) => {
+                setCountry(data.country);
                 setValue(
                   "entrance",
                   parseInt(data.entrance?.replace(/\D/g, "") as string)
@@ -274,8 +284,11 @@ const AddressForm: React.FC<{ onSubmit: () => void }> = ({ onSubmit }) => {
               min={1}
             />
 
-            <Button className="w-full col-span-4 text-body hover:text-accent">
-              {form ? "Обновить" : "Сохранить"} {"адрес"}
+            <Button
+              loading={isLoading}
+              className="w-full col-span-4 text-body hover:text-accent"
+            >
+              {form ? "Подтвердить" : "Сохранить"} {"адрес"}
             </Button>
           </>
         )}

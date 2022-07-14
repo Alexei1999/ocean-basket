@@ -4,7 +4,7 @@ import {
   $isRestaurantOpen,
   deleteLastProductFromCart,
 } from "@features/choose-dishes/models";
-import { Dish, DishStatus } from "@shared/api/dishes";
+import { Dish, DishStatus } from "@shared/api/common";
 import { RoutesConfig } from "@shared/lib/routes-config";
 
 import cn from "classnames";

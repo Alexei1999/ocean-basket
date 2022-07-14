@@ -2,9 +2,9 @@ import { saveChoosenDish } from "@entities/cart/components/Details/add-dish-moda
 import { isDishValid } from "@entities/cart/components/Details/details";
 import { toTranslit } from "@entities/dishes/components/Card/DishCard";
 import { $cartItems } from "@features/choose-dishes/models";
-import { $rus } from "@features/choose-dishes/models";
-import { Dish } from "@shared/api/dishes";
+import { Dish } from "@shared/api/common";
 import { RoutesConfig } from "@shared/lib/routes-config";
+import { $rus } from "@features/choose-dishes/models";
 import { useStore } from "effector-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";

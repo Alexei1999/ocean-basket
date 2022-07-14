@@ -2,6 +2,7 @@ import { AddDishModal } from "@entities/cart/components/Details/add-dish-modal";
 import { PromotionSlider } from "@entities/promotions/components/PromotionSlider/PromotionSlider";
 import { onRemoveAnimationConfig } from "@shared/components/LoadingContainer/FishAnimationContainer";
 import { RoutesConfig } from "@shared/lib/routes-config";
+import { AddressModal } from "@widgets/address-modal";
 import FilterBar from "@widgets/filter-bar/filter-bar";
 import { ShopClosedModal } from "@widgets/ShopClosedModal";
 import classNames from "classnames";
@@ -23,6 +24,7 @@ export function MenuPage() {
 
   return (
     <>
+      <AddressModal />
       <AddDishModal />
       <div className={classNames(!canSticky && "pt-14 md:pt-16 xl:pt-0")}>
         <ShopClosedModal />

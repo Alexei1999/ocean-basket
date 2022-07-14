@@ -22,7 +22,7 @@ import footerZip from "@assets/footer.zip.png";
 
 import { onScrollPage } from "@shared/components/ScrollContainer";
 import { onRemoveAnimationConfig } from "@shared/components/LoadingContainer/FishAnimationContainer";
-import { getSlider } from "@shared/api/dishes";
+import { getSlider } from "@shared/api/common";
 import { toTranslit } from "@entities/dishes/components/Card/DishCard";
 import { usePropRef } from "@shared/lib/usePropRef";
 import { hostUrl } from "@shared/api/base";
