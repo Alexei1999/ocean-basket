@@ -13,6 +13,10 @@ export const $isConfirmed = createStore(!getIsKz());
 
 export const getRestaurantFx = createEffect(getRestaurant);
 
+getRestaurantFx.failData.watch(() => {
+  toast.error("Ошибка при отправке адреса");
+});
+
 export const getRestaurantFiltered = getRestaurantFx.doneData.filterMap(
   (props) => {
     if (typeof props?.prefix !== "string") {
