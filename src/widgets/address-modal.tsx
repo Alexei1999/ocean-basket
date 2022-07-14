@@ -5,10 +5,11 @@ import { createEffect, createEvent, createStore, forward } from "effector";
 import { useStore } from "effector-react";
 import { toast } from "react-toastify";
 import { getIsKz } from "@shared/lib/functional-utils";
+import { onChangeHostUrl } from "@shared/api/switchable";
 
 const onConfirm = createEvent();
 
-export const $isConfirmed = createStore(getIsKz());
+export const $isConfirmed = createStore(getIsKz()).on(onConfirm, () => true);
 
 export const getRestaurantFx = createEffect(getRestaurant);
 
@@ -16,21 +17,11 @@ getRestaurantFx.failData.watch(() => {
   toast.error("Ошибка при отправке адреса");
 });
 
-export const getRestaurantFiltered = getRestaurantFx.doneData.filterMap(
-  (props) => {
-    if (typeof props?.prefix !== "string") {
-      return;
-    }
-
-    return props.prefix;
+getRestaurantFx.doneData.watch((data) => {
+  if (typeof data?.prefix === "string") {
+    onChangeHostUrl(data?.prefix);
+    onConfirm();
   }
-);
-
-getRestaurantFiltered.watch((sss) => "filtered: " + sss);
-
-forward({
-  from: getRestaurantFiltered,
-  to: onConfirm,
 });
 
 export const $isAdressModalOpen = $isConfirmed.map(

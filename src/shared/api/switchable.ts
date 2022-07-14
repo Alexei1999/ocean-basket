@@ -1,11 +1,12 @@
-import { getRestaurantFiltered } from "@widgets/address-modal";
 import axios from "axios";
-import { createStore } from "effector";
+import { createEvent, createStore } from "effector";
 import { baseApi, hostUrl, transformResponse } from "./base";
 import { Dish, Category, apiBaseUrl, DishStatus } from "./common";
 
+export const onChangeHostUrl = createEvent<string>();
+
 export const $hostUrl = createStore(hostUrl).on(
-  getRestaurantFiltered,
+  onChangeHostUrl,
   (_, prefix) => prefix
 );
 
