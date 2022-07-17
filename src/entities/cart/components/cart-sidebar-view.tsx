@@ -21,6 +21,7 @@ import Button from "@shared/button";
 import { toast } from "react-toastify";
 import { formatPrice } from "./Details/variation-groups";
 import { $rus } from "@features/choose-dishes/models";
+import { $isConfirmed, setAdressModalOpen } from "@widgets/address-modal";
 
 export const MIN_SUM_RUS = 2000;
 export const MIN_SUM_KZ = 2000;
@@ -103,6 +104,7 @@ export const CartSidebarView = ({
   const [promocode, setPromocode] = useState<string>("");
   const [isSuccessful, setIsSuccessful] = useState<boolean>(false);
 
+  const isConfirmed = useStore($isConfirmed);
   const isLoading = useStore(verifyPromocodeFx.pending);
   const isOpen = useStore($isRestaurantOpen);
 
@@ -123,6 +125,11 @@ export const CartSidebarView = ({
 
   function handleCheckout() {
     if (isDisabled) return;
+    if (!isConfirmed) {
+      setAdressModalOpen(true);
+      return;
+    }
+
     onSubmit?.();
   }
 

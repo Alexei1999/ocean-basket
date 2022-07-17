@@ -39,6 +39,7 @@ import { formatPrice } from "@entities/cart/components/Details/variation-groups"
 import { useNavigate } from "react-router-dom";
 import { RoutesConfig } from "@shared/lib/routes-config";
 import { $rus } from "@features/choose-dishes/models";
+import { $isConfirmed, setAdressModalOpen } from "@widgets/address-modal";
 
 type SubmitFormParams = {
   form: Omit<OrderTypeParams, "InvoiceID" | "Signature">;
@@ -208,6 +209,8 @@ export const CheckAvailabilityAction: React.FC<
 > = ({ onSubmit, ...props }) => {
   useGate(gateAction, { onSuccess: onSubmit, onFail: () => {} });
 
+  const isConfirmed = useStore($isConfirmed);
+
   const navigate = useNavigate();
 
   const isRub = useStore($rus);
@@ -285,6 +288,11 @@ export const CheckAvailabilityAction: React.FC<
       return;
     }
     if (isLoading) return;
+
+    if (!isConfirmed) {
+      setAdressModalOpen(true);
+      return;
+    }
 
     const newTab = window.open();
 

@@ -12,10 +12,12 @@ import { GDRPPolicy } from "@entities/GDRPPolicy";
 import { ScrollContainer } from "@shared/components/ScrollContainer";
 import { FishAnimationContainer } from "@shared/components/LoadingContainer/FishAnimationContainer";
 import { YMInitializer } from "react-yandex-metrika";
+import { AddressModal } from "@widgets/address-modal";
 
 function App() {
   return (
-    <FishAnimationContainer>r
+    <FishAnimationContainer>
+      r
       <YMInitializer
         accounts={[87286996]}
         options={{
@@ -26,6 +28,7 @@ function App() {
           ecommerce: "dataLayer",
         }}
       />
+      <AddressModal />
       <GDRPPolicy />
       <CartSidebar />
       <MobileMainMenu />

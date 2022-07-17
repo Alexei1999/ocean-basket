@@ -24,7 +24,6 @@ export function MenuPage() {
 
   return (
     <>
-      <AddressModal />
       <AddDishModal />
       <div className={classNames(!canSticky && "pt-14 md:pt-16 xl:pt-0")}>
         <ShopClosedModal />
