@@ -17,7 +17,6 @@ import { AddressModal } from "@widgets/address-modal";
 function App() {
   return (
     <FishAnimationContainer>
-      r
       <YMInitializer
         accounts={[87286996]}
         options={{
