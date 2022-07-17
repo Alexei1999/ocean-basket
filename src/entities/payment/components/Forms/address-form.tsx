@@ -94,7 +94,8 @@ const AddressForm: React.FC<{
   isLoading?: boolean;
   onSubmit: (coords: Array<number | null>, country?: string) => void;
   switchIconEnabled?: boolean;
-}> = ({ onSubmit, switchIconEnabled = true, isLoading = false }) => {
+  subLabel?: string;
+}> = ({ onSubmit, switchIconEnabled = true, isLoading = false, subLabel }) => {
   const isMapMode = useStore($isMapMode);
   const [isSwitchShown, setIsSwitchShown] = useState(true);
   const [coords, setCoords] = useState<Array<number | null>>([null, null]);
@@ -108,7 +109,7 @@ const AddressForm: React.FC<{
   };
 
   return (
-    <div className="p-5 sm:p-8 bg-light md:rounded-xl min-h-screen md:min-h-0">
+    <div className="p-5 sm:p-8 bg-light md:rounded-xl min-h-screen md:min-h-0 max-w-5xl">
       <div className="w-full mb-4 sm:mb-6 flex justify-center relative">
         {switchIconEnabled && isSwitchShown && (
           <SwitchIcon
@@ -283,6 +284,12 @@ const AddressForm: React.FC<{
               placeholder="Например: Домашний"
               min={1}
             />
+
+            {subLabel && (
+              <div className="text-red-500 col-span-4 text-sm my-3 md:my-5">
+                {subLabel}
+              </div>
+            )}
 
             <Button
               loading={isLoading}

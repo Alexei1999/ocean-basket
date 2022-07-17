@@ -6,6 +6,7 @@ import { useStore } from "effector-react";
 import { toast } from "react-toastify";
 import { getIsKz } from "@shared/lib/functional-utils";
 import { onChangeHostUrl } from "@shared/api/switchable";
+import { $rus } from "@features/choose-dishes/models";
 
 const onConfirm = createEvent();
 
@@ -36,12 +37,19 @@ onConfirm.watch(() => {
 });
 
 export const AddressModal = () => {
+  const isRus = useStore($rus);
+
   const isOpen = useStore($isAdressModalOpen);
   const isLoading = useStore(getRestaurantFx.pending);
 
   return (
     <Modal showClose={false} open={isOpen} onClose={() => void 0}>
       <AddressForm
+        subLabel={
+          isRus
+            ? "Мы доставляем наши блюда по всей Москве в пределах МКАД. Если ваш адрес доставки находится за пределами МКАД, ресторан оформит возврат денежных средств и отменит заказ. Заказы за МКАД оформляются по номеру телефона в индивидуальном порядке. Благодарим за понимание."
+            : "Мы доставляем наши блюда в пределах зоны: пр. Райымбека - ул. Калдаякова - ул. Сатпаева - ул. Ауезова. Если ваш адрес доставки находится вне зоны, ресторан оформит возврат денежных средств и отменит заказ. Заказы вне зоны оформляются по номеру телефона в индивидуальном порядке. Благодарим за понимание."
+        }
         isLoading={isLoading}
         switchIconEnabled={false}
         onSubmit={(coords) => {
