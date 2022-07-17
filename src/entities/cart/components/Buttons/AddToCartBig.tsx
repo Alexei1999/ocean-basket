@@ -13,6 +13,7 @@ import cn from "classnames";
 import { useStore } from "effector-react";
 import { Counter } from "../../../dishes/components/Counter/Counter";
 import styles from "./styles.module.scss";
+import { $isConfirmed, setAdressModalOpen } from "@widgets/address-modal";
 
 interface Props {
   product: Dish;
@@ -34,6 +35,7 @@ export const AddToCartBig = ({
   activeModifiers,
   onAdd,
 }: Props) => {
+  const isConfirmed = useStore($isConfirmed);
   const isRub = useStore($rus);
   const { unicItemsNumber } = useStore($cartSizes);
 
@@ -43,6 +45,11 @@ export const AddToCartBig = ({
     e.stopPropagation();
     if (!active) return;
     if (disabled) return;
+
+    if (!isConfirmed) {
+      setAdressModalOpen(true);
+      return;
+    }
 
     addProductToCart(
       createPickedDish(

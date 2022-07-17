@@ -12,6 +12,7 @@ import Button from "@shared/button";
 import { $rus } from "@features/choose-dishes/models";
 import { useStore } from "effector-react";
 import { useMemo } from "react";
+import { $isConfirmed, setAdressModalOpen } from "@widgets/address-modal";
 
 export const pickDishForce = (
   dish: Dish,
@@ -46,6 +47,7 @@ export function PromotionModal({
 }) {
   const isRus = useStore($rus);
   const isRestaurantOpen = useStore($isRestaurantOpen);
+  const isConfirmed = useStore($isConfirmed);
 
   const filteredBasket = useMemo(
     () => (promotion?.basket ?? []).filter((dish) => isDishValid(isRus, dish)),
@@ -71,6 +73,12 @@ export function PromotionModal({
             disabled={isDisabled}
             onClick={() => {
               if (isDisabled) return;
+
+              if (!isConfirmed) {
+                setAdressModalOpen(true);
+                return;
+              }
+
               filteredBasket.forEach((basket: Dish) => {
                 setIsOpen(false);
                 addProductToCart(pickDishForce(basket, isRus));

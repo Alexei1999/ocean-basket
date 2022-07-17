@@ -6,6 +6,7 @@ import {
 } from "@features/choose-dishes/models";
 import { Dish, DishStatus } from "@shared/api/common";
 import { RoutesConfig } from "@shared/lib/routes-config";
+import { $isConfirmed, setAdressModalOpen } from "@widgets/address-modal";
 
 import cn from "classnames";
 import { useStore } from "effector-react";
@@ -25,6 +26,7 @@ export const AddToCart = ({ data, counterClass }: Props) => {
   const { unicItemsNumber } = useStore($cartSizes);
   const navigate = useNavigate();
 
+  const isConfirmed = useStore($isConfirmed);
   const isOpen = useStore($isRestaurantOpen);
 
   const isDisabled = data.status !== DishStatus.Active || isOpen === false;
@@ -34,6 +36,11 @@ export const AddToCart = ({ data, counterClass }: Props) => {
   ) => {
     e.stopPropagation();
     if (isDisabled) return;
+
+    if (!isConfirmed) {
+      setAdressModalOpen(true);
+      return;
+    }
 
     saveChoosenDish(data);
     navigate(RoutesConfig.Menu + "/" + data.id + "/" + toTranslit(data.name));

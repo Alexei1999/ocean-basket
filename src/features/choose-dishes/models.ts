@@ -75,12 +75,22 @@ export const $isRestaurantOpen = restore(fetchTimeValidateFx.doneData, null);
 
 forward({
   from: gateChooseDishes.open,
-  to: [fetchDishesFx, fetchPopularDishesFx, fetchPomotionsFx],
+  to: [
+    fetchDishesFx,
+    fetchPopularDishesFx,
+    fetchPomotionsFx,
+    fetchCategoriesFx,
+  ],
 });
 
 forward({
   from: $hostUrl,
-  to: [fetchDishesFx, fetchPopularDishesFx, fetchPomotionsFx],
+  to: [
+    fetchDishesFx,
+    fetchPopularDishesFx,
+    fetchPomotionsFx,
+    fetchCategoriesFx,
+  ],
 });
 
 const flattedDishes = fetchDishesFx.doneData.map((data) =>

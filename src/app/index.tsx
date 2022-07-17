@@ -15,7 +15,7 @@ import { YMInitializer } from "react-yandex-metrika";
 
 function App() {
   return (
-    <FishAnimationContainer>
+    <FishAnimationContainer>r
       <YMInitializer
         accounts={[87286996]}
         options={{

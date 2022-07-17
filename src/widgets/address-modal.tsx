@@ -24,9 +24,16 @@ getRestaurantFx.doneData.watch((data) => {
   }
 });
 
-export const $isAdressModalOpen = $isConfirmed.map(
-  (isConfirmed) => !isConfirmed
+export const setAdressModalOpen = createEvent<boolean>();
+
+export const $isAdressModalOpen = createStore(false).on(
+  setAdressModalOpen,
+  (_, payload) => payload
 );
+
+onConfirm.watch(() => {
+  setAdressModalOpen(false);
+});
 
 export const AddressModal = () => {
   const isOpen = useStore($isAdressModalOpen);
