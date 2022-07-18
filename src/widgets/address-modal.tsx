@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { getIsKz } from "@shared/lib/functional-utils";
 import { onChangeHostUrl } from "@shared/api/switchable";
 import { $rus } from "@features/choose-dishes/models";
+import { onSetRestaurant } from "./header/components/AddressSelection";
 
 const onConfirm = createEvent();
 
@@ -22,6 +23,10 @@ getRestaurantFx.doneData.watch((data) => {
   if (typeof data?.prefix === "string") {
     onChangeHostUrl(data?.prefix);
     onConfirm();
+  }
+
+  if (typeof data?.restaurant === "string") {
+    onSetRestaurant(data.restaurant);
   }
 });
 

@@ -16,8 +16,18 @@ export const $restaurant = createStore<string | null>(null).on(
   (_, payload) => payload
 );
 
+export const onSetRestaurant = createEvent<string>();
+
+export const $restaurantText = createStore<string | null>(null).on(
+  onSetRestaurant,
+  (_, payload) => payload
+);
+
 export const AddressSelection = ({ className }: { className?: string }) => {
   const isRus = useStore($rus);
+
+  const label = useStore($restaurantText);
+
   const restaurant = useStore($restaurant);
 
   const addressesList = useMemo(
@@ -49,23 +59,29 @@ export const AddressSelection = ({ className }: { className?: string }) => {
         width={15}
         height={18}
       />
-      <select
-        value={restaurant ?? undefined}
-        onChange={(e) => onRestaurantSelection(e.target.value)}
-        className={classNames(
-          "text-body overflow-ellipsis text-sm w-full text-right lg:text-left bg-light"
-        )}
-      >
-        {addressesList.map(({ region, addresses }) => (
-          <optgroup key={region} label={region}>
-            {addresses.map((address) => (
-              <option key={address} value={address}>
-                {address}
-              </option>
-            ))}
-          </optgroup>
-        ))}
-      </select>
+      {label ? (
+        <div className="text-body overflow-ellipsis text-sm w-full text-right lg:text-left bg-light">
+          {label}
+        </div>
+      ) : (
+        <select
+          value={restaurant ?? undefined}
+          onChange={(e) => onRestaurantSelection(e.target.value)}
+          className={classNames(
+            "text-body overflow-ellipsis text-sm w-full text-right lg:text-left bg-light"
+          )}
+        >
+          {addressesList.map(({ region, addresses }) => (
+            <optgroup key={region} label={region}>
+              {addresses.map((address) => (
+                <option key={address} value={address}>
+                  {address}
+                </option>
+              ))}
+            </optgroup>
+          ))}
+        </select>
+      )}
     </div>
   );
 };

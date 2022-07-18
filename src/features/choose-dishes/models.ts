@@ -1,18 +1,13 @@
 import { filterCartObjects } from "@entities/cart/components/Details/details";
 import { fetchCategoriesFx } from "@entities/сategories/components/Categories/Categories";
 import { onCategorySelect } from "@entities/сategories/components/TreeMenu/TreeMenuItem";
-import {
-  Category,
-  Dish,
-  DishStatus,
-  EMPTY_STRING,
-  getTimeValidate,
-} from "@shared/api/common";
+import { Category, Dish, DishStatus, EMPTY_STRING } from "@shared/api/common";
 import {
   $hostUrl,
   getDishes,
   getPopular,
   getPromotions,
+  getTimeValidate,
   Promotion,
 } from "@shared/api/switchable";
 import { getIsKz } from "@shared/lib/functional-utils";

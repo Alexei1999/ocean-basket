@@ -1,5 +1,6 @@
 import { ModifierType } from "@features/choose-dishes/models";
-import { Dish, getModifiers } from "@shared/api/common";
+import { Dish } from "@shared/api/common";
+import { getModifiers } from "@shared/api/switchable";
 import Spinner from "@shared/components/spinner/spinner";
 import { createEffect, createStore } from "effector";
 import { useStore } from "effector-react";

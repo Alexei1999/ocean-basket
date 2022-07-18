@@ -1,3 +1,4 @@
+import { ModifierType } from "@features/choose-dishes/models";
 import axios from "axios";
 import { createEvent, createStore } from "effector";
 import { baseApi, hostUrl, transformResponse } from "./base";
@@ -49,8 +50,42 @@ export type Promotion = {
 };
 
 export const getPromotions = (): Promise<Promotion[]> => {
-  return baseApi
+  return axios
     .get(`${apiBaseUrl}/actions`, {
+      baseURL: $hostUrl.getState(),
+      transformResponse: transformResponse,
+    })
+    .then((response) => response.data);
+};
+
+export const getTimeValidate = (): Promise<boolean> => {
+  return axios
+    .get(`${apiBaseUrl}/timeValidate`, {
+      baseURL: $hostUrl.getState(),
+      transformResponse: transformResponse,
+    })
+    .then((response) => response.data)
+    .then((data) => data.result);
+};
+
+export const getDish = (id: string): Promise<Dish> => {
+  return axios
+    .post(
+      `${apiBaseUrl}/getDish`,
+      { dish_id: id },
+      {
+        baseURL: $hostUrl.getState(),
+        transformResponse: transformResponse,
+      }
+    )
+    .then((response) => response.data);
+};
+
+export const getModifiers = (id: string | number): Promise<ModifierType[]> => {
+  if (!id) throw new Error("id is required");
+
+  return axios
+    .get(`${apiBaseUrl}/modifiers/${id}`, {
       baseURL: $hostUrl.getState(),
       transformResponse: transformResponse,
     })

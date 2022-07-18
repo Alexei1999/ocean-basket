@@ -96,13 +96,7 @@ export const postSubscribe = (params: string) => {
   return baseApi.post(`${apiBaseUrl}/subscribers/submit`, { email: params });
 };
 
-export const getModifiers = (id: string | number): Promise<ModifierType[]> => {
-  if (!id) throw new Error("id is required");
 
-  return baseApi
-    .get(`${apiBaseUrl}/modifiers/${id}`)
-    .then((response) => response.data);
-};
 
 export type PaymentArgumentsParams = {
   OutSum: number;
@@ -152,19 +146,6 @@ export type ValidateTimeStatus = {
   result: boolean;
 };
 
-export const getTimeValidate = (): Promise<boolean> => {
-  return baseApi
-    .get(`${apiBaseUrl}/timeValidate`)
-    .then((response) => response.data)
-    .then((data) => data.result);
-};
-
-export const getDish = (id: string): Promise<Dish> => {
-  return baseApi
-    .post(`${apiBaseUrl}/getDish`, { dish_id: id })
-    .then((response) => response.data);
-};
-
 export const getPosts = (): Promise<string[]> => {
   return baseApi
     .get(`${apiBaseUrl}/getPermalinks`)
@@ -180,6 +161,7 @@ export const getRestaurant = (params: {
   longtitude: string;
 }): Promise<{
   prefix: string | null;
+  restaurant: string | null;
 }> => {
   return axios
     .post(`${apiBaseUrl}/getRestaurant`, params, {

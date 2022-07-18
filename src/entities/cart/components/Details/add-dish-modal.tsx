@@ -1,5 +1,6 @@
 import Modal from "@entities/payment/components/Forms/modal";
-import { Dish, getDish } from "@shared/api/common";
+import { Dish, } from "@shared/api/common";
+import { getDish } from "@shared/api/switchable";
 import { setLoadingAnimation } from "@shared/components/LoadingContainer/FishAnimationContainer";
 import { RoutesConfig } from "@shared/lib/routes-config";
 import { $isAdressModalOpen } from "@widgets/address-modal";
