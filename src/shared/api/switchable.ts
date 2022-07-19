@@ -1,7 +1,7 @@
 import { ModifierType } from "@features/choose-dishes/models";
 import axios from "axios";
 import { createEvent, createStore } from "effector";
-import { baseApi, hostUrl, transformResponse } from "./base";
+import { baseApi, hostUrl, prefixes, transformResponse } from "./base";
 import { Dish, Category, apiBaseUrl, DishStatus } from "./common";
 
 export const onChangeHostUrl = createEvent<string>();
@@ -10,6 +10,20 @@ export const $hostUrl = createStore(hostUrl).on(
   onChangeHostUrl,
   (_, prefix) => prefix
 );
+
+let flag = false;
+//@ts-ignore
+window.onChangePrefix = () => {
+  if (flag) {
+    onChangeHostUrl(prefixes.ru[0]);
+    flag = false;
+
+    return;
+  }
+
+  onChangeHostUrl(prefixes.ru[1]);
+  flag = true;
+};
 
 export const getDishes = (): Promise<{ [category: string]: Dish[] }> => {
   return axios

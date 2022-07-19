@@ -12,36 +12,23 @@ import {
   LOCATION_TRUE_RUS_SUM,
 } from "@entities/payment/components/Forms/PaymentProccessing";
 import { $rus } from "@features/choose-dishes/models";
-
-function Card({
-  text,
-  label,
-  description,
-  className,
-}: {
-  text: string;
-  label?: string;
-  description: ReactNode;
-  className?: string;
-}) {
-  return (
-    <div
-      className={classNames(
-        className,
-        "text-heading border-current border inline-block rounded-3xl px-9 py-6"
-      )}
-    >
-      <span className="text-body font-friends text-4xl md:text-5xl font-normal">
-        {text}
-      </span>
-      {label && <div className="pt-3 text-2xl text-body">{label}</div>}
-      {description && <div className="pt-3 text-body">{description}</div>}
-    </div>
-  );
-}
+import { Card } from "./Card";
+import {
+  deliveryAreaConfig,
+  deliveryCostConfig,
+  freeDeliveryConfig,
+  gettingOrderConfig,
+  legalAddressConfig,
+  minOrderPriceConfig,
+  returnConditionsConfig,
+  takingOrdersConfig,
+} from "./configs";
+import { propsGetter } from "./lib";
+import { $hostUrl } from "@shared/api/switchable";
 
 export function DetailsPage() {
   const isRus = useStore($rus);
+  const prefix = useStore($hostUrl);
 
   return (
     <>
@@ -59,75 +46,32 @@ export function DetailsPage() {
           <div className="gap-x-14 3xl:gap-x-20 gap-y-7 flex flex-wrap flex-col md:flex-row relative md:max-w-[70%] justify-start">
             <Card
               text="Прием заказов"
-              description={
-                isRus
-                  ? "Прием заказов осуществляется во время работы ресторанов."
-                  : "Прием заказов осуществляется с 10:00 до 22:00"
-              }
+              description={propsGetter(takingOrdersConfig, isRus, prefix)}
               className="flex-grow md:basis-80 md:max-w-xl"
             />
             <Card
               text="Территория доставки"
               className="flex-grow md:basis-80 md:max-w-2xl"
-              description={
-                isRus ? (
-                  "Мы доставляем по всей Москве."
-                ) : (
-                  <ul>
-                    <li>Доставка производится в г.Алматы в квадрате улиц:</li>
-                    <li>
-                      пр. Райымбека - ул. Калдаякова - ул. Сатпаева - ул.
-                      Ауэзова
-                    </li>
-                  </ul>
-                )
-              }
+              description={propsGetter(deliveryAreaConfig, isRus, prefix)}
             />
           </div>
           <div className="flex flex-wrap md:items-start flex-col md:flex-row gap-y-7 gap-x-14 3xl:gap-x-20">
             <Card
               text="Минимальная сумма заказа"
-              label={isRus ? "2000 РУБ*" : "2000 тенге*"}
+              label={propsGetter(minOrderPriceConfig, isRus, prefix)}
               description="*С учетом всех специальных предложений."
               className="md:max-w-[34rem]"
             />
             <Card
               className="md:max-w-2xl"
               text="Стоимость доставки"
-              description={
-                isRus ? (
-                  <ul>
-                    <li>
-                      Доставка по городу в пределах МКАД при заказе от{" "}
-                      {FREE_DELIVERY_RUS_SUM} р. — бесплатная.
-                    </li>
-                    <li>
-                      {" "}
-                      В пределах Третьего транспортного кольца —{" "}
-                      {LOCATION_TRUE_RUS_SUM} р.{" "}
-                    </li>
-                    <li> В пределах МКАД — {LOCATION_FALSE_RUS_SUM} р.</li>
-                  </ul>
-                ) : (
-                  <ul>
-                    <li>
-                      Доставка по городу в пределах зоны при заказе от{" "}
-                      {FREE_DELIVERY_KZ_SUM} тенге — бесплатная.
-                    </li>
-                    <li>В пределах зоны доставки — {LOCATION_KZ_SUM} тенге.</li>
-                  </ul>
-                )
-              }
+              description={propsGetter(deliveryCostConfig, isRus, prefix)}
             />
           </div>
           <div className="flex flex-wrap md:items-start flex-col md:flex-row gap-y-7 md:max-w-[70%] gap-x-14 3xl:gap-x-20">
             <Card
               text="Бесплатная доставка"
-              description={
-                !isRus
-                  ? `При заказе выше ${FREE_DELIVERY_KZ_SUM} тенге.`
-                  : `При заказе выше ${FREE_DELIVERY_RUS_SUM} руб.`
-              }
+              description={propsGetter(freeDeliveryConfig, isRus, prefix)}
               className="md:max-w-[34rem]"
             />
             <Card
@@ -137,36 +81,19 @@ export function DetailsPage() {
             />
             <Card
               text="Как получить заказ"
-              description="Доставка осуществляется курьерскими службами."
+              description={propsGetter(gettingOrderConfig, isRus, prefix)}
               className="basis-[25rem] md:max-w-lg"
             />
           </div>
           <div className="flex flex-wrap lg:items-start flex-col lg:flex-row gap-y-7 gap-x-14 3xl:gap-x-20">
             <Card
               text="Условия возврата"
-              description={
-                isRus
-                  ? "Eсли вас не устроила доставка, качество блюд, вы можете напрямую позвонить в ресторан по номеру +7 (977) 456 2221 (цифра 1), а также написать письмо на почту info@oceanbasket.ru. Мы оперативно ответим и решим проблему."
-                  : "Условия возврата рассматриваются в индивидуальном порядке. Свяжитесь с нами по электронной почте  info@oceanbasket.kz, если у Вас есть какие-либо жалобы и предложения по поводу качества Продукта."
-              }
+              description={propsGetter(returnConditionsConfig, isRus, prefix)}
               className="flex-grow lg:basis-80 max-w-xl"
             />
             <Card
               text="Юридический адрес"
-              description={
-                isRus ? (
-                  <ul>
-                    <li>ООО ОБ Мясницкая</li>
-                    <li>
-                      101000, г. Москва, ул. Мясницкая, д.11, этаж 1, помещение
-                      V, комната 6
-                    </li>
-                    <li>ИНН 7708376250 ОГРН 1207700108219</li>
-                  </ul>
-                ) : (
-                  "Казахстан, город Алматы, Алмалинский район, улица КАЗЫБЕК БИ, дом 50, почтовый индекс 050000"
-                )
-              }
+              description={propsGetter(legalAddressConfig, isRus, prefix)}
               className="flex-grow lg:basis-80 max-w-xl"
             />
           </div>

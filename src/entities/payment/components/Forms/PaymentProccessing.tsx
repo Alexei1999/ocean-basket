@@ -103,7 +103,7 @@ sample({
   source: [$cartSizes, $location, $rus],
   clock: [$cartSizes, $location, $rus],
   fn: ([cartSizes, location, isRus]) => {
-    const totalAmount = cartSizes.totalAmount ?? 0;
+    const totalAmount = cartSizes?.totalAmount ?? 0;
 
     if (totalAmount >= (isRus ? FREE_DELIVERY_RUS_SUM : FREE_DELIVERY_KZ_SUM)) {
       return totalAmount;

@@ -5,7 +5,7 @@ import logoMini from "@assets/logo-mini.svg";
 import logoFooter from "@assets/logo-footer.svg";
 import classNames from "classnames";
 import { addresses, Country } from "@pages/ContactsPage/config";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 
 import footer from "@assets/footer.png";
 import { $categories, $rus } from "@features/choose-dishes/models";
@@ -17,6 +17,7 @@ import { fetchCategoriesFx } from "@entities/сategories/components/Categories/C
 import { extendedLinks, headerLinks } from "@widgets/header/config/links";
 import { restore } from "effector";
 import { onScrollPage } from "@shared/components/ScrollContainer";
+import { $hostUrl } from "@shared/api/switchable";
 
 const links = [...extendedLinks, ...headerLinks];
 
@@ -50,6 +51,18 @@ function FooterContactsBlock({
   item: Country;
   className?: string;
 }) {
+  const prefix = useStore($hostUrl);
+
+  const targetRestaurant = useMemo(
+    () =>
+      item.regions
+        .flatMap((item) => item.addresses)
+        .find((address) => address.prefix === prefix),
+    [item, prefix]
+  );
+
+  const targetEmail = targetRestaurant?.email || item.defaultEmail;
+
   if (!item) return null;
 
   return (
@@ -84,13 +97,13 @@ function FooterContactsBlock({
           );
         })}
 
-        {item.email && (
+        {targetEmail && (
           <div className="flex pb-4 sm:pb-0 sm:justify-end pt-7 sm:pt-4">
             <a
-              href={"mailto:" + item.email}
+              href={"mailto:" + targetEmail}
               className="sm:w-4/12 text-base whitespace-pre"
             >
-              {item.email}
+              {targetEmail}
             </a>
           </div>
         )}
@@ -166,13 +179,13 @@ export function Footer() {
             <span className="text-base font-bold uppercase">
               Наши рестораны
             </span>
-
-            {isRus ? (
+            {isRus && (
               <FooterContactsBlock
                 className="flex-grow pt-12"
                 item={addresses[0]}
               />
-            ) : (
+            )}
+            {!isRus && (
               <FooterContactsBlock
                 className="flex-grow pt-12"
                 item={addresses[1]}

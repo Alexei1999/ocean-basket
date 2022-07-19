@@ -14,6 +14,7 @@ import {
 } from "@shared/components/AddressSuggestionsMap";
 import { useStore } from "effector-react";
 import { $rus } from "@features/choose-dishes/models";
+import { $hostUrl } from "@shared/api/switchable";
 
 function ContactsBlock({
   item,
@@ -24,6 +25,18 @@ function ContactsBlock({
   className?: string;
   children?: React.ReactNode;
 }) {
+  const prefix = useStore($hostUrl);
+
+  const targetRestaurant = useMemo(
+    () =>
+      item.regions
+        .flatMap((item) => item.addresses)
+        .find((address) => address.prefix === prefix),
+    [item, prefix]
+  );
+
+  const targetEmail = targetRestaurant?.email || item.defaultEmail;
+
   if (!item) return null;
 
   return (
@@ -66,11 +79,11 @@ function ContactsBlock({
           );
         })}
       </div>
-      {item.email && (
+      {targetEmail && (
         <div className="flex flex-col pt-14 ">
           <span className="text-base font-medium">Email</span>
           <span className="text-base pt-6">
-            <a href={"mailto:" + item.email}>{item.email}</a>
+            <a href={"mailto:" + targetEmail}>{targetEmail}</a>
           </span>
         </div>
       )}

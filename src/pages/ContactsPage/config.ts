@@ -1,7 +1,11 @@
+import { prefixes } from "@shared/api/base";
+
 export type Address = {
+  prefix: string;
   address: string;
   number: string;
   gps: number[];
+  email?: string;
 };
 
 export type Region = {
@@ -13,8 +17,11 @@ export type Region = {
 export type Country = {
   country_label: string | null;
   regions: Region[];
-  email: string;
+  defaultEmail: string;
 };
+
+
+
 
 export const addresses: Country[] = [
   {
@@ -25,14 +32,24 @@ export const addresses: Country[] = [
         region: "Москва",
         addresses: [
           {
+            prefix: prefixes.ru[0],
             address: "ул. Мясницкая, д. 11, м. Лубянка",
             number: "+7 (977) 456 2221",
             gps: [55.761677, 37.632745],
+            email: "marketing@oceanbasket.ru",
+          },
+          {
+            prefix: prefixes.ru[1],
+            address:
+              "Мичуринский проспект, д. 7, м. Ломоносовский проспект / м. Раменки",
+            number: "+7 (495) 589 2266",
+            gps: [55.70255756078396, 37.50947297004879],
+            email: "info@oceanbasket.ru",
           },
         ],
       },
     ],
-    email: "marketing@oceanbasket.ru",
+    defaultEmail: "marketing@oceanbasket.ru",
   },
   {
     country_label: "Казахстан",
@@ -42,6 +59,7 @@ export const addresses: Country[] = [
         region: "Алматы",
         addresses: [
           {
+            prefix: prefixes.kz[0],
             address:
               "Алмалинский район, ул. Казыбек би, дом 50, почтовый индекс 050000",
             number: "+7 (705) 449 7744",
@@ -82,6 +100,6 @@ export const addresses: Country[] = [
       //   ],
       // },
     ],
-    email: "info@oceanbasket.kz",
+    defaultEmail: "info@oceanbasket.kz",
   },
 ];
