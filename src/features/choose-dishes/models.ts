@@ -85,6 +85,7 @@ forward({
     fetchPopularDishesFx,
     fetchPomotionsFx,
     fetchCategoriesFx,
+    fetchTimeValidateFx,
   ],
 });
 

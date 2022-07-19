@@ -96,8 +96,6 @@ export const postSubscribe = (params: string) => {
   return baseApi.post(`${apiBaseUrl}/subscribers/submit`, { email: params });
 };
 
-
-
 export type PaymentArgumentsParams = {
   OutSum: number;
 };
