@@ -16,13 +16,14 @@ interface AddressesProps<T> {
   className?: string;
   addLabel?: string;
   editLabel?: string;
+  isLoading?: boolean;
   isSimple?: boolean;
   data?: T;
-  form: React.FC<{ onSubmit: (...args: any[]) => void }>;
+  form: React.FC<{ onSubmit: (...args: any[]) => void; isLoading?: boolean }>;
   card: React.FC<{ checked: boolean; data: T; onEdit: () => void }>;
   isModalOpen: boolean;
   onEdit: () => void;
-  onClose: () => void;
+  onSubmit: (...args: any[]) => void;
   emptyMessage?: string;
   count: number;
   after?: ReactNode;
@@ -41,11 +42,12 @@ export function BlocksGrid<T>({
   editLabel,
   data,
   isSimple = false,
+  isLoading = false,
   form: Form,
   card: Card,
   onEdit: onAdd,
   isModalOpen,
-  onClose,
+  onSubmit: onClose,
   emptyMessage,
   count,
   after,
@@ -58,11 +60,11 @@ export function BlocksGrid<T>({
     <div className={className}>
       {isSimple ? (
         <ModalSimple open={isModalOpen} onClose={onClose} showClose>
-          <Form onSubmit={onClose} />
+          <Form onSubmit={onClose} isLoading={isLoading} />
         </ModalSimple>
       ) : (
         <Modal open={isModalOpen} onClose={onClose} showClose>
-          <Form onSubmit={onClose} />
+          <Form onSubmit={onClose} isLoading={isLoading} />
         </Modal>
       )}
 

@@ -21,6 +21,7 @@ import ScheduleGrid from "./schedule-grid";
 import { RightSideView } from "./unverified-item-list";
 import { getIsKz } from "@shared/lib/functional-utils";
 import { $rus } from "@features/choose-dishes/models";
+import { getRestaurantFx } from "@widgets/address-modal";
 
 export const FREE_DELIVERY_RUS_SUM = 5000;
 export const FREE_DELIVERY_KZ_SUM = 15000;
@@ -125,6 +126,7 @@ sample({
 export function PaymentProccessing() {
   const cartSizes = useStore($cartSizes);
   const isRub = useStore($rus);
+  const isLoading = useStore(getRestaurantFx.pending);
 
   const [isOrdered, setIsOrdered] = useState(false);
   const [orderNumber, setOrderNumber] = useState<undefined | number>(undefined);
@@ -204,7 +206,24 @@ export function PaymentProccessing() {
               card={AddressCard}
               isModalOpen={isAddressModalOpen}
               onEdit={() => setIsAddressModalOpen(true)}
-              onClose={() => setIsAddressModalOpen(false)}
+              isLoading={isLoading}
+              onSubmit={(coords) => {
+                setIsAddressModalOpen(false);
+
+                if (isLoading) return;
+                if (
+                  typeof coords[0] !== "number" ||
+                  typeof coords[1] !== "number"
+                ) {
+                  toast.error("Адрес заполнен неккоректно");
+                  return;
+                }
+
+                getRestaurantFx({
+                  latitude: coords[0]!.toString(),
+                  longtitude: coords[1]!.toString(),
+                });
+              }}
               emptyMessage="Адрес не заполнен"
               after={
                 !isRub ? undefined : (totalAmount ?? 0) >=
@@ -264,7 +283,7 @@ export function PaymentProccessing() {
               data={phone}
               isModalOpen={isPhoneModalOpen}
               onEdit={() => setIsPhoneModalOpen(true)}
-              onClose={() => setIsPhoneModalOpen(false)}
+              onSubmit={() => setIsPhoneModalOpen(false)}
               emptyMessage="Телефон не заполнен"
             />
             <CheckAvailabilityAction onSubmit={onSubmitHandler}>
